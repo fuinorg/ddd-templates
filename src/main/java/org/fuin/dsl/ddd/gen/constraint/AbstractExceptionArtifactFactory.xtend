@@ -10,12 +10,14 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact
 
 class AbstractExceptionArtifactFactory extends AbstractSource implements ArtifactFactory<Constraint> {
 
+	String artifactName;
+
 	override getModelType() {
 		typeof(Constraint)
 	}
 
 	override init(ArtifactFactoryConfig config) {
-		// Not used
+		artifactName = config.getArtifact()
 	}
 
 	override isIncremental() {
@@ -25,7 +27,7 @@ class AbstractExceptionArtifactFactory extends AbstractSource implements Artifac
 	override create(Constraint constraint) throws GenerateException {
 		val Namespace ns = constraint.eContainer() as Namespace;
 		val String filename = (ns.getName() + ".Abstract" + constraint.getException()).replace('.', '/') + ".java";
-		return new GeneratedArtifact("AbstractException", filename, create(constraint, ns).toString());
+		return new GeneratedArtifact(artifactName, filename, create(constraint, ns).toString());
 	}
 
 	def create(Constraint constr, Namespace ns) {

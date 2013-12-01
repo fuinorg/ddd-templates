@@ -10,12 +10,14 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact
 
 class EnumArtifactFactory extends AbstractSource implements ArtifactFactory<EnumObject> {
 	
+	String artifactName;
+	
 	override getModelType() {
 		typeof(EnumObject)
 	}
 	
 	override init(ArtifactFactoryConfig config) {
-		// Not used
+		artifactName = config.getArtifact()
 	}
 	
 	override isIncremental() {
@@ -25,7 +27,7 @@ class EnumArtifactFactory extends AbstractSource implements ArtifactFactory<Enum
 	override create(EnumObject enu) throws GenerateException {
         val Namespace ns = enu.eContainer() as Namespace;
         var String filename = (ns.getName() + "." + enu.getName()).replace('.', '/') + ".java";
-        return new GeneratedArtifact("Enum", filename, create(enu, ns).toString());
+        return new GeneratedArtifact(artifactName, filename, create(enu, ns).toString());
 	}
 	
 	def create(EnumObject vo, Namespace ns) {

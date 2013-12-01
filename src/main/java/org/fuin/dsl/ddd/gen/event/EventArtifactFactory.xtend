@@ -12,12 +12,14 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact
 
 class EventArtifactFactory extends AbstractSource implements ArtifactFactory<Event> {
 	
+	String artifactName;
+	
 	override getModelType() {
 		typeof(Event)
 	}
 	
 	override init(ArtifactFactoryConfig config) {
-		// Not used
+		artifactName = config.getArtifact()
 	}
 	
 	override isIncremental() {
@@ -31,7 +33,7 @@ class EventArtifactFactory extends AbstractSource implements ArtifactFactory<Eve
             val AbstractEntity entity = container as AbstractEntity;
             val Namespace ns = entity.eContainer() as Namespace;
             val String filename = (ns.getName() + '.' + event.getName()).replace('.', '/') + ".java";
-	        return new GeneratedArtifact("Event", filename, create(event, ns).toString());
+	        return new GeneratedArtifact(artifactName, filename, create(event, ns).toString());
 		}        
 	}
 	

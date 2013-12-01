@@ -16,11 +16,15 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
 @SuppressWarnings("all")
 public class EnumArtifactFactory extends AbstractSource implements ArtifactFactory<EnumObject> {
+  private String artifactName;
+  
   public Class<? extends EnumObject> getModelType() {
     return EnumObject.class;
   }
   
   public void init(final ArtifactFactoryConfig config) {
+    String _artifact = config.getArtifact();
+    this.artifactName = _artifact;
   }
   
   public boolean isIncremental() {
@@ -38,7 +42,7 @@ public class EnumArtifactFactory extends AbstractSource implements ArtifactFacto
     String filename = (_replace + ".java");
     CharSequence _create = this.create(enu, ns);
     String _string = _create.toString();
-    GeneratedArtifact _generatedArtifact = new GeneratedArtifact("Enum", filename, _string);
+    GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _string);
     return _generatedArtifact;
   }
   

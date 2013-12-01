@@ -10,12 +10,14 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact
 
 class ValueObjectArtifactFactory extends AbstractSource implements ArtifactFactory<ValueObject> {
 	
+	String artifactName;
+	
 	override getModelType() {
 		typeof(ValueObject)
 	}
 
 	override init(ArtifactFactoryConfig config) {
-		// Not used
+		artifactName = config.getArtifact()
 	}
 
 	override isIncremental() {
@@ -25,7 +27,7 @@ class ValueObjectArtifactFactory extends AbstractSource implements ArtifactFacto
 	override create(ValueObject valueObject) throws GenerateException {
 		val Namespace ns = valueObject.eContainer() as Namespace;
         val String filename = (ns.getName() + "." + valueObject.getName()).replace('.', '/') + ".java";
-		return new GeneratedArtifact("ValueObject", filename, create(valueObject, ns).toString());
+		return new GeneratedArtifact(artifactName, filename, create(valueObject, ns).toString());
 	}
 	
 	def create(ValueObject vo, Namespace ns) {

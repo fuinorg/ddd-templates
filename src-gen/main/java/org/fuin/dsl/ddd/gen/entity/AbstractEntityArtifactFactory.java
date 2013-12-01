@@ -15,11 +15,15 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
 @SuppressWarnings("all")
 public class AbstractEntityArtifactFactory extends AbstractSource implements ArtifactFactory<Entity> {
+  private String artifactName;
+  
   public Class<? extends Entity> getModelType() {
     return Entity.class;
   }
   
   public void init(final ArtifactFactoryConfig config) {
+    String _artifact = config.getArtifact();
+    this.artifactName = _artifact;
   }
   
   public boolean isIncremental() {
@@ -37,7 +41,7 @@ public class AbstractEntityArtifactFactory extends AbstractSource implements Art
     final String filename = (_replace + ".java");
     CharSequence _create = this.create(entity, ns);
     String _string = _create.toString();
-    GeneratedArtifact _generatedArtifact = new GeneratedArtifact("AbstractEntity", filename, _string);
+    GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _string);
     return _generatedArtifact;
   }
   

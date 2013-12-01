@@ -13,12 +13,14 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact
  */
 class AbstractAggregateArtifactFactory extends AbstractSource implements ArtifactFactory<Aggregate> {
 	
+	String artifactName;
+	
 	override getModelType() {
 		return typeof(Aggregate)
 	}
 	
 	override init(ArtifactFactoryConfig config) {
-		// Not used
+		artifactName = config.getArtifact()
 	}
 	
 	override isIncremental() {
@@ -28,7 +30,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource implements Artifac
 	override create(Aggregate aggregate) throws GenerateException {
         val Namespace ns = aggregate.eContainer() as Namespace;
         val filename = (ns.getName() + ".Abstract" + aggregate.getName()).replace('.', '/') + ".java"
-        return new GeneratedArtifact("AbstractAggregate", filename, create(aggregate, ns).toString());
+        return new GeneratedArtifact(artifactName, filename, create(aggregate, ns).toString());
 	}
 	
 	/**

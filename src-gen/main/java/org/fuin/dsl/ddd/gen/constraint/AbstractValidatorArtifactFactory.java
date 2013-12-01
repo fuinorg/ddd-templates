@@ -17,11 +17,15 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
 @SuppressWarnings("all")
 public class AbstractValidatorArtifactFactory extends AbstractSource implements ArtifactFactory<Constraint> {
+  private String artifactName;
+  
   public Class<? extends Constraint> getModelType() {
     return Constraint.class;
   }
   
   public void init(final ArtifactFactoryConfig config) {
+    String _artifact = config.getArtifact();
+    this.artifactName = _artifact;
   }
   
   public boolean isIncremental() {
@@ -41,7 +45,7 @@ public class AbstractValidatorArtifactFactory extends AbstractSource implements 
       ".java");
     CharSequence _create = this.create(constraint, ns);
     String _string = _create.toString();
-    GeneratedArtifact _generatedArtifact = new GeneratedArtifact("AbstractValidator", filename, _string);
+    GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _string);
     return _generatedArtifact;
   }
   

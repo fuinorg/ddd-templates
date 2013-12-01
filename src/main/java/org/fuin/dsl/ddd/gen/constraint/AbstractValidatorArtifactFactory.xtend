@@ -15,12 +15,14 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact
 
 class AbstractValidatorArtifactFactory extends AbstractSource implements ArtifactFactory<Constraint> {
 
+	String artifactName;
+
 	override getModelType() {
 		typeof(Constraint)
 	}
 
 	override init(ArtifactFactoryConfig config) {
-		// Not used
+		artifactName = config.getArtifact()
 	}
 
 	override isIncremental() {
@@ -31,7 +33,7 @@ class AbstractValidatorArtifactFactory extends AbstractSource implements Artifac
 		val Namespace ns = constraint.eContainer() as Namespace;
 		val String filename = (ns.getName() + ".Abstract" + constraint.getName() + "Validator").replace('.', '/') +
 			".java";
-		return new GeneratedArtifact("AbstractValidator", filename, create(constraint, ns).toString());
+		return new GeneratedArtifact(artifactName, filename, create(constraint, ns).toString());
 	}
 
 	def create(Constraint c, Namespace ns) {

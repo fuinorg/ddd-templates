@@ -18,11 +18,15 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact;
  */
 @SuppressWarnings("all")
 public class AbstractAggregateArtifactFactory extends AbstractSource implements ArtifactFactory<Aggregate> {
+  private String artifactName;
+  
   public Class<? extends Aggregate> getModelType() {
     return Aggregate.class;
   }
   
   public void init(final ArtifactFactoryConfig config) {
+    String _artifact = config.getArtifact();
+    this.artifactName = _artifact;
   }
   
   public boolean isIncremental() {
@@ -40,7 +44,7 @@ public class AbstractAggregateArtifactFactory extends AbstractSource implements 
     final String filename = (_replace + ".java");
     CharSequence _create = this.create(aggregate, ns);
     String _string = _create.toString();
-    GeneratedArtifact _generatedArtifact = new GeneratedArtifact("AbstractAggregate", filename, _string);
+    GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _string);
     return _generatedArtifact;
   }
   

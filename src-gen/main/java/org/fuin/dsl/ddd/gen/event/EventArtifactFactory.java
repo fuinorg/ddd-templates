@@ -15,11 +15,15 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
 @SuppressWarnings("all")
 public class EventArtifactFactory extends AbstractSource implements ArtifactFactory<Event> {
+  private String artifactName;
+  
   public Class<? extends Event> getModelType() {
     return Event.class;
   }
   
   public void init(final ArtifactFactoryConfig config) {
+    String _artifact = config.getArtifact();
+    this.artifactName = _artifact;
   }
   
   public boolean isIncremental() {
@@ -44,7 +48,7 @@ public class EventArtifactFactory extends AbstractSource implements ArtifactFact
         final String filename = (_replace + ".java");
         CharSequence _create = this.create(event, ns);
         String _string = _create.toString();
-        GeneratedArtifact _generatedArtifact = new GeneratedArtifact("Event", filename, _string);
+        GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _string);
         return _generatedArtifact;
       }
       _xblockexpression = (_xifexpression);
