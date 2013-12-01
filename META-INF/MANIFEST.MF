@@ -1,0 +1,40 @@
+Manifest-Version: 1.0
+Bundle-Description: Xtend based domain-driven design (DDD) code generati
+ on templates for use with SrcGen4J
+Bundle-DocURL: http://www.fuin.org/
+Bundle-License: http://www.fsf.org/licensing/licenses/lgpl.html
+Bundle-ManifestVersion: 2
+Bundle-Name: DDD Templates
+Bundle-SymbolicName: org.fuin.dsl.ddd.templates
+Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
+ ny)
+Bundle-Version: 0.1.0.SNAPSHOT
+Export-Package: org.fuin.dsl.ddd.gen.aggregategen;uses:="org.eclipse.emf
+ .ecore.resource,org.eclipse.xtext.generator,org.fuin.dsl.ddd.domainDriv
+ enDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.dsl.ddd.gen.intf";versio
+ n="0.1.0.SNAPSHOT",org.fuin.dsl.ddd.gen.base;uses:="org.eclipse.emf.eco
+ re,org.fuin.dsl.ddd.domainDrivenDesignDsl";version="0.1.0.SNAPSHOT",org
+ .fuin.dsl.ddd.gen.entitygen;uses:="org.eclipse.emf.ecore.resource,org.e
+ clipse.xtext.generator,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.
+ dsl.ddd.gen.base,org.fuin.dsl.ddd.gen.intf";version="0.1.0.SNAPSHOT",or
+ g.fuin.dsl.ddd.gen.enumgen;uses:="org.eclipse.emf.ecore.resource,org.ec
+ lipse.xtext.generator,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.d
+ sl.ddd.gen.base,org.fuin.dsl.ddd.gen.intf";version="0.1.0.SNAPSHOT",org
+ .fuin.dsl.ddd.gen.eventgen;uses:="org.eclipse.emf.ecore.resource,org.ec
+ lipse.xtext.generator,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.d
+ sl.ddd.gen.base,org.fuin.dsl.ddd.gen.intf";version="0.1.0.SNAPSHOT",org
+ .fuin.dsl.ddd.gen.exceptions;uses:="org.eclipse.emf.ecore.resource,org.
+ eclipse.xtext.generator,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin
+ .dsl.ddd.gen.base,org.fuin.dsl.ddd.gen.intf";version="0.1.0.SNAPSHOT",o
+ rg.fuin.dsl.ddd.gen.intf;uses:="org.eclipse.emf.ecore.resource,org.ecli
+ pse.xtext.generator";version="0.1.0.SNAPSHOT",org.fuin.dsl.ddd.gen.vali
+ datorgen;uses:="org.eclipse.emf.ecore.resource,org.eclipse.xtext.genera
+ tor,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,or
+ g.fuin.dsl.ddd.gen.intf";version="0.1.0.SNAPSHOT",org.fuin.dsl.ddd.gen.
+ vogen;uses:="org.eclipse.emf.ecore.resource,org.eclipse.xtext.generator
+ ,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.f
+ uin.dsl.ddd.gen.intf";version="0.1.0.SNAPSHOT"
+Import-Package: com.google.common.base,com.google.common.collect,org.ecl
+ ipse.emf.common.util,org.eclipse.emf.ecore,org.eclipse.emf.ecore.resour
+ ce,org.eclipse.xtend2.lib,org.eclipse.xtext.generator,org.eclipse.xtext
+ .xbase.lib,org.fuin.dsl.ddd.domainDrivenDesignDsl

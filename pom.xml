@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.fuin</groupId>
+        <artifactId>pom-osgi</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <groupId>org.fuin.dsl.ddd</groupId>
+    <artifactId>ddd-templates</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    
+    <name>DDD Templates</name>
+    <description>Xtend based domain-driven design (DDD) code generation templates for use with SrcGen4J</description>
+    <url>http://www.fuin.org/dsl/ddd-dsl/</url>
+
+    <scm>
+        <url>https://github.com/michael-schnell/ddd-templates/</url>
+        <connection>scm:git:git://github.com/michael-schnell/ddd-templates.git</connection>
+        <developerConnection>scm:git:git@github.com:michael-schnell/ddd-templates.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/michael-schnell/ddd-templates/issues</url>
+    </issueManagement>
+
+
+</project>
