@@ -42,6 +42,10 @@ public abstract class AbstractSource {
    * line.
    */
   public String text(final String str) {
+    boolean _equals = Objects.equal(str, null);
+    if (_equals) {
+      return "";
+    }
     StringBuilder _stringBuilder = new StringBuilder();
     StringBuilder sb = _stringBuilder;
     StringTokenizer _stringTokenizer = new StringTokenizer(str, "\r\n");

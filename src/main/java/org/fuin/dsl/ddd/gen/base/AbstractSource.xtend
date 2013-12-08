@@ -31,6 +31,9 @@ abstract class AbstractSource {
 	 * line.
 	 */
 	def String text(String str) {
+		if (str == null) {
+			return "";
+		}
 		var StringBuilder sb = new StringBuilder();
 		var StringTokenizer tok = new StringTokenizer(str, "\r\n");
 		while (tok.hasMoreTokens) {
