@@ -1,5 +1,6 @@
 package org.fuin.dsl.ddd.gen.constraint;
 
+import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -31,12 +32,17 @@ public class ExceptionArtifactFactory extends AbstractSource implements Artifact
   }
   
   public GeneratedArtifact create(final Constraint constraint) throws GenerateException {
+    String _exception = constraint.getException();
+    boolean _equals = Objects.equal(_exception, null);
+    if (_equals) {
+      return null;
+    }
     EObject _eContainer = constraint.eContainer();
     final Namespace ns = ((Namespace) _eContainer);
     String _name = ns.getName();
     String _plus = (_name + ".");
-    String _exception = constraint.getException();
-    String _plus_1 = (_plus + _exception);
+    String _exception_1 = constraint.getException();
+    String _plus_1 = (_plus + _exception_1);
     String _replace = _plus_1.replace(".", "/");
     final String filename = (_replace + ".java");
     try {

@@ -25,6 +25,10 @@ class AbstractExceptionArtifactFactory extends AbstractSource implements Artifac
 	}
 
 	override create(Constraint constraint) throws GenerateException {
+		if (constraint.getException() == null) {
+			// No exception wanted for this constraint
+			return null;
+		} 
 		val Namespace ns = constraint.eContainer() as Namespace;
 		val String filename = (ns.getName() + ".Abstract" + constraint.getException()).replace('.', '/') + ".java";
 		return new GeneratedArtifact(artifactName, filename, create(constraint, ns).toString().getBytes("UTF-8"));
