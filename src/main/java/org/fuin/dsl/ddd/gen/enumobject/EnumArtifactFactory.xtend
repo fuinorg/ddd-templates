@@ -27,7 +27,7 @@ class EnumArtifactFactory extends AbstractSource implements ArtifactFactory<Enum
 	override create(EnumObject enu) throws GenerateException {
         val Namespace ns = enu.eContainer() as Namespace;
         var String filename = (ns.getName() + "." + enu.getName()).replace('.', '/') + ".java";
-        return new GeneratedArtifact(artifactName, filename, create(enu, ns).toString());
+        return new GeneratedArtifact(artifactName, filename, create(enu, ns).toString().getBytes("UTF-8"));
 	}
 	
 	def create(EnumObject vo, Namespace ns) {

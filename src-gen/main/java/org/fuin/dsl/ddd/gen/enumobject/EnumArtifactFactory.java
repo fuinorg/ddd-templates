@@ -3,6 +3,7 @@ package org.fuin.dsl.ddd.gen.enumobject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumInstance;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal;
@@ -40,10 +41,15 @@ public class EnumArtifactFactory extends AbstractSource implements ArtifactFacto
     String _plus_1 = (_plus + _name_1);
     String _replace = _plus_1.replace(".", "/");
     String filename = (_replace + ".java");
-    CharSequence _create = this.create(enu, ns);
-    String _string = _create.toString();
-    GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _string);
-    return _generatedArtifact;
+    try {
+      CharSequence _create = this.create(enu, ns);
+      String _string = _create.toString();
+      byte[] _bytes = _string.getBytes("UTF-8");
+      GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _bytes);
+      return _generatedArtifact;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public CharSequence create(final EnumObject vo, final Namespace ns) {

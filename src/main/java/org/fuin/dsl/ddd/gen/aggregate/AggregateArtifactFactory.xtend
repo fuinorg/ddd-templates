@@ -26,8 +26,8 @@ class AggregateArtifactFactory extends AbstractSource implements ArtifactFactory
 	
 	override create(Aggregate aggregate) throws GenerateException {
         val Namespace ns = aggregate.eContainer() as Namespace;
-        val String filename = ns.name + '.' + aggregate.name.replace('.', '/') + ".java";
-        return new GeneratedArtifact(artifactName, filename, create(aggregate, ns).toString());
+        val filename = (ns.getName() + "." + aggregate.getName()).replace('.', '/') + ".java"
+        return new GeneratedArtifact(artifactName, filename, create(aggregate, ns).toString().getBytes("UTF-8"));
 	}
 	
 	def create(Aggregate aggregate, Namespace ns) {

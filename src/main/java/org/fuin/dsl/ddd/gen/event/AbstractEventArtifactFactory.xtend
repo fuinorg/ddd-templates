@@ -33,7 +33,7 @@ class AbstractEventArtifactFactory extends AbstractSource implements ArtifactFac
             val AbstractEntity entity = container as AbstractEntity;
             val Namespace ns = entity.eContainer() as Namespace;
             val String filename = (ns.getName() + ".Abstract" + event.getName()).replace('.', '/') + ".java";
-	        return new GeneratedArtifact(artifactName, filename, create(event, ns).toString());
+	        return new GeneratedArtifact(artifactName, filename, create(event, ns).toString().getBytes("UTF-8"));
 		}        
 	}
 	

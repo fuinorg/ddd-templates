@@ -27,7 +27,7 @@ class AbstractValueObjectArtifactFactory extends AbstractSource implements Artif
 	override create(ValueObject valueObject) throws GenerateException {
 		val Namespace ns = valueObject.eContainer() as Namespace;
         val String filename = (ns.getName() + ".Abstract" + valueObject.getName()).replace('.', '/') + ".java";
-		return new GeneratedArtifact(artifactName, filename, create(valueObject, ns).toString());
+		return new GeneratedArtifact(artifactName, filename, create(valueObject, ns).toString().getBytes("UTF-8"));
 	}
 	
 	def create(ValueObject vo, Namespace ns) {

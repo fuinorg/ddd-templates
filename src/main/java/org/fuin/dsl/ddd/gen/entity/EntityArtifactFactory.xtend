@@ -27,7 +27,7 @@ class EntityArtifactFactory extends AbstractSource  implements ArtifactFactory<E
 	override create(Entity entity) throws GenerateException {
         val Namespace ns = entity.eContainer() as Namespace;
         val filename = (ns.getName() + '.' + entity.getName()).replace('.', '/') + ".java";
-        return new GeneratedArtifact(artifactName, filename, create(entity, ns).toString());
+        return new GeneratedArtifact(artifactName, filename, create(entity, ns).toString().getBytes("UTF-8"));
 	}
 	
 	def create(Entity entity, Namespace ns) {

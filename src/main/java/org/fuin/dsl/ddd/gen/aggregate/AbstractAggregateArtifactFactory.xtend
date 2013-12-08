@@ -3,9 +3,9 @@ package org.fuin.dsl.ddd.gen.aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
-import org.fuin.srcgen4j.commons.ArtifactFactory;
-import org.fuin.srcgen4j.commons.GenerateException
+import org.fuin.srcgen4j.commons.ArtifactFactory
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
+import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 
 /**
@@ -30,7 +30,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource implements Artifac
 	override create(Aggregate aggregate) throws GenerateException {
         val Namespace ns = aggregate.eContainer() as Namespace;
         val filename = (ns.getName() + ".Abstract" + aggregate.getName()).replace('.', '/') + ".java"
-        return new GeneratedArtifact(artifactName, filename, create(aggregate, ns).toString());
+        return new GeneratedArtifact(artifactName, filename, create(aggregate, ns).toString().getBytes("UTF-8"));
 	}
 	
 	/**

@@ -3,6 +3,7 @@ package org.fuin.dsl.ddd.gen.aggregate;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
@@ -36,13 +37,18 @@ public class AggregateArtifactFactory extends AbstractSource implements Artifact
     String _name = ns.getName();
     String _plus = (_name + ".");
     String _name_1 = aggregate.getName();
-    String _replace = _name_1.replace(".", "/");
-    String _plus_1 = (_plus + _replace);
-    final String filename = (_plus_1 + ".java");
-    CharSequence _create = this.create(aggregate, ns);
-    String _string = _create.toString();
-    GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _string);
-    return _generatedArtifact;
+    String _plus_1 = (_plus + _name_1);
+    String _replace = _plus_1.replace(".", "/");
+    final String filename = (_replace + ".java");
+    try {
+      CharSequence _create = this.create(aggregate, ns);
+      String _string = _create.toString();
+      byte[] _bytes = _string.getBytes("UTF-8");
+      GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _bytes);
+      return _generatedArtifact;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public CharSequence create(final Aggregate aggregate, final Namespace ns) {

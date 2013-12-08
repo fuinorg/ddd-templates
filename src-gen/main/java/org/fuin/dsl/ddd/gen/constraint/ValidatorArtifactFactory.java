@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintTarget;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
@@ -42,10 +43,15 @@ public class ValidatorArtifactFactory extends AbstractSource implements Artifact
     String _plus_2 = (_plus_1 + "Validator");
     String _replace = _plus_2.replace(".", "/");
     final String filename = (_replace + ".java");
-    CharSequence _create = this.create(constraint, ns);
-    String _string = _create.toString();
-    GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _string);
-    return _generatedArtifact;
+    try {
+      CharSequence _create = this.create(constraint, ns);
+      String _string = _create.toString();
+      byte[] _bytes = _string.getBytes("UTF-8");
+      GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _bytes);
+      return _generatedArtifact;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public CharSequence create(final Constraint c, final Namespace ns) {

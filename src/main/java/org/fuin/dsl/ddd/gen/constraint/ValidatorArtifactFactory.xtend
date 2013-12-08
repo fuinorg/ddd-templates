@@ -32,7 +32,7 @@ class ValidatorArtifactFactory extends AbstractSource implements ArtifactFactory
 	override create(Constraint constraint) throws GenerateException {
 		val Namespace ns = constraint.eContainer() as Namespace;
 		val String filename = (ns.getName() + "." + constraint.getName() + "Validator").replace('.', '/') + ".java";
-		return new GeneratedArtifact(artifactName, filename, create(constraint, ns).toString());
+		return new GeneratedArtifact(artifactName, filename, create(constraint, ns).toString().getBytes("UTF-8"));
 	}
 
 	def create(Constraint c, Namespace ns) {
