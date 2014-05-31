@@ -1,38 +1,27 @@
 package org.fuin.dsl.ddd.gen.enumobject
 
+import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.gen.base.AbstractSource
-import org.fuin.srcgen4j.commons.ArtifactFactory
-import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 
-class EnumArtifactFactory extends AbstractSource implements ArtifactFactory<EnumObject> {
-	
-	String artifactName;
+class EnumArtifactFactory extends AbstractSource<EnumObject> {
 	
 	override getModelType() {
 		typeof(EnumObject)
 	}
 	
-	override init(ArtifactFactoryConfig config) {
-		artifactName = config.getArtifact()
-	}
-	
-	override isIncremental() {
-		true
-	}
-	
 	override create(EnumObject enu) throws GenerateException {
         val Namespace ns = enu.eContainer() as Namespace;
-        var String filename = (ns.getName() + "." + enu.getName()).replace('.', '/') + ".java";
+        val filename = (ns.asPackage + "." + enu.getName()).replace('.', '/') + ".java";
         return new GeneratedArtifact(artifactName, filename, create(enu, ns).toString().getBytes("UTF-8"));
 	}
 	
 	def create(EnumObject vo, Namespace ns) {
 		''' 
-		package «ns.name»;
+		«copyrightHeader»
+		package «ns.asPackage»;
 		
 		«_imports(vo)»
 		
@@ -44,7 +33,7 @@ class EnumArtifactFactory extends AbstractSource implements ArtifactFactory<Enum
 			«in.name»(«_methodCall(vo.variables, in.params)»)
 		«ENDFOR»;
 		
-			«_varsDecl(vo.variables)»
+			«_varsDecl(vo)»
 		
 			private «vo.name»(«_paramsDecl(vo.variables)») {
 				«_paramsAssignment(vo.variables)»

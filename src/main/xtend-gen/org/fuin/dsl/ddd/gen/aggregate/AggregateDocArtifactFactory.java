@@ -9,43 +9,30 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
-import org.fuin.srcgen4j.commons.ArtifactFactory;
-import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
 @SuppressWarnings("all")
-public class AggregateDocArtifactFactory extends AbstractSource implements ArtifactFactory<Aggregate> {
-  private String artifactName;
-  
+public class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
   public Class<? extends Aggregate> getModelType() {
     return Aggregate.class;
   }
   
-  public void init(final ArtifactFactoryConfig config) {
-    String _artifact = config.getArtifact();
-    this.artifactName = _artifact;
-  }
-  
-  public boolean isIncremental() {
-    return true;
-  }
-  
   public GeneratedArtifact create(final Aggregate aggregate) throws GenerateException {
-    EObject _eContainer = aggregate.eContainer();
-    final Namespace ns = ((Namespace) _eContainer);
-    String _name = ns.getName();
-    String _plus = (_name + ".");
-    String _name_1 = aggregate.getName();
-    String _plus_1 = (_plus + _name_1);
-    String _replace = _plus_1.replace(".", "/");
-    final String filename = (_replace + ".html");
     try {
+      EObject _eContainer = aggregate.eContainer();
+      final Namespace ns = ((Namespace) _eContainer);
+      String _asPackage = this.asPackage(ns);
+      String _plus = (_asPackage + ".");
+      String _name = aggregate.getName();
+      String _plus_1 = (_plus + _name);
+      String _replace = _plus_1.replace(".", "/");
+      final String filename = (_replace + ".html");
+      String _artifactName = this.getArtifactName();
       CharSequence _create = this.create(aggregate, ns);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
-      GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _bytes);
-      return _generatedArtifact;
+      return new GeneratedArtifact(_artifactName, filename, _bytes);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -62,11 +49,11 @@ public class AggregateDocArtifactFactory extends AbstractSource implements Artif
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("<title>");
-    String _name = ns.getName();
-    _builder.append(_name, "		");
+    String _asPackage = this.asPackage(ns);
+    _builder.append(_asPackage, "\t\t");
     _builder.append(".");
-    String _name_1 = aggregate.getName();
-    _builder.append(_name_1, "		");
+    String _name = aggregate.getName();
+    _builder.append(_name, "\t\t");
     _builder.append("</title>");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -76,11 +63,11 @@ public class AggregateDocArtifactFactory extends AbstractSource implements Artif
     _builder.append("<body>");
     _builder.newLine();
     _builder.append("\t\t");
-    String _name_2 = ns.getName();
-    _builder.append(_name_2, "		");
+    String _asPackage_1 = this.asPackage(ns);
+    _builder.append(_asPackage_1, "\t\t");
     _builder.append(".");
-    String _name_3 = aggregate.getName();
-    _builder.append(_name_3, "		");
+    String _name_1 = aggregate.getName();
+    _builder.append(_name_1, "\t\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("<table border=\"1\">");
@@ -90,16 +77,16 @@ public class AggregateDocArtifactFactory extends AbstractSource implements Artif
       for(final Variable variable : _variables) {
         _builder.append("\t\t");
         _builder.append("<tr><td>");
-        String _name_4 = variable.getName();
-        _builder.append(_name_4, "		");
+        String _name_2 = variable.getName();
+        _builder.append(_name_2, "\t\t");
         _builder.append("</td><td>");
         Type _type = variable.getType();
-        String _name_5 = _type.getName();
-        _builder.append(_name_5, "		");
+        String _name_3 = _type.getName();
+        _builder.append(_name_3, "\t\t");
         _builder.append("</td><td>");
         String _doc = variable.getDoc();
         String _text = this.text(_doc);
-        _builder.append(_text, "		");
+        _builder.append(_text, "\t\t");
         _builder.append("</td></tr>");
         _builder.newLineIfNotEmpty();
       }

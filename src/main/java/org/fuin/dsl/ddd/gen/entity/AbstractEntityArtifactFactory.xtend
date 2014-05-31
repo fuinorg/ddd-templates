@@ -1,52 +1,83 @@
 package org.fuin.dsl.ddd.gen.entity
 
+import org.fuin.dsl.ddd.gen.base.AbstractSource
+import java.util.List
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.gen.base.AbstractSource
-import org.fuin.srcgen4j.commons.ArtifactFactory
 import org.fuin.srcgen4j.commons.GenerateException
-import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 
-class AbstractEntityArtifactFactory extends AbstractSource implements ArtifactFactory<Entity> {
+class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
-	String artifactName;
-	
 	override getModelType() {
 		typeof(Entity)
 	}
 	
-	override init(ArtifactFactoryConfig config) {
-		artifactName = config.getArtifact()
-	}
-	
-	override isIncremental() {
-		true
-	}
-
 	override create(Entity entity) throws GenerateException {
         val Namespace ns = entity.eContainer() as Namespace;
-        val filename = (ns.getName() + ".Abstract" + entity.getName()).replace('.', '/') + ".java";
+        val filename = (ns.asPackage + ".Abstract" + entity.getName()).replace('.', '/') + ".java";
         return new GeneratedArtifact(artifactName, filename, create(entity, ns).toString().getBytes("UTF-8"));
 	}
 
 	def create(Entity entity, Namespace ns) {
 		''' 
-		package «ns.name»;
+		«copyrightHeader»
+		package «ns.asPackage»;
 		
 		«_imports(entity)»
 		
-		/** «entity.doc.text» */
-		public abstract class Abstract«entity.name» {
+		«_typeDoc(entity)»
+		public abstract class Abstract«entity.name» extends AbstractEntity<«entity.root.idType.name», «entity.root.name», «entity.idType.name»> {
+
+			private «entity.idType.name» id;
+
+			«_varsDecl(entity)»
 		
-			«_varsDecl(entity.variables)»
+			«_constructorsDecl(entity, entity.constructors)»
+		
+			@Override
+			public final EntityType getType() {				
+				return «entity.idType.name».TYPE;
+			}
+		
+			@Override
+			public final «entity.idType.name» getId() {
+				return id;
+			}
 		
 			«_settersGetters("protected final", entity.variables)»
 		
-			«_abstractMethodsDecl(entity.methods)»
+			«_abstractChildEntityLocatorMethods(entity)»
+			
+			«_eventAbstractMethodsDecl(entity)»
 		
-			«_eventAbstractMethodsDecl(entity.methods)»
+		}
+		'''
+	}
+
+	def _constructorsDecl(Entity entity, List<Constructor> constructors) {
+		'''
+		«FOR constructor : constructors»
+		«_constructorDecl(entity, constructor)»
 		
+		«ENDFOR»
+		'''
+	}
+
+	def _constructorDecl(Entity entity, Constructor constructor) {
+		'''
+		/**
+		 * «constructor.doc.text»
+		 *
+		 * @param rootAggregate The root aggregate of this entity.
+		«FOR v : constructor.variables»
+		 * @param «v.name» «v.superDoc» 
+		«ENDFOR»
+		 */
+		public Abstract«entity.name»(@NotNull final «entity.root.name» rootAggregate, «_paramsDecl(constructor.variables)») «_exceptions(constructor.allExceptions)»{
+			super(rootAggregate);
+			«_paramsAssignment(constructor.variables)»	
 		}
 		'''
 	}

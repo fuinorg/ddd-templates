@@ -1,38 +1,35 @@
 package org.fuin.dsl.ddd.gen.constraint
 
+import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.gen.base.AbstractSource
-import org.fuin.srcgen4j.commons.ArtifactFactory
-import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 
-class ValidatorAnnotationArtifactFactory extends AbstractSource implements ArtifactFactory<Constraint> {
-	
-	String artifactName;
+class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 	
 	override getModelType() {
 		typeof(Constraint)
 	}
 
-	override init(ArtifactFactoryConfig config) {
-		artifactName = config.getArtifact()
-	}
-
-	override isIncremental() {
-		true
-	}
-
 	override create(Constraint constraint) throws GenerateException {
+		if (constraint.target == null) {
+			return null;
+		}
 		val Namespace ns = constraint.eContainer() as Namespace;
-        val String filename = (ns.getName() + "." + constraint.getName()).replace('.', '/') + ".java";
+        val filename = (ns.asPackage + "." + "." + constraint.getName()).replace('.', '/') + ".java";
 		return new GeneratedArtifact(artifactName, filename, create(constraint, ns).toString().getBytes("UTF-8"));
+	}
+	
+	def String replaceValidatedValue(String msg) {
+		var String newMsg = msg.replace("${vv_", "${validatedValue.");
+		return newMsg.replace("${vv}", "${validatedValue}");
 	}
 	
 	def create(Constraint c, Namespace ns) { 
 		''' 
-		package «ns.name»;
+		«copyrightHeader»
+		package «ns.asPackage»;
 		
 		import static java.lang.annotation.ElementType.*;
 		import static java.lang.annotation.RetentionPolicy.*;
@@ -44,27 +41,38 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource implements Artif
 		import javax.validation.Constraint;
 		import javax.validation.Payload;
 		
-		/** «c.doc.text» */
-		@Target( { METHOD, FIELD, ANNOTATION_TYPE, PARAMETER })
+		/**
+		 * «c.doc.text»
+		 */
+		@Target({ TYPE, METHOD, FIELD, ANNOTATION_TYPE, PARAMETER })
 		@Retention(RUNTIME)
 		@Constraint(validatedBy = «c.name»Validator.class)
 		@Documented
+		// CHECKSTYLE:OFF:LineLength
 		public @interface «c.name» {
 		
-		    String message() default "«c.message.text»";
-		
+			/** Used to create an error message. */
+		    String message() default "«c.message.replaceValidatedValue»";
+
+			/** Processing groups with which the constraint declaration is associated. */		
 		    Class<?>[] groups() default {};
 		
+			/** Payload with which the the constraint declaration is associated. */
 		    Class<? extends Payload>[] payload() default {};
 		
 			«IF c.variables.size == 1»
+				«c.variables.last.doc»
 				«asJavaPrimitive(c.variables.last)» value();
+				
 			«ELSEIF c.variables.size > 1»
 			«FOR v:c.variables»	
+				«v.doc»
 				«asJavaPrimitive(v)» «v.name»();
+				
 			«ENDFOR»
 			«ENDIF»
 		}
+		//CHECKSTYLE:ON:LineLength
 		'''	
 	}
 	

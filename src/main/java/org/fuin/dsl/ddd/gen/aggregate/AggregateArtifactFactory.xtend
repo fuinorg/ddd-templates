@@ -1,52 +1,63 @@
 package org.fuin.dsl.ddd.gen.aggregate
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
-import org.fuin.srcgen4j.commons.ArtifactFactory
-import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
+import java.util.List
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 
-class AggregateArtifactFactory extends AbstractSource implements ArtifactFactory<Aggregate> {
-
-	String artifactName;
+class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 
 	override getModelType() {
 		return typeof(Aggregate)
 	}
 	
-	override init(ArtifactFactoryConfig config) {
-		artifactName = config.getArtifact()
-	}
-	
-	override isIncremental() {
-		true
-	}
-	
 	override create(Aggregate aggregate) throws GenerateException {
         val Namespace ns = aggregate.eContainer() as Namespace;
-        val filename = (ns.getName() + "." + aggregate.getName()).replace('.', '/') + ".java"
+        val filename = (ns.asPackage + "." + aggregate.getName()).replace('.', '/') + ".java"
         return new GeneratedArtifact(artifactName, filename, create(aggregate, ns).toString().getBytes("UTF-8"));
 	}
 	
 	def create(Aggregate aggregate, Namespace ns) {
 		''' 
-		package «ns.name»;
+		«copyrightHeader» 
+		package «ns.asPackage»;
 		
 		«_imports(aggregate)»
 		
-		/** «aggregate.doc.text» */
-		public class «aggregate.name» extends Abstract«aggregate.name» {
+		«_typeDoc(aggregate)»
+		public final class «aggregate.name» extends Abstract«aggregate.name» {
 		
-			«_constructorsDecl(aggregate, aggregate.constructors)»
+			/**
+			 * Default constructor for loading the aggregate root from history. 
+			 */
+			public «aggregate.name»() {
+				super();
+			}
 		
-			«_methodsDecl(aggregate.methods)»
+			«_constructorsDecl(aggregate)»
 		
-			«_eventMethodsDecl(aggregate.methods)»
+			«_childEntityLocatorMethods(aggregate)»
+			
+			«_methodsDecl(aggregate)»
+		
+			«_eventMethodsDecl(aggregate)»
 		
 		}
 		'''	
+	}
+
+	override _constructorDecl(String internalTypeName, List<Variable> variables, Constraints constraints) {
+		'''
+		«_methodDoc("Constructor with all data.", variables, null)»
+		public «internalTypeName»(«_paramsDecl(variables.nullSafe)») «_exceptions(exceptionList(constraints))»{
+			super();
+			// TODO Implement!
+		}
+		'''
 	}
 	
 }

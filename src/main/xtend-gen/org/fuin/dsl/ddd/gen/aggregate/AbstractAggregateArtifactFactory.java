@@ -5,12 +5,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
-import org.fuin.srcgen4j.commons.ArtifactFactory;
-import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -18,37 +16,26 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact;
  * Generates an abstract aggregate Java class.
  */
 @SuppressWarnings("all")
-public class AbstractAggregateArtifactFactory extends AbstractSource implements ArtifactFactory<Aggregate> {
-  private String artifactName;
-  
+public class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
   public Class<? extends Aggregate> getModelType() {
     return Aggregate.class;
   }
   
-  public void init(final ArtifactFactoryConfig config) {
-    String _artifact = config.getArtifact();
-    this.artifactName = _artifact;
-  }
-  
-  public boolean isIncremental() {
-    return true;
-  }
-  
   public GeneratedArtifact create(final Aggregate aggregate) throws GenerateException {
-    EObject _eContainer = aggregate.eContainer();
-    final Namespace ns = ((Namespace) _eContainer);
-    String _name = ns.getName();
-    String _plus = (_name + ".Abstract");
-    String _name_1 = aggregate.getName();
-    String _plus_1 = (_plus + _name_1);
-    String _replace = _plus_1.replace(".", "/");
-    final String filename = (_replace + ".java");
     try {
+      EObject _eContainer = aggregate.eContainer();
+      final Namespace ns = ((Namespace) _eContainer);
+      String _asPackage = this.asPackage(ns);
+      String _plus = (_asPackage + ".Abstract");
+      String _name = aggregate.getName();
+      String _plus_1 = (_plus + _name);
+      String _replace = _plus_1.replace(".", "/");
+      final String filename = (_replace + ".java");
+      String _artifactName = this.getArtifactName();
       CharSequence _create = this.create(aggregate, ns);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
-      GeneratedArtifact _generatedArtifact = new GeneratedArtifact(this.artifactName, filename, _bytes);
-      return _generatedArtifact;
+      return new GeneratedArtifact(_artifactName, filename, _bytes);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -59,9 +46,13 @@ public class AbstractAggregateArtifactFactory extends AbstractSource implements 
    */
   public CharSequence create(final Aggregate aggregate, final Namespace ns) {
     StringConcatenation _builder = new StringConcatenation();
+    String _copyrightHeader = this.getCopyrightHeader();
+    _builder.append(_copyrightHeader, "");
+    _builder.append(" ");
+    _builder.newLineIfNotEmpty();
     _builder.append("package ");
-    String _name = ns.getName();
-    _builder.append(_name, "");
+    String _asPackage = this.asPackage(ns);
+    _builder.append(_asPackage, "");
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -69,40 +60,116 @@ public class AbstractAggregateArtifactFactory extends AbstractSource implements 
     _builder.append(__imports, "");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("/** ");
-    String _doc = aggregate.getDoc();
-    String _text = this.text(_doc);
-    _builder.append(_text, "");
-    _builder.append(" */");
+    CharSequence __typeDoc = this._typeDoc(aggregate);
+    _builder.append(__typeDoc, "");
     _builder.newLineIfNotEmpty();
     _builder.append("public abstract class Abstract");
-    String _name_1 = aggregate.getName();
+    String _name = aggregate.getName();
+    _builder.append(_name, "");
+    _builder.append(" extends AbstractAggregateRoot<");
+    AggregateId _idType = aggregate.getIdType();
+    String _name_1 = _idType.getName();
     _builder.append(_name_1, "");
-    _builder.append(" {");
+    _builder.append("> {");
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@NotNull");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("private ");
+    AggregateId _idType_1 = aggregate.getIdType();
+    String _name_2 = _idType_1.getName();
+    _builder.append(_name_2, "\t");
+    _builder.append(" id;");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("\t");
+    CharSequence __varsDecl = this._varsDecl(aggregate);
+    _builder.append(__varsDecl, "\t");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public final EntityType getType() {\t\t\t\t");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("return ");
+    AggregateId _idType_2 = aggregate.getIdType();
+    String _name_3 = _idType_2.getName();
+    _builder.append(_name_3, "\t\t");
+    _builder.append(".TYPE;");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("@Override");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("public final ");
+    AggregateId _idType_3 = aggregate.getIdType();
+    String _name_4 = _idType_3.getName();
+    _builder.append(_name_4, "\t");
+    _builder.append(" getId() {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("return id;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("/**");
+    _builder.newLine();
+    _builder.append("\t ");
+    _builder.append("* Sets the aggregate identifier.");
+    _builder.newLine();
+    _builder.append("\t ");
+    _builder.append("* ");
+    _builder.newLine();
+    _builder.append("\t ");
+    _builder.append("* @param id Unique aggregate identifier.");
+    _builder.newLine();
+    _builder.append("\t ");
+    _builder.append("*/");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("protected final void setId(@NotNull final ");
+    AggregateId _idType_4 = aggregate.getIdType();
+    String _name_5 = _idType_4.getName();
+    _builder.append(_name_5, "\t");
+    _builder.append(" id) {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t");
+    _builder.append("Contract.requireArgNotNull(\"id\", id);");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.append("this.id = id;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
     EList<Variable> _variables = aggregate.getVariables();
-    CharSequence __varsDecl = this._varsDecl(_variables);
-    _builder.append(__varsDecl, "	");
+    CharSequence __settersGetters = this._settersGetters("protected final", _variables);
+    _builder.append(__settersGetters, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    EList<Variable> _variables_1 = aggregate.getVariables();
-    CharSequence __settersGetters = this._settersGetters("protected final", _variables_1);
-    _builder.append(__settersGetters, "	");
+    CharSequence __abstractChildEntityLocatorMethods = this._abstractChildEntityLocatorMethods(aggregate);
+    _builder.append(__abstractChildEntityLocatorMethods, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    EList<Method> _methods = aggregate.getMethods();
-    CharSequence __abstractMethodsDecl = this._abstractMethodsDecl(_methods);
-    _builder.append(__abstractMethodsDecl, "	");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("\t");
-    EList<Method> _methods_1 = aggregate.getMethods();
-    CharSequence __eventAbstractMethodsDecl = this._eventAbstractMethodsDecl(_methods_1);
-    _builder.append(__eventAbstractMethodsDecl, "	");
+    CharSequence __eventAbstractMethodsDecl = this._eventAbstractMethodsDecl(aggregate);
+    _builder.append(__eventAbstractMethodsDecl, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("}");
