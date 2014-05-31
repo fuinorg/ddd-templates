@@ -86,14 +86,10 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			    @Inject
 			    private EntityIdFactory entityIdFactory;
 			
-			    /**
-			     * Default constructor.
-			     */
-			    public «ctx.toFirstUpper»EventRegistry() {
-					super();
+				@PostConstruct
+				protected void init() {
 					
-					final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter();
-					entityIdPathConverter.setFactory(entityIdFactory);
+					final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(entityIdFactory);
 					final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { entityIdPathConverter };
 					
 					registry = new SimpleDeserializerRegistry();
@@ -101,18 +97,18 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 					«FOR event : events»
 					registry.add(new XmlDeSerializer(«event.name».EVENT_TYPE.asBaseType(), adapters, «event.name».class));
 					«ENDFOR»
-			  }
 			
-			    @Override
+				}
+			
+			  	@Override
 			    public Serializer getSerializer(final String type) {
 					return registry.getSerializer(type);
-			  }
+			  	}
 			
 			    @Override
-			    public Deserializer getDeserializer(final String type,
-			     final int version, final String mimeType, final Charset encoding) {
+			    public Deserializer getDeserializer(final String type, final int version, final String mimeType, final Charset encoding) {
 					return registry.getDeserializer(type, version, mimeType, encoding);
-			  }
+			  	}
 			
 			}
 			
