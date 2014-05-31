@@ -154,7 +154,7 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("private final SimpleDeserializerRegistry registry;");
+    _builder.append("private SimpleDeserializerRegistry registry;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");

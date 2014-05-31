@@ -81,7 +81,7 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			public class «ctx.toFirstUpper»EventRegistry implements DeserializerRegistry,
 				SerializerRegistry {
 			
-			    private final SimpleDeserializerRegistry registry;
+			    private SimpleDeserializerRegistry registry;
 			
 			    @Inject
 			    private EntityIdFactory entityIdFactory;
