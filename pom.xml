@@ -16,17 +16,17 @@
 
 	<name>DDD Templates</name>
 	<description>Xtend based domain-driven design (DDD) code generation templates for use with SrcGen4J</description>
-	<url>http://www.fuin.org/dsl/ddd-dsl/</url>
+	<url>http://www.fuin.org/ddd-templates/</url>
 
 	<scm>
-		<url>https://github.com/michael-schnell/ddd-templates/</url>
-		<connection>scm:git:git://github.com/michael-schnell/ddd-templates.git</connection>
-		<developerConnection>scm:git:git@github.com:michael-schnell/ddd-templates.git</developerConnection>
+		<url>https://github.com/fuinorg/ddd-templates/</url>
+		<connection>scm:git:git://github.com/fuinorg/ddd-templates.git</connection>
+		<developerConnection>scm:git:git@github.com:fuinorg/ddd-templates.git</developerConnection>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/michael-schnell/ddd-templates/issues</url>
+		<url>https://github.com/fuinorg/ddd-templates/issues</url>
 	</issueManagement>
 
 	<dependencies>
@@ -72,6 +72,16 @@
 	<build>
 
 		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
