@@ -105,23 +105,9 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     _builder.newLine();
     _builder.append("import java.nio.charset.Charset;");
     _builder.newLine();
-    _builder.newLine();
     _builder.append("import javax.enterprise.context.ApplicationScoped;");
     _builder.newLine();
-    _builder.newLine();
-    _builder.append("import org.fuin.ddd4j.ddd.Deserializer;");
-    _builder.newLine();
-    _builder.append("import org.fuin.ddd4j.ddd.DeserializerRegistry;");
-    _builder.newLine();
-    _builder.append("import org.fuin.ddd4j.ddd.EventMetaData;");
-    _builder.newLine();
-    _builder.append("import org.fuin.ddd4j.ddd.Serializer;");
-    _builder.newLine();
-    _builder.append("import org.fuin.ddd4j.ddd.SerializerRegistry;");
-    _builder.newLine();
-    _builder.append("import org.fuin.ddd4j.ddd.SimpleDeserializerRegistry;");
-    _builder.newLine();
-    _builder.append("import org.fuin.ddd4j.ddd.XmlDeSerializer;");
+    _builder.append("import org.fuin.ddd4j.ddd.*;");
     _builder.newLine();
     _builder.newLine();
     {
@@ -147,14 +133,11 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     _builder.append("public class ");
     String _firstUpper = StringExtensions.toFirstUpper(ctx);
     _builder.append(_firstUpper, "");
-    _builder.append("EventRegistry implements DeserializerRegistry,");
+    _builder.append("EventRegistry implements SerializerDeserializerRegistry {");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("SerializerRegistry {");
-    _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
-    _builder.append("private SimpleDeserializerRegistry registry;");
+    _builder.append("private SerializerDeserializerRegistry registry;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("    ");
@@ -181,10 +164,10 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     _builder.append("\t\t");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("registry = new SimpleDeserializerRegistry();");
+    _builder.append("registry = new SerializerDeserializerRegistry();");
     _builder.newLine();
     _builder.append("\t\t");
-    _builder.append("registry.add(new XmlDeSerializer(\"EventMetaData\", EventMetaData.class));");
+    _builder.append("registry.add(new XmlDeSerializer(\"BasicEventMetaData\", BasicEventMetaData.class));");
     _builder.newLine();
     {
       for(final Event event_1 : events) {

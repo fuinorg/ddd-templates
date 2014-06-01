@@ -59,16 +59,8 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			package «pkg»;
 			
 			import java.nio.charset.Charset;
-			
 			import javax.enterprise.context.ApplicationScoped;
-			
-			import org.fuin.ddd4j.ddd.Deserializer;
-			import org.fuin.ddd4j.ddd.DeserializerRegistry;
-			import org.fuin.ddd4j.ddd.EventMetaData;
-			import org.fuin.ddd4j.ddd.Serializer;
-			import org.fuin.ddd4j.ddd.SerializerRegistry;
-			import org.fuin.ddd4j.ddd.SimpleDeserializerRegistry;
-			import org.fuin.ddd4j.ddd.XmlDeSerializer;
+			import org.fuin.ddd4j.ddd.*;
 			
 			«FOR event : events»
 				import «event.fqn»;
@@ -78,10 +70,9 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			 * Contains a list of all events defined by this package.
 			 */
 			@ApplicationScoped
-			public class «ctx.toFirstUpper»EventRegistry implements DeserializerRegistry,
-				SerializerRegistry {
+			public class «ctx.toFirstUpper»EventRegistry implements SerializerDeserializerRegistry {
 			
-			    private SimpleDeserializerRegistry registry;
+			    private SerializerDeserializerRegistry registry;
 			
 			    @Inject
 			    private EntityIdFactory entityIdFactory;
@@ -92,8 +83,8 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 					final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(entityIdFactory);
 					final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { entityIdPathConverter };
 					
-					registry = new SimpleDeserializerRegistry();
-					registry.add(new XmlDeSerializer("EventMetaData", EventMetaData.class));
+					registry = new SerializerDeserializerRegistry();
+					registry.add(new XmlDeSerializer("BasicEventMetaData", BasicEventMetaData.class));
 					«FOR event : events»
 					registry.add(new XmlDeSerializer(«event.name».EVENT_TYPE.asBaseType(), adapters, «event.name».class));
 					«ENDFOR»
