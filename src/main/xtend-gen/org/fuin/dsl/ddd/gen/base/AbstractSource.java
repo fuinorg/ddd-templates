@@ -2674,14 +2674,18 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _xifexpression;
   }
   
-  public CharSequence _uniquelyNumberedIntf(final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {
+  public CharSequence _uniquelyNumberedException(final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {
     CharSequence _xifexpression = null;
     int _cid = ex.getCid();
     boolean _greaterThan = (_cid > 0);
     if (_greaterThan) {
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append("implements UniquelyNumbered ");
+      _builder.append("UniquelyNumberedException");
       _xifexpression = _builder;
+    } else {
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("Exception");
+      _xifexpression = _builder_1;
     }
     return _xifexpression;
   }

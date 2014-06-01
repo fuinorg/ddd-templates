@@ -69,14 +69,14 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
     _builder.append("public final class ");
     String _name = ex.getName();
     _builder.append(_name, "");
-    _builder.append(" extends Exception ");
-    CharSequence __uniquelyNumberedIntf = this._uniquelyNumberedIntf(ex);
-    _builder.append(__uniquelyNumberedIntf, "");
-    _builder.append("{");
+    _builder.append(" extends ");
+    CharSequence __uniquelyNumberedException = this._uniquelyNumberedException(ex);
+    _builder.append(__uniquelyNumberedException, "");
+    _builder.append(" {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("private static final long serialVersionUID = 1L;");
+    _builder.append("private static final long serialVersionUID = 1000L;");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
@@ -121,9 +121,21 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
     _builder.append(") {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    _builder.append("super(KeyValue.replace(\"");
+    _builder.append("super(");
+    {
+      int _cid = ex.getCid();
+      boolean _greaterThan = (_cid > 0);
+      if (_greaterThan) {
+        int _cid_1 = ex.getCid();
+        _builder.append(_cid_1, "\t\t");
+        _builder.append(", ");
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t\t    ");
+    _builder.append("KeyValue.replace(\"");
     String _message = ex.getMessage();
-    _builder.append(_message, "\t\t");
+    _builder.append(_message, "\t\t    ");
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
     {
@@ -163,29 +175,6 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
     CharSequence __getters = this._getters("public final", _variables_4);
     _builder.append(__getters, "\t");
     _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    {
-      int _cid = ex.getCid();
-      boolean _greaterThan = (_cid > 0);
-      if (_greaterThan) {
-        _builder.append("\t");
-        _builder.append("@Override");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("public final long getUniqueNumber() {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("\t");
-        _builder.append("return ");
-        int _cid_1 = ex.getCid();
-        _builder.append(_cid_1, "\t\t");
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("}");
-        _builder.newLine();
-      }
-    }
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

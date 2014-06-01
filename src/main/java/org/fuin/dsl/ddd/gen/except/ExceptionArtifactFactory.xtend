@@ -29,9 +29,9 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 			/**
 			 * «ex.doc.text»
 			 */
-			public final class «ex.name» extends Exception «_uniquelyNumberedIntf(ex)»{
+			public final class «ex.name» extends «_uniquelyNumberedException(ex)» {
 			
-				private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1000L;
 			
 				«_varsDecl(ex)»
 			
@@ -43,7 +43,8 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 				«ENDFOR»
 				*/
 				public «ex.name»(«_paramsDecl(ex.variables)») {
-					super(KeyValue.replace("«ex.message»",
+					super(«IF ex.cid > 0»«ex.cid», «ENDIF»
+					    KeyValue.replace("«ex.message»",
 						«FOR v : ex.variables SEPARATOR ','»
 							new KeyValue("«v.name»", «v.name»)
 						«ENDFOR» 
@@ -52,13 +53,6 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 				}
 			
 				«_getters("public final", ex.variables)»
-			
-				«IF ex.cid > 0»
-				@Override
-				public final long getUniqueNumber() {
-					return «ex.cid»;
-				}
-				«ENDIF»
 			
 			}
 		'''

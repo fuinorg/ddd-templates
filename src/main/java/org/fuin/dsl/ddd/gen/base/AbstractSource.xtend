@@ -1171,9 +1171,11 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		}
 	}
 
-	def _uniquelyNumberedIntf(Exception ex) {
+	def _uniquelyNumberedException(Exception ex) {
 		if (ex.cid > 0) {
-			'''implements UniquelyNumbered '''
+			'''UniquelyNumberedException'''
+		} else {
+			'''Exception'''
 		}
 
 	}
