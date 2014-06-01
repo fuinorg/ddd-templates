@@ -9,31 +9,31 @@ Bundle-SymbolicName: org.fuin.dsl.ddd.templates
 Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
  ny)
 Bundle-Version: 0.1.0.SNAPSHOT
-Export-Package: org.fuin.dsl.ddd.gen.event;uses:="org.fuin.dsl.ddd.domai
- nDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons";v
- ersion="0.1.0.SNAPSHOT",org.fuin.dsl.ddd.gen.resourceset;uses:="org.ecl
- ipse.emf.ecore.resource,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin
- .dsl.ddd.gen.base,org.fuin.srcgen4j.commons";version="0.1.0.SNAPSHOT",o
- rg.fuin.dsl.ddd.gen.base;uses:="org.eclipse.emf.ecore,org.fuin.dsl.ddd.
- domainDrivenDesignDsl,org.fuin.srcgen4j.commons";version="0.1.0.SNAPSHO
- T",org.fuin.dsl.ddd.gen.aggregateid;uses:="org.fuin.dsl.ddd.domainDrive
- nDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons";version
- ="0.1.0.SNAPSHOT",org.fuin.dsl.ddd.gen.entity;uses:="org.fuin.dsl.ddd.d
- omainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.common
- s";version="0.1.0.SNAPSHOT",org.fuin.dsl.ddd.gen.valueobject;uses:="org
+Export-Package: org.fuin.dsl.ddd.gen.event;version="0.1.0.SNAPSHOT";uses
+ :="org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org
+ .fuin.srcgen4j.commons",org.fuin.dsl.ddd.gen.resourceset;version="0.1.0
+ .SNAPSHOT";uses:="org.eclipse.emf.ecore.resource,org.fuin.dsl.ddd.domai
+ nDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons",o
+ rg.fuin.dsl.ddd.gen.base;version="0.1.0.SNAPSHOT";uses:="org.eclipse.em
+ f.ecore,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.srcgen4j.common
+ s",org.fuin.dsl.ddd.gen.aggregateid;version="0.1.0.SNAPSHOT";uses:="org
  .fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.
- srcgen4j.commons";version="0.1.0.SNAPSHOT",org.fuin.dsl.ddd.gen.entityi
- d;uses:="org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.ba
- se,org.fuin.srcgen4j.commons";version="0.1.0.SNAPSHOT",org.fuin.dsl.ddd
- .gen.except;uses:="org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.
- ddd.gen.base,org.fuin.srcgen4j.commons";version="0.1.0.SNAPSHOT",org.fu
- in.dsl.ddd.gen.aggregate;uses:="org.fuin.dsl.ddd.domainDrivenDesignDsl,
- org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons";version="0.1.0.SNA
- PSHOT",org.fuin.dsl.ddd.gen.constraint;uses:="org.fuin.dsl.ddd.domainDr
- ivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons";vers
- ion="0.1.0.SNAPSHOT",org.fuin.dsl.ddd.gen.enumobject;uses:="org.fuin.ds
- l.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j
- .commons";version="0.1.0.SNAPSHOT"
+ srcgen4j.commons",org.fuin.dsl.ddd.gen.entity;version="0.1.0.SNAPSHOT";
+ uses:="org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base
+ ,org.fuin.srcgen4j.commons",org.fuin.dsl.ddd.gen.valueobject;version="0
+ .1.0.SNAPSHOT";uses:="org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.d
+ sl.ddd.gen.base,org.fuin.srcgen4j.commons",org.fuin.dsl.ddd.gen.entityi
+ d;version="0.1.0.SNAPSHOT";uses:="org.fuin.dsl.ddd.domainDrivenDesignDs
+ l,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons",org.fuin.dsl.ddd
+ .gen.except;version="0.1.0.SNAPSHOT";uses:="org.fuin.dsl.ddd.domainDriv
+ enDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons",org.fu
+ in.dsl.ddd.gen.aggregate;version="0.1.0.SNAPSHOT";uses:="org.fuin.dsl.d
+ dd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.co
+ mmons",org.fuin.dsl.ddd.gen.constraint;version="0.1.0.SNAPSHOT";uses:="
+ org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fu
+ in.srcgen4j.commons",org.fuin.dsl.ddd.gen.enumobject;version="0.1.0.SNA
+ PSHOT";uses:="org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.g
+ en.base,org.fuin.srcgen4j.commons"
 Import-Package: com.google.common.base;version="[14.0,15)",com.google.co
  mmon.collect;version="[14.0,15)",org.eclipse.emf.common.util,org.eclips
  e.emf.ecore,org.eclipse.emf.ecore.resource,org.eclipse.xtend2.lib,org.e
