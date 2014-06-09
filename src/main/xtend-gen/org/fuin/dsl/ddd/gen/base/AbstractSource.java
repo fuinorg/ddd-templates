@@ -1054,18 +1054,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _setters(final CodeSnippetContext ctx, final String visibility, final List<Variable> vars) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      for(final Variable variable : vars) {
-        SrcSetter _srcSetter = new SrcSetter(ctx, visibility, variable);
-        _builder.append(_srcSetter, "");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    return _builder;
-  }
-  
   public CharSequence _exceptions(final List<String> exceptions) {
     CharSequence _xblockexpression = null;
     {

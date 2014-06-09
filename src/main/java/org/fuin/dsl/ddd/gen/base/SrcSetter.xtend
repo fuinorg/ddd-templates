@@ -21,8 +21,10 @@ class SrcSetter implements CodeSnippet {
 		this.ctx = ctx
 		this.visibility = visibility
 		this.variable = variable
-		ctx.requiresImport("javax.validation.constraints.NotNull")
-		ctx.requiresImport("org.fuin.objects4j.common.Contract")
+		if (variable.nullable == null) {
+			ctx.requiresImport("javax.validation.constraints.NotNull")
+			ctx.requiresImport("org.fuin.objects4j.common.Contract")		
+		}
 		if (variable.multiplicity != null) {
 			ctx.requiresImport("java.util.List")
 		}

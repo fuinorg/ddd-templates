@@ -6,7 +6,7 @@ import org.fuin.dsl.ddd.gen.base.Utils;
 import org.junit.Test;
 
 @SuppressWarnings("all")
-public class DDDTemplatesExtensionsTest {
+public class UtilsTest {
   @Test
   public void testSeparated() {
     String _separated = Utils.separated(",", null);

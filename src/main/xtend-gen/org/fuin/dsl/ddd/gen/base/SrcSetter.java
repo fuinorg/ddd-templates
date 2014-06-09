@@ -25,8 +25,12 @@ public class SrcSetter implements CodeSnippet {
     this.ctx = ctx;
     this.visibility = visibility;
     this.variable = variable;
-    ctx.requiresImport("javax.validation.constraints.NotNull");
-    ctx.requiresImport("org.fuin.objects4j.common.Contract");
+    String _nullable = variable.getNullable();
+    boolean _equals = Objects.equal(_nullable, null);
+    if (_equals) {
+      ctx.requiresImport("javax.validation.constraints.NotNull");
+      ctx.requiresImport("org.fuin.objects4j.common.Contract");
+    }
     String _multiplicity = variable.getMultiplicity();
     boolean _notEquals = (!Objects.equal(_multiplicity, null));
     if (_notEquals) {

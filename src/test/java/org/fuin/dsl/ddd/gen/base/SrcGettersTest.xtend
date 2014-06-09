@@ -19,7 +19,7 @@ import static org.fest.assertions.Assertions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
-class SrcGetterTest {
+class SrcGettersTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser

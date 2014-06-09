@@ -4,7 +4,7 @@ import org.junit.Test
 
 import static org.fest.assertions.Assertions.*
 
-class DDDTemplatesExtensionsTest {
+class UtilsTest {
 	
 	@Test
 	def void testSeparated() {

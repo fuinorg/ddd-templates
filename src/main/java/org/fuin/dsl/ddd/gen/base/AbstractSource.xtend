@@ -428,14 +428,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def _setters(CodeSnippetContext ctx, String visibility, List<Variable> vars) {
-		'''	
-			«FOR variable : vars»
-				«new SrcSetter(ctx, visibility, variable)»
-			«ENDFOR»
-		'''
-	}
-
 	def _exceptions(List<String> exceptions) {
 		if ((exceptions == null) || (exceptions.size == 0)) {
 			return ""
