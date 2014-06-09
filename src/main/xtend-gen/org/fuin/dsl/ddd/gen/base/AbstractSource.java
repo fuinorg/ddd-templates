@@ -1058,17 +1058,12 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     StringConcatenation _builder = new StringConcatenation();
     {
       for(final Variable variable : vars) {
-        String __setter = this._setter(ctx, visibility, variable);
-        _builder.append(__setter, "");
+        SrcSetter _srcSetter = new SrcSetter(ctx, visibility, variable);
+        _builder.append(_srcSetter, "");
         _builder.newLineIfNotEmpty();
       }
     }
     return _builder;
-  }
-  
-  public String _setter(final CodeSnippetContext ctx, final String visibility, final Variable variable) {
-    SrcSetter _srcSetter = new SrcSetter(ctx, visibility, variable);
-    return _srcSetter.toString();
   }
   
   public CharSequence _exceptions(final List<String> exceptions) {

@@ -81,7 +81,7 @@ class SrcGetterTest {
 				}
 			''')
 		assertThat(ctx.references).containsOnly("ctx.types.String")
-		assertThat(ctx.imports).containsOnly("org.fuin.objects4j.common.NeverNull", "java.lang.String")
+		assertThat(ctx.imports).containsOnly("org.fuin.objects4j.common.NeverNull", "java.util.List", "java.lang.String")
 
 	}
 
