@@ -112,7 +112,7 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
-    CharSequence __constructorsDecl = this._constructorsDecl(vo);
+    CharSequence __constructorsDecl = this._constructorsDecl(ctx, vo);
     _builder.append(__constructorsDecl, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");

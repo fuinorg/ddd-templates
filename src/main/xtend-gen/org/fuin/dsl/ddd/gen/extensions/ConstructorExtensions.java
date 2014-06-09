@@ -15,13 +15,13 @@ import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
  */
 @SuppressWarnings("all")
 public class ConstructorExtensions {
-  public static List<String> allExceptions(final Constructor constructor) {
-    List<String> list = new ArrayList<String>();
+  public static List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> allExceptions(final Constructor constructor) {
+    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> list = new ArrayList<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception>();
     Constraints _constraints = constructor.getConstraints();
     boolean _notEquals = (!Objects.equal(_constraints, null));
     if (_notEquals) {
       Constraints _constraints_1 = constructor.getConstraints();
-      List<String> _exceptionList = ConstraintsExtensions.exceptionList(_constraints_1);
+      List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(_constraints_1);
       list.addAll(_exceptionList);
     }
     return list;

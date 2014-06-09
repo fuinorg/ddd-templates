@@ -2,6 +2,7 @@ package org.fuin.dsl.ddd.gen.aggregate;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -10,10 +11,17 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.base.SrcImports;
+import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
+import org.fuin.dsl.ddd.gen.base.Utils;
+import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 
 @SuppressWarnings("all")
 public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
@@ -23,16 +31,23 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
   
   public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
+      final String className = aggregate.getName();
       EObject _eContainer = aggregate.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
-      String _asPackage = this.asPackage(ns);
-      String _plus = (_asPackage + ".");
+      final String pkg = this.asPackage(ns);
       String _name = aggregate.getName();
-      String _plus_1 = (_plus + _name);
-      String _replace = _plus_1.replace(".", "/");
+      final String fqn = ((pkg + ".") + _name);
+      String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
+      final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
+      String _uniqueName = AbstractElementExtensions.uniqueName(aggregate);
+      refReg.putReference(_uniqueName, fqn);
+      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+      this.addImports(ctx);
+      this.addReferences(ctx, aggregate);
+      ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
-      CharSequence _create = this.create(aggregate, ns);
+      CharSequence _create = this.create(ctx, aggregate, pkg, className);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);
@@ -41,31 +56,39 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     }
   }
   
-  public CharSequence create(final Aggregate aggregate, final Namespace ns) {
+  public Object addImports(final CodeSnippetContext ctx) {
+    return null;
+  }
+  
+  public void addReferences(final CodeSnippetContext ctx, final Aggregate aggregate) {
+    String _uniqueAbstractName = AbstractElementExtensions.uniqueAbstractName(aggregate);
+    ctx.requiresReference(_uniqueAbstractName);
+  }
+  
+  public CharSequence create(final SimpleCodeSnippetContext ctx, final Aggregate aggregate, final String pkg, final String className) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyrightHeader = this.getCopyrightHeader();
     _builder.append(_copyrightHeader, "");
     _builder.append(" ");
     _builder.newLineIfNotEmpty();
     _builder.append("package ");
-    String _asPackage = this.asPackage(ns);
-    _builder.append(_asPackage, "");
+    _builder.append(pkg, "");
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    CharSequence __imports = this._imports(aggregate);
-    _builder.append(__imports, "");
+    Set<String> _imports = ctx.getImports();
+    SrcImports _srcImports = new SrcImports(_imports);
+    _builder.append(_srcImports, "");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     CharSequence __typeDoc = this._typeDoc(aggregate);
     _builder.append(__typeDoc, "");
     _builder.newLineIfNotEmpty();
     _builder.append("public final class ");
+    _builder.append(className, "");
+    _builder.append(" extends Abstract");
     String _name = aggregate.getName();
     _builder.append(_name, "");
-    _builder.append(" extends Abstract");
-    String _name_1 = aggregate.getName();
-    _builder.append(_name_1, "");
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -80,8 +103,8 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _name_2 = aggregate.getName();
-    _builder.append(_name_2, "\t");
+    String _name_1 = aggregate.getName();
+    _builder.append(_name_1, "\t");
     _builder.append("() {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -92,7 +115,7 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
-    CharSequence __constructorsDecl = this._constructorsDecl(aggregate);
+    CharSequence __constructorsDecl = this._constructorsDecl(ctx, aggregate);
     _builder.append(__constructorsDecl, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -103,7 +126,7 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    CharSequence __methodsDecl = this._methodsDecl(aggregate);
+    CharSequence __methodsDecl = this._methodsDecl(ctx, aggregate);
     _builder.append(__methodsDecl, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -117,7 +140,7 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     return _builder;
   }
   
-  public CharSequence _constructorDecl(final String internalTypeName, final List<Variable> variables, final Constraints constraints) {
+  public CharSequence _constructorDecl(final CodeSnippetContext ctx, final String internalTypeName, final List<Variable> variables, final Constraints constraints) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence __methodDoc = this._methodDoc("Constructor with all data.", variables, null);
     _builder.append(__methodDoc, "");
@@ -129,9 +152,9 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     CharSequence __paramsDecl = this._paramsDecl(_nullSafe);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
-    List<String> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
-    CharSequence __exceptions = this._exceptions(_exceptionList);
-    _builder.append(__exceptions, "");
+    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
+    SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _exceptionList);
+    _builder.append(_srcThrowsExceptions, "");
     _builder.append("{");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");

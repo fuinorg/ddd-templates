@@ -74,7 +74,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 			
 				«_optionalDeserializationConstructor(id)»
 			
-				«_constructorsDecl(id)»
+				«_constructorsDecl(ctx, id)»
 			
 				«new SrcGetters(ctx, "public final", id.variables)»
 			

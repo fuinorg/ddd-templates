@@ -80,8 +80,8 @@ public class MethodExtensions {
     return list;
   }
   
-  public static List<String> allExceptions(final Method method) {
-    List<String> list = new ArrayList<String>();
+  public static List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> allExceptions(final Method method) {
+    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> list = new ArrayList<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception>();
     boolean _and = false;
     Method _refMethod = method.getRefMethod();
     boolean _notEquals = (!Objects.equal(_refMethod, null));
@@ -94,14 +94,14 @@ public class MethodExtensions {
     }
     if (_and) {
       Method _refMethod_2 = method.getRefMethod();
-      List<String> _allExceptions = MethodExtensions.allExceptions(_refMethod_2);
+      List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = MethodExtensions.allExceptions(_refMethod_2);
       list.addAll(_allExceptions);
     }
     Constraints _constraints = method.getConstraints();
     boolean _notEquals_2 = (!Objects.equal(_constraints, null));
     if (_notEquals_2) {
       Constraints _constraints_1 = method.getConstraints();
-      List<String> _exceptionList = ConstraintsExtensions.exceptionList(_constraints_1);
+      List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(_constraints_1);
       list.addAll(_exceptionList);
     }
     return list;

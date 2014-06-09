@@ -11,20 +11,19 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
 
 @SuppressWarnings("all")
 public class ConstraintsExtensions {
-  public static List<String> exceptionList(final Constraints constraints) {
+  public static List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptionList(final Constraints constraints) {
     boolean _equals = Objects.equal(constraints, null);
     if (_equals) {
-      return Collections.<String>emptyList();
+      return Collections.<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception>emptyList();
     }
-    List<String> list = new ArrayList<String>();
+    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> list = new ArrayList<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception>();
     EList<ConstraintCall> _calls = constraints.getCalls();
     for (final ConstraintCall call : _calls) {
       Constraint _constraint = call.getConstraint();
       boolean _notEquals = (!Objects.equal(_constraint, null));
       if (_notEquals) {
         Constraint _constraint_1 = call.getConstraint();
-        org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception = _constraint_1.getException();
-        String exception = _exception.getName();
+        org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception exception = _constraint_1.getException();
         boolean _notEquals_1 = (!Objects.equal(exception, null));
         if (_notEquals_1) {
           list.add(exception);

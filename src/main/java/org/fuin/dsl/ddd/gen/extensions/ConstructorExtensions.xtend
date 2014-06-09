@@ -5,6 +5,7 @@ import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
 
@@ -13,8 +14,8 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
  */
 class ConstructorExtensions {
 
-	def static List<String> allExceptions(Constructor constructor) {
-		var List<String> list = new ArrayList<String>();
+	def static List<Exception> allExceptions(Constructor constructor) {
+		var List<Exception> list = new ArrayList<Exception>();
 		if (constructor.constraints != null) {
 			list.addAll(constructor.constraints.exceptionList);
 		}

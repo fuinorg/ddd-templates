@@ -9,6 +9,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcImports
 import org.fuin.dsl.ddd.gen.base.SrcSetters
+import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -19,7 +20,6 @@ import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
@@ -37,7 +37,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
-		refReg.putReference(separated(".", entity.context.name, entity.namespace.name, className), fqn)
+		refReg.putReference(entity.uniqueAbstractName, fqn)
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
 		ctx.addImports
@@ -72,7 +72,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 			
 				«_varsDecl(entity)»
 			
-				«_constructorsDecl(entity, entity.constructors)»
+				«_constructorsDecl(ctx, entity, entity.constructors)»
 			
 				@Override
 				public final EntityType getType() {				
@@ -94,16 +94,16 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 		'''
 	}
 
-	def _constructorsDecl(Entity entity, List<Constructor> constructors) {
+	def _constructorsDecl(CodeSnippetContext ctx, Entity entity, List<Constructor> constructors) {
 		'''
 			«FOR constructor : constructors»
-				«_constructorDecl(entity, constructor)»
+				«_constructorDecl(ctx, entity, constructor)»
 				
 			«ENDFOR»
 		'''
 	}
 
-	def _constructorDecl(Entity entity, Constructor constructor) {
+	def _constructorDecl(CodeSnippetContext ctx, Entity entity, Constructor constructor) {
 		'''
 			/**
 			 * «constructor.doc.text»
@@ -113,8 +113,8 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 				* @param «v.name» «v.superDoc» 
 			«ENDFOR»
 			 */
-			public Abstract«entity.name»(@NotNull final «entity.root.name» rootAggregate, «_paramsDecl(constructor.variables)») «_exceptions(
-				constructor.allExceptions)»{
+			public Abstract«entity.name»(@NotNull final «entity.root.name» rootAggregate, «_paramsDecl(constructor.variables)») «new SrcThrowsExceptions(
+				ctx, constructor.allExceptions)»{
 				super(rootAggregate);
 				«_paramsAssignment(constructor.variables)»	
 			}

@@ -38,6 +38,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
+import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
@@ -49,6 +50,7 @@ import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
 
 @SuppressWarnings("all")
 public abstract class AbstractSource<T extends Object> implements ArtifactFactory<T> {
@@ -709,7 +711,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return null;
   }
   
-  public CharSequence _constructorsDecl(final InternalType internalType) {
+  public CharSequence _constructorsDecl(final CodeSnippetContext ctx, final InternalType internalType) {
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<Constructor> _constructors = internalType.getConstructors();
@@ -718,7 +720,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
         String _name = internalType.getName();
         EList<Variable> _variables = constructor.getVariables();
         Constraints _constraints = constructor.getConstraints();
-        CharSequence __constructorDecl = this._constructorDecl(_name, _variables, _constraints);
+        CharSequence __constructorDecl = this._constructorDecl(ctx, _name, _variables, _constraints);
         _builder.append(__constructorDecl, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
@@ -727,7 +729,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _constructorsDecl(final AbstractVO vo) {
+  public CharSequence _constructorsDecl(final CodeSnippetContext ctx, final AbstractVO vo) {
     CharSequence _xifexpression = null;
     EList<Constructor> _constructors = vo.getConstructors();
     List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
@@ -736,14 +738,14 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     if (_equals) {
       String _name = vo.getName();
       EList<Variable> _variables = vo.getVariables();
-      _xifexpression = this._constructorDecl(_name, _variables, null);
+      _xifexpression = this._constructorDecl(ctx, _name, _variables, null);
     } else {
-      _xifexpression = this._constructorsDecl(((InternalType) vo));
+      _xifexpression = this._constructorsDecl(ctx, ((InternalType) vo));
     }
     return _xifexpression;
   }
   
-  public CharSequence _constructorDecl(final String internalTypeName, final List<Variable> variables, final Constraints constraints) {
+  public CharSequence _constructorDecl(final CodeSnippetContext ctx, final String internalTypeName, final List<Variable> variables, final Constraints constraints) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence __methodDoc = this._methodDoc("Constructor with all data.", variables, null);
     _builder.append(__methodDoc, "");
@@ -755,9 +757,9 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     CharSequence __paramsDecl = this._paramsDecl(_nullSafe);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
-    List<String> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
-    CharSequence __exceptions = this._exceptions(_exceptionList);
-    _builder.append(__exceptions, "");
+    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
+    SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _exceptionList);
+    _builder.append(_srcThrowsExceptions, "");
     _builder.append("{");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -774,13 +776,13 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _methodsDecl(final InternalType internalType) {
+  public CharSequence _methodsDecl(final CodeSnippetContext ctx, final InternalType internalType) {
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<Method> _methods = internalType.getMethods();
       List<Method> _nullSafe = CollectionExtensions.<Method>nullSafe(_methods);
       for(final Method method : _nullSafe) {
-        CharSequence __methodDecl = this._methodDecl(method);
+        CharSequence __methodDecl = this._methodDecl(ctx, method);
         _builder.append(__methodDecl, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
@@ -789,7 +791,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _methodDecl(final Method method) {
+  public CharSequence _methodDecl(final CodeSnippetContext ctx, final Method method) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence __methodDoc = this._methodDoc(method);
     _builder.append(__methodDoc, "");
@@ -802,9 +804,9 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     CharSequence __paramsDecl = this._paramsDecl(_allVariables);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
-    List<String> _allExceptions = MethodExtensions.allExceptions(method);
-    CharSequence __exceptions = this._exceptions(_allExceptions);
-    _builder.append(__exceptions, "");
+    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = MethodExtensions.allExceptions(method);
+    SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _allExceptions);
+    _builder.append(_srcThrowsExceptions, "");
     _builder.append("{");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -1032,39 +1034,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     return _builder;
-  }
-  
-  public CharSequence _exceptions(final List<String> exceptions) {
-    CharSequence _xblockexpression = null;
-    {
-      boolean _or = false;
-      boolean _equals = Objects.equal(exceptions, null);
-      if (_equals) {
-        _or = true;
-      } else {
-        int _size = exceptions.size();
-        boolean _equals_1 = (_size == 0);
-        _or = _equals_1;
-      }
-      if (_or) {
-        return "";
-      }
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("throws ");
-      {
-        boolean _hasElements = false;
-        for(final String ex : exceptions) {
-          if (!_hasElements) {
-            _hasElements = true;
-          } else {
-            _builder.appendImmediate(", ", "");
-          }
-          _builder.append(ex, "");
-        }
-      }
-      _xblockexpression = _builder;
-    }
-    return _xblockexpression;
   }
   
   public CharSequence _eventAbstractMethodsDecl(final AbstractEntity entity) {

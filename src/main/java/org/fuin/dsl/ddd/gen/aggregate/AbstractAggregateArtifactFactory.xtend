@@ -16,7 +16,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 /**
  * Generates an abstract aggregate Java class.
@@ -35,7 +34,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
-		refReg.putReference(separated(".", aggregate.context.name, aggregate.namespace.name, className), fqn)
+		refReg.putReference(aggregate.uniqueAbstractName, fqn)
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
 		ctx.addImports

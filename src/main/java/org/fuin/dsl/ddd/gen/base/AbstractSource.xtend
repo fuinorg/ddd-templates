@@ -309,46 +309,46 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	}
 
-	def _constructorsDecl(InternalType internalType) {
+	def _constructorsDecl(CodeSnippetContext ctx, InternalType internalType) {
 		'''
 			«FOR constructor : internalType.constructors.nullSafe»
-				«_constructorDecl(internalType.name, constructor.variables, constructor.constraints)»
+				«_constructorDecl(ctx, internalType.name, constructor.variables, constructor.constraints)»
 				
 			«ENDFOR»
 		'''
 	}
 
-	def _constructorsDecl(AbstractVO vo) {
+	def _constructorsDecl(CodeSnippetContext ctx, AbstractVO vo) {
 		if (vo.constructors.nullSafe.size == 0) {
-			_constructorDecl(vo.name, vo.variables, null)
+			_constructorDecl(ctx, vo.name, vo.variables, null)
 		} else {
-			_constructorsDecl(vo as InternalType)
+			_constructorsDecl(ctx, vo as InternalType)
 		}
 	}
 
-	def _constructorDecl(String internalTypeName, List<Variable> variables, Constraints constraints) {
+	def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables, Constraints constraints) {
 		'''
 			«_methodDoc("Constructor with all data.", variables, null)»
-			public «internalTypeName»(«_paramsDecl(variables.nullSafe)») «_exceptions(constraints.exceptionList)»{
+			public «internalTypeName»(«_paramsDecl(variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
 				super();
 				«_paramsAssignment(variables.nullSafe)»	
 			}
 		'''
 	}
 
-	def _methodsDecl(InternalType internalType) {
+	def _methodsDecl(CodeSnippetContext ctx, InternalType internalType) {
 		'''
 			«FOR method : internalType.methods.nullSafe»
-				«_methodDecl(method)»
+				«_methodDecl(ctx, method)»
 				
 			«ENDFOR»
 		'''
 	}
 
-	def _methodDecl(Method method) {
+	def _methodDecl(CodeSnippetContext ctx, Method method) {
 		'''
 			«_methodDoc(method)»
-			public final void «method.name»(«_paramsDecl(method.allVariables)») «_exceptions(method.allExceptions)»{
+			public final void «method.name»(«_paramsDecl(method.allVariables)») «new SrcThrowsExceptions(ctx, method.allExceptions)»{
 				// TODO Implement	
 			}
 		'''
@@ -415,13 +415,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''	
 			this.«v.name» = «v.name»;
 		'''
-	}
-
-	def _exceptions(List<String> exceptions) {
-		if ((exceptions == null) || (exceptions.size == 0)) {
-			return ""
-		}
-		'''throws «FOR ex : exceptions SEPARATOR ', '»«ex»«ENDFOR»'''
 	}
 
 	def _eventAbstractMethodsDecl(AbstractEntity entity) {

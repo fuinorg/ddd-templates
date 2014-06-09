@@ -10,7 +10,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement
 class AbstractElementExtensions {
 
 	/**
-	 * Returns the unique name of the abstract element.
+	 * Returns the unique name .
 	 * 
 	 * @param el Element to return a unique name for.
 	 * 
@@ -27,6 +27,26 @@ class AbstractElementExtensions {
 			throw new IllegalArgumentException("argument 'el.namespace' cannot be null")
 		}
 		return separated(".", el.context.name, el.namespace.name, el.name)
+	}
+
+	/**
+	 * Returns the abstract unique name.
+	 * 
+	 * @param el Element to return an abstract unique name for.
+	 * 
+	 * @return Abstract unique name in the context/namespace.
+	 */
+	def static String uniqueAbstractName(AbstractElement el) {
+		if (el == null) {
+			throw new IllegalArgumentException("argument 'el' cannot be null")
+		}
+		if (el.context == null) {
+			throw new IllegalArgumentException("argument 'el.context' cannot be null")
+		}
+		if (el.namespace == null) {
+			throw new IllegalArgumentException("argument 'el.namespace' cannot be null")
+		}
+		return separated(".", el.context.name, el.namespace.name, "Abstract" + el.getName())		
 	}
 
 }

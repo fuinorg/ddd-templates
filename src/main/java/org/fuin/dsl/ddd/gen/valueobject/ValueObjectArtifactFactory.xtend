@@ -62,7 +62,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			
 				«_optionalDeserializationConstructor(vo)»
 			
-				«_constructorsDecl(vo)»
+				«_constructorsDecl(ctx, vo)»
 				
 				«new SrcGetters(ctx, "public final", vo.variables)»
 				

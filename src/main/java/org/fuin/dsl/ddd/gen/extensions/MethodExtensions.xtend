@@ -10,6 +10,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
 
@@ -45,8 +46,8 @@ class MethodExtensions {
 		return list;
 	}
 
-	def static List<String> allExceptions(Method method) {
-		var List<String> list = new ArrayList<String>();
+	def static List<Exception> allExceptions(Method method) {
+		var List<Exception> list = new ArrayList<Exception>();
 		if ((method.refMethod != null) && (method != method.refMethod)) {
 			list.addAll(method.refMethod.allExceptions);
 		}

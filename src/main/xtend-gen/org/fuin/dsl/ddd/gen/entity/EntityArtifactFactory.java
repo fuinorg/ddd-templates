@@ -2,6 +2,7 @@ package org.fuin.dsl.ddd.gen.entity;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -12,11 +13,18 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.base.SrcImports;
+import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
+import org.fuin.dsl.ddd.gen.base.Utils;
+import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 
 @SuppressWarnings("all")
 public class EntityArtifactFactory extends AbstractSource<Entity> {
@@ -26,16 +34,23 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
   
   public GeneratedArtifact create(final Entity entity, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
+      final String className = entity.getName();
       EObject _eContainer = entity.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
-      String _asPackage = this.asPackage(ns);
-      String _plus = (_asPackage + ".");
+      final String pkg = this.asPackage(ns);
       String _name = entity.getName();
-      String _plus_1 = (_plus + _name);
-      String _replace = _plus_1.replace(".", "/");
+      final String fqn = ((pkg + ".") + _name);
+      String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
+      final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
+      String _uniqueName = AbstractElementExtensions.uniqueName(entity);
+      refReg.putReference(_uniqueName, fqn);
+      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+      this.addImports(ctx);
+      this.addReferences(ctx, entity);
+      ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
-      CharSequence _create = this.create(entity, ns);
+      CharSequence _create = this.create(ctx, entity, pkg, className);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);
@@ -44,19 +59,28 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     }
   }
   
-  public CharSequence create(final Entity entity, final Namespace ns) {
+  public Object addImports(final CodeSnippetContext ctx) {
+    return null;
+  }
+  
+  public void addReferences(final CodeSnippetContext ctx, final Entity entity) {
+    String _uniqueAbstractName = AbstractElementExtensions.uniqueAbstractName(entity);
+    ctx.requiresReference(_uniqueAbstractName);
+  }
+  
+  public CharSequence create(final SimpleCodeSnippetContext ctx, final Entity entity, final String pkg, final String className) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyrightHeader = this.getCopyrightHeader();
     _builder.append(_copyrightHeader, "");
     _builder.newLineIfNotEmpty();
     _builder.append("package ");
-    String _asPackage = this.asPackage(ns);
-    _builder.append(_asPackage, "");
+    _builder.append(pkg, "");
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    CharSequence __imports = this._imports(entity);
-    _builder.append(__imports, "");
+    Set<String> _imports = ctx.getImports();
+    SrcImports _srcImports = new SrcImports(_imports);
+    _builder.append(_srcImports, "");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     CharSequence __typeDoc = this._typeDoc(entity);
@@ -73,7 +97,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     _builder.newLine();
     _builder.append("\t");
     EList<Constructor> _constructors = entity.getConstructors();
-    CharSequence __constructorsDecl = this._constructorsDecl(entity, _constructors);
+    CharSequence __constructorsDecl = this._constructorsDecl(ctx, entity, _constructors);
     _builder.append(__constructorsDecl, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -84,7 +108,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    CharSequence __methodsDecl = this._methodsDecl(entity);
+    CharSequence __methodsDecl = this._methodsDecl(ctx, entity);
     _builder.append(__methodsDecl, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -98,11 +122,11 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     return _builder;
   }
   
-  public CharSequence _constructorsDecl(final Entity entity, final List<Constructor> constructors) {
+  public CharSequence _constructorsDecl(final CodeSnippetContext ctx, final Entity entity, final List<Constructor> constructors) {
     StringConcatenation _builder = new StringConcatenation();
     {
       for(final Constructor constructor : constructors) {
-        CharSequence __constructorDecl = this._constructorDecl(entity, constructor);
+        CharSequence __constructorDecl = this._constructorDecl(ctx, entity, constructor);
         _builder.append(__constructorDecl, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
@@ -111,7 +135,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     return _builder;
   }
   
-  public CharSequence _constructorDecl(final Entity entity, final Constructor constructor) {
+  public CharSequence _constructorDecl(final CodeSnippetContext ctx, final Entity entity, final Constructor constructor) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/**");
     _builder.newLine();
@@ -155,9 +179,9 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     CharSequence __paramsDecl = this._paramsDecl(_variables_1);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
-    List<String> _allExceptions = ConstructorExtensions.allExceptions(constructor);
-    CharSequence __exceptions = this._exceptions(_allExceptions);
-    _builder.append(__exceptions, "");
+    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = ConstructorExtensions.allExceptions(constructor);
+    SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _allExceptions);
+    _builder.append(_srcThrowsExceptions, "");
     _builder.append("{");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");

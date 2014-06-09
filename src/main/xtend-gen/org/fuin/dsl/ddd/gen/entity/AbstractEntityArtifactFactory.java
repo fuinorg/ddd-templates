@@ -10,7 +10,6 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
@@ -19,10 +18,10 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
 import org.fuin.dsl.ddd.gen.base.SrcImports;
 import org.fuin.dsl.ddd.gen.base.SrcSetters;
+import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
-import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
@@ -48,12 +47,8 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
-      Context _context = EObjectExtensions.getContext(entity);
-      String _name_1 = _context.getName();
-      Namespace _namespace = EObjectExtensions.getNamespace(entity);
-      String _name_2 = _namespace.getName();
-      String _separated = Utils.separated(".", _name_1, _name_2, className);
-      refReg.putReference(_separated, fqn);
+      String _uniqueAbstractName = AbstractElementExtensions.uniqueAbstractName(entity);
+      refReg.putReference(_uniqueAbstractName, fqn);
       final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
       this.addImports(ctx);
       this.addReferences(ctx, entity);
@@ -130,7 +125,7 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
     _builder.newLine();
     _builder.append("\t");
     EList<Constructor> _constructors = entity.getConstructors();
-    CharSequence __constructorsDecl = this._constructorsDecl(entity, _constructors);
+    CharSequence __constructorsDecl = this._constructorsDecl(ctx, entity, _constructors);
     _builder.append(__constructorsDecl, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -195,11 +190,11 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
     return _builder;
   }
   
-  public CharSequence _constructorsDecl(final Entity entity, final List<Constructor> constructors) {
+  public CharSequence _constructorsDecl(final CodeSnippetContext ctx, final Entity entity, final List<Constructor> constructors) {
     StringConcatenation _builder = new StringConcatenation();
     {
       for(final Constructor constructor : constructors) {
-        CharSequence __constructorDecl = this._constructorDecl(entity, constructor);
+        CharSequence __constructorDecl = this._constructorDecl(ctx, entity, constructor);
         _builder.append(__constructorDecl, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
@@ -208,7 +203,7 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
     return _builder;
   }
   
-  public CharSequence _constructorDecl(final Entity entity, final Constructor constructor) {
+  public CharSequence _constructorDecl(final CodeSnippetContext ctx, final Entity entity, final Constructor constructor) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/**");
     _builder.newLine();
@@ -252,9 +247,9 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
     CharSequence __paramsDecl = this._paramsDecl(_variables_1);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
-    List<String> _allExceptions = ConstructorExtensions.allExceptions(constructor);
-    CharSequence __exceptions = this._exceptions(_allExceptions);
-    _builder.append(__exceptions, "");
+    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = ConstructorExtensions.allExceptions(constructor);
+    SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _allExceptions);
+    _builder.append(_srcThrowsExceptions, "");
     _builder.append("{");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
