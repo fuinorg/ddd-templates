@@ -6,7 +6,9 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcImports
+import org.fuin.dsl.ddd.gen.base.SrcSetters
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -82,8 +84,8 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 					return id;
 				}
 			
-				«_settersGetters(ctx, "protected final", entity.variables)»
-			
+				«new SrcGetters(ctx, "protected final", entity.variables)»				
+				«new SrcSetters(ctx, "protected final", entity.variables)»
 				«_abstractChildEntityLocatorMethods(entity)»
 				
 				«_eventAbstractMethodsDecl(entity)»

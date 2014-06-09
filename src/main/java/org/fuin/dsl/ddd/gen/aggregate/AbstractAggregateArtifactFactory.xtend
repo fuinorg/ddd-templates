@@ -4,7 +4,9 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcImports
+import org.fuin.dsl.ddd.gen.base.SrcSetters
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -13,8 +15,8 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 /**
  * Generates an abstract aggregate Java class.
@@ -93,8 +95,8 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 					this.id = id;
 				}
 				
-				«_settersGetters(ctx, "protected final", aggregate.variables)»
-			
+				«new SrcGetters(ctx, "protected final", aggregate.variables)»				
+				«new SrcSetters(ctx, "protected final", aggregate.variables)»
 				«_abstractChildEntityLocatorMethods(aggregate)»
 			
 				«_eventAbstractMethodsDecl(aggregate)»

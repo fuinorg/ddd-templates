@@ -38,8 +38,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
-import org.fuin.dsl.ddd.gen.base.SrcGetter;
-import org.fuin.dsl.ddd.gen.base.SrcSetter;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
@@ -51,7 +49,6 @@ import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
-import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
 
 @SuppressWarnings("all")
 public abstract class AbstractSource<T extends Object> implements ArtifactFactory<T> {
@@ -1034,23 +1031,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(_name_1, "");
     _builder.append(";");
     _builder.newLineIfNotEmpty();
-    return _builder;
-  }
-  
-  public CharSequence _settersGetters(final CodeSnippetContext ctx, final String visibility, final List<Variable> vars) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      for(final Variable v : vars) {
-        SrcSetter _srcSetter = new SrcSetter(ctx, visibility, v);
-        _builder.append(_srcSetter, "");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-        SrcGetter _srcGetter = new SrcGetter(ctx, visibility, v);
-        _builder.append(_srcGetter, "");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
     return _builder;
   }
   
