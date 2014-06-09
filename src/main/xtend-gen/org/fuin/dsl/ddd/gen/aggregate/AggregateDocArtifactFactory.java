@@ -1,5 +1,6 @@
 package org.fuin.dsl.ddd.gen.aggregate;
 
+import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -9,6 +10,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -18,7 +20,7 @@ public class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
     return Aggregate.class;
   }
   
-  public GeneratedArtifact create(final Aggregate aggregate) throws GenerateException {
+  public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       EObject _eContainer = aggregate.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
@@ -85,7 +87,7 @@ public class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
         _builder.append(_name_3, "\t\t");
         _builder.append("</td><td>");
         String _doc = variable.getDoc();
-        String _text = this.text(_doc);
+        String _text = StringExtensions.text(_doc);
         _builder.append(_text, "\t\t");
         _builder.append("</td></tr>");
         _builder.newLineIfNotEmpty();

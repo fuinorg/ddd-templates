@@ -17,6 +17,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -30,7 +31,7 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     return false;
   }
   
-  public GeneratedArtifact create(final ResourceSet resourceSet) throws GenerateException {
+  public GeneratedArtifact create(final ResourceSet resourceSet, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final Map<String,List<Event>> contextEvents = this.contextEventMap(resourceSet);
       Set<String> _keySet = contextEvents.keySet();
@@ -74,14 +75,14 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     while (_while) {
       {
         final Event event = iter.next();
-        Context _context = this.getContext(event);
+        Context _context = EObjectExtensions.getContext(event);
         String _name = _context.getName();
         List<Event> events = contextEvents.get(_name);
         boolean _equals = Objects.equal(events, null);
         if (_equals) {
           ArrayList<Event> _arrayList = new ArrayList<Event>();
           events = _arrayList;
-          Context _context_1 = this.getContext(event);
+          Context _context_1 = EObjectExtensions.getContext(event);
           String _name_1 = _context_1.getName();
           contextEvents.put(_name_1, events);
         }
@@ -190,13 +191,13 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     _builder.append("  \t");
     _builder.append("@Override");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("  \t ");
     _builder.append("public Serializer getSerializer(final String type) {");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return registry.getSerializer(type);");
     _builder.newLine();
-    _builder.append("  \t");
+    _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -209,7 +210,7 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     _builder.append("\t\t");
     _builder.append("return registry.getDeserializer(type, version, mimeType, encoding);");
     _builder.newLine();
-    _builder.append("  \t");
+    _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

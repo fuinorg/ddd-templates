@@ -1,6 +1,5 @@
 package org.fuin.dsl.ddd.gen.resourceset
 
-import org.fuin.dsl.ddd.gen.base.AbstractSource
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Iterator
@@ -8,8 +7,11 @@ import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId
+import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
+
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 
@@ -21,7 +23,7 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 		false
 	}
 
-	override create(ResourceSet resourceSet) throws GenerateException {
+	override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
 		val Map<String, List<AbstractEntityId>> contextEntityIds = resourceSet.contextEntityIdMap
 
@@ -31,11 +33,12 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 			val List<AbstractEntityId> entityIds = contextEntityIds.get(ctx)
 			val String pkg = getBasePkg() + "." + ctx + "." + getPkg()
 			val filename = (pkg + "." + ctx.toFirstUpper + "EntityIdFactory").replace('.', '/') + ".java";
+
 			// TODO Support multiple generated artifacts for ArtifactFactory
 			return new GeneratedArtifact(artifactName, filename,
 				create(pkg, ctx, entityIds, resourceSet).toString().getBytes("UTF-8"));
 		}
-		
+
 	}
 
 	def contextEntityIdMap(ResourceSet resourceSet) {
@@ -47,55 +50,55 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 			if (entityIds == null) {
 				entityIds = new ArrayList<AbstractEntityId>();
 				contextEntityIds.put(entityId.context.name, entityIds)
-			}			
+			}
 			entityIds.add(entityId)
 		}
 		return contextEntityIds
-	}	
+	}
 
 	def create(String pkg, String ctx, List<AbstractEntityId> entityIds, ResourceSet resourceSet) {
 		''' 
-		«copyrightHeader»
-		package «pkg»;
+			«copyrightHeader»
+			package «pkg»;
+				
+			import java.util.*;
+			import javax.enterprise.context.*;
+			import org.fuin.ddd4j.ddd.*;
 			
-		import java.util.*;
-		import javax.enterprise.context.*;
-		import org.fuin.ddd4j.ddd.*;
-		
-		/**
-		 * Creates entity identifier instanced based on the type.
-		 */
-		@ApplicationScoped
-		public final class «ctx.toFirstUpper»EntityIdFactory implements EntityIdFactory {
-		
-		    private Map<String, SingleEntityIdFactory> map;
-		
-		    /**
-		     * Default constructor.
-		     */
-		    public EmsEntityIdFactory() {
-				super();
-				map = new HashMap<String, SingleEntityIdFactory>();
-				«FOR entityId : entityIds»
+			/**
+			 * Creates entity identifier instanced based on the type.
+			 */
+			@ApplicationScoped
+			public final class «ctx.toFirstUpper»EntityIdFactory implements EntityIdFactory {
+			
+			    private Map<String, SingleEntityIdFactory> map;
+			
+			    /**
+			     * Default constructor.
+			     */
+			    public EmsEntityIdFactory() {
+					super();
+					map = new HashMap<String, SingleEntityIdFactory>();
+					«FOR entityId : entityIds»
 				map.put(«entityId.name».TYPE.asString(), new «entityId.name»Converter());
-				«ENDFOR»
-		    }
-		
-		    @Override
-		    public EntityId createEntityId(final String type, final String id) {
-				final SingleEntityIdFactory factory = map.get(type);
-				if (factory == null) {
-				    throw new IllegalArgumentException("Unknown type: " + type);
-				}
-				return factory.createEntityId(id);
-		    }
-		
-		    @Override
-		    public boolean containsType(final String type) {
-				return map.containsKey(type);
-		    }
-		
-		}
+					«ENDFOR»
+			    }
+			
+			    @Override
+			    public EntityId createEntityId(final String type, final String id) {
+					final SingleEntityIdFactory factory = map.get(type);
+					if (factory == null) {
+			    throw new IllegalArgumentException("Unknown type: " + type);
+					}
+					return factory.createEntityId(id);
+			  }
+			
+			    @Override
+			    public boolean containsType(final String type) {
+					return map.containsKey(type);
+			  }
+			
+			}
 		'''
 	}
 

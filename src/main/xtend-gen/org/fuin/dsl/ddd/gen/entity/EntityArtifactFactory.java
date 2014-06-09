@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.entity;
 
 import java.util.List;
+import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -11,6 +12,9 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
+import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
+import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -20,7 +24,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     return Entity.class;
   }
   
-  public GeneratedArtifact create(final Entity entity) throws GenerateException {
+  public GeneratedArtifact create(final Entity entity, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       EObject _eContainer = entity.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
@@ -114,7 +118,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     _builder.append(" ");
     _builder.append("* ");
     String _doc = constructor.getDoc();
-    String _text = this.text(_doc);
+    String _text = StringExtensions.text(_doc);
     _builder.append(_text, " ");
     _builder.newLineIfNotEmpty();
     _builder.append(" ");
@@ -130,7 +134,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
         String _name = v.getName();
         _builder.append(_name, "");
         _builder.append(" ");
-        String _superDoc = this.superDoc(v);
+        String _superDoc = VariableExtensions.superDoc(v);
         _builder.append(_superDoc, "");
         _builder.append(" ");
         _builder.newLineIfNotEmpty();
@@ -151,7 +155,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     CharSequence __paramsDecl = this._paramsDecl(_variables_1);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
-    List<String> _allExceptions = this.allExceptions(constructor);
+    List<String> _allExceptions = ConstructorExtensions.allExceptions(constructor);
     CharSequence __exceptions = this._exceptions(_allExceptions);
     _builder.append(__exceptions, "");
     _builder.append("{");

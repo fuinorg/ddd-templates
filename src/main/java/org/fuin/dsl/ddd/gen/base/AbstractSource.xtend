@@ -1,28 +1,21 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
-import java.util.Collections
 import java.util.HashSet
 import java.util.List
 import java.util.Map
 import java.util.Set
-import java.util.StringTokenizer
 import org.eclipse.emf.ecore.EObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintTarget
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
@@ -31,12 +24,21 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.StringLiteral
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.commons.ArtifactFactory
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.LiteralExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
@@ -71,31 +73,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 			return ""
 		}
 		return header
-	}
-
-	/**
-	 * Returns the pure doc message without slashes and stars in one line.
-	 * 
-	 * @param str JavaDoc comment. 
-	 * 
-	 * @return Plain single line text.
-	 */
-	def String text(String str) {
-		if (str == null) {
-			return "";
-		}
-		var StringBuilder sb = new StringBuilder();
-		var StringTokenizer tok = new StringTokenizer(str, "\r\n");
-		while (tok.hasMoreTokens) {
-			var String line = tok.nextToken();
-			line = line.replace("/**", "");
-			line = line.replace(" * ", "");
-			line = line.replace("*/", "");
-			sb.append(line);
-			sb.append(" ");
-		}
-		var String result = sb.toString().replace("  ", " ").trim();
-		return result;
 	}
 
 	def Set<String> createImportSet(EObject el) {
@@ -147,20 +124,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def String fqn(AbstractElement el) {
 		var Namespace ns = el.namespace;
 		return ns.asPackage + "." + el.name;
-	}
-
-	def Namespace getNamespace(EObject obj) {
-		if (obj instanceof Namespace) {
-			return obj
-		}
-		return getNamespace(obj.eContainer)
-	}
-
-	def Context getContext(EObject obj) {
-		if (obj instanceof Context) {
-			return obj
-		}
-		return getContext(obj.eContainer)
 	}
 
 	def String asPackage(Namespace ns) {
@@ -228,250 +191,8 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		return name + "[]";
 	}
 
-	def String str(Literal literal) {
-		if (literal instanceof StringLiteral) {
-			return "\"" + literal.value + "\"";
-		}
-		return literal.value;
-	}
-
-	def List<String> exceptionList(Constraints constraints) {
-		if (constraints == null) {
-			return Collections::emptyList;
-		}
-		var List<String> list = new ArrayList<String>();
-		for (call : constraints.calls) {
-			if (call.constraint != null) {
-				var String exception = call.constraint.exception.name;
-				if (exception != null) {
-					list.add(exception);
-				}
-			}
-		}
-		return list;
-	}
-
-	def Variable copyRenamed(Variable v, String name) {
-		var Variable vv = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
-		vv.setName(name);
-		vv.setDoc(v.doc);
-		vv.setNullable(v.nullable);
-		vv.setType(v.type);
-		vv.setMultiplicity(v.multiplicity);
-		vv.setInvariants(v.invariants);
-		vv.setOverridden(v.overridden);
-		return vv;
-	}
-
-	def List<Variable> allVariables(Constraint constr) {
-		var List<Variable> list = new ArrayList<Variable>();
-		if (constr.variables != null) {
-			list.addAll(constr.variables);
-		}
-		var ConstraintTarget target = constr.target;
-		if (target instanceof ExternalType) {
-			var ExternalType et = (target as ExternalType)
-			var Variable vv = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
-			vv.setName("vv");
-			vv.setDoc("/** The validated value. */");
-			vv.setType(et);
-			list.add(vv);
-		} else {
-			var ValueObject vo = (target as ValueObject);
-			if (vo.variables != null) {
-				for (v : vo.variables) {
-					var Variable vv = copyRenamed(v, "vv_" + v.name);
-					list.add(vv);
-				}
-			}
-		}
-		return list;
-	}
-
-	def List<Variable> allVariables(Method method) {
-		var List<Variable> list = new ArrayList<Variable>();
-		if ((method.refMethod != null) && (method != method.refMethod)) {
-			var Variable refVar = createVariableForRef(method.refMethod);
-			if (refVar != null) {
-				list.add(refVar);
-			}
-			list.addAll(method.refMethod.allVariables);
-		}
-		list.addAll(method.variables);
-		return list;
-	}
-
-	def List<String> allExceptions(Method method) {
-		var List<String> list = new ArrayList<String>();
-		if ((method.refMethod != null) && (method != method.refMethod)) {
-			list.addAll(method.refMethod.allExceptions);
-		}
-		if (method.constraints != null) {
-			list.addAll(method.constraints.exceptionList);
-		}
-		return list;
-	}
-
-	def List<String> allExceptions(Constructor constructor) {
-		var List<String> list = new ArrayList<String>();
-		if (constructor.constraints != null) {
-			list.addAll(constructor.constraints.exceptionList);
-		}
-		return list;
-	}
-
-	def Variable createVariableForRef(AbstractMethod method) {
-		if (method.eContainer instanceof AbstractVO) {
-			var AbstractVO vo = method.eContainer as AbstractVO;
-			var Variable v = DomainDrivenDesignDslFactory::eINSTANCE.createVariable();
-			v.setName(vo.name.toFirstLower);
-			v.setType(vo);
-			return v;
-		} else if (method.eContainer instanceof AbstractEntity) {
-			var ExternalType et = DomainDrivenDesignDslFactory::eINSTANCE.createExternalType();
-			et.setName("EntityIdPath");
-			var Variable v = DomainDrivenDesignDslFactory::eINSTANCE.createVariable();
-			v.setName("entityIdPath");
-			v.setType(et);
-			return v;
-		}
-		return null;
-	}
-
-	def Variable first(List<Variable> variables) {
-		if ((variables == null) || (variables.size() == 0)) {
-			return null;
-		}
-		return variables.get(0);
-	}
-
-	def List<Variable> withoutFirst(List<Variable> variables) {
-		var List<Variable> rest = new ArrayList<Variable>();
-		if ((variables != null) && (variables.size() > 0)) {
-			var count = 0;
-			for (Variable v : variables) {
-				if (count > 0) {
-					rest.add(v);
-				}
-				count = count + 1;
-			}
-		}
-		return rest;
-	}
-
-	def AbstractEntityId getEntityIdType(Event event) {
-		var AbstractEntity abstractEntity = (event.eContainer.eContainer as AbstractEntity);
-		if (abstractEntity instanceof Aggregate) {
-			var Aggregate aggregate = (abstractEntity as Aggregate);
-			return aggregate.idType;
-		} else {
-			var Entity entity = (abstractEntity as Entity);
-			return entity.idType;
-		}
-	}
-
-	def toXmlName(String name) {
-		name.replaceAll('(.)(\\p{Upper})', '$1-$2').toLowerCase;
-	}
-
-	def toSqlUpper(String name) {
-		name.replaceAll('(.)(\\p{Upper})', '$1_$2').toUpperCase;
-	}
-
-	def toSqlLower(String name) {
-		name.replaceAll('(.)(\\p{Upper})', '$1_$2').toLowerCase;
-	}
-
-	def toSqlInitials(String name) {
-		if (name == null || name.length == 0) {
-			return name
-		}
-		val sb = new StringBuilder();
-		val lname = toSqlLower(name)
-		for (i : 0 .. lname.length - 1) {
-			val ch = lname.charAt(i)
-			if (i == 0) {
-				sb.append(ch)
-			} else if ((ch.compareTo('_') == 0) && (i < lname.length - 1)) {
-				sb.append('_')
-				sb.append(lname.charAt(i + 1))
-			}
-		}
-		return sb.toString();
-	}
-
-	def String superDoc(Variable variable) {
-		if (variable.doc == null) {
-			variable.type.doc.text
-		} else {
-			return variable.doc.text
-		}
-	}
-
-	def String doc(Type type) {
-		if (type instanceof AbstractEntity) {
-			return (type as AbstractEntity).doc
-		} else if (type instanceof AbstractVO) {
-			return (type as AbstractVO).doc
-		}
-		return type.name;
-	}
-
-	private def Set<Entity> childEntities(AbstractEntity parent) {
-		var Set<Entity> childs = new HashSet<Entity>();
-		for (v : parent.variables) {
-			if (v.type instanceof Entity) {
-				childs.add(v.type as Entity);
-			}
-		}
-		return childs;
-	}
-
-	def <T> List<T> nullSafe(List<T> list) {
-		if (list == null) {
-			return Collections.emptyList;
-		}
-		return list
-	}
-
-	def <K, V> Map<K, V> nullSafe(Map<K, V> map) {
-		if (map == null) {
-			return Collections.emptyMap;
-		}
-		return map
-	}
-
-	def List<AbstractMethod> constructorsAndMethods(AbstractEntity entity) {
-		val List<AbstractMethod> methods = new ArrayList<AbstractMethod>()
-		methods.addAll(entity.constructors)
-		methods.addAll(entity.methods)
-		return methods
-	}
-
-	def List<Constraint> allConstraints(Method method) {
-		val List<Constraint> list = new ArrayList<Constraint>();
-		if ((method.refMethod != null) && (method != method.refMethod)) {
-			list.addAll(method.refMethod.allConstraints);
-		}
-		if (method.constraints != null) {
-			for (ConstraintCall cc : method.constraints.calls) {
-				list.add(cc.constraint);
-			}
-		}
-		return list;
-	}
-
-	def List<Constraint> allConstraints(Constructor constructor) {
-		val List<Constraint> list = new ArrayList<Constraint>();
-		if (constructor.constraints != null) {
-			for (ConstraintCall cc : constructor.constraints.calls) {
-				list.add(cc.constraint);
-			}
-		}
-		return list;
-	}
-
 	// --- Source code fragments (Method names should start with an underscore '_') ---
+
 	def _imports(EObject... elements) {
 		if ((elements == null) || (elements.length == 0)) {
 			return "";
@@ -573,13 +294,13 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		if (vars.size == 0) {
 			return '''@«constraint.name»''';
 		} else if (vars.size == 1) {
-			return '''@«constraint.name»(«str(params.last)»)''';
+			return '''@«constraint.name»(«params.last.str»)''';
 		} else if (vars.size() > 1) {
 			var List<String> list = new ArrayList<String>();
 			var int i = 0;
 			do {
 				var String name = vars.get(i).name;
-				var String value = str(params.get(i));
+				var String value = params.get(i).str;
 				list.add(name + " = " + value);
 				i = i + 1;
 			} while (i < vars.size());
@@ -608,7 +329,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _constructorDecl(String internalTypeName, List<Variable> variables, Constraints constraints) {
 		'''
 			«_methodDoc("Constructor with all data.", variables, null)»
-			public «internalTypeName»(«_paramsDecl(variables.nullSafe)») «_exceptions(exceptionList(constraints))»{
+			public «internalTypeName»(«_paramsDecl(variables.nullSafe)») «_exceptions(constraints.exceptionList)»{
 				super();
 				«_paramsAssignment(variables.nullSafe)»	
 			}
@@ -647,9 +368,9 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		if (vars.size == 0) {
 			return "";
 		} else if (vars.size == 1) {
-			return str(params.last);
+			return params.last.str;
 		} else if (vars.size() > 1) {
-			return '''«FOR p : params SEPARATOR ', '»«str(p)»«ENDFOR»''';
+			return '''«FOR p : params SEPARATOR ', '»«p.str»«ENDFOR»''';
 		}
 	}
 
@@ -696,62 +417,27 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def _settersGetters(String visibility, List<Variable> vars) {
+	def _settersGetters(CodeSnippetContext ctx, String visibility, List<Variable> vars) {
 		'''	
 			«FOR v : vars»
-				«_setter(visibility, v)»
+				«new SrcSetter(ctx, visibility, v)»
 				
-				«_getter(visibility, v)»
+				«new SrcGetter(ctx, visibility, v)»
 				
 			«ENDFOR»
 		'''
 	}
 
-	def _getters(String visibility, List<Variable> vars) {
-		'''	
-			«FOR v : vars»
-				«_getter(visibility, v)»
-			«ENDFOR»
-		'''
-	}
-
-	def _getter(String visibility, Variable v) {
-		'''	
-			/**
-			 * Returns: «v.superDoc.text»
-			 *
-			 * @return Current value.
-			 */
-			 «IF v.nullable == null»@NeverNull«ENDIF»
-			«visibility» «asJavaType(v)» get«v.name.toFirstUpper»() {
-				return «v.name»;
-			}
-		'''
-	}
-
-	def _setters(String visibility, List<Variable> vars) {
+	def _setters(CodeSnippetContext ctx, String visibility, List<Variable> vars) {
 		'''	
 			«FOR variable : vars»
-				«_setter(visibility, variable)»
+				«_setter(ctx, visibility, variable)»
 			«ENDFOR»
 		'''
 	}
 
-	def _setter(String visibility, Variable variable) {
-		'''	
-			/**
-			 * Sets: «variable.doc.text»
-			 *
-			 * @param «variable.name» Value to set.
-			 */
-			«visibility» void set«variable.name.toFirstUpper»(«IF variable.nullable == null»@NotNull «ENDIF»final «asJavaType(
-				variable)» «variable.name») {
-				«IF variable.nullable == null»
-					Contract.requireArgNotNull("«variable.name»", «variable.name»);
-				«ENDIF»
-				this.«variable.name» = «variable.name»;
-			}
-		'''
+	def _setter(CodeSnippetContext ctx, String visibility, Variable variable) {
+		new SrcSetter(ctx, visibility, variable).toString
 	}
 
 	def _exceptions(List<String> exceptions) {
@@ -1019,68 +705,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def String _valueObjectConverterSource(Namespace ns, String voTypeName, String targetTypeName,
-		boolean implementsSingleEntityIdFactory) {
-		'''	
-			«copyrightHeader»
-			package «ns.asPackage»;
-			
-			import javax.enterprise.context.ApplicationScoped;
-			import javax.persistence.AttributeConverter;
-			import javax.persistence.Converter;
-			import org.fuin.objects4j.common.ThreadSafe;
-			import org.fuin.objects4j.vo.AbstractValueObjectConverter;
-			
-			/**
-			 * Converts «voTypeName» from/to «targetTypeName».
-			 */
-			@ThreadSafe
-			@ApplicationScoped
-			@Converter(autoApply = true)
-			public final class «voTypeName»Converter extends
-					AbstractValueObjectConverter<«targetTypeName», «voTypeName»> implements
-					AttributeConverter<«voTypeName», «targetTypeName»>«IF implementsSingleEntityIdFactory», SingleEntityIdFactory«ENDIF» {
-			
-				@Override
-				public Class<«targetTypeName»> getBaseTypeClass() {
-					return «targetTypeName».class;
-				}
-			
-				@Override
-				public final Class<«voTypeName»> getValueObjectClass() {
-					return «voTypeName».class;
-				}
-			
-				@Override
-				public final boolean isValid(final «targetTypeName» value) {
-					return «voTypeName».isValid(value);
-				}
-			
-				@Override
-				public final «voTypeName» toVO(final «targetTypeName» value) {
-					return «voTypeName».valueOf(value);
-				}
-			
-				@Override
-				public final «targetTypeName» fromVO(final «voTypeName» value) {
-					if (value == null) {
-						return null;
-					}
-					return value.asBaseType();
-				}
-			
-			«IF implementsSingleEntityIdFactory»
-				@Override
-				public final EntityId createEntityId(final String id) {
-					return «voTypeName».valueOf(id);
-				}
-			«ENDIF»
-			
-			}
-		'''
-
-	}
-
 	def _xmlRootElement(String name) {
 		'''
 			@XmlRootElement(name = "«name.toXmlName»")
@@ -1161,14 +785,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 			}
 			
 		'''
-	}
-
-	def _get(String objName, Variable v) {
-		if (objName == null) {
-			'''get«v.name.toFirstUpper»()'''
-		} else {
-			'''«objName».get«v.name.toFirstUpper»()'''
-		}
 	}
 
 	def _uniquelyNumberedException(Exception ex) {

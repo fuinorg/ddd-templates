@@ -1,12 +1,25 @@
 package org.fuin.dsl.ddd.gen.event
 
-import org.fuin.dsl.ddd.gen.base.AbstractSource
+import java.util.Map
 import org.eclipse.emf.ecore.EObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
+
+import static org.fuin.dsl.ddd.gen.base.Utils.*
+
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 
 class EventArtifactFactory extends AbstractSource<Event> {
 
@@ -14,32 +27,51 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		typeof(Event)
 	}
 
-	override create(Event event) throws GenerateException {
+	override create(Event event, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 		val EObject method = event.eContainer();
 		val EObject container = method.eContainer();
 		if (container instanceof AbstractEntity) {
 			val AbstractEntity entity = container as AbstractEntity;
+			
+			val className = event.getName()
 			val Namespace ns = entity.eContainer() as Namespace;
-			val filename = (ns.asPackage + "." + event.getName()).replace('.', '/') + ".java";
-			return new GeneratedArtifact(artifactName, filename, create(event, ns).toString().getBytes("UTF-8"));
+			val pkg = ns.asPackage
+			val fqn = pkg + "." + event.getName()
+			val filename = fqn.replace('.', '/') + ".java";
+			val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+			refReg.putReference(event.uniqueName, fqn)
+			
+			val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
+			ctx.addImports
+			ctx.addReferences(event)
+			ctx.resolve(refReg)
+			
+			return new GeneratedArtifact(artifactName, filename, create(ctx, event, pkg, className).toString().getBytes("UTF-8"));
 		}
 	}
 
-	def create(Event event, Namespace ns) {
+	def AbstractEntityId getEntityIdType(Event event) {
+		var AbstractEntity abstractEntity = (event.eContainer.eContainer as AbstractEntity);
+		return abstractEntity.idType
+	}
+	
+	def addImports(CodeSnippetContext ctx) {
+		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
+	}	
+
+	def addReferences(CodeSnippetContext ctx, Event event) {		
+	}
+
+	def create(CodeSnippetContext ctx, Event event, String pkg, String className) {
 		''' 
 			«copyrightHeader»
-			package «ns.asPackage»;
+			package «pkg»;
 			
-			import javax.validation.constraints.*;
-			import javax.xml.bind.annotation.*;
-			import org.fuin.objects4j.common.*;
-			import org.fuin.objects4j.vo.*;
-			import java.io.Serializable;
 			«_imports(event)»
 			
 			/** «event.doc.text» */
 			«_xmlRootElement(event.name)»
-			public final class «event.name» extends AbstractDomainEvent<«event.entityIdType.name»> {
+			public final class «className» extends AbstractDomainEvent<«event.entityIdType.name»> {
 			
 				private static final long serialVersionUID = 1000L;
 			
@@ -73,16 +105,16 @@ class EventArtifactFactory extends AbstractSource<Event> {
 					return EVENT_TYPE;
 				}
 			
-				«_getters("public final", event.variables)»
-
+				«new SrcGetters(ctx, "public final", event.variables)»
+			
 				@Override
 				public final String toString() {
-					return KeyValue.replace("«event.message»",
-						new KeyValue("#entityIdPath", getEntityIdPath())
-						«FOR v : event.variables»
+				return KeyValue.replace("«event.message»",
+					new KeyValue("#entityIdPath", getEntityIdPath())
+					«FOR v : event.variables»
 						, new KeyValue("«v.name»", «v.name»)
-						«ENDFOR»
-					);
+					«ENDFOR»
+				);
 				}
 				
 			}

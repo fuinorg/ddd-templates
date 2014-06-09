@@ -1,11 +1,13 @@
 package org.fuin.dsl.ddd.gen.aggregate;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
@@ -16,12 +18,12 @@ public class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> 
     return Aggregate.class;
   }
   
-  public GeneratedArtifact create(final Aggregate aggregate) throws GenerateException {
+  public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       EObject _eContainer = aggregate.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
       String _name = aggregate.getName();
-      String _sqlLower = this.toSqlLower(_name);
+      String _sqlLower = StringExtensions.toSqlLower(_name);
       String _plus = ("changelog-xxxxx-" + _sqlLower);
       final String filename = (_plus + "_events.xml");
       String _artifactName = this.getArtifactName();
@@ -65,7 +67,7 @@ public class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> 
     _builder.append("\t\t");
     _builder.append("<createTable tableName=\"");
     String _name_1 = aggregate.getName();
-    String _sqlLower = this.toSqlLower(_name_1);
+    String _sqlLower = StringExtensions.toSqlLower(_name_1);
     _builder.append(_sqlLower, "\t\t");
     _builder.append("_events\" remarks=\"Events of aggregate ");
     String _name_2 = aggregate.getName();
@@ -75,7 +77,7 @@ public class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> 
     _builder.append("\t\t\t");
     _builder.append("<column name=\"");
     String _name_3 = aggregate.getName();
-    String _sqlLower_1 = this.toSqlLower(_name_3);
+    String _sqlLower_1 = StringExtensions.toSqlLower(_name_3);
     _builder.append(_sqlLower_1, "\t\t\t");
     _builder.append("_id\" type=\"java.sql.Types.VARCHAR(36)\">");
     _builder.newLineIfNotEmpty();
@@ -103,7 +105,7 @@ public class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> 
     _builder.append("\t\t\t\t\t");
     _builder.append("foreignKeyName=\"fk__");
     String _name_4 = aggregate.getName();
-    String _sqlInitials = this.toSqlInitials(_name_4);
+    String _sqlInitials = StringExtensions.toSqlInitials(_name_4);
     _builder.append(_sqlInitials, "\t\t\t\t\t");
     _builder.append("__events_id\" />");
     _builder.newLineIfNotEmpty();
@@ -117,18 +119,18 @@ public class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> 
     _builder.append("\t\t");
     _builder.append("<addPrimaryKey tableName=\"");
     String _name_5 = aggregate.getName();
-    String _sqlLower_2 = this.toSqlLower(_name_5);
+    String _sqlLower_2 = StringExtensions.toSqlLower(_name_5);
     _builder.append(_sqlLower_2, "\t\t");
     _builder.append("_events\" columnNames=\"");
     String _name_6 = aggregate.getName();
-    String _sqlLower_3 = this.toSqlLower(_name_6);
+    String _sqlLower_3 = StringExtensions.toSqlLower(_name_6);
     _builder.append(_sqlLower_3, "\t\t");
     _builder.append("_id, event_number\"");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
     _builder.append("constraintName=\"pk__");
     String _name_7 = aggregate.getName();
-    String _sqlInitials_1 = this.toSqlInitials(_name_7);
+    String _sqlInitials_1 = StringExtensions.toSqlInitials(_name_7);
     _builder.append(_sqlInitials_1, "\t\t\t");
     _builder.append("_events\" />");
     _builder.newLineIfNotEmpty();
@@ -136,7 +138,7 @@ public class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> 
     _builder.append("\t\t");
     _builder.append("<createTable tableName=\"");
     String _name_8 = aggregate.getName();
-    String _sqlLower_4 = this.toSqlLower(_name_8);
+    String _sqlLower_4 = StringExtensions.toSqlLower(_name_8);
     _builder.append(_sqlLower_4, "\t\t");
     _builder.append("_streams\" remarks=\"");
     String _name_9 = aggregate.getName();
@@ -146,7 +148,7 @@ public class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> 
     _builder.append("\t\t\t");
     _builder.append("<column name=\"");
     String _name_10 = aggregate.getName();
-    String _sqlLower_5 = this.toSqlLower(_name_10);
+    String _sqlLower_5 = StringExtensions.toSqlLower(_name_10);
     _builder.append(_sqlLower_5, "\t\t\t");
     _builder.append("_id\" type=\"java.sql.Types.VARCHAR(36)\">");
     _builder.newLineIfNotEmpty();
@@ -156,7 +158,7 @@ public class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> 
     _builder.append("\t\t\t\t\t");
     _builder.append("primaryKeyName=\"pk__");
     String _name_11 = aggregate.getName();
-    String _sqlInitials_2 = this.toSqlInitials(_name_11);
+    String _sqlInitials_2 = StringExtensions.toSqlInitials(_name_11);
     _builder.append(_sqlInitials_2, "\t\t\t\t\t");
     _builder.append("_streams\" />");
     _builder.newLineIfNotEmpty();

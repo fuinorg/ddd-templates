@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.event;
 
 import java.util.List;
+import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -10,6 +11,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -19,7 +21,7 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
     return Event.class;
   }
   
-  public GeneratedArtifact create(final Event event) throws GenerateException {
+  public GeneratedArtifact create(final Event event, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final EObject method = event.eContainer();
       final EObject container = method.eContainer();
@@ -161,20 +163,20 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
     _builder.append(_name_7, "\t");
     _builder.append(" createTestee() {");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
+    _builder.append("\t");
     _builder.append("final AId aId = null;");
     _builder.newLine();
     {
       EList<Variable> _variables = event.getVariables();
-      List<Variable> _nullSafe = this.<Variable>nullSafe(_variables);
+      List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
       for(final Variable v : _nullSafe) {
-        _builder.append("\t\t");
+        _builder.append("\t");
         _builder.append("final ");
         String _asJavaType = this.asJavaType(v);
-        _builder.append(_asJavaType, "\t\t");
+        _builder.append(_asJavaType, "\t");
         _builder.append(" ");
         String _name_8 = v.getName();
-        _builder.append(_name_8, "\t\t");
+        _builder.append(_name_8, "\t");
         _builder.append(" = null;");
         _builder.newLineIfNotEmpty();
       }
@@ -195,7 +197,7 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("   ");
     _builder.append("protected final XmlAdapter<?, ?>[] createAdapter() {");
     _builder.newLine();
     _builder.append("\t\t");
@@ -204,7 +206,7 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
     _builder.append("\t\t");
     _builder.append("return new XmlAdapter[] { entityIdPathConverter };");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("  ");
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t");

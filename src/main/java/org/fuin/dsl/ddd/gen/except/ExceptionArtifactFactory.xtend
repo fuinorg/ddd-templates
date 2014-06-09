@@ -1,10 +1,23 @@
 package org.fuin.dsl.ddd.gen.except
 
-import org.fuin.dsl.ddd.gen.base.AbstractSource
+import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
+
+import static org.fuin.dsl.ddd.gen.base.Utils.*
+
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcImports
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
@@ -12,24 +25,42 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 		typeof(Exception)
 	}
 
-	override create(Exception ex) throws GenerateException {
+	override create(Exception ex, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+		
+		val className = ex.getName()
 		val Namespace ns = ex.eContainer() as Namespace;
-        val filename = (ns.asPackage + "." + ex.getName()).replace('.', '/') + ".java";
-		return new GeneratedArtifact(artifactName, filename, create(ex, ns).toString().getBytes("UTF-8"));
+		val pkg = ns.asPackage
+		val fqn = pkg + "." + ex.getName()
+		val filename = fqn.replace('.', '/') + ".java";
+		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+		refReg.putReference(ex.uniqueName, fqn)
+		
+		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
+		ctx.addImports
+		ctx.addReferences(ex)
+		ctx.resolve(refReg)
+		
+		return new GeneratedArtifact(artifactName, filename, create(ctx, ex, pkg, className).toString().getBytes("UTF-8"));
 	}
 
-	def create(Exception ex, Namespace ns) {
+	def addImports(CodeSnippetContext ctx) {
+		ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
+	}
+	
+	def addReferences(CodeSnippetContext ctx, Exception ex) {
+	}
+		
+	def create(SimpleCodeSnippetContext ctx, Exception ex, String pkg, String className) {
 		'''
 			«copyrightHeader» 
-			package «ns.asPackage»;
+			package «pkg»;
 			
-			import org.fuin.objects4j.vo.KeyValue;
-			«_imports(ex)»
+			«new SrcImports(ctx.imports)»
 			
 			/**
 			 * «ex.doc.text»
 			 */
-			public final class «ex.name» extends «_uniquelyNumberedException(ex)» {
+			public final class «className» extends «_uniquelyNumberedException(ex)» {
 			
 				private static final long serialVersionUID = 1000L;
 			
@@ -45,14 +76,14 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 				public «ex.name»(«_paramsDecl(ex.variables)») {
 					super(«IF ex.cid > 0»«ex.cid», «ENDIF»
 					    KeyValue.replace("«ex.message»",
-						«FOR v : ex.variables SEPARATOR ','»
-							new KeyValue("«v.name»", «v.name»)
-						«ENDFOR» 
+					«FOR v : ex.variables SEPARATOR ','»
+						new KeyValue("«v.name»", «v.name»)
+					«ENDFOR» 
 					));
 					«_paramsAssignment(ex.variables)»
 				}
 			
-				«_getters("public final", ex.variables)»
+				«new SrcGetters(ctx, "public final", ex.variables)»
 			
 			}
 		'''
@@ -60,10 +91,10 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
 	def _varsDecl(Exception ex) {
 		'''
-		«FOR variable : ex.variables.nullSafe»
-		«_varDecl(variable)»
-		
-		«ENDFOR»
+			«FOR variable : ex.variables.nullSafe»
+				«_varDecl(variable)»
+				
+			«ENDFOR»
 		'''
 	}
 

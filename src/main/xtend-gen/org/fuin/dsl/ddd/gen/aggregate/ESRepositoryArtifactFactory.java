@@ -1,5 +1,6 @@
 package org.fuin.dsl.ddd.gen.aggregate;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -18,7 +19,7 @@ public class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> imple
     return Aggregate.class;
   }
   
-  public GeneratedArtifact create(final Aggregate aggregate) throws GenerateException {
+  public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       EObject _eContainer = aggregate.eContainer();
       final Namespace ns = ((Namespace) _eContainer);

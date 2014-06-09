@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.constraint;
 
 import com.google.common.base.Objects;
+import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -11,6 +12,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintTarget;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -20,7 +22,7 @@ public class ValidatorAnnotationArtifactFactory extends AbstractSource<Constrain
     return Constraint.class;
   }
   
-  public GeneratedArtifact create(final Constraint constraint) throws GenerateException {
+  public GeneratedArtifact create(final Constraint constraint, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       ConstraintTarget _target = constraint.getTarget();
       boolean _equals = Objects.equal(_target, null);
@@ -84,7 +86,7 @@ public class ValidatorAnnotationArtifactFactory extends AbstractSource<Constrain
     _builder.append(" ");
     _builder.append("* ");
     String _doc = c.getDoc();
-    String _text = this.text(_doc);
+    String _text = StringExtensions.text(_doc);
     _builder.append(_text, " ");
     _builder.newLineIfNotEmpty();
     _builder.append(" ");
@@ -112,25 +114,25 @@ public class ValidatorAnnotationArtifactFactory extends AbstractSource<Constrain
     _builder.append("\t");
     _builder.append("/** Used to create an error message. */");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("\t   ");
     _builder.append("String message() default \"");
     String _message = c.getMessage();
     String _replaceValidatedValue = this.replaceValidatedValue(_message);
-    _builder.append(_replaceValidatedValue, "    ");
+    _builder.append(_replaceValidatedValue, "\t   ");
     _builder.append("\";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("/** Processing groups with which the constraint declaration is associated. */\t\t");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("   ");
     _builder.append("Class<?>[] groups() default {};");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("/** Payload with which the the constraint declaration is associated. */");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("\t   ");
     _builder.append("Class<? extends Payload>[] payload() default {};");
     _builder.newLine();
     _builder.newLine();

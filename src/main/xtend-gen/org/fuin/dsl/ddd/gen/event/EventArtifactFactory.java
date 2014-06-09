@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.event;
 
 import java.util.List;
+import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -11,8 +12,17 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.base.SrcGetters;
+import org.fuin.dsl.ddd.gen.base.Utils;
+import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EventExtensions;
+import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
+import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 
 @SuppressWarnings("all")
 public class EventArtifactFactory extends AbstractSource<Event> {
@@ -20,22 +30,29 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     return Event.class;
   }
   
-  public GeneratedArtifact create(final Event event) throws GenerateException {
+  public GeneratedArtifact create(final Event event, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final EObject method = event.eContainer();
       final EObject container = method.eContainer();
       if ((container instanceof AbstractEntity)) {
         final AbstractEntity entity = ((AbstractEntity) container);
+        final String className = event.getName();
         EObject _eContainer = entity.eContainer();
         final Namespace ns = ((Namespace) _eContainer);
-        String _asPackage = this.asPackage(ns);
-        String _plus = (_asPackage + ".");
+        final String pkg = this.asPackage(ns);
         String _name = event.getName();
-        String _plus_1 = (_plus + _name);
-        String _replace = _plus_1.replace(".", "/");
+        final String fqn = ((pkg + ".") + _name);
+        String _replace = fqn.replace(".", "/");
         final String filename = (_replace + ".java");
+        final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
+        String _uniqueName = EventExtensions.uniqueName(event);
+        refReg.putReference(_uniqueName, fqn);
+        final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+        this.addImports(ctx);
+        this.addReferences(ctx, event);
+        ctx.resolve(refReg);
         String _artifactName = this.getArtifactName();
-        CharSequence _create = this.create(event, ns);
+        CharSequence _create = this.create(ctx, event, pkg, className);
         String _string = _create.toString();
         byte[] _bytes = _string.getBytes("UTF-8");
         return new GeneratedArtifact(_artifactName, filename, _bytes);
@@ -46,26 +63,30 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     }
   }
   
-  public CharSequence create(final Event event, final Namespace ns) {
+  public AbstractEntityId getEntityIdType(final Event event) {
+    EObject _eContainer = event.eContainer();
+    EObject _eContainer_1 = _eContainer.eContainer();
+    AbstractEntity abstractEntity = ((AbstractEntity) _eContainer_1);
+    return abstractEntity.getIdType();
+  }
+  
+  public void addImports(final CodeSnippetContext ctx) {
+    ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter");
+  }
+  
+  public Object addReferences(final CodeSnippetContext ctx, final Event event) {
+    return null;
+  }
+  
+  public CharSequence create(final CodeSnippetContext ctx, final Event event, final String pkg, final String className) {
     StringConcatenation _builder = new StringConcatenation();
     String _copyrightHeader = this.getCopyrightHeader();
     _builder.append(_copyrightHeader, "");
     _builder.newLineIfNotEmpty();
     _builder.append("package ");
-    String _asPackage = this.asPackage(ns);
-    _builder.append(_asPackage, "");
+    _builder.append(pkg, "");
     _builder.append(";");
     _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import javax.validation.constraints.*;");
-    _builder.newLine();
-    _builder.append("import javax.xml.bind.annotation.*;");
-    _builder.newLine();
-    _builder.append("import org.fuin.objects4j.common.*;");
-    _builder.newLine();
-    _builder.append("import org.fuin.objects4j.vo.*;");
-    _builder.newLine();
-    _builder.append("import java.io.Serializable;");
     _builder.newLine();
     CharSequence __imports = this._imports(event);
     _builder.append(__imports, "");
@@ -73,7 +94,7 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     _builder.newLine();
     _builder.append("/** ");
     String _doc = event.getDoc();
-    String _text = this.text(_doc);
+    String _text = StringExtensions.text(_doc);
     _builder.append(_text, "");
     _builder.append(" */");
     _builder.newLineIfNotEmpty();
@@ -82,12 +103,11 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     _builder.append(__xmlRootElement, "");
     _builder.newLineIfNotEmpty();
     _builder.append("public final class ");
-    String _name_1 = event.getName();
-    _builder.append(_name_1, "");
+    _builder.append(className, "");
     _builder.append(" extends AbstractDomainEvent<");
     AbstractEntityId _entityIdType = this.getEntityIdType(event);
-    String _name_2 = _entityIdType.getName();
-    _builder.append(_name_2, "");
+    String _name_1 = _entityIdType.getName();
+    _builder.append(_name_1, "");
     _builder.append("> {");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -100,8 +120,8 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public static final EventType EVENT_TYPE = new EventType(\"");
-    String _name_3 = event.getName();
-    _builder.append(_name_3, "\t");
+    String _name_2 = event.getName();
+    _builder.append(_name_2, "\t");
     _builder.append("\");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -122,8 +142,8 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("protected ");
-    String _name_4 = event.getName();
-    _builder.append(_name_4, "\t");
+    String _name_3 = event.getName();
+    _builder.append(_name_3, "\t");
     _builder.append("() {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -140,7 +160,7 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     _builder.append("\t ");
     _builder.append("* ");
     String _doc_1 = event.getDoc();
-    String _text_1 = this.text(_doc_1);
+    String _text_1 = StringExtensions.text(_doc_1);
     _builder.append(_text_1, "\t ");
     _builder.newLineIfNotEmpty();
     _builder.append("\t ");
@@ -154,10 +174,10 @@ public class EventArtifactFactory extends AbstractSource<Event> {
       for(final Variable v : _variables) {
         _builder.append("\t");
         _builder.append("* @param ");
-        String _name_5 = v.getName();
-        _builder.append(_name_5, "\t");
+        String _name_4 = v.getName();
+        _builder.append(_name_4, "\t");
         _builder.append(" ");
-        String _superDoc = this.superDoc(v);
+        String _superDoc = VariableExtensions.superDoc(v);
         _builder.append(_superDoc, "\t");
         _builder.append(" ");
         _builder.newLineIfNotEmpty();
@@ -168,8 +188,8 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public ");
-    String _name_6 = event.getName();
-    _builder.append(_name_6, "\t");
+    String _name_5 = event.getName();
+    _builder.append(_name_5, "\t");
     _builder.append("(@NotNull final EntityIdPath entityIdPath, ");
     EList<Variable> _variables_1 = event.getVariables();
     CharSequence __paramsDecl = this._paramsDecl(_variables_1);
@@ -203,8 +223,8 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     _builder.newLine();
     _builder.append("\t");
     EList<Variable> _variables_3 = event.getVariables();
-    CharSequence __getters = this._getters("public final", _variables_3);
-    _builder.append(__getters, "\t");
+    SrcGetters _srcGetters = new SrcGetters(ctx, "public final", _variables_3);
+    _builder.append(_srcGetters, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t");
@@ -213,30 +233,30 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     _builder.append("\t");
     _builder.append("public final String toString() {");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t");
     _builder.append("return KeyValue.replace(\"");
     String _message = event.getMessage();
-    _builder.append(_message, "\t\t");
+    _builder.append(_message, "\t");
     _builder.append("\",");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
+    _builder.append("\t\t");
     _builder.append("new KeyValue(\"#entityIdPath\", getEntityIdPath())");
     _builder.newLine();
     {
       EList<Variable> _variables_4 = event.getVariables();
       for(final Variable v_1 : _variables_4) {
-        _builder.append("\t\t\t");
+        _builder.append("\t\t");
         _builder.append(", new KeyValue(\"");
-        String _name_7 = v_1.getName();
-        _builder.append(_name_7, "\t\t\t");
+        String _name_6 = v_1.getName();
+        _builder.append(_name_6, "\t\t");
         _builder.append("\", ");
-        String _name_8 = v_1.getName();
-        _builder.append(_name_8, "\t\t\t");
+        String _name_7 = v_1.getName();
+        _builder.append(_name_7, "\t\t");
         _builder.append(")");
         _builder.newLineIfNotEmpty();
       }
     }
-    _builder.append("\t\t");
+    _builder.append("\t");
     _builder.append(");");
     _builder.newLine();
     _builder.append("\t");
@@ -253,7 +273,7 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<Variable> _variables = event.getVariables();
-      List<Variable> _nullSafe = this.<Variable>nullSafe(_variables);
+      List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
       for(final Variable variable : _nullSafe) {
         CharSequence __varDecl = this._varDecl(variable, true);
         _builder.append(__varDecl, "");

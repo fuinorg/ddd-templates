@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.aggregate;
 
 import java.util.List;
+import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -9,6 +10,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
+import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -18,7 +21,7 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     return Aggregate.class;
   }
   
-  public GeneratedArtifact create(final Aggregate aggregate) throws GenerateException {
+  public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       EObject _eContainer = aggregate.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
@@ -122,11 +125,11 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     _builder.append("public ");
     _builder.append(internalTypeName, "");
     _builder.append("(");
-    List<Variable> _nullSafe = this.<Variable>nullSafe(variables);
+    List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
     CharSequence __paramsDecl = this._paramsDecl(_nullSafe);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
-    List<String> _exceptionList = this.exceptionList(constraints);
+    List<String> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
     CharSequence __exceptions = this._exceptions(_exceptionList);
     _builder.append(__exceptions, "");
     _builder.append("{");

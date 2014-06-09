@@ -17,6 +17,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -30,7 +31,7 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     return false;
   }
   
-  public GeneratedArtifact create(final ResourceSet resourceSet) throws GenerateException {
+  public GeneratedArtifact create(final ResourceSet resourceSet, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final Map<String,List<AggregateId>> contextAggregateIds = this.contextAggregateIdMap(resourceSet);
       Set<String> _keySet = contextAggregateIds.keySet();
@@ -74,14 +75,14 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     while (_while) {
       {
         final AggregateId aggregateId = iter.next();
-        Context _context = this.getContext(aggregateId);
+        Context _context = EObjectExtensions.getContext(aggregateId);
         String _name = _context.getName();
         List<AggregateId> aggregateIds = contextEntityIds.get(_name);
         boolean _equals = Objects.equal(aggregateIds, null);
         if (_equals) {
           ArrayList<AggregateId> _arrayList = new ArrayList<AggregateId>();
           aggregateIds = _arrayList;
-          Context _context_1 = this.getContext(aggregateId);
+          Context _context_1 = EObjectExtensions.getContext(aggregateId);
           String _name_1 = _context_1.getName();
           contextEntityIds.put(_name_1, aggregateIds);
         }
@@ -156,13 +157,12 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     _builder.newLine();
     {
       for(final AggregateId aggregateId : aggregateIds) {
-        _builder.append("\t\t");
         _builder.append("map.put(");
         String _name = aggregateId.getName();
-        _builder.append(_name, "\t\t");
+        _builder.append(_name, "");
         _builder.append(".TYPE.asString(), new ");
         String _name_1 = aggregateId.getName();
-        _builder.append(_name_1, "\t\t");
+        _builder.append(_name_1, "");
         _builder.append("StreamFactory());");
         _builder.newLineIfNotEmpty();
       }
@@ -180,7 +180,7 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     _builder.append("\t\t");
     _builder.append("return map.get(streamId.getName()) != null;");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("  ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -196,10 +196,10 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     _builder.append("\t\t");
     _builder.append("if (factory == null) {");
     _builder.newLine();
-    _builder.append("\t\t    ");
+    _builder.append("    ");
     _builder.append("throw new IllegalArgumentException(\"Unknown stream id type: \"");
     _builder.newLine();
-    _builder.append("\t\t\t    ");
+    _builder.append("     ");
     _builder.append("+ streamId);");
     _builder.newLine();
     _builder.append("\t\t");
@@ -208,7 +208,7 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     _builder.append("\t\t");
     _builder.append("return factory.createStream(streamId);");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("  ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

@@ -1,8 +1,9 @@
 package org.fuin.dsl.ddd.gen.aggregate
 
-import org.fuin.dsl.ddd.gen.base.AbstractSource
+import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.srcgen4j.commons.ArtifactFactory
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -13,7 +14,7 @@ class ESJpaEventIdArtifactFactory extends AbstractSource<Aggregate> implements A
 		return typeof(Aggregate)
 	}
 	
-	override create(Aggregate aggregate) throws GenerateException {
+	override create(Aggregate aggregate, Map<String, Object> context, boolean preparationRun) throws GenerateException {
         val Namespace ns = aggregate.eContainer() as Namespace;
         val filename = (ns.asPackage + "." + aggregate.getName()).replace('.', '/') + "EventId.java"
         return new GeneratedArtifact(artifactName, filename, create(aggregate, ns).toString().getBytes("UTF-8"));

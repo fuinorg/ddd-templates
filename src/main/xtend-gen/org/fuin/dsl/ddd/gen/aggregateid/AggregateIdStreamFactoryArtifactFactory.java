@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.aggregateid;
 
 import com.google.common.base.Objects;
+import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -17,7 +18,7 @@ public class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<Aggr
     return AggregateId.class;
   }
   
-  public GeneratedArtifact create(final AggregateId aggregateId) throws GenerateException {
+  public GeneratedArtifact create(final AggregateId aggregateId, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       Aggregate _entity = aggregateId.getEntity();
       boolean _equals = Objects.equal(_entity, null);
@@ -95,7 +96,7 @@ public class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<Aggr
     _builder.append(_name_3, "\t\t");
     _builder.append(".valueOf(id));");
     _builder.newLineIfNotEmpty();
-    _builder.append("    ");
+    _builder.append("  ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -105,13 +106,13 @@ public class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<Aggr
     _builder.append("\t");
     _builder.append("public boolean containsType(final StreamId streamId) {");
     _builder.newLine();
-    _builder.append("\t\t");
+    _builder.append("\t");
     _builder.append("return streamId.getName().equals(");
     String _name_4 = id.getName();
-    _builder.append(_name_4, "\t\t");
+    _builder.append(_name_4, "\t");
     _builder.append(".TYPE.asString());");
     _builder.newLineIfNotEmpty();
-    _builder.append("    ");
+    _builder.append("\t  ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

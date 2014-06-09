@@ -1,12 +1,13 @@
 package org.fuin.dsl.ddd.gen.aggregate;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
@@ -17,7 +18,7 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     return Aggregate.class;
   }
   
-  public GeneratedArtifact create(final Aggregate aggregate) throws GenerateException {
+  public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       EObject _eContainer = aggregate.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
@@ -71,7 +72,7 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.newLine();
     _builder.append("@Table(name = \"");
     String _name_1 = aggregate.getName();
-    String _sqlUpper = this.toSqlUpper(_name_1);
+    String _sqlUpper = StringExtensions.toSqlUpper(_name_1);
     _builder.append(_sqlUpper, "");
     _builder.append("_EVENTS\")");
     _builder.newLineIfNotEmpty();
@@ -97,14 +98,14 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("    ");
     _builder.append("@Column(name = \"");
     String _name_4 = aggregate.getName();
-    String _sqlUpper_1 = this.toSqlUpper(_name_4);
+    String _sqlUpper_1 = StringExtensions.toSqlUpper(_name_4);
     _builder.append(_sqlUpper_1, "    ");
     _builder.append("_ID\")");
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
     _builder.append("private String ");
     String _name_5 = aggregate.getName();
-    String _firstLower = StringExtensions.toFirstLower(_name_5);
+    String _firstLower = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_5);
     _builder.append(_firstLower, "    ");
     _builder.append("Id;");
     _builder.newLineIfNotEmpty();
@@ -163,7 +164,7 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("     ");
     _builder.append("* @param ");
     String _name_8 = aggregate.getName();
-    String _firstLower_1 = StringExtensions.toFirstLower(_name_8);
+    String _firstLower_1 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_8);
     _builder.append(_firstLower_1, "     ");
     _builder.append("Id");
     _builder.newLineIfNotEmpty();
@@ -194,7 +195,7 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append(_name_10, "    ");
     _builder.append("Id ");
     String _name_11 = aggregate.getName();
-    String _firstLower_2 = StringExtensions.toFirstLower(_name_11);
+    String _firstLower_2 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_11);
     _builder.append(_firstLower_2, "    ");
     _builder.append("Id,");
     _builder.newLineIfNotEmpty();
@@ -207,11 +208,11 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("\t\t");
     _builder.append("Contract.requireArgNotNull(\"");
     String _name_12 = aggregate.getName();
-    String _firstLower_3 = StringExtensions.toFirstLower(_name_12);
+    String _firstLower_3 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_12);
     _builder.append(_firstLower_3, "\t\t");
     _builder.append("Id\", ");
     String _name_13 = aggregate.getName();
-    String _firstLower_4 = StringExtensions.toFirstLower(_name_13);
+    String _firstLower_4 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_13);
     _builder.append(_firstLower_4, "\t\t");
     _builder.append("Id);");
     _builder.newLineIfNotEmpty();
@@ -221,11 +222,11 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("\t\t");
     _builder.append("this.");
     String _name_14 = aggregate.getName();
-    String _firstLower_5 = StringExtensions.toFirstLower(_name_14);
+    String _firstLower_5 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_14);
     _builder.append(_firstLower_5, "\t\t");
     _builder.append("Id = ");
     String _name_15 = aggregate.getName();
-    String _firstLower_6 = StringExtensions.toFirstLower(_name_15);
+    String _firstLower_6 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_15);
     _builder.append(_firstLower_6, "\t\t");
     _builder.append("Id.asString();");
     _builder.newLineIfNotEmpty();
@@ -235,7 +236,7 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("\t\t");
     _builder.append("this.id = ");
     String _name_16 = aggregate.getName();
-    String _firstLower_7 = StringExtensions.toFirstLower(_name_16);
+    String _firstLower_7 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_16);
     _builder.append(_firstLower_7, "\t\t");
     _builder.append("Id;");
     _builder.newLineIfNotEmpty();
@@ -267,7 +268,7 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("\t\t");
     _builder.append("return ");
     String _name_18 = aggregate.getName();
-    String _firstLower_8 = StringExtensions.toFirstLower(_name_18);
+    String _firstLower_8 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_18);
     _builder.append(_firstLower_8, "\t\t");
     _builder.append("Id;");
     _builder.newLineIfNotEmpty();
@@ -287,7 +288,7 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("     ");
     _builder.append("* @return Name converted into a ");
     String _name_19 = aggregate.getName();
-    String _firstLower_9 = StringExtensions.toFirstLower(_name_19);
+    String _firstLower_9 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_19);
     _builder.append(_firstLower_9, "     ");
     _builder.append(" ID.");
     _builder.newLineIfNotEmpty();
@@ -309,7 +310,7 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append(_name_21, "\t\t    ");
     _builder.append("Id.valueOf(");
     String _name_22 = aggregate.getName();
-    String _firstLower_10 = StringExtensions.toFirstLower(_name_22);
+    String _firstLower_10 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_22);
     _builder.append(_firstLower_10, "\t\t    ");
     _builder.append("Id);");
     _builder.newLineIfNotEmpty();
@@ -366,11 +367,11 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("\t\t");
     _builder.append("result = prime * result\t+ ((");
     String _name_23 = aggregate.getName();
-    String _firstLower_11 = StringExtensions.toFirstLower(_name_23);
+    String _firstLower_11 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_23);
     _builder.append(_firstLower_11, "\t\t");
     _builder.append("Id == null) ? 0 : ");
     String _name_24 = aggregate.getName();
-    String _firstLower_12 = StringExtensions.toFirstLower(_name_24);
+    String _firstLower_12 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_24);
     _builder.append(_firstLower_12, "\t\t");
     _builder.append("Id.hashCode());");
     _builder.newLineIfNotEmpty();
@@ -419,14 +420,14 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("\t\t");
     _builder.append("if (");
     String _name_27 = aggregate.getName();
-    String _firstLower_13 = StringExtensions.toFirstLower(_name_27);
+    String _firstLower_13 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_27);
     _builder.append(_firstLower_13, "\t\t");
     _builder.append("Id == null) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t    ");
     _builder.append("if (other.");
     String _name_28 = aggregate.getName();
-    String _firstLower_14 = StringExtensions.toFirstLower(_name_28);
+    String _firstLower_14 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_28);
     _builder.append(_firstLower_14, "\t\t    ");
     _builder.append("Id != null)");
     _builder.newLineIfNotEmpty();
@@ -436,11 +437,11 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("\t\t");
     _builder.append("} else if (!");
     String _name_29 = aggregate.getName();
-    String _firstLower_15 = StringExtensions.toFirstLower(_name_29);
+    String _firstLower_15 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_29);
     _builder.append(_firstLower_15, "\t\t");
     _builder.append("Id.equals(other.");
     String _name_30 = aggregate.getName();
-    String _firstLower_16 = StringExtensions.toFirstLower(_name_30);
+    String _firstLower_16 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_30);
     _builder.append(_firstLower_16, "\t\t");
     _builder.append("Id))");
     _builder.newLineIfNotEmpty();
@@ -482,7 +483,7 @@ public class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> impleme
     _builder.append("\t\t");
     _builder.append("return ");
     String _name_31 = aggregate.getName();
-    String _firstLower_17 = StringExtensions.toFirstLower(_name_31);
+    String _firstLower_17 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_31);
     _builder.append(_firstLower_17, "\t\t");
     _builder.append("Id + \"-\" + eventNumber;");
     _builder.newLineIfNotEmpty();

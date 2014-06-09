@@ -1,14 +1,19 @@
 package org.fuin.dsl.ddd.gen.aggregateid;
 
 import com.google.common.base.Objects;
+import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.base.SrcValueObjectConverter;
+import org.fuin.dsl.ddd.gen.base.Utils;
+import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
 
 @SuppressWarnings("all")
 public class AggregateIdConverterArtifactFactory extends AbstractSource<AggregateId> {
@@ -16,28 +21,33 @@ public class AggregateIdConverterArtifactFactory extends AbstractSource<Aggregat
     return AggregateId.class;
   }
   
-  public GeneratedArtifact create(final AggregateId aggregateId) throws GenerateException {
+  public GeneratedArtifact create(final AggregateId aggregateId, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       ExternalType _base = aggregateId.getBase();
       boolean _equals = Objects.equal(_base, null);
       if (_equals) {
         return null;
       }
+      String _name = aggregateId.getName();
+      final String className = (_name + "Converter");
       EObject _eContainer = aggregateId.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
       String _asPackage = this.asPackage(ns);
       String _plus = (_asPackage + ".");
-      String _name = aggregateId.getName();
-      String _plus_1 = (_plus + _name);
-      String _plus_2 = (_plus_1 + "Converter");
-      String _replace = _plus_2.replace(".", "/");
+      final String fqn = (_plus + className);
+      String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
+      final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
+      String _uniqueName = AbstractElementExtensions.uniqueName(aggregateId);
+      String _plus_1 = (_uniqueName + "Converter");
+      refReg.putReference(_plus_1, fqn);
       String _artifactName = this.getArtifactName();
-      String _name_1 = aggregateId.getName();
+      String _copyrightHeader = this.getCopyrightHeader();
+      String _asPackage_1 = this.asPackage(ns);
       ExternalType _base_1 = aggregateId.getBase();
-      String _name_2 = _base_1.getName();
-      String __valueObjectConverterSource = this._valueObjectConverterSource(ns, _name_1, _name_2, true);
-      byte[] _bytes = __valueObjectConverterSource.getBytes("UTF-8");
+      SrcValueObjectConverter _srcValueObjectConverter = new SrcValueObjectConverter(refReg, _copyrightHeader, _asPackage_1, aggregateId, _base_1, true);
+      String _string = _srcValueObjectConverter.toString();
+      byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);

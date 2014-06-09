@@ -17,6 +17,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -30,7 +31,7 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     return false;
   }
   
-  public GeneratedArtifact create(final ResourceSet resourceSet) throws GenerateException {
+  public GeneratedArtifact create(final ResourceSet resourceSet, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final Map<String,List<AbstractEntityId>> contextEntityIds = this.contextEntityIdMap(resourceSet);
       Set<String> _keySet = contextEntityIds.keySet();
@@ -74,14 +75,14 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     while (_while) {
       {
         final AbstractEntityId entityId = iter.next();
-        Context _context = this.getContext(entityId);
+        Context _context = EObjectExtensions.getContext(entityId);
         String _name = _context.getName();
         List<AbstractEntityId> entityIds = contextEntityIds.get(_name);
         boolean _equals = Objects.equal(entityIds, null);
         if (_equals) {
           ArrayList<AbstractEntityId> _arrayList = new ArrayList<AbstractEntityId>();
           entityIds = _arrayList;
-          Context _context_1 = this.getContext(entityId);
+          Context _context_1 = EObjectExtensions.getContext(entityId);
           String _name_1 = _context_1.getName();
           contextEntityIds.put(_name_1, entityIds);
         }
@@ -151,13 +152,12 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     _builder.newLine();
     {
       for(final AbstractEntityId entityId : entityIds) {
-        _builder.append("\t\t");
         _builder.append("map.put(");
         String _name = entityId.getName();
-        _builder.append(_name, "\t\t");
+        _builder.append(_name, "");
         _builder.append(".TYPE.asString(), new ");
         String _name_1 = entityId.getName();
-        _builder.append(_name_1, "\t\t");
+        _builder.append(_name_1, "");
         _builder.append("Converter());");
         _builder.newLineIfNotEmpty();
       }
@@ -178,7 +178,7 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     _builder.append("\t\t");
     _builder.append("if (factory == null) {");
     _builder.newLine();
-    _builder.append("\t\t    ");
+    _builder.append("    ");
     _builder.append("throw new IllegalArgumentException(\"Unknown type: \" + type);");
     _builder.newLine();
     _builder.append("\t\t");
@@ -187,7 +187,7 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     _builder.append("\t\t");
     _builder.append("return factory.createEntityId(id);");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("  ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
@@ -200,7 +200,7 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     _builder.append("\t\t");
     _builder.append("return map.containsKey(type);");
     _builder.newLine();
-    _builder.append("    ");
+    _builder.append("  ");
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();

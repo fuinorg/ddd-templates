@@ -1,6 +1,5 @@
 package org.fuin.dsl.ddd.gen.resourceset
 
-import org.fuin.dsl.ddd.gen.base.AbstractSource
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Iterator
@@ -8,8 +7,11 @@ import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
+import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
+
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 
@@ -21,7 +23,7 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 		false
 	}
 
-	override create(ResourceSet resourceSet) throws GenerateException {
+	override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
 		val Map<String, List<Event>> contextEvents = resourceSet.contextEventMap
 
@@ -31,11 +33,12 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			val List<Event> events = contextEvents.get(ctx)
 			val String pkg = getBasePkg() + "." + ctx + "." + getPkg()
 			val filename = (pkg + "." + ctx.toFirstUpper + "EventRegistry").replace('.', '/') + ".java";
+
 			// TODO Support multiple generated artifacts for ArtifactFactory
 			return new GeneratedArtifact(artifactName, filename,
 				create(pkg, ctx, events, resourceSet).toString().getBytes("UTF-8"));
 		}
-		
+
 	}
 
 	def contextEventMap(ResourceSet resourceSet) {
@@ -47,11 +50,11 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			if (events == null) {
 				events = new ArrayList<Event>();
 				contextEvents.put(event.context.name, events)
-			}			
+			}
 			events.add(event)
 		}
 		return contextEvents
-	}	
+	}
 
 	def create(String pkg, String ctx, List<Event> events, ResourceSet resourceSet) {
 		''' 
@@ -86,20 +89,20 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 					registry = new SerializerDeserializerRegistry();
 					registry.add(new XmlDeSerializer("BasicEventMetaData", BasicEventMetaData.class));
 					«FOR event : events»
-					registry.add(new XmlDeSerializer(«event.name».EVENT_TYPE.asBaseType(), adapters, «event.name».class));
+						registry.add(new XmlDeSerializer(«event.name».EVENT_TYPE.asBaseType(), adapters, «event.name».class));
 					«ENDFOR»
 			
 				}
 			
 			  	@Override
-			    public Serializer getSerializer(final String type) {
+			  	 public Serializer getSerializer(final String type) {
 					return registry.getSerializer(type);
-			  	}
+				}
 			
 			    @Override
 			    public Deserializer getDeserializer(final String type, final int version, final String mimeType, final Charset encoding) {
 					return registry.getDeserializer(type, version, mimeType, encoding);
-			  	}
+				}
 			
 			}
 			

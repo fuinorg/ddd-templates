@@ -1,5 +1,6 @@
 package org.fuin.dsl.ddd.gen.enumobject;
 
+import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -10,6 +11,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 
@@ -19,7 +21,7 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
     return EnumObject.class;
   }
   
-  public GeneratedArtifact create(final EnumObject enu) throws GenerateException {
+  public GeneratedArtifact create(final EnumObject enu, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       EObject _eContainer = enu.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
@@ -56,7 +58,7 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
     _builder.newLine();
     _builder.append("/** ");
     String _doc = vo.getDoc();
-    String _text = this.text(_doc);
+    String _text = StringExtensions.text(_doc);
     _builder.append(_text, "");
     _builder.append(" */");
     _builder.newLineIfNotEmpty();
@@ -87,7 +89,7 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
         _builder.append(__methodCall, "");
         _builder.append(")");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
+        _builder.append("\t\t\t");
       }
     }
     _builder.append(";");

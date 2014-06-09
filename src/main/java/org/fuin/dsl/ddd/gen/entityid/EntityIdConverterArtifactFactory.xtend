@@ -1,10 +1,16 @@
 package org.fuin.dsl.ddd.gen.entityid
 
-import org.fuin.dsl.ddd.gen.base.AbstractSource
+import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcValueObjectConverter
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
+
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.base.Utils.*
 
 class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
 
@@ -12,16 +18,22 @@ class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
 		typeof(EntityId)
 	}
 
-	override create(EntityId entityId) throws GenerateException {
+	override create(EntityId entityId, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 		if (entityId.base == null) {
 			return null;
 		}
+		val className = entityId.getName() + "Converter"
 		val Namespace ns = entityId.eContainer() as Namespace;
-        val filename = (ns.asPackage + "." + entityId.getName() + "Converter").replace('.', '/') + ".java";
+		val fqn = ns.asPackage + "." + className
+		val filename = fqn.replace('.', '/') + ".java";
+		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+		refReg.putReference(entityId.uniqueName + "Converter", fqn)
+		
 		return new GeneratedArtifact(
 			artifactName,
 			filename,
-			_valueObjectConverterSource(ns, entityId.name, entityId.base.name, true).getBytes("UTF-8")
+			new SrcValueObjectConverter(refReg, copyrightHeader, ns.asPackage, entityId, entityId.base, true).
+				toString().getBytes("UTF-8")			
 		);
 	}
 

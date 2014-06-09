@@ -3,26 +3,21 @@ package org.fuin.dsl.ddd.gen.base;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
-import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall;
@@ -40,13 +35,23 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Invariants;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.OverriddenTypeMetaInfo;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.StringLiteral;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
+import org.fuin.dsl.ddd.gen.base.SrcGetter;
+import org.fuin.dsl.ddd.gen.base.SrcSetter;
+import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
+import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
+import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
+import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
+import org.fuin.dsl.ddd.gen.extensions.LiteralExtensions;
+import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
+import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
+import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
 
 @SuppressWarnings("all")
 public abstract class AbstractSource<T extends Object> implements ArtifactFactory<T> {
@@ -70,60 +75,23 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   }
   
   public String getBasePkg() {
-    Map<String,String> _nullSafe = this.<String, String>nullSafe(this.varMap);
+    Map<String,String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
     return _nullSafe.get("basepkg");
   }
   
   public String getPkg() {
-    Map<String,String> _nullSafe = this.<String, String>nullSafe(this.varMap);
+    Map<String,String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
     return _nullSafe.get("pkg");
   }
   
   public String getCopyrightHeader() {
-    Map<String,String> _nullSafe = this.<String, String>nullSafe(this.varMap);
+    Map<String,String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
     final String header = _nullSafe.get("copyrightHeader");
     boolean _equals = Objects.equal(header, null);
     if (_equals) {
       return "";
     }
     return header;
-  }
-  
-  /**
-   * Returns the pure doc message without slashes and stars in one line.
-   * 
-   * @param str JavaDoc comment.
-   * 
-   * @return Plain single line text.
-   */
-  public String text(final String str) {
-    boolean _equals = Objects.equal(str, null);
-    if (_equals) {
-      return "";
-    }
-    StringBuilder sb = new StringBuilder();
-    StringTokenizer tok = new StringTokenizer(str, "\r\n");
-    boolean _hasMoreTokens = tok.hasMoreTokens();
-    boolean _while = _hasMoreTokens;
-    while (_while) {
-      {
-        String line = tok.nextToken();
-        String _replace = line.replace("/**", "");
-        line = _replace;
-        String _replace_1 = line.replace(" * ", "");
-        line = _replace_1;
-        String _replace_2 = line.replace("*/", "");
-        line = _replace_2;
-        sb.append(line);
-        sb.append(" ");
-      }
-      boolean _hasMoreTokens_1 = tok.hasMoreTokens();
-      _while = _hasMoreTokens_1;
-    }
-    String _string = sb.toString();
-    String _replace = _string.replace("  ", " ");
-    String result = _replace.trim();
-    return result;
   }
   
   public Set<String> createImportSet(final EObject el) {
@@ -208,7 +176,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   }
   
   public String fqn(final Event event) {
-    Namespace ns = this.getNamespace(event);
+    Namespace ns = EObjectExtensions.getNamespace(event);
     String _asPackage = this.asPackage(ns);
     String _plus = (_asPackage + ".");
     String _name = event.getName();
@@ -216,27 +184,11 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   }
   
   public String fqn(final AbstractElement el) {
-    Namespace ns = this.getNamespace(el);
+    Namespace ns = EObjectExtensions.getNamespace(el);
     String _asPackage = this.asPackage(ns);
     String _plus = (_asPackage + ".");
     String _name = el.getName();
     return (_plus + _name);
-  }
-  
-  public Namespace getNamespace(final EObject obj) {
-    if ((obj instanceof Namespace)) {
-      return ((Namespace)obj);
-    }
-    EObject _eContainer = obj.eContainer();
-    return this.getNamespace(_eContainer);
-  }
-  
-  public Context getContext(final EObject obj) {
-    if ((obj instanceof Context)) {
-      return ((Context)obj);
-    }
-    EObject _eContainer = obj.eContainer();
-    return this.getContext(_eContainer);
   }
   
   public String asPackage(final Namespace ns) {
@@ -245,7 +197,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     if (_equals) {
       String _basePkg = this.getBasePkg();
       String _plus = (_basePkg + ".");
-      Context _context = this.getContext(ns);
+      Context _context = EObjectExtensions.getContext(ns);
       String _name = _context.getName();
       String _plus_1 = (_plus + _name);
       String _plus_2 = (_plus_1 + ".");
@@ -254,7 +206,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     }
     String _basePkg_1 = this.getBasePkg();
     String _plus_3 = (_basePkg_1 + ".");
-    Context _context_1 = this.getContext(ns);
+    Context _context_1 = EObjectExtensions.getContext(ns);
     String _name_2 = _context_1.getName();
     String _plus_4 = (_plus_3 + _name_2);
     String _plus_5 = (_plus_4 + ".");
@@ -470,407 +422,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return (name + "[]");
   }
   
-  public String str(final Literal literal) {
-    if ((literal instanceof StringLiteral)) {
-      String _value = ((StringLiteral)literal).getValue();
-      String _plus = ("\"" + _value);
-      return (_plus + "\"");
-    }
-    return literal.getValue();
-  }
-  
-  public List<String> exceptionList(final Constraints constraints) {
-    boolean _equals = Objects.equal(constraints, null);
-    if (_equals) {
-      return Collections.<String>emptyList();
-    }
-    List<String> list = new ArrayList<String>();
-    EList<ConstraintCall> _calls = constraints.getCalls();
-    for (final ConstraintCall call : _calls) {
-      Constraint _constraint = call.getConstraint();
-      boolean _notEquals = (!Objects.equal(_constraint, null));
-      if (_notEquals) {
-        Constraint _constraint_1 = call.getConstraint();
-        org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception = _constraint_1.getException();
-        String exception = _exception.getName();
-        boolean _notEquals_1 = (!Objects.equal(exception, null));
-        if (_notEquals_1) {
-          list.add(exception);
-        }
-      }
-    }
-    return list;
-  }
-  
-  public Variable copyRenamed(final Variable v, final String name) {
-    Variable vv = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
-    vv.setName(name);
-    String _doc = v.getDoc();
-    vv.setDoc(_doc);
-    String _nullable = v.getNullable();
-    vv.setNullable(_nullable);
-    Type _type = v.getType();
-    vv.setType(_type);
-    String _multiplicity = v.getMultiplicity();
-    vv.setMultiplicity(_multiplicity);
-    Invariants _invariants = v.getInvariants();
-    vv.setInvariants(_invariants);
-    OverriddenTypeMetaInfo _overridden = v.getOverridden();
-    vv.setOverridden(_overridden);
-    return vv;
-  }
-  
-  public List<Variable> allVariables(final Constraint constr) {
-    List<Variable> list = new ArrayList<Variable>();
-    EList<Variable> _variables = constr.getVariables();
-    boolean _notEquals = (!Objects.equal(_variables, null));
-    if (_notEquals) {
-      EList<Variable> _variables_1 = constr.getVariables();
-      list.addAll(_variables_1);
-    }
-    ConstraintTarget target = constr.getTarget();
-    if ((target instanceof ExternalType)) {
-      ExternalType et = ((ExternalType) target);
-      Variable vv = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
-      vv.setName("vv");
-      vv.setDoc("/** The validated value. */");
-      vv.setType(et);
-      list.add(vv);
-    } else {
-      ValueObject vo = ((ValueObject) target);
-      EList<Variable> _variables_2 = vo.getVariables();
-      boolean _notEquals_1 = (!Objects.equal(_variables_2, null));
-      if (_notEquals_1) {
-        EList<Variable> _variables_3 = vo.getVariables();
-        for (final Variable v : _variables_3) {
-          {
-            String _name = v.getName();
-            String _plus = ("vv_" + _name);
-            Variable vv_1 = this.copyRenamed(v, _plus);
-            list.add(vv_1);
-          }
-        }
-      }
-    }
-    return list;
-  }
-  
-  public List<Variable> allVariables(final Method method) {
-    List<Variable> list = new ArrayList<Variable>();
-    boolean _and = false;
-    Method _refMethod = method.getRefMethod();
-    boolean _notEquals = (!Objects.equal(_refMethod, null));
-    if (!_notEquals) {
-      _and = false;
-    } else {
-      Method _refMethod_1 = method.getRefMethod();
-      boolean _notEquals_1 = (!Objects.equal(method, _refMethod_1));
-      _and = _notEquals_1;
-    }
-    if (_and) {
-      Method _refMethod_2 = method.getRefMethod();
-      Variable refVar = this.createVariableForRef(_refMethod_2);
-      boolean _notEquals_2 = (!Objects.equal(refVar, null));
-      if (_notEquals_2) {
-        list.add(refVar);
-      }
-      Method _refMethod_3 = method.getRefMethod();
-      List<Variable> _allVariables = this.allVariables(_refMethod_3);
-      list.addAll(_allVariables);
-    }
-    EList<Variable> _variables = method.getVariables();
-    list.addAll(_variables);
-    return list;
-  }
-  
-  public List<String> allExceptions(final Method method) {
-    List<String> list = new ArrayList<String>();
-    boolean _and = false;
-    Method _refMethod = method.getRefMethod();
-    boolean _notEquals = (!Objects.equal(_refMethod, null));
-    if (!_notEquals) {
-      _and = false;
-    } else {
-      Method _refMethod_1 = method.getRefMethod();
-      boolean _notEquals_1 = (!Objects.equal(method, _refMethod_1));
-      _and = _notEquals_1;
-    }
-    if (_and) {
-      Method _refMethod_2 = method.getRefMethod();
-      List<String> _allExceptions = this.allExceptions(_refMethod_2);
-      list.addAll(_allExceptions);
-    }
-    Constraints _constraints = method.getConstraints();
-    boolean _notEquals_2 = (!Objects.equal(_constraints, null));
-    if (_notEquals_2) {
-      Constraints _constraints_1 = method.getConstraints();
-      List<String> _exceptionList = this.exceptionList(_constraints_1);
-      list.addAll(_exceptionList);
-    }
-    return list;
-  }
-  
-  public List<String> allExceptions(final Constructor constructor) {
-    List<String> list = new ArrayList<String>();
-    Constraints _constraints = constructor.getConstraints();
-    boolean _notEquals = (!Objects.equal(_constraints, null));
-    if (_notEquals) {
-      Constraints _constraints_1 = constructor.getConstraints();
-      List<String> _exceptionList = this.exceptionList(_constraints_1);
-      list.addAll(_exceptionList);
-    }
-    return list;
-  }
-  
-  public Variable createVariableForRef(final AbstractMethod method) {
-    EObject _eContainer = method.eContainer();
-    if ((_eContainer instanceof AbstractVO)) {
-      EObject _eContainer_1 = method.eContainer();
-      AbstractVO vo = ((AbstractVO) _eContainer_1);
-      Variable v = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
-      String _name = vo.getName();
-      String _firstLower = StringExtensions.toFirstLower(_name);
-      v.setName(_firstLower);
-      v.setType(vo);
-      return v;
-    } else {
-      EObject _eContainer_2 = method.eContainer();
-      if ((_eContainer_2 instanceof AbstractEntity)) {
-        ExternalType et = DomainDrivenDesignDslFactory.eINSTANCE.createExternalType();
-        et.setName("EntityIdPath");
-        Variable v_1 = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
-        v_1.setName("entityIdPath");
-        v_1.setType(et);
-        return v_1;
-      }
-    }
-    return null;
-  }
-  
-  public Variable first(final List<Variable> variables) {
-    boolean _or = false;
-    boolean _equals = Objects.equal(variables, null);
-    if (_equals) {
-      _or = true;
-    } else {
-      int _size = variables.size();
-      boolean _equals_1 = (_size == 0);
-      _or = _equals_1;
-    }
-    if (_or) {
-      return null;
-    }
-    return variables.get(0);
-  }
-  
-  public List<Variable> withoutFirst(final List<Variable> variables) {
-    List<Variable> rest = new ArrayList<Variable>();
-    boolean _and = false;
-    boolean _notEquals = (!Objects.equal(variables, null));
-    if (!_notEquals) {
-      _and = false;
-    } else {
-      int _size = variables.size();
-      boolean _greaterThan = (_size > 0);
-      _and = _greaterThan;
-    }
-    if (_and) {
-      int count = 0;
-      for (final Variable v : variables) {
-        {
-          if ((count > 0)) {
-            rest.add(v);
-          }
-          count = (count + 1);
-        }
-      }
-    }
-    return rest;
-  }
-  
-  public AbstractEntityId getEntityIdType(final Event event) {
-    EObject _eContainer = event.eContainer();
-    EObject _eContainer_1 = _eContainer.eContainer();
-    AbstractEntity abstractEntity = ((AbstractEntity) _eContainer_1);
-    if ((abstractEntity instanceof Aggregate)) {
-      Aggregate aggregate = ((Aggregate) abstractEntity);
-      return aggregate.getIdType();
-    } else {
-      Entity entity = ((Entity) abstractEntity);
-      return entity.getIdType();
-    }
-  }
-  
-  public String toXmlName(final String name) {
-    String _replaceAll = name.replaceAll("(.)(\\p{Upper})", "$1-$2");
-    return _replaceAll.toLowerCase();
-  }
-  
-  public String toSqlUpper(final String name) {
-    String _replaceAll = name.replaceAll("(.)(\\p{Upper})", "$1_$2");
-    return _replaceAll.toUpperCase();
-  }
-  
-  public String toSqlLower(final String name) {
-    String _replaceAll = name.replaceAll("(.)(\\p{Upper})", "$1_$2");
-    return _replaceAll.toLowerCase();
-  }
-  
-  public String toSqlInitials(final String name) {
-    boolean _or = false;
-    boolean _equals = Objects.equal(name, null);
-    if (_equals) {
-      _or = true;
-    } else {
-      int _length = name.length();
-      boolean _equals_1 = (_length == 0);
-      _or = _equals_1;
-    }
-    if (_or) {
-      return name;
-    }
-    final StringBuilder sb = new StringBuilder();
-    final String lname = this.toSqlLower(name);
-    int _length_1 = lname.length();
-    int _minus = (_length_1 - 1);
-    IntegerRange _upTo = new IntegerRange(0, _minus);
-    for (final Integer i : _upTo) {
-      {
-        final char ch = lname.charAt((i).intValue());
-        if (((i).intValue() == 0)) {
-          sb.append(ch);
-        } else {
-          boolean _and = false;
-          int _compareTo = Character.valueOf(ch).compareTo(Character.valueOf('_'));
-          boolean _equals_2 = (_compareTo == 0);
-          if (!_equals_2) {
-            _and = false;
-          } else {
-            int _length_2 = lname.length();
-            int _minus_1 = (_length_2 - 1);
-            boolean _lessThan = ((i).intValue() < _minus_1);
-            _and = _lessThan;
-          }
-          if (_and) {
-            sb.append("_");
-            char _charAt = lname.charAt(((i).intValue() + 1));
-            sb.append(_charAt);
-          }
-        }
-      }
-    }
-    return sb.toString();
-  }
-  
-  public String superDoc(final Variable variable) {
-    String _xifexpression = null;
-    String _doc = variable.getDoc();
-    boolean _equals = Objects.equal(_doc, null);
-    if (_equals) {
-      Type _type = variable.getType();
-      String _doc_1 = this.doc(_type);
-      _xifexpression = this.text(_doc_1);
-    } else {
-      String _doc_2 = variable.getDoc();
-      return this.text(_doc_2);
-    }
-    return _xifexpression;
-  }
-  
-  public String doc(final Type type) {
-    if ((type instanceof AbstractEntity)) {
-      return ((AbstractEntity) type).getDoc();
-    } else {
-      if ((type instanceof AbstractVO)) {
-        return ((AbstractVO) type).getDoc();
-      }
-    }
-    return type.getName();
-  }
-  
-  private Set<Entity> childEntities(final AbstractEntity parent) {
-    Set<Entity> childs = new HashSet<Entity>();
-    EList<Variable> _variables = parent.getVariables();
-    for (final Variable v : _variables) {
-      Type _type = v.getType();
-      if ((_type instanceof Entity)) {
-        Type _type_1 = v.getType();
-        childs.add(((Entity) _type_1));
-      }
-    }
-    return childs;
-  }
-  
-  public <T extends Object> List<T> nullSafe(final List<T> list) {
-    boolean _equals = Objects.equal(list, null);
-    if (_equals) {
-      return Collections.<T>emptyList();
-    }
-    return list;
-  }
-  
-  public <K extends Object, V extends Object> Map<K,V> nullSafe(final Map<K,V> map) {
-    boolean _equals = Objects.equal(map, null);
-    if (_equals) {
-      return Collections.<K, V>emptyMap();
-    }
-    return map;
-  }
-  
-  public List<AbstractMethod> constructorsAndMethods(final AbstractEntity entity) {
-    final List<AbstractMethod> methods = new ArrayList<AbstractMethod>();
-    EList<Constructor> _constructors = entity.getConstructors();
-    methods.addAll(_constructors);
-    EList<Method> _methods = entity.getMethods();
-    methods.addAll(_methods);
-    return methods;
-  }
-  
-  public List<Constraint> allConstraints(final Method method) {
-    final List<Constraint> list = new ArrayList<Constraint>();
-    boolean _and = false;
-    Method _refMethod = method.getRefMethod();
-    boolean _notEquals = (!Objects.equal(_refMethod, null));
-    if (!_notEquals) {
-      _and = false;
-    } else {
-      Method _refMethod_1 = method.getRefMethod();
-      boolean _notEquals_1 = (!Objects.equal(method, _refMethod_1));
-      _and = _notEquals_1;
-    }
-    if (_and) {
-      Method _refMethod_2 = method.getRefMethod();
-      List<Constraint> _allConstraints = this.allConstraints(_refMethod_2);
-      list.addAll(_allConstraints);
-    }
-    Constraints _constraints = method.getConstraints();
-    boolean _notEquals_2 = (!Objects.equal(_constraints, null));
-    if (_notEquals_2) {
-      Constraints _constraints_1 = method.getConstraints();
-      EList<ConstraintCall> _calls = _constraints_1.getCalls();
-      for (final ConstraintCall cc : _calls) {
-        Constraint _constraint = cc.getConstraint();
-        list.add(_constraint);
-      }
-    }
-    return list;
-  }
-  
-  public List<Constraint> allConstraints(final Constructor constructor) {
-    final List<Constraint> list = new ArrayList<Constraint>();
-    Constraints _constraints = constructor.getConstraints();
-    boolean _notEquals = (!Objects.equal(_constraints, null));
-    if (_notEquals) {
-      Constraints _constraints_1 = constructor.getConstraints();
-      EList<ConstraintCall> _calls = _constraints_1.getCalls();
-      for (final ConstraintCall cc : _calls) {
-        Constraint _constraint = cc.getConstraint();
-        list.add(_constraint);
-      }
-    }
-    return list;
-  }
-  
   public CharSequence _imports(final EObject... elements) {
     CharSequence _xblockexpression = null;
     {
@@ -908,14 +459,14 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   public CharSequence _methodDoc(final Constructor constructor) {
     String _doc = constructor.getDoc();
     EList<Variable> _variables = constructor.getVariables();
-    List<Constraint> _allConstraints = this.allConstraints(constructor);
+    List<Constraint> _allConstraints = ConstructorExtensions.allConstraints(constructor);
     return this._methodDoc(_doc, _variables, _allConstraints);
   }
   
   public CharSequence _methodDoc(final Method method) {
     String _doc = method.getDoc();
-    List<Variable> _allVariables = this.allVariables(method);
-    List<Constraint> _allConstraints = this.allConstraints(method);
+    List<Variable> _allVariables = MethodExtensions.allVariables(method);
+    List<Constraint> _allConstraints = MethodExtensions.allConstraints(method);
     return this._methodDoc(_doc, _allVariables, _allConstraints);
   }
   
@@ -925,20 +476,20 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.newLine();
     _builder.append(" ");
     _builder.append("* ");
-    String _text = this.text(doc);
+    String _text = StringExtensions.text(doc);
     _builder.append(_text, " ");
     _builder.newLineIfNotEmpty();
     _builder.append(" ");
     _builder.append("*");
     _builder.newLine();
     {
-      List<Variable> _nullSafe = this.<Variable>nullSafe(variables);
+      List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
       for(final Variable v : _nullSafe) {
         _builder.append("* @param ");
         String _name = v.getName();
         _builder.append(_name, "");
         _builder.append(" ");
-        String _superDoc = this.superDoc(v);
+        String _superDoc = VariableExtensions.superDoc(v);
         _builder.append(_superDoc, "");
         _builder.append(" ");
         _builder.newLineIfNotEmpty();
@@ -948,7 +499,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append("*");
     _builder.newLine();
     {
-      List<Constraint> _nullSafe_1 = this.<Constraint>nullSafe(constraints);
+      List<Constraint> _nullSafe_1 = CollectionExtensions.<Constraint>nullSafe(constraints);
       for(final Constraint constraint : _nullSafe_1) {
         {
           org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception = constraint.getException();
@@ -960,7 +511,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
             _builder.append(_name_1, "");
             _builder.append(" Thrown if the constraint was violated: ");
             String _doc = constraint.getDoc();
-            String _text_1 = this.text(_doc);
+            String _text_1 = StringExtensions.text(_doc);
             _builder.append(_text_1, "");
             _builder.append(" ");
             _builder.newLineIfNotEmpty();
@@ -981,7 +532,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(" ");
     _builder.append("* ");
     String _doc = internalType.getDoc();
-    String _text = this.text(_doc);
+    String _text = StringExtensions.text(_doc);
     _builder.append(_text, " ");
     _builder.newLineIfNotEmpty();
     _builder.append(" ");
@@ -998,7 +549,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<Variable> _variables = internalType.getVariables();
-      List<Variable> _nullSafe = this.<Variable>nullSafe(_variables);
+      List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
       for(final Variable variable : _nullSafe) {
         CharSequence __varDecl = this._varDecl(variable, xml);
         _builder.append(__varDecl, "");
@@ -1113,7 +664,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
         _builder_1.append(_name_1, "");
         _builder_1.append("(");
         Literal _last = IterableExtensions.<Literal>last(params);
-        String _str = this.str(_last);
+        String _str = LiteralExtensions.str(_last);
         _builder_1.append(_str, "");
         _builder_1.append(")");
         return _builder_1.toString();
@@ -1129,7 +680,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
               Variable _get = vars.get(i);
               String name = _get.getName();
               Literal _get_1 = params.get(i);
-              String value = this.str(_get_1);
+              String value = LiteralExtensions.str(_get_1);
               list.add(((name + " = ") + value));
               i = (i + 1);
             }
@@ -1165,7 +716,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<Constructor> _constructors = internalType.getConstructors();
-      List<Constructor> _nullSafe = this.<Constructor>nullSafe(_constructors);
+      List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
       for(final Constructor constructor : _nullSafe) {
         String _name = internalType.getName();
         EList<Variable> _variables = constructor.getVariables();
@@ -1182,7 +733,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   public CharSequence _constructorsDecl(final AbstractVO vo) {
     CharSequence _xifexpression = null;
     EList<Constructor> _constructors = vo.getConstructors();
-    List<Constructor> _nullSafe = this.<Constructor>nullSafe(_constructors);
+    List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
     int _size = _nullSafe.size();
     boolean _equals = (_size == 0);
     if (_equals) {
@@ -1203,11 +754,11 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append("public ");
     _builder.append(internalTypeName, "");
     _builder.append("(");
-    List<Variable> _nullSafe = this.<Variable>nullSafe(variables);
+    List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
     CharSequence __paramsDecl = this._paramsDecl(_nullSafe);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
-    List<String> _exceptionList = this.exceptionList(constraints);
+    List<String> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
     CharSequence __exceptions = this._exceptions(_exceptionList);
     _builder.append(__exceptions, "");
     _builder.append("{");
@@ -1216,7 +767,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append("super();");
     _builder.newLine();
     _builder.append("\t");
-    List<Variable> _nullSafe_1 = this.<Variable>nullSafe(variables);
+    List<Variable> _nullSafe_1 = CollectionExtensions.<Variable>nullSafe(variables);
     CharSequence __paramsAssignment = this._paramsAssignment(_nullSafe_1);
     _builder.append(__paramsAssignment, "\t");
     _builder.append("\t");
@@ -1230,7 +781,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<Method> _methods = internalType.getMethods();
-      List<Method> _nullSafe = this.<Method>nullSafe(_methods);
+      List<Method> _nullSafe = CollectionExtensions.<Method>nullSafe(_methods);
       for(final Method method : _nullSafe) {
         CharSequence __methodDecl = this._methodDecl(method);
         _builder.append(__methodDecl, "");
@@ -1250,11 +801,11 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     String _name = method.getName();
     _builder.append(_name, "");
     _builder.append("(");
-    List<Variable> _allVariables = this.allVariables(method);
+    List<Variable> _allVariables = MethodExtensions.allVariables(method);
     CharSequence __paramsDecl = this._paramsDecl(_allVariables);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
-    List<String> _allExceptions = this.allExceptions(method);
+    List<String> _allExceptions = MethodExtensions.allExceptions(method);
     CharSequence __exceptions = this._exceptions(_allExceptions);
     _builder.append(__exceptions, "");
     _builder.append("{");
@@ -1294,7 +845,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       boolean _equals_1 = (_size_1 == 1);
       if (_equals_1) {
         Literal _last = IterableExtensions.<Literal>last(params);
-        return this.str(_last);
+        return LiteralExtensions.str(_last);
       } else {
         int _size_2 = vars.size();
         boolean _greaterThan = (_size_2 > 1);
@@ -1308,7 +859,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
               } else {
                 _builder.appendImmediate(", ", "");
               }
-              String _str = this.str(p);
+              String _str = LiteralExtensions.str(p);
               _builder.append(_str, "");
             }
           }
@@ -1486,16 +1037,16 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _settersGetters(final String visibility, final List<Variable> vars) {
+  public CharSequence _settersGetters(final CodeSnippetContext ctx, final String visibility, final List<Variable> vars) {
     StringConcatenation _builder = new StringConcatenation();
     {
       for(final Variable v : vars) {
-        CharSequence __setter = this._setter(visibility, v);
-        _builder.append(__setter, "");
+        SrcSetter _srcSetter = new SrcSetter(ctx, visibility, v);
+        _builder.append(_srcSetter, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
-        CharSequence __getter = this._getter(visibility, v);
-        _builder.append(__getter, "");
+        SrcGetter _srcGetter = new SrcGetter(ctx, visibility, v);
+        _builder.append(_srcGetter, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
       }
@@ -1503,72 +1054,11 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _getters(final String visibility, final List<Variable> vars) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      for(final Variable v : vars) {
-        CharSequence __getter = this._getter(visibility, v);
-        _builder.append(__getter, "");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    return _builder;
-  }
-  
-  public CharSequence _getter(final String visibility, final Variable v) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Returns: ");
-    String _superDoc = this.superDoc(v);
-    String _text = this.text(_superDoc);
-    _builder.append(_text, " ");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @return Current value.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append(" ");
-    {
-      String _nullable = v.getNullable();
-      boolean _equals = Objects.equal(_nullable, null);
-      if (_equals) {
-        _builder.append("@NeverNull");
-      }
-    }
-    _builder.newLineIfNotEmpty();
-    _builder.append(visibility, "");
-    _builder.append(" ");
-    String _asJavaType = this.asJavaType(v);
-    _builder.append(_asJavaType, "");
-    _builder.append(" get");
-    String _name = v.getName();
-    String _firstUpper = StringExtensions.toFirstUpper(_name);
-    _builder.append(_firstUpper, "");
-    _builder.append("() {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("return ");
-    String _name_1 = v.getName();
-    _builder.append(_name_1, "\t");
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder;
-  }
-  
-  public CharSequence _setters(final String visibility, final List<Variable> vars) {
+  public CharSequence _setters(final CodeSnippetContext ctx, final String visibility, final List<Variable> vars) {
     StringConcatenation _builder = new StringConcatenation();
     {
       for(final Variable variable : vars) {
-        CharSequence __setter = this._setter(visibility, variable);
+        String __setter = this._setter(ctx, visibility, variable);
         _builder.append(__setter, "");
         _builder.newLineIfNotEmpty();
       }
@@ -1576,76 +1066,9 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _setter(final String visibility, final Variable variable) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Sets: ");
-    String _doc = variable.getDoc();
-    String _text = this.text(_doc);
-    _builder.append(_text, " ");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param ");
-    String _name = variable.getName();
-    _builder.append(_name, " ");
-    _builder.append(" Value to set.");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append(visibility, "");
-    _builder.append(" void set");
-    String _name_1 = variable.getName();
-    String _firstUpper = StringExtensions.toFirstUpper(_name_1);
-    _builder.append(_firstUpper, "");
-    _builder.append("(");
-    {
-      String _nullable = variable.getNullable();
-      boolean _equals = Objects.equal(_nullable, null);
-      if (_equals) {
-        _builder.append("@NotNull ");
-      }
-    }
-    _builder.append("final ");
-    String _asJavaType = this.asJavaType(variable);
-    _builder.append(_asJavaType, "");
-    _builder.append(" ");
-    String _name_2 = variable.getName();
-    _builder.append(_name_2, "");
-    _builder.append(") {");
-    _builder.newLineIfNotEmpty();
-    {
-      String _nullable_1 = variable.getNullable();
-      boolean _equals_1 = Objects.equal(_nullable_1, null);
-      if (_equals_1) {
-        _builder.append("\t");
-        _builder.append("Contract.requireArgNotNull(\"");
-        String _name_3 = variable.getName();
-        _builder.append(_name_3, "\t");
-        _builder.append("\", ");
-        String _name_4 = variable.getName();
-        _builder.append(_name_4, "\t");
-        _builder.append(");");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t");
-    _builder.append("this.");
-    String _name_5 = variable.getName();
-    _builder.append(_name_5, "\t");
-    _builder.append(" = ");
-    String _name_6 = variable.getName();
-    _builder.append(_name_6, "\t");
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder;
+  public String _setter(final CodeSnippetContext ctx, final String visibility, final Variable variable) {
+    SrcSetter _srcSetter = new SrcSetter(ctx, visibility, variable);
+    return _srcSetter.toString();
   }
   
   public CharSequence _exceptions(final List<String> exceptions) {
@@ -1684,7 +1107,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   public CharSequence _eventAbstractMethodsDecl(final AbstractEntity entity) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      List<AbstractMethod> _constructorsAndMethods = this.constructorsAndMethods(entity);
+      List<AbstractMethod> _constructorsAndMethods = AbstractEntityExtensions.constructorsAndMethods(entity);
       for(final AbstractMethod method : _constructorsAndMethods) {
         EList<Event> _events = method.getEvents();
         CharSequence __eventAbstractMethods = this._eventAbstractMethods(_events);
@@ -1746,7 +1169,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   public CharSequence _eventMethodsDecl(final AbstractEntity entity) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      List<AbstractMethod> _constructorsAndMethods = this.constructorsAndMethods(entity);
+      List<AbstractMethod> _constructorsAndMethods = AbstractEntityExtensions.constructorsAndMethods(entity);
       for(final AbstractMethod method : _constructorsAndMethods) {
         EList<Event> _events = method.getEvents();
         CharSequence __eventMethods = this._eventMethods(_events);
@@ -2245,7 +1668,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     String _xblockexpression = null;
     {
       EList<Constructor> _constructors = internalType.getConstructors();
-      List<Constructor> _nullSafe = this.<Constructor>nullSafe(_constructors);
+      List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
       for (final Constructor constructor : _nullSafe) {
         boolean _or = false;
         boolean _equals = Objects.equal(constructor, null);
@@ -2253,7 +1676,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
           _or = true;
         } else {
           EList<Variable> _variables = constructor.getVariables();
-          List<Variable> _nullSafe_1 = this.<Variable>nullSafe(_variables);
+          List<Variable> _nullSafe_1 = CollectionExtensions.<Variable>nullSafe(_variables);
           int _size = _nullSafe_1.size();
           boolean _equals_1 = (_size == 0);
           _or = _equals_1;
@@ -2286,192 +1709,10 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _xblockexpression;
   }
   
-  public String _valueObjectConverterSource(final Namespace ns, final String voTypeName, final String targetTypeName, final boolean implementsSingleEntityIdFactory) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyrightHeader = this.getCopyrightHeader();
-    _builder.append(_copyrightHeader, "");
-    _builder.newLineIfNotEmpty();
-    _builder.append("package ");
-    String _asPackage = this.asPackage(ns);
-    _builder.append(_asPackage, "");
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("import javax.enterprise.context.ApplicationScoped;");
-    _builder.newLine();
-    _builder.append("import javax.persistence.AttributeConverter;");
-    _builder.newLine();
-    _builder.append("import javax.persistence.Converter;");
-    _builder.newLine();
-    _builder.append("import org.fuin.objects4j.common.ThreadSafe;");
-    _builder.newLine();
-    _builder.append("import org.fuin.objects4j.vo.AbstractValueObjectConverter;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Converts ");
-    _builder.append(voTypeName, " ");
-    _builder.append(" from/to ");
-    _builder.append(targetTypeName, " ");
-    _builder.append(".");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("@ThreadSafe");
-    _builder.newLine();
-    _builder.append("@ApplicationScoped");
-    _builder.newLine();
-    _builder.append("@Converter(autoApply = true)");
-    _builder.newLine();
-    _builder.append("public final class ");
-    _builder.append(voTypeName, "");
-    _builder.append("Converter extends");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("AbstractValueObjectConverter<");
-    _builder.append(targetTypeName, "\t\t");
-    _builder.append(", ");
-    _builder.append(voTypeName, "\t\t");
-    _builder.append("> implements");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("AttributeConverter<");
-    _builder.append(voTypeName, "\t\t");
-    _builder.append(", ");
-    _builder.append(targetTypeName, "\t\t");
-    _builder.append(">");
-    {
-      if (implementsSingleEntityIdFactory) {
-        _builder.append(", SingleEntityIdFactory");
-      }
-    }
-    _builder.append(" {");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public Class<");
-    _builder.append(targetTypeName, "\t");
-    _builder.append("> getBaseTypeClass() {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("return ");
-    _builder.append(targetTypeName, "\t\t");
-    _builder.append(".class;");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public final Class<");
-    _builder.append(voTypeName, "\t");
-    _builder.append("> getValueObjectClass() {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("return ");
-    _builder.append(voTypeName, "\t\t");
-    _builder.append(".class;");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public final boolean isValid(final ");
-    _builder.append(targetTypeName, "\t");
-    _builder.append(" value) {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("return ");
-    _builder.append(voTypeName, "\t\t");
-    _builder.append(".isValid(value);");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public final ");
-    _builder.append(voTypeName, "\t");
-    _builder.append(" toVO(final ");
-    _builder.append(targetTypeName, "\t");
-    _builder.append(" value) {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("return ");
-    _builder.append(voTypeName, "\t\t");
-    _builder.append(".valueOf(value);");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public final ");
-    _builder.append(targetTypeName, "\t");
-    _builder.append(" fromVO(final ");
-    _builder.append(voTypeName, "\t");
-    _builder.append(" value) {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("if (value == null) {");
-    _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("return null;");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return value.asBaseType();");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    {
-      if (implementsSingleEntityIdFactory) {
-        _builder.append("@Override");
-        _builder.newLine();
-        _builder.append("public final EntityId createEntityId(final String id) {");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("return ");
-        _builder.append(voTypeName, "\t");
-        _builder.append(".valueOf(id);");
-        _builder.newLineIfNotEmpty();
-        _builder.append("}");
-        _builder.newLine();
-      }
-    }
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder.toString();
-  }
-  
   public CharSequence _xmlRootElement(final String name) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@XmlRootElement(name = \"");
-    String _xmlName = this.toXmlName(name);
+    String _xmlName = StringExtensions.toXmlName(name);
     _builder.append(_xmlName, "");
     _builder.append("\")");
     _builder.newLineIfNotEmpty();
@@ -2518,7 +1759,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@XmlElement(name = \"");
     String _name = v.getName();
-    String _xmlName = this.toXmlName(_name);
+    String _xmlName = StringExtensions.toXmlName(_name);
     _builder.append(_xmlName, "");
     _builder.append("\")");
     _builder.newLineIfNotEmpty();
@@ -2529,7 +1770,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@XmlAttribute(name = \"");
     String _name = v.getName();
-    String _xmlName = this.toXmlName(_name);
+    String _xmlName = StringExtensions.toXmlName(_name);
     _builder.append(_xmlName, "");
     _builder.append("\")");
     _builder.newLineIfNotEmpty();
@@ -2539,7 +1780,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   public CharSequence _abstractChildEntityLocatorMethods(final AbstractEntity parent) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      Set<Entity> _childEntities = this.childEntities(parent);
+      Set<Entity> _childEntities = AbstractEntityExtensions.childEntities(parent);
       for(final Entity child : _childEntities) {
         CharSequence __abstractChildEntityLocatorMethod = this._abstractChildEntityLocatorMethod(child);
         _builder.append(__abstractChildEntityLocatorMethod, "");
@@ -2567,7 +1808,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append("* @param ");
     AbstractEntityId _idType = entity.getIdType();
     String _name_1 = _idType.getName();
-    String _firstLower = StringExtensions.toFirstLower(_name_1);
+    String _firstLower = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_1);
     _builder.append(_firstLower, " ");
     _builder.append(" Unique identifier of the child entity to find.");
     _builder.newLineIfNotEmpty();
@@ -2593,7 +1834,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(" ");
     AbstractEntityId _idType_2 = entity.getIdType();
     String _name_5 = _idType_2.getName();
-    String _firstLower_1 = StringExtensions.toFirstLower(_name_5);
+    String _firstLower_1 = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_5);
     _builder.append(_firstLower_1, "");
     _builder.append(");");
     _builder.newLineIfNotEmpty();
@@ -2604,7 +1845,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   public CharSequence _childEntityLocatorMethods(final AbstractEntity parent) {
     StringConcatenation _builder = new StringConcatenation();
     {
-      Set<Entity> _childEntities = this.childEntities(parent);
+      Set<Entity> _childEntities = AbstractEntityExtensions.childEntities(parent);
       for(final Entity child : _childEntities) {
         CharSequence __childEntityLocatorMethod = this._childEntityLocatorMethod(child);
         _builder.append(__childEntityLocatorMethod, "");
@@ -2634,7 +1875,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(" ");
     AbstractEntityId _idType_1 = entity.getIdType();
     String _name_3 = _idType_1.getName();
-    String _firstLower = StringExtensions.toFirstLower(_name_3);
+    String _firstLower = org.eclipse.xtext.xbase.lib.StringExtensions.toFirstLower(_name_3);
     _builder.append(_firstLower, "");
     _builder.append(") {");
     _builder.newLineIfNotEmpty();
@@ -2648,30 +1889,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.newLine();
     _builder.newLine();
     return _builder;
-  }
-  
-  public CharSequence _get(final String objName, final Variable v) {
-    CharSequence _xifexpression = null;
-    boolean _equals = Objects.equal(objName, null);
-    if (_equals) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("get");
-      String _name = v.getName();
-      String _firstUpper = StringExtensions.toFirstUpper(_name);
-      _builder.append(_firstUpper, "");
-      _builder.append("()");
-      _xifexpression = _builder;
-    } else {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append(objName, "");
-      _builder_1.append(".get");
-      String _name_1 = v.getName();
-      String _firstUpper_1 = StringExtensions.toFirstUpper(_name_1);
-      _builder_1.append(_firstUpper_1, "");
-      _builder_1.append("()");
-      _xifexpression = _builder_1;
-    }
-    return _xifexpression;
   }
   
   public CharSequence _uniquelyNumberedException(final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {
