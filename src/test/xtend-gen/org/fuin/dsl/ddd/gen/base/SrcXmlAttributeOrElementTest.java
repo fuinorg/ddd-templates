@@ -1,7 +1,5 @@
 package org.fuin.dsl.ddd.gen.base;
 
-import com.google.common.collect.Iterables;
-import java.util.Iterator;
 import java.util.Set;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -14,13 +12,11 @@ import org.fest.assertions.Assertions;
 import org.fest.assertions.CollectionAssert;
 import org.fest.assertions.StringAssert;
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcXmlAttributeOrElement;
+import org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions;
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry;
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 import org.junit.Test;
@@ -39,7 +35,7 @@ public class SrcXmlAttributeOrElementTest {
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("x.types.String", "java.lang.String");
     DomainModel _createModel = this.createModel();
-    final Aggregate aggregate = this.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
+    final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
     EList<Variable> _variables = aggregate.getVariables();
     final Variable idVar = _variables.get(0);
     final SrcXmlAttributeOrElement testeeId = new SrcXmlAttributeOrElement(ctx, idVar);
@@ -60,7 +56,7 @@ public class SrcXmlAttributeOrElementTest {
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("x.types.String", "java.lang.String");
     DomainModel _createModel = this.createModel();
-    final Aggregate aggregate = this.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
+    final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
     EList<Variable> _variables = aggregate.getVariables();
     final Variable voVar = _variables.get(1);
     final SrcXmlAttributeOrElement testeeVo = new SrcXmlAttributeOrElement(ctx, voVar);
@@ -73,37 +69,6 @@ public class SrcXmlAttributeOrElementTest {
     Set<String> _imports = ctx.getImports();
     CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
     _assertThat_1.containsOnly("javax.xml.bind.annotation.XmlElement");
-  }
-  
-  private <T extends AbstractElement> T find(final DomainModel model, final Class<T> type, final String name) {
-    DomainModel _createModel = this.createModel();
-    EList<Context> _contexts = _createModel.getContexts();
-    Context _get = _contexts.get(0);
-    EList<Namespace> _namespaces = _get.getNamespaces();
-    Namespace _get_1 = _namespaces.get(0);
-    EList<AbstractElement> _elements = _get_1.getElements();
-    final Iterable<T> iterable = Iterables.<T>filter(_elements, type);
-    final Iterator<T> iter = iterable.iterator();
-    boolean _hasNext = iter.hasNext();
-    boolean _while = _hasNext;
-    while (_while) {
-      {
-        final T el = iter.next();
-        String _name = el.getName();
-        boolean _equals = name.equals(_name);
-        if (_equals) {
-          return el;
-        }
-      }
-      boolean _hasNext_1 = iter.hasNext();
-      _while = _hasNext_1;
-    }
-    String _simpleName = type.getSimpleName();
-    String _plus = ("No element of type \'" + _simpleName);
-    String _plus_1 = (_plus + "\' found with name \'");
-    String _plus_2 = (_plus_1 + name);
-    String _plus_3 = (_plus_2 + "\'");
-    throw new IllegalArgumentException(_plus_3);
   }
   
   private DomainModel createModel() {

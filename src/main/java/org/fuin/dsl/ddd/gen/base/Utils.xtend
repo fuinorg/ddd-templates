@@ -1,6 +1,8 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.Map
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 

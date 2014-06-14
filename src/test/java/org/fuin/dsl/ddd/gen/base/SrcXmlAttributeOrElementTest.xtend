@@ -5,7 +5,6 @@ import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
@@ -15,6 +14,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.fest.assertions.Assertions.*
+
+import static extension org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -67,18 +68,6 @@ class SrcXmlAttributeOrElementTest {
 		assertThat(resultVo).isEqualTo('''@XmlElement(name = "vo")''')
 		assertThat(ctx.imports).containsOnly("javax.xml.bind.annotation.XmlElement")
 
-	}
-
-	private def <T extends AbstractElement> T find(DomainModel model, Class<T> type, String name) {
-		val iterable = createModel().contexts.get(0).namespaces.get(0).elements.filter(type)
-		val iter = iterable.iterator
-		while (iter.hasNext) {
-			val el = iter.next
-			if (name.equals(el.name)) {
-				return el
-			}
-		}
-		throw new IllegalArgumentException("No element of type '" + type.simpleName + "' found with name '" + name + "'")
 	}
 
 	private def DomainModel createModel() {
