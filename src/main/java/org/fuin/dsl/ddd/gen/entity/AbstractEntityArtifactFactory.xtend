@@ -22,6 +22,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtension
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -65,7 +66,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
 	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className) {
 		val String src = ''' 
-			«_typeDoc(entity)»
+			«new SrcJavaDoc(entity)»
 			public abstract class «className» extends AbstractEntity<«entity.root.idType.name», «entity.root.name», «entity.
 				idType.name»> {
 			

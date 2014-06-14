@@ -15,6 +15,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
@@ -62,7 +63,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
 	def create(SimpleCodeSnippetContext ctx, AggregateId id, String pkg, String className) {
 		val src = ''' 
-			«_typeDoc(id)»
+			«new SrcJavaDoc(id)»
 			@Immutable
 			@XmlJavaTypeAdapter(«id.name»Converter.class)
 			public final class «className» «optionalExtendsForBase(id.name, id.base)»implements AggregateRootId, ValueObject {

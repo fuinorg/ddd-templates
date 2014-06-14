@@ -12,6 +12,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
@@ -71,8 +72,8 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     String _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
-      CharSequence __typeDoc = this._typeDoc(aggregate);
-      _builder.append(__typeDoc, "");
+      SrcJavaDoc _srcJavaDoc = new SrcJavaDoc(aggregate);
+      _builder.append(_srcJavaDoc, "");
       _builder.newLineIfNotEmpty();
       _builder.append("public final class ");
       _builder.append(className, "");

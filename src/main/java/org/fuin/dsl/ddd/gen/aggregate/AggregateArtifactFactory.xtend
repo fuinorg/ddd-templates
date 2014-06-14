@@ -20,6 +20,7 @@ import static org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 
@@ -60,7 +61,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {
 		val String src = ''' 
-			«_typeDoc(aggregate)»
+			«new SrcJavaDoc(aggregate)»
 			public final class «className» extends Abstract«aggregate.name» {
 			
 				/**

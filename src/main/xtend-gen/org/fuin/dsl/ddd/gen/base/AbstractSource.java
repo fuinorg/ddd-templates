@@ -270,22 +270,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _typeDoc(final InternalType internalType) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    String _doc = internalType.getDoc();
-    String _text = StringExtensions.text(_doc);
-    _builder.append(_text, " ");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    return _builder;
-  }
-  
   public CharSequence _varsDecl(final CodeSnippetContext ctx, final InternalType internalType, final boolean xml) {
     StringConcatenation _builder = new StringConcatenation();
     {

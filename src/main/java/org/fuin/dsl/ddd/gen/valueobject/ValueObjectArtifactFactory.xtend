@@ -15,6 +15,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -51,7 +52,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
 	def create(SimpleCodeSnippetContext ctx, ValueObject vo, String pkg, String className) {
 		val String src = ''' 
-			«_typeDoc(vo)»
+			«new SrcJavaDoc(vo)»
 			
 			«IF vo.base == null»
 				«_xmlRootElement(vo.name)»

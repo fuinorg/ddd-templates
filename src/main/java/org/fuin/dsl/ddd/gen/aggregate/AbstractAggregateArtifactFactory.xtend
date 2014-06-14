@@ -16,6 +16,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 /**
  * Generates an abstract aggregate Java class.
@@ -66,7 +67,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 	 */
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {
 		val String src = ''' 
-			«_typeDoc(aggregate)»
+			«new SrcJavaDoc(aggregate)»
 			public abstract class «className» extends AbstractAggregateRoot<«aggregate.idType.name»> {
 			
 				@NotNull

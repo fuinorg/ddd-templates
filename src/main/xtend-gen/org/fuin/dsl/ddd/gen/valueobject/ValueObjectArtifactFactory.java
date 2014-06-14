@@ -14,6 +14,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
@@ -64,8 +65,8 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
     String _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
-      CharSequence __typeDoc = this._typeDoc(vo);
-      _builder.append(__typeDoc, "");
+      SrcJavaDoc _srcJavaDoc = new SrcJavaDoc(vo);
+      _builder.append(_srcJavaDoc, "");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       {

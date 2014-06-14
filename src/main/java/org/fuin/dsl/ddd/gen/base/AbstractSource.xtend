@@ -131,14 +131,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def _typeDoc(InternalType internalType) {
-		'''
-			/**
-			 * «internalType.doc.text»
-			 */
-		'''
-	}
-
 	def _varsDecl(CodeSnippetContext ctx, InternalType internalType, boolean xml) {
 		'''
 			«FOR variable : internalType.variables.nullSafe»

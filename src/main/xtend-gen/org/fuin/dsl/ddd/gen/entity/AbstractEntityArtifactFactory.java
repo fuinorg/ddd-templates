@@ -17,6 +17,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcSetters;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.Utils;
@@ -80,8 +81,8 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
     String _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
-      CharSequence __typeDoc = this._typeDoc(entity);
-      _builder.append(__typeDoc, "");
+      SrcJavaDoc _srcJavaDoc = new SrcJavaDoc(entity);
+      _builder.append(_srcJavaDoc, "");
       _builder.newLineIfNotEmpty();
       _builder.append("public abstract class ");
       _builder.append(className, "");
