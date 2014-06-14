@@ -4,8 +4,8 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
-import org.fuin.dsl.ddd.gen.base.SrcImports
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -74,16 +74,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			}
 		'''
 
-		// Source code creation is splitted into two parts because imports are 
-		// added to the "ctx" during creation of above "src" variable
-		''' 
-			«copyrightHeader» 
-			package «pkg»;
-			
-			«new SrcImports(ctx.imports)»
-			
-			«src»
-		'''
+		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
 	}
 

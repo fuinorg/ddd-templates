@@ -7,7 +7,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.dsl.ddd.gen.base.AbstractSource
-import org.fuin.dsl.ddd.gen.base.SrcImports
+import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -76,16 +76,8 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 			}
 		'''
 
-		// Source code creation is splitted into two parts because imports are 
-		// added to the "ctx" during creation of above "src" variable
-		''' 
-			«copyrightHeader» 
-			package «pkg»;
-			
-			«new SrcImports(ctx.imports)»
-			
-			«src»
-		'''
+		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+		
 	}
 
 	def _constructorsDecl(CodeSnippetContext ctx, Entity entity, List<Constructor> constructors) {

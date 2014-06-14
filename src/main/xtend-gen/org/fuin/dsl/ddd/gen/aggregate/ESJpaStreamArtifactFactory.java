@@ -9,7 +9,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
-import org.fuin.dsl.ddd.gen.base.SrcImports;
+import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
@@ -49,7 +49,7 @@ public class ESJpaStreamArtifactFactory extends AbstractSource<Aggregate> implem
       this.addReferences(ctx, aggregate);
       ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
-      CharSequence _create = this.create(ctx, aggregate, pkg, className);
+      String _create = this.create(ctx, aggregate, pkg, className);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);
@@ -70,8 +70,8 @@ public class ESJpaStreamArtifactFactory extends AbstractSource<Aggregate> implem
     ctx.requiresReference(_uniqueName);
   }
   
-  public CharSequence create(final SimpleCodeSnippetContext ctx, final Aggregate aggregate, final String pkg, final String className) {
-    CharSequence _xblockexpression = null;
+  public String create(final SimpleCodeSnippetContext ctx, final Aggregate aggregate, final String pkg, final String className) {
+    String _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("/**");
@@ -372,24 +372,10 @@ public class ESJpaStreamArtifactFactory extends AbstractSource<Aggregate> implem
       _builder.append("}");
       _builder.newLine();
       final String src = _builder.toString();
-      StringConcatenation _builder_1 = new StringConcatenation();
       String _copyrightHeader = this.getCopyrightHeader();
-      _builder_1.append(_copyrightHeader, "");
-      _builder_1.append(" ");
-      _builder_1.newLineIfNotEmpty();
-      _builder_1.append("package ");
-      _builder_1.append(pkg, "");
-      _builder_1.append(";");
-      _builder_1.newLineIfNotEmpty();
-      _builder_1.newLine();
       Set<String> _imports = ctx.getImports();
-      SrcImports _srcImports = new SrcImports(_imports);
-      _builder_1.append(_srcImports, "");
-      _builder_1.newLineIfNotEmpty();
-      _builder_1.newLine();
-      _builder_1.append(src, "");
-      _builder_1.newLineIfNotEmpty();
-      _xblockexpression = _builder_1;
+      SrcAll _srcAll = new SrcAll(_copyrightHeader, pkg, _imports, src);
+      _xblockexpression = _srcAll.toString();
     }
     return _xblockexpression;
   }

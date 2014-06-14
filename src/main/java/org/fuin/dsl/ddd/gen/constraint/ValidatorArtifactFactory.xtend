@@ -5,19 +5,19 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintTarget
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
-import org.fuin.dsl.ddd.gen.base.SrcImports
+import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcInvokeGetter
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
+import static extension org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintTargetExtensions.*
-import static extension org.fuin.dsl.ddd.gen.base.Utils.*
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcInvokeGetter
+import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 
 class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 
@@ -114,16 +114,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 			
 		'''
 
-		// Source code creation is splitted into two parts because imports are 
-		// added to the "ctx" during creation of above "src" variable
-		''' 
-			«copyrightHeader» 
-			package «pkg»;
-			
-			«new SrcImports(ctx.imports)»
-			
-			«src»
-		'''
+		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
 	}
 
