@@ -115,9 +115,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	def _methodDoc(String doc, List<Variable> variables, List<Constraint> constraints) {
 		'''
-			/**
-			 * «doc.text»
-			 *
+			 «new SrcJavaDoc(doc)»
 			«FOR v : variables.nullSafe»
 				* @param «v.name» «v.superDoc» 
 			«ENDFOR»

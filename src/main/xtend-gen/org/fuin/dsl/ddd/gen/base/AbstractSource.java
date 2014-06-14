@@ -28,6 +28,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.SrcValidationAnnotation;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
@@ -216,16 +217,10 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   
   public CharSequence _methodDoc(final String doc, final List<Variable> variables, final List<Constraint> constraints) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/**");
-    _builder.newLine();
     _builder.append(" ");
-    _builder.append("* ");
-    String _text = StringExtensions.text(doc);
-    _builder.append(_text, " ");
+    SrcJavaDoc _srcJavaDoc = new SrcJavaDoc(doc);
+    _builder.append(_srcJavaDoc, " ");
     _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
     {
       List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
       for(final Variable v : _nullSafe) {
@@ -255,8 +250,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
             _builder.append(_name_1, "");
             _builder.append(" Thrown if the constraint was violated: ");
             String _doc = constraint.getDoc();
-            String _text_1 = StringExtensions.text(_doc);
-            _builder.append(_text_1, "");
+            String _text = StringExtensions.text(_doc);
+            _builder.append(_text, "");
             _builder.append(" ");
             _builder.newLineIfNotEmpty();
           }
