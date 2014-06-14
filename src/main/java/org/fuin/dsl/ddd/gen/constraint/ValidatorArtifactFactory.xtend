@@ -50,7 +50,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 		ctx.resolve(refReg)
 
 		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, constraint, ns.asPackage, className).toString().getBytes("UTF-8"));
+			create(ctx, constraint, pkg, className).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
@@ -77,12 +77,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 		val targetName = c.target.name
 		val variables = c.target.variables
 
-		''' 
-			«copyrightHeader» 
-			package «pkg»;
-			
-			«new SrcImports(ctx.imports).toString»
-			
+		val String src = ''' 
 			/** «c.doc.text» */
 			// CHECKSTYLE:OFF:LineLength
 			public final class «className» implements ConstraintValidator<«c.name», «targetName»> {
@@ -117,6 +112,17 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 				«ENDIF»
 			}
 			
+		'''
+
+		// Source code creation is splitted into two parts because imports are 
+		// added to the "ctx" during creation of above "src" variable
+		''' 
+			«copyrightHeader» 
+			package «pkg»;
+			
+			«new SrcImports(ctx.imports)»
+			
+			«src»
 		'''
 
 	}

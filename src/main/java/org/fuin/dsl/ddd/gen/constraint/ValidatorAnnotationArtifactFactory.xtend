@@ -4,9 +4,15 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcImports
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
+import static extension org.fuin.dsl.ddd.gen.base.Utils.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 
 class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
@@ -19,9 +25,41 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 		if (constraint.target == null) {
 			return null;
 		}
+
+		val className = constraint.getName()
 		val Namespace ns = constraint.eContainer() as Namespace;
-		val filename = (ns.asPackage + "." + "." + constraint.getName()).replace('.', '/') + ".java";
-		return new GeneratedArtifact(artifactName, filename, create(constraint, ns).toString().getBytes("UTF-8"));
+		val fqn = ns.asPackage + "." + className
+		val filename = fqn.replace('.', '/') + ".java";
+
+		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+		refReg.putReference(constraint.uniqueName, fqn)
+
+		if (preparationRun) {
+
+			// No code generation during preparation phase
+			return null
+		}
+
+		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
+		ctx.addImports
+		ctx.addReferences(constraint)
+		ctx.resolve(refReg)
+
+		return new GeneratedArtifact(artifactName, filename,
+			create(ctx, constraint, pkg, className).toString().getBytes("UTF-8"));
+	}
+
+	def addImports(CodeSnippetContext ctx) {
+		ctx.requiresImport("java.lang.annotation.Documented")
+		ctx.requiresImport("java.lang.annotation.Retention")
+		ctx.requiresImport("java.lang.annotation.Target")
+		ctx.requiresImport("javax.validation.Constraint")
+		ctx.requiresImport("javax.validation.Payload")
+
+	}
+
+	def addReferences(CodeSnippetContext ctx, Constraint constraint) {
+		ctx.requiresReference(constraint.uniqueName + "Validator")
 	}
 
 	def String replaceValidatedValue(String msg) {
@@ -29,21 +67,8 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 		return newMsg.replace("${vv}", "${validatedValue}");
 	}
 
-	def create(Constraint c, Namespace ns) {
-		''' 
-			«copyrightHeader»
-			package «ns.asPackage»;
-			
-			import static java.lang.annotation.ElementType.*;
-			import static java.lang.annotation.RetentionPolicy.*;
-			
-			import java.lang.annotation.Documented;
-			import java.lang.annotation.Retention;
-			import java.lang.annotation.Target;
-			
-			import javax.validation.Constraint;
-			import javax.validation.Payload;
-			
+	def create(SimpleCodeSnippetContext ctx, Constraint c, String pkg, String className) {
+		val String src = ''' 
 			/**
 			 * «c.doc.text»
 			 */
@@ -58,7 +83,7 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 				   String message() default "«c.message.replaceValidatedValue»";
 			
 				/** Processing groups with which the constraint declaration is associated. */		
-			   Class<?>[] groups() default {};
+				  Class<?>[] groups() default {};
 			
 				/** Payload with which the the constraint declaration is associated. */
 				   Class<? extends Payload>[] payload() default {};
@@ -76,6 +101,17 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 				«ENDIF»
 			}
 			//CHECKSTYLE:ON:LineLength
+		'''
+
+		// Source code creation is splitted into two parts because imports are 
+		// added to the "ctx" during creation of above "src" variable
+		''' 
+			«copyrightHeader» 
+			package «pkg»;
+			
+			«new SrcImports(ctx.imports)»
+			
+			«src»
 		'''
 	}
 

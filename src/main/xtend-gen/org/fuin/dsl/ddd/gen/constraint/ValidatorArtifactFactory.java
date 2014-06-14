@@ -61,8 +61,8 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
       this.addReferences(ctx, constraint);
       ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
-      String _asPackage_1 = this.asPackage(ns);
-      CharSequence _create = this.create(ctx, constraint, _asPackage_1, className);
+      String _pkg = this.getPkg();
+      CharSequence _create = this.create(ctx, constraint, _pkg, className);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);
@@ -108,21 +108,6 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
       ConstraintTarget _target_1 = c.getTarget();
       final List<Variable> variables = ConstraintTargetExtensions.getVariables(_target_1);
       StringConcatenation _builder = new StringConcatenation();
-      String _copyrightHeader = this.getCopyrightHeader();
-      _builder.append(_copyrightHeader, "");
-      _builder.append(" ");
-      _builder.newLineIfNotEmpty();
-      _builder.append("package ");
-      _builder.append(pkg, "");
-      _builder.append(";");
-      _builder.newLineIfNotEmpty();
-      _builder.newLine();
-      Set<String> _imports = ctx.getImports();
-      SrcImports _srcImports = new SrcImports(_imports);
-      String _string = _srcImports.toString();
-      _builder.append(_string, "");
-      _builder.newLineIfNotEmpty();
-      _builder.newLine();
       _builder.append("/** ");
       String _doc = c.getDoc();
       String _text = StringExtensions.text(_doc);
@@ -246,8 +231,8 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
                 _builder.appendImmediate(", ", "\t\t\t");
               }
               SrcInvokeGetter _srcInvokeGetter = new SrcInvokeGetter(ctx, "obj", v);
-              String _string_1 = _srcInvokeGetter.toString();
-              _builder.append(_string_1, "\t\t\t");
+              String _string = _srcInvokeGetter.toString();
+              _builder.append(_string, "\t\t\t");
             }
           }
           _builder.append(");");
@@ -266,7 +251,25 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
       _builder.append("}");
       _builder.newLine();
       _builder.newLine();
-      _xblockexpression = _builder;
+      final String src = _builder.toString();
+      StringConcatenation _builder_1 = new StringConcatenation();
+      String _copyrightHeader = this.getCopyrightHeader();
+      _builder_1.append(_copyrightHeader, "");
+      _builder_1.append(" ");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.append("package ");
+      _builder_1.append(pkg, "");
+      _builder_1.append(";");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      Set<String> _imports = ctx.getImports();
+      SrcImports _srcImports = new SrcImports(_imports);
+      _builder_1.append(_srcImports, "");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      _builder_1.append(src, "");
+      _builder_1.newLineIfNotEmpty();
+      _xblockexpression = _builder_1;
     }
     return _xblockexpression;
   }
