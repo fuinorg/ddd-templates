@@ -5,6 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcImports
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -60,13 +61,8 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 		ctx.requiresReference(entityId.uniqueName + "Converter")
 	}
 
-	def create(CodeSnippetContext ctx, EntityId id, String pkg, String className) {
-		''' 
-			«copyrightHeader»
-			package «pkg»;
-			
-			«_imports(id)»
-			
+	def create(SimpleCodeSnippetContext ctx, EntityId id, String pkg, String className) {
+		val String src = ''' 
 			«_typeDoc(id)»
 			@Immutable
 			@XmlJavaTypeAdapter(«id.name»Converter.class)
@@ -99,6 +95,18 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 				
 			}
 		'''
+
+		// Source code creation is splitted into two parts because imports are 
+		// added to the "ctx" during creation of above "src" variable
+		''' 
+			«copyrightHeader» 
+			package «pkg»;
+			
+			«new SrcImports(ctx.imports)»
+			
+			«src»
+		'''
+
 	}
 
 }

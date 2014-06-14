@@ -37,10 +37,10 @@ Export-Package: org.fuin.dsl.ddd.gen.event;version="0.1.0.SNAPSHOT";uses
  "org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.f
  uin.srcgen4j.commons,org.fuin.srcgen4j.core.emf",org.fuin.dsl.ddd.gen.e
  numobject;version="0.1.0.SNAPSHOT";uses:="org.fuin.dsl.ddd.domainDriven
- DesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons",org.fuin
- .dsl.ddd.gen.extensions;version="0.1.0.SNAPSHOT";uses:="org.eclipse.emf
- .ecore,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.srcgen4j.core.em
- f"
+ DesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons,org.fuin.
+ srcgen4j.core.emf",org.fuin.dsl.ddd.gen.extensions;version="0.1.0.SNAPS
+ HOT";uses:="org.eclipse.emf.ecore,org.fuin.dsl.ddd.domainDrivenDesignDs
+ l,org.fuin.srcgen4j.core.emf"
 Import-Package: com.google.common.base;version="[14.0,15)",com.google.co
  mmon.collect;version="[14.0,15)",javax.inject,org.eclipse.emf.common.ut
  il,org.eclipse.emf.ecore,org.eclipse.emf.ecore.resource,org.eclipse.xte
