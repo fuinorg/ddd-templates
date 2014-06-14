@@ -2,7 +2,6 @@ package org.fuin.dsl.ddd.gen.entity
 
 import java.util.List
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
@@ -62,12 +61,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className) {
-		''' 
-			«copyrightHeader»
-			package «pkg»;
-			
-			«new SrcImports(ctx.imports)»
-			
+		val String src = ''' 
 			«_typeDoc(entity)»
 			public final class «entity.name» extends Abstract«entity.name» {
 			
@@ -80,6 +74,17 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 				«_eventMethodsDecl(entity)»
 			
 			}
+		'''
+
+		// Source code creation is splitted into two parts because imports are 
+		// added to the "ctx" during creation of above "src" variable
+		''' 
+			«copyrightHeader» 
+			package «pkg»;
+			
+			«new SrcImports(ctx.imports)»
+			
+			«src»
 		'''
 	}
 
