@@ -9,7 +9,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
-import org.fuin.dsl.ddd.gen.base.SrcVarDecl
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -18,7 +18,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
@@ -81,7 +80,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				/** Unique name used to store the event. */
 				public static final EventType EVENT_TYPE = new EventType("«event.name»");
 				
-				«_varsDecl(ctx, event)»
+				«new SrcVarsDecl(ctx, "private", false, event)»
 			
 				/**
 				 * Protected default constructor for deserialization.
@@ -125,15 +124,6 @@ class EventArtifactFactory extends AbstractSource<Event> {
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
-
-	def _varsDecl(CodeSnippetContext ctx, Event event) {
-		'''
-			«FOR variable : event.variables.nullSafe»
-				«new SrcVarDecl(ctx, "private", true, variable)»
-				
-			«ENDFOR»
-		'''
 	}
 
 }

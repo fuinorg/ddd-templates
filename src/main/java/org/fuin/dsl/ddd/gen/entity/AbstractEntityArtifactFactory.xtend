@@ -8,8 +8,10 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcSetters
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -22,7 +24,6 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtension
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -72,7 +73,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 			
 				private «entity.idType.name» id;
 			
-				«_varsDecl(ctx, entity, false)»
+				«new SrcVarsDecl(ctx, "private", false, entity)»
 			
 				«_constructorsDecl(ctx, entity, entity.constructors)»
 			

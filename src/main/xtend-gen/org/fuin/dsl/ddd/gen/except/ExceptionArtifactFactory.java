@@ -1,6 +1,5 @@
 package org.fuin.dsl.ddd.gen.except;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
@@ -12,10 +11,9 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
-import org.fuin.dsl.ddd.gen.base.SrcVarDecl;
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
-import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
@@ -95,8 +93,8 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
       _builder.newLine();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __varsDecl = this._varsDecl(ctx, ex);
-      _builder.append(__varsDecl, "\t");
+      SrcVarsDecl _srcVarsDecl = new SrcVarsDecl(ctx, "private", false, ex);
+      _builder.append(_srcVarsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
@@ -200,20 +198,5 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
       _xblockexpression = _srcAll.toString();
     }
     return _xblockexpression;
-  }
-  
-  public CharSequence _varsDecl(final CodeSnippetContext ctx, final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      EList<Variable> _variables = ex.getVariables();
-      List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
-      for(final Variable variable : _nullSafe) {
-        SrcVarDecl _srcVarDecl = new SrcVarDecl(ctx, "private", false, variable);
-        _builder.append(_srcVarDecl, "");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
-    return _builder;
   }
 }

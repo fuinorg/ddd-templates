@@ -131,15 +131,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def _varsDecl(CodeSnippetContext ctx, InternalType internalType, boolean xml) {
-		'''
-			«FOR variable : internalType.variables.nullSafe»
-				«new SrcVarDecl(ctx, "private", xml, variable)»
-				
-			«ENDFOR»
-		'''
-	}
-
 	def _constructorsDecl(CodeSnippetContext ctx, InternalType internalType) {
 		'''
 			«FOR constructor : internalType.constructors.nullSafe»

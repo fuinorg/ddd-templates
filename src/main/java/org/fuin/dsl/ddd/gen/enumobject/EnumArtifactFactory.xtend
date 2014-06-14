@@ -5,6 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -63,7 +64,7 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 				«in.name»(«_methodCall(vo.variables, in.params)»)
 			«ENDFOR»;
 			
-				«_varsDecl(ctx, vo, false)»
+				«new SrcVarsDecl(ctx, "private", false, vo)»
 			
 				private «vo.name»(«_paramsDecl(ctx, vo.variables)») {
 					«_paramsAssignment(vo.variables)»

@@ -6,6 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -15,10 +16,8 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcVarDecl
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
@@ -67,7 +66,7 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 			
 				private static final long serialVersionUID = 1000L;
 			
-				«_varsDecl(ctx, ex)»
+				«new SrcVarsDecl(ctx, "private", false, ex)»
 			
 				/**
 				 * Constructs a new instance of the exception.
@@ -93,15 +92,6 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
-
-	def _varsDecl(CodeSnippetContext ctx, Exception ex) {
-		'''
-			«FOR variable : ex.variables.nullSafe»
-				«new SrcVarDecl(ctx, "private", false, variable)»
-				
-			«ENDFOR»
-		'''
 	}
 
 }

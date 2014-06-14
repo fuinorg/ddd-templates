@@ -6,6 +6,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -15,7 +17,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
@@ -73,7 +74,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 				/** Name that identifies the aggregate uniquely within the context. */	
 				public static final EntityType TYPE = new StringBasedEntityType("«id.entity.name»");
 			
-				«_varsDecl(ctx, id, false)»
+				«new SrcVarsDecl(ctx, "private", false, id)»
 			
 				«_optionalDeserializationConstructor(id)»
 			

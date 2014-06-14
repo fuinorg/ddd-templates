@@ -15,6 +15,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcSetters;
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
@@ -105,8 +106,8 @@ public class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> 
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __varsDecl = this._varsDecl(ctx, aggregate, false);
-      _builder.append(__varsDecl, "\t");
+      SrcVarsDecl _srcVarsDecl = new SrcVarsDecl(ctx, "private", false, aggregate);
+      _builder.append(_srcVarsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");

@@ -6,6 +6,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -15,7 +17,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -61,7 +62,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«_varsDecl(ctx, vo, (vo.base == null))»
+				«new SrcVarsDecl(ctx, "private", (vo.base == null), vo)»
 			
 				«_optionalDeserializationConstructor(vo)»
 			

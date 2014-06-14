@@ -30,7 +30,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.SrcValidationAnnotation;
-import org.fuin.dsl.ddd.gen.base.SrcVarDecl;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
@@ -267,21 +266,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(" ");
     _builder.append("*/");
     _builder.newLine();
-    return _builder;
-  }
-  
-  public CharSequence _varsDecl(final CodeSnippetContext ctx, final InternalType internalType, final boolean xml) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      EList<Variable> _variables = internalType.getVariables();
-      List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
-      for(final Variable variable : _nullSafe) {
-        SrcVarDecl _srcVarDecl = new SrcVarDecl(ctx, "private", xml, variable);
-        _builder.append(_srcVarDecl, "");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
     return _builder;
   }
   

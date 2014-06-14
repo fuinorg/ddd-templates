@@ -15,6 +15,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
@@ -97,8 +98,8 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
       _builder.append("\t");
       ExternalType _base_2 = vo.getBase();
       boolean _equals_1 = Objects.equal(_base_2, null);
-      CharSequence __varsDecl = this._varsDecl(ctx, vo, _equals_1);
-      _builder.append(__varsDecl, "\t");
+      SrcVarsDecl _srcVarsDecl = new SrcVarsDecl(ctx, "private", _equals_1, vo);
+      _builder.append(_srcVarsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");

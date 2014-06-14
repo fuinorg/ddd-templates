@@ -20,6 +20,7 @@ import org.fuin.dsl.ddd.gen.base.SrcGetters;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcSetters;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
@@ -111,8 +112,8 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __varsDecl = this._varsDecl(ctx, entity, false);
-      _builder.append(__varsDecl, "\t");
+      SrcVarsDecl _srcVarsDecl = new SrcVarsDecl(ctx, "private", false, entity);
+      _builder.append(_srcVarsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");

@@ -6,6 +6,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -15,7 +17,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 
@@ -30,7 +31,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + entityId.getName()
 		val filename = fqn.replace('.', '/') + ".java";
-		
+
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(entityId.uniqueName, fqn)
 
@@ -44,7 +45,8 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 		ctx.addImports
 		ctx.addReferences(entityId)
 
-		return new GeneratedArtifact(artifactName, filename, create(ctx, entityId, pkg, className).toString().getBytes("UTF-8"));
+		return new GeneratedArtifact(artifactName, filename,
+			create(ctx, entityId, pkg, className).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
@@ -73,8 +75,8 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 				/** Name that identifies the entity uniquely within the context. */	
 				public static final EntityType TYPE = new StringBasedEntityType("«id.entity.name»");
 			
-				«_varsDecl(ctx, id, false)»
-			
+				«new SrcVarsDecl(ctx, "private", false, id)»
+				
 				«_optionalDeserializationConstructor(id)»
 			
 				«_constructorsDecl(ctx, id)»
