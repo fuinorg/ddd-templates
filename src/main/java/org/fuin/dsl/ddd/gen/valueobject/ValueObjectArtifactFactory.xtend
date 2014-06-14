@@ -28,8 +28,15 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + valueObject.getName()
 		val filename = fqn.replace('.', '/') + ".java";
+		
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(valueObject.uniqueName, fqn)
+
+		if (preparationRun) {
+
+			// No code generation during preparation phase
+			return null
+		}
 		
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
 		ctx.addImports

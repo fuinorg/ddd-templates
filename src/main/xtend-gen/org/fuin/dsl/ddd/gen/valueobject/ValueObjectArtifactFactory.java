@@ -39,6 +39,9 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
       String _uniqueName = AbstractElementExtensions.uniqueName(valueObject);
       refReg.putReference(_uniqueName, fqn);
+      if (preparationRun) {
+        return null;
+      }
       final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
       this.addImports(ctx);
       ctx.resolve(refReg);

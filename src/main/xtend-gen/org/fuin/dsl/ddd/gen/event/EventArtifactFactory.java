@@ -47,6 +47,9 @@ public class EventArtifactFactory extends AbstractSource<Event> {
         final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
         String _uniqueName = EventExtensions.uniqueName(event);
         refReg.putReference(_uniqueName, fqn);
+        if (preparationRun) {
+          return null;
+        }
         final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
         this.addImports(ctx);
         this.addReferences(ctx, event);

@@ -26,8 +26,15 @@ class AggregateIdConverterArtifactFactory extends AbstractSource<AggregateId> {
 		val Namespace ns = aggregateId.eContainer() as Namespace;
 		val String fqn = ns.asPackage + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
+		
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(aggregateId.uniqueName + "Converter", fqn)
+
+		if (preparationRun) {
+
+			// No code generation during preparation phase
+			return null
+		}
 		
 		return new GeneratedArtifact(
 			artifactName,

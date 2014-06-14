@@ -26,8 +26,15 @@ class ValueObjectConverterArtifactFactory extends AbstractSource<ValueObject> {
 		val Namespace ns = valueObject.eContainer() as Namespace;
 		val fqn = ns.asPackage + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
+		
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(valueObject.uniqueName + "Converter", fqn)
+
+		if (preparationRun) {
+
+			// No code generation during preparation phase
+			return null
+		}
 
 		return new GeneratedArtifact(
 			artifactName,

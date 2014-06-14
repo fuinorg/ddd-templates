@@ -34,8 +34,14 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + aggregate.getName()
 		val filename = fqn.replace('.', '/') + ".java";
+		
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(aggregate.uniqueName, fqn)
+
+		if (preparationRun) {
+			// No code generation during preparation phase
+			return null
+		}
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
 		ctx.addImports
@@ -54,12 +60,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {
-		''' 
-			«copyrightHeader» 
-			package «pkg»;
-			
-			«new SrcImports(ctx.imports)»
-			
+		val String src = ''' 
 			«_typeDoc(aggregate)»
 			public final class «className» extends Abstract«aggregate.name» {
 			
@@ -79,6 +80,18 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 				«_eventMethodsDecl(aggregate)»
 			
 			}
+		'''
+
+		// Source code creation is splitted into two parts because imports are 
+		// added to the "ctx" during creation of above "src" variable
+		''' 
+			«copyrightHeader» 
+			package «pkg»;
+			
+			«new SrcImports(ctx.imports)»
+			
+			«src»
+			
 		'''
 	}
 

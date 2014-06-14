@@ -45,6 +45,9 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
       String _uniqueName = AbstractElementExtensions.uniqueName(entity);
       refReg.putReference(_uniqueName, fqn);
+      if (preparationRun) {
+        return null;
+      }
       final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
       this.addImports(ctx);
       this.addReferences(ctx, entity);

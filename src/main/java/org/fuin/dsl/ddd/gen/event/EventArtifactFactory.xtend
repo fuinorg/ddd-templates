@@ -38,8 +38,15 @@ class EventArtifactFactory extends AbstractSource<Event> {
 			val pkg = ns.asPackage
 			val fqn = pkg + "." + event.getName()
 			val filename = fqn.replace('.', '/') + ".java";
+			
 			val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 			refReg.putReference(event.uniqueName, fqn)
+
+			if (preparationRun) {
+	
+				// No code generation during preparation phase
+				return null
+			}
 			
 			val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
 			ctx.addImports

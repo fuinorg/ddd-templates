@@ -26,25 +26,28 @@ public class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
     return AggregateId.class;
   }
   
-  public GeneratedArtifact create(final AggregateId entityId, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final AggregateId aggregateId, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
-      final String className = entityId.getName();
-      EObject _eContainer = entityId.eContainer();
+      final String className = aggregateId.getName();
+      EObject _eContainer = aggregateId.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
       final String pkg = this.asPackage(ns);
-      String _name = entityId.getName();
+      String _name = aggregateId.getName();
       final String fqn = ((pkg + ".") + _name);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
-      String _uniqueName = AbstractElementExtensions.uniqueName(entityId);
+      String _uniqueName = AbstractElementExtensions.uniqueName(aggregateId);
       refReg.putReference(_uniqueName, fqn);
+      if (preparationRun) {
+        return null;
+      }
       final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
       this.addImports(ctx);
-      this.addReferences(ctx, entityId);
+      this.addReferences(ctx, aggregateId);
       ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
-      CharSequence _create = this.create(ctx, entityId, pkg, className);
+      CharSequence _create = this.create(ctx, aggregateId, pkg, className);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);

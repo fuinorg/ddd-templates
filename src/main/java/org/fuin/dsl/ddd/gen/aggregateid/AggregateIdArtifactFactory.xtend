@@ -21,22 +21,29 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 		typeof(AggregateId)
 	}
 
-	override create(AggregateId entityId, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		
-		val className = entityId.getName()
-		val Namespace ns = entityId.eContainer() as Namespace;
+	override create(AggregateId aggregateId, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+
+		val className = aggregateId.getName()
+		val Namespace ns = aggregateId.eContainer() as Namespace;
 		val pkg = ns.asPackage
-		val fqn = pkg + "." + entityId.getName()
+		val fqn = pkg + "." + aggregateId.getName()
 		val filename = fqn.replace('.', '/') + ".java";
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
-		refReg.putReference(entityId.uniqueName, fqn)
-		
+		refReg.putReference(aggregateId.uniqueName, fqn)
+
+		if (preparationRun) {
+
+			// No code generation during preparation phase
+			return null
+		}
+
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
 		ctx.addImports
-		ctx.addReferences(entityId)
+		ctx.addReferences(aggregateId)
 		ctx.resolve(refReg)
-		
-		return new GeneratedArtifact(artifactName, filename, create(ctx, entityId, pkg, className).toString().getBytes("UTF-8"));
+
+		return new GeneratedArtifact(artifactName, filename,
+			create(ctx, aggregateId, pkg, className).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
@@ -52,7 +59,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 	def addReferences(CodeSnippetContext ctx, AggregateId entityId) {
 		ctx.requiresReference(entityId.uniqueName + "Converter")
 	}
-	
+
 	def create(CodeSnippetContext ctx, AggregateId id, String pkg, String className) {
 		''' 
 			«copyrightHeader»

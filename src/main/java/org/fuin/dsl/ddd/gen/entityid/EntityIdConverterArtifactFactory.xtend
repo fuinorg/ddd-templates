@@ -26,8 +26,15 @@ class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
 		val Namespace ns = entityId.eContainer() as Namespace;
 		val fqn = ns.asPackage + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
+		
 		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 		refReg.putReference(entityId.uniqueName + "Converter", fqn)
+
+		if (preparationRun) {
+
+			// No code generation during preparation phase
+			return null
+		}
 		
 		return new GeneratedArtifact(
 			artifactName,

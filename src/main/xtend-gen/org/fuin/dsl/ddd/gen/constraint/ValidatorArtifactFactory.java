@@ -53,6 +53,9 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
       String _uniqueName = AbstractElementExtensions.uniqueName(constraint);
       String _plus_1 = (_uniqueName + "Validator");
       refReg.putReference(_plus_1, fqn);
+      if (preparationRun) {
+        return null;
+      }
       final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
       this.addImports(ctx);
       this.addReferences(ctx, constraint);

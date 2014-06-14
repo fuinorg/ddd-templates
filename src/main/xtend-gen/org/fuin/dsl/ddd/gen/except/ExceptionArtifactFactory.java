@@ -42,6 +42,9 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
       String _uniqueName = AbstractElementExtensions.uniqueName(ex);
       refReg.putReference(_uniqueName, fqn);
+      if (preparationRun) {
+        return null;
+      }
       final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
       this.addImports(ctx);
       this.addReferences(ctx, ex);

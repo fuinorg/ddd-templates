@@ -41,6 +41,9 @@ public class AggregateIdConverterArtifactFactory extends AbstractSource<Aggregat
       String _uniqueName = AbstractElementExtensions.uniqueName(aggregateId);
       String _plus_1 = (_uniqueName + "Converter");
       refReg.putReference(_plus_1, fqn);
+      if (preparationRun) {
+        return null;
+      }
       String _artifactName = this.getArtifactName();
       String _copyrightHeader = this.getCopyrightHeader();
       String _asPackage_1 = this.asPackage(ns);

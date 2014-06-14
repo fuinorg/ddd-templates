@@ -36,8 +36,15 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + entity.getName()
 		val filename = fqn.replace('.', '/') + ".java";
+		
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(entity.uniqueName, fqn)
+
+		if (preparationRun) {
+
+			// No code generation during preparation phase
+			return null
+		}
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
 		ctx.addImports
