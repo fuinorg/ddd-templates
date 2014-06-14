@@ -8,6 +8,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcImports
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -17,9 +18,9 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 
 class EventArtifactFactory extends AbstractSource<Event> {
 
@@ -69,13 +70,8 @@ class EventArtifactFactory extends AbstractSource<Event> {
 	def addReferences(CodeSnippetContext ctx, Event event) {		
 	}
 
-	def create(CodeSnippetContext ctx, Event event, String pkg, String className) {
-		''' 
-			«copyrightHeader»
-			package «pkg»;
-			
-			«_imports(event)»
-			
+	def create(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
+		val String src = ''' 
 			/** «event.doc.text» */
 			«_xmlRootElement(event.name)»
 			public final class «className» extends AbstractDomainEvent<«event.entityIdType.name»> {
@@ -126,6 +122,18 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				
 			}
 		'''
+
+		// Source code creation is splitted into two parts because imports are 
+		// added to the "ctx" during creation of above "src" variable
+		''' 
+			«copyrightHeader» 
+			package «pkg»;
+			
+			«new SrcImports(ctx.imports)»
+			
+			«src»
+		'''
+
 	}
 
 	def _varsDecl(Event event) {
