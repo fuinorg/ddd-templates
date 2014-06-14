@@ -8,8 +8,14 @@ import java.util.Map
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
+
+import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
@@ -31,14 +37,35 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 		while (ctxIt.hasNext) {
 			val String ctx = ctxIt.next
 			val List<Event> events = contextEvents.get(ctx)
+
+			val className = ctx.toFirstUpper + "EventRegistry"
 			val String pkg = getBasePkg() + "." + ctx + "." + getPkg()
-			val filename = (pkg + "." + ctx.toFirstUpper + "EventRegistry").replace('.', '/') + ".java";
+			val fqn = pkg + "." + className
+			val filename = fqn.replace('.', '/') + ".java";
+
+			val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+			refReg.putReference(className, fqn)
 
 			// TODO Support multiple generated artifacts for ArtifactFactory
+			if (preparationRun) {
+				return null
+			}
+
+			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext()
+			sctx.addImports
+			sctx.addReferences
+			sctx.resolve(refReg)
+
 			return new GeneratedArtifact(artifactName, filename,
-				create(pkg, ctx, events, resourceSet).toString().getBytes("UTF-8"));
+				create(sctx, ctx, pkg, className, events, resourceSet).toString().getBytes("UTF-8"));
 		}
 
+	}
+
+	def addImports(CodeSnippetContext ctx) {
+	}
+
+	def addReferences(CodeSnippetContext ctx) {
 	}
 
 	def contextEventMap(ResourceSet resourceSet) {
@@ -56,24 +83,13 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 		return contextEvents
 	}
 
-	def create(String pkg, String ctx, List<Event> events, ResourceSet resourceSet) {
-		''' 
-			«copyrightHeader»
-			package «pkg»;
-			
-			import java.nio.charset.Charset;
-			import javax.enterprise.context.ApplicationScoped;
-			import org.fuin.ddd4j.ddd.*;
-			
-			«FOR event : events»
-				import «event.fqn»;
-			«ENDFOR»
-			
+	def create(SimpleCodeSnippetContext sctx, String ctx, String pkg, String className, List<Event> events, ResourceSet resourceSet) {
+		val String src = ''' 
 			/**
 			 * Contains a list of all events defined by this package.
 			 */
 			@ApplicationScoped
-			public class «ctx.toFirstUpper»EventRegistry implements SerializerDeserializerRegistry {
+			public class «className» implements SerializerDeserializerRegistry {
 			
 			    private SerializerDeserializerRegistry registry;
 			
@@ -107,6 +123,9 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			}
 			
 		'''
+
+		new SrcAll(copyrightHeader, pkg, sctx.imports, src).toString 
+
 	}
 
 }

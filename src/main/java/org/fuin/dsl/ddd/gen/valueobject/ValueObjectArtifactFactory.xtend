@@ -5,6 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcImports
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -49,13 +50,8 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 		ctx.requiresImport("org.fuin.objects4j.vo.ValueObject")
 	}
 
-	def create(CodeSnippetContext ctx, ValueObject vo, String pkg, String className) {
-		''' 
-			«copyrightHeader»
-			package «pkg»;
-			
-			«_imports(vo)»
-			
+	def create(SimpleCodeSnippetContext ctx, ValueObject vo, String pkg, String className) {
+		val String src = ''' 
 			«_typeDoc(vo)»
 			
 			«IF vo.base == null»
@@ -77,6 +73,18 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 				
 			}
 		'''
+
+		// Source code creation is splitted into two parts because imports are 
+		// added to the "ctx" during creation of above "src" variable
+		''' 
+			«copyrightHeader» 
+			package «pkg»;
+			
+			«new SrcImports(ctx.imports)»
+			
+			«src»
+		'''
+
 	}
 
 }

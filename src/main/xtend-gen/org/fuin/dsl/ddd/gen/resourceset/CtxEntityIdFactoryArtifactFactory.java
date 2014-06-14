@@ -17,9 +17,14 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.base.SrcAll;
+import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 
 @SuppressWarnings("all")
 public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
@@ -42,19 +47,28 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
         {
           final String ctx = ctxIt.next();
           final List<AbstractEntityId> entityIds = contextEntityIds.get(ctx);
+          String _firstUpper = StringExtensions.toFirstUpper(ctx);
+          final String className = (_firstUpper + "EntityIdFactory");
           String _basePkg = this.getBasePkg();
           String _plus = (_basePkg + ".");
           String _plus_1 = (_plus + ctx);
           String _plus_2 = (_plus_1 + ".");
           String _pkg = this.getPkg();
           final String pkg = (_plus_2 + _pkg);
-          String _firstUpper = StringExtensions.toFirstUpper(ctx);
-          String _plus_3 = ((pkg + ".") + _firstUpper);
-          String _plus_4 = (_plus_3 + "EntityIdFactory");
-          String _replace = _plus_4.replace(".", "/");
+          final String fqn = ((pkg + ".") + className);
+          String _replace = fqn.replace(".", "/");
           final String filename = (_replace + ".java");
+          final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
+          refReg.putReference(className, fqn);
+          if (preparationRun) {
+            return null;
+          }
+          final SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext();
+          this.addImports(sctx);
+          this.addReferences(sctx);
+          sctx.resolve(refReg);
           String _artifactName = this.getArtifactName();
-          CharSequence _create = this.create(pkg, ctx, entityIds, resourceSet);
+          String _create = this.create(sctx, ctx, pkg, className, entityIds, resourceSet);
           String _string = _create.toString();
           byte[] _bytes = _string.getBytes("UTF-8");
           return new GeneratedArtifact(_artifactName, filename, _bytes);
@@ -64,6 +78,14 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  public Object addImports(final CodeSnippetContext ctx) {
+    return null;
+  }
+  
+  public Object addReferences(final CodeSnippetContext ctx) {
+    return null;
   }
   
   public Map<String,List<AbstractEntityId>> contextEntityIdMap(final ResourceSet resourceSet) {
@@ -94,118 +116,112 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     return contextEntityIds;
   }
   
-  public CharSequence create(final String pkg, final String ctx, final List<AbstractEntityId> entityIds, final ResourceSet resourceSet) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyrightHeader = this.getCopyrightHeader();
-    _builder.append(_copyrightHeader, "");
-    _builder.newLineIfNotEmpty();
-    _builder.append("package ");
-    _builder.append(pkg, "");
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.newLine();
-    _builder.append("import java.util.*;");
-    _builder.newLine();
-    _builder.append("import javax.enterprise.context.*;");
-    _builder.newLine();
-    _builder.append("import org.fuin.ddd4j.ddd.*;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Creates entity identifier instanced based on the type.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("@ApplicationScoped");
-    _builder.newLine();
-    _builder.append("public final class ");
-    String _firstUpper = StringExtensions.toFirstUpper(ctx);
-    _builder.append(_firstUpper, "");
-    _builder.append("EntityIdFactory implements EntityIdFactory {");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("private Map<String, SingleEntityIdFactory> map;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append("     ");
-    _builder.append("* Default constructor.");
-    _builder.newLine();
-    _builder.append("     ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("public EmsEntityIdFactory() {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("super();");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("map = new HashMap<String, SingleEntityIdFactory>();");
-    _builder.newLine();
+  public String create(final SimpleCodeSnippetContext sctx, final String ctx, final String pkg, final String className, final List<AbstractEntityId> entityIds, final ResourceSet resourceSet) {
+    String _xblockexpression = null;
     {
-      for(final AbstractEntityId entityId : entityIds) {
-        _builder.append("map.put(");
-        String _name = entityId.getName();
-        _builder.append(_name, "");
-        _builder.append(".TYPE.asString(), new ");
-        String _name_1 = entityId.getName();
-        _builder.append(_name_1, "");
-        _builder.append("Converter());");
-        _builder.newLineIfNotEmpty();
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("/**");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("* Creates entity identifier instanced based on the type.");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("*/");
+      _builder.newLine();
+      _builder.append("@ApplicationScoped");
+      _builder.newLine();
+      _builder.append("public final class ");
+      _builder.append(className, "");
+      _builder.append(" implements EntityIdFactory {");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("private Map<String, SingleEntityIdFactory> map;");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("/**");
+      _builder.newLine();
+      _builder.append("     ");
+      _builder.append("* Default constructor.");
+      _builder.newLine();
+      _builder.append("     ");
+      _builder.append("*/");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("public ");
+      _builder.append(className, "    ");
+      _builder.append("() {");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t\t");
+      _builder.append("super();");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("map = new HashMap<String, SingleEntityIdFactory>();");
+      _builder.newLine();
+      {
+        for(final AbstractEntityId entityId : entityIds) {
+          _builder.append("\t\t");
+          _builder.append("map.put(");
+          String _name = entityId.getName();
+          _builder.append(_name, "\t\t");
+          _builder.append(".TYPE.asString(), new ");
+          String _name_1 = entityId.getName();
+          _builder.append(_name_1, "\t\t");
+          _builder.append("Converter());");
+          _builder.newLineIfNotEmpty();
+        }
       }
+      _builder.append("    ");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("@Override");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("public EntityId createEntityId(final String type, final String id) {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("final SingleEntityIdFactory factory = map.get(type);");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("if (factory == null) {");
+      _builder.newLine();
+      _builder.append("  \t\t\t");
+      _builder.append("throw new IllegalArgumentException(\"Unknown type: \" + type);");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("return factory.createEntityId(id);");
+      _builder.newLine();
+      _builder.append("  ");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("@Override");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("public boolean containsType(final String type) {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("return map.containsKey(type);");
+      _builder.newLine();
+      _builder.append("  ");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("}");
+      _builder.newLine();
+      final String src = _builder.toString();
+      String _copyrightHeader = this.getCopyrightHeader();
+      Set<String> _imports = sctx.getImports();
+      SrcAll _srcAll = new SrcAll(_copyrightHeader, pkg, _imports, src);
+      _xblockexpression = _srcAll.toString();
     }
-    _builder.append("    ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("public EntityId createEntityId(final String type, final String id) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("final SingleEntityIdFactory factory = map.get(type);");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("if (factory == null) {");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("throw new IllegalArgumentException(\"Unknown type: \" + type);");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return factory.createEntityId(id);");
-    _builder.newLine();
-    _builder.append("  ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("    ");
-    _builder.append("public boolean containsType(final String type) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return map.containsKey(type);");
-    _builder.newLine();
-    _builder.append("  ");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder;
+    return _xblockexpression;
   }
 }

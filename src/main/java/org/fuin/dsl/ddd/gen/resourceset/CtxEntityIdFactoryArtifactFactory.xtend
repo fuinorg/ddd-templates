@@ -8,10 +8,17 @@ import java.util.Map
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcImports
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
+
+import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcAll
 
 class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 
@@ -31,14 +38,36 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 		while (ctxIt.hasNext) {
 			val String ctx = ctxIt.next
 			val List<AbstractEntityId> entityIds = contextEntityIds.get(ctx)
+
+			val className = ctx.toFirstUpper + "EntityIdFactory"
 			val String pkg = getBasePkg() + "." + ctx + "." + getPkg()
-			val filename = (pkg + "." + ctx.toFirstUpper + "EntityIdFactory").replace('.', '/') + ".java";
+			val fqn = pkg + "." + className
+			val filename = fqn.replace('.', '/') + ".java";
+
+			val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+			refReg.putReference(className, fqn)
 
 			// TODO Support multiple generated artifacts for ArtifactFactory
+			if (preparationRun) {
+				return null
+			}
+
+			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext()
+			sctx.addImports
+			sctx.addReferences
+			sctx.resolve(refReg)
+
 			return new GeneratedArtifact(artifactName, filename,
-				create(pkg, ctx, entityIds, resourceSet).toString().getBytes("UTF-8"));
+				create(sctx, ctx, pkg, className, entityIds, resourceSet).toString().getBytes("UTF-8"));
+
 		}
 
+	}
+
+	def addImports(CodeSnippetContext ctx) {
+	}
+
+	def addReferences(CodeSnippetContext ctx) {
 	}
 
 	def contextEntityIdMap(ResourceSet resourceSet) {
@@ -56,31 +85,25 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 		return contextEntityIds
 	}
 
-	def create(String pkg, String ctx, List<AbstractEntityId> entityIds, ResourceSet resourceSet) {
-		''' 
-			«copyrightHeader»
-			package «pkg»;
-				
-			import java.util.*;
-			import javax.enterprise.context.*;
-			import org.fuin.ddd4j.ddd.*;
-			
+	def create(SimpleCodeSnippetContext sctx, String ctx, String pkg, String className, List<AbstractEntityId> entityIds,
+		ResourceSet resourceSet) {
+		val String src = ''' 
 			/**
 			 * Creates entity identifier instanced based on the type.
 			 */
 			@ApplicationScoped
-			public final class «ctx.toFirstUpper»EntityIdFactory implements EntityIdFactory {
+			public final class «className» implements EntityIdFactory {
 			
 			    private Map<String, SingleEntityIdFactory> map;
 			
 			    /**
 			     * Default constructor.
 			     */
-			    public EmsEntityIdFactory() {
+			    public «className»() {
 					super();
 					map = new HashMap<String, SingleEntityIdFactory>();
 					«FOR entityId : entityIds»
-				map.put(«entityId.name».TYPE.asString(), new «entityId.name»Converter());
+					map.put(«entityId.name».TYPE.asString(), new «entityId.name»Converter());
 					«ENDFOR»
 			    }
 			
@@ -88,7 +111,7 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 			    public EntityId createEntityId(final String type, final String id) {
 					final SingleEntityIdFactory factory = map.get(type);
 					if (factory == null) {
-			    throw new IllegalArgumentException("Unknown type: " + type);
+			  			throw new IllegalArgumentException("Unknown type: " + type);
 					}
 					return factory.createEntityId(id);
 			  }
@@ -100,6 +123,9 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 			
 			}
 		'''
+
+		new SrcAll(copyrightHeader, pkg, sctx.imports, src).toString 
+
 	}
 
 }

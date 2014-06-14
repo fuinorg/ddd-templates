@@ -8,8 +8,14 @@ import java.util.Map
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
+import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
+
+import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
@@ -31,14 +37,35 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 		while (ctxIt.hasNext) {
 			val String ctx = ctxIt.next
 			val List<AggregateId> aggregateIds = contextAggregateIds.get(ctx)
+
+			val className = ctx.toFirstUpper + "StreamFactory"
 			val String pkg = getBasePkg() + "." + ctx + "." + getPkg()
-			val filename = (pkg + "." + ctx.toFirstUpper + "StreamFactory").replace('.', '/') + ".java";
+			val fqn = pkg + "." + className
+			val filename = fqn.replace('.', '/') + ".java";
+
+			val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+			refReg.putReference(className, fqn)
 
 			// TODO Support multiple generated artifacts for ArtifactFactory
+			if (preparationRun) {
+				return null
+			}
+
+			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext()
+			sctx.addImports
+			sctx.addReferences
+			sctx.resolve(refReg)
+
 			return new GeneratedArtifact(artifactName, filename,
-				create(pkg, ctx, aggregateIds, resourceSet).toString().getBytes("UTF-8"));
+				create(sctx, ctx, pkg, className, aggregateIds, resourceSet).toString().getBytes("UTF-8"));
 		}
 
+	}
+
+	def addImports(CodeSnippetContext ctx) {
+	}
+
+	def addReferences(CodeSnippetContext ctx) {
 	}
 
 	def contextAggregateIdMap(ResourceSet resourceSet) {
@@ -56,32 +83,25 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 		return contextEntityIds
 	}
 
-	def create(String pkg, String ctx, List<AggregateId> aggregateIds, ResourceSet resourceSet) {
-		''' 
-			«copyrightHeader»
-			package «pkg»;
-				
-			import java.util.*;
-			import javax.enterprise.context.*;
-			import org.fuin.ddd4j.eventstore.intf.*;
-			import org.fuin.ddd4j.eventstore.jpa.*;
-			
+	def create(SimpleCodeSnippetContext sctx, String ctx, String pkg, String className, List<AggregateId> aggregateIds,
+		ResourceSet resourceSet) {
+		val String src = ''' 
 			/**
 			 * Creates a stream for all known EMS aggregates based on a AggregateRootId.
 			 */
 			@ApplicationScoped
-			public class «ctx.toFirstUpper»StreamFactory implements IdStreamFactory {
+			public class «className» implements IdStreamFactory {
 			
 			    private Map<String, IdStreamFactory> map;
 			
 			    /**
 			     * Default constructor.
 			     */
-			    public «ctx.toFirstUpper»StreamFactory() {
+			    public «className»() {
 					super();
 					map = new HashMap<String, IdStreamFactory>();
 					«FOR aggregateId : aggregateIds»
-				map.put(«aggregateId.name».TYPE.asString(), new «aggregateId.name»StreamFactory());
+					map.put(«aggregateId.name».TYPE.asString(), new «aggregateId.name»StreamFactory());
 					«ENDFOR»
 			    }
 			
@@ -94,14 +114,17 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 			    public Stream createStream(final StreamId streamId) {
 					final IdStreamFactory factory = map.get(streamId.getName());
 					if (factory == null) {
-			    throw new IllegalArgumentException("Unknown stream id type: "
-			     + streamId);
+			  throw new IllegalArgumentException("Unknown stream id type: "
+			   + streamId);
 					}
 					return factory.createStream(streamId);
 			  }
 			
 			}
 		'''
+
+		new SrcAll(copyrightHeader, pkg, sctx.imports, src).toString 
+
 	}
 
 }
