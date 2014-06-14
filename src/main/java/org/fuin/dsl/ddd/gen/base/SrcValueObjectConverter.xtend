@@ -66,12 +66,7 @@ class SrcValueObjectConverter implements CodeSnippet {
 	}
 
 	override toString() {
-		'''	
-			«copyrightHeader»
-			package «pkg»;
-			
-			«new SrcImports(ctx.imports).toString»
-			
+		val src = '''	
 			/**
 			 * Converts «voTypeName» from/to «targetTypeName».
 			 */
@@ -119,6 +114,9 @@ class SrcValueObjectConverter implements CodeSnippet {
 			
 			}
 		'''
+		
+		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+		
 	}
 
 }
