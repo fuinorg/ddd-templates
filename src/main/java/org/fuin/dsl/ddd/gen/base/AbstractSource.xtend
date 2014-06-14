@@ -1,22 +1,14 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
-import java.util.HashSet
 import java.util.List
 import java.util.Map
-import java.util.Set
-import org.eclipse.emf.ecore.EObject
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintTarget
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
@@ -24,7 +16,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.commons.ArtifactFactory
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
@@ -75,89 +66,11 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		return header
 	}
 
-	def Set<String> createImportSet(EObject el) {
-		var Set<String> types = new HashSet<String>();
-		types.add('org.fuin.ddd4j.ddd.*')
-		types.add('org.fuin.objects4j.vo.*')
-		types.add('java.util.List')
-		types.add('java.util.Locale') // TODO Workaround 
-		addJavaImport(types, el);
-		for (variable : el.eAllContents.toIterable.filter(typeof(Variable))) {
-			if (variable.invariants != null) {
-				for (call : variable.invariants.calls) {
-					types.add(call.constraint.fqn);
-				}
-			}
-			addJavaImport(types, variable.type);
-			if (variable.multiplicity != null) {
-				types.add(typeof(List).name);
-			}
-		}
-		for (constraints : el.eAllContents.toIterable.filter(typeof(Constraints))) {
-			if (constraints.calls != null) {
-				for (call : constraints.calls) {
-					var Constraint constraint = call.constraint;
-					if (constraint.exception != null) {
-						var Namespace ns = constraint.eContainer as Namespace;
-						types.add(ns.asPackage + "." + constraint.exception.name);
-					}
-				}
-
-			}
-		}
-		for (method : el.eAllContents.toIterable.filter(typeof(Method))) {
-			if (method.refMethod != null) {
-				types.addAll(createImportSet(method.refMethod));
-			}
-		}
-		for (constraintTarget : el.eAllContents.toIterable.filter(typeof(ConstraintTarget))) {
-			addJavaImport(types, constraintTarget);
-		}
-		return types;
-	}
-
-	def String fqn(Event event) {
-		var Namespace ns = event.namespace;
-		return ns.asPackage + "." + event.name;
-	}
-
-	def String fqn(AbstractElement el) {
-		var Namespace ns = el.namespace;
-		return ns.asPackage + "." + el.name;
-	}
-
 	def String asPackage(Namespace ns) {
 		if (getPkg() == null) {
 			return getBasePkg() + "." + ns.context.name + "." + ns.name;
 		}
 		return getBasePkg() + "." + ns.context.name + "." + getPkg() + "." + ns.name;
-	}
-
-	def addJavaImport(Set<String> imports, EObject obj) {
-		if (!(obj instanceof AbstractElement)) {
-			return null;
-		}
-		var AbstractElement type = obj as AbstractElement;
-		var String name = type.name;
-		switch name {
-			case 'UUID': imports.add('java.util.UUID')
-			case 'Date': imports.add('org.joda.time.LocalDate')
-			case 'Time': imports.add('org.joda.time.LocalTime')
-			case 'Timestamp': imports.add('org.joda.time.LocalDateTime')
-			case 'Currency': imports.add('java.util.Currency')
-			case 'BigDecimal': imports.add('java.math.BigDecimal')
-			case 'Locale': imports.add('java.util.Locale')
-			case 'Byte': null
-			case 'Short': null
-			case 'Integer': null
-			case 'Long': null
-			case 'Float': null
-			case 'Double': null
-			case 'Boolean': null
-			case 'Character': null
-			case 'String': null
-			default: imports.add(fqn(type))
-		}
 	}
 
 	def String asJavaType(Variable variable) {
@@ -192,22 +105,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	}
 
 	// --- Source code fragments (Method names should start with an underscore '_') ---
-
-	def _imports(EObject... elements) {
-		if ((elements == null) || (elements.length == 0)) {
-			return "";
-		}
-		var Set<String> imports = new HashSet<String>();
-		for (el : elements) {
-			imports.addAll(createImportSet(el));
-		}
-		'''
-			«FOR imp : imports»
-				import «imp»;
-			«ENDFOR»
-		'''
-	}
-
 	def _methodDoc(Constructor constructor) {
 		return _methodDoc(constructor.doc, constructor.variables, constructor.allConstraints)
 	}
@@ -268,10 +165,12 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		}
 	}
 
-	def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables, Constraints constraints) {
+	def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables,
+		Constraints constraints) {
 		'''
 			«_methodDoc("Constructor with all data.", variables, null)»
-			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
+			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx,
+				constraints.exceptionList)»{
 				super();
 				«_paramsAssignment(variables.nullSafe)»	
 			}
@@ -290,7 +189,8 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _methodDecl(CodeSnippetContext ctx, Method method) {
 		'''
 			«_methodDoc(method)»
-			public final void «method.name»(«_paramsDecl(ctx, method.allVariables)») «new SrcThrowsExceptions(ctx, method.allExceptions)»{
+			public final void «method.name»(«_paramsDecl(ctx, method.allVariables)») «new SrcThrowsExceptions(ctx,
+				method.allExceptions)»{
 				// TODO Implement	
 			}
 		'''
@@ -333,8 +233,8 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	def _paramDecl(CodeSnippetContext ctx, Variable v) {
 		if ((v.invariants != null) && (v.invariants.calls != null) && (v.invariants.calls.size > 0)) {
-			'''«FOR cc : v.invariants.calls SEPARATOR ' '»«new SrcValidationAnnotation(ctx, cc)»«ENDFOR» «IF v.nullable == null»@NotNull	«ENDIF»final «asJavaType(
-				v)» «v.name»'''
+			'''«FOR cc : v.invariants.calls SEPARATOR ' '»«new SrcValidationAnnotation(ctx, cc)»«ENDFOR» «IF v.nullable ==
+				null»@NotNull	«ENDIF»final «asJavaType(v)» «v.name»'''
 		} else {
 			'''«IF v.nullable == null»@NotNull «ENDIF»final «asJavaType(v)» «v.name»'''
 		}

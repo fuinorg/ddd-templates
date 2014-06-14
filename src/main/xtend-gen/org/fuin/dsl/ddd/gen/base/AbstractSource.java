@@ -1,26 +1,19 @@
 package org.fuin.dsl.ddd.gen.base;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Iterables;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.IteratorExtensions;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintTarget;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
@@ -92,103 +85,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return header;
   }
   
-  public Set<String> createImportSet(final EObject el) {
-    Set<String> types = new HashSet<String>();
-    types.add("org.fuin.ddd4j.ddd.*");
-    types.add("org.fuin.objects4j.vo.*");
-    types.add("java.util.List");
-    types.add("java.util.Locale");
-    this.addJavaImport(types, el);
-    TreeIterator<EObject> _eAllContents = el.eAllContents();
-    Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(_eAllContents);
-    Iterable<Variable> _filter = Iterables.<Variable>filter(_iterable, Variable.class);
-    for (final Variable variable : _filter) {
-      {
-        Invariants _invariants = variable.getInvariants();
-        boolean _notEquals = (!Objects.equal(_invariants, null));
-        if (_notEquals) {
-          Invariants _invariants_1 = variable.getInvariants();
-          EList<ConstraintCall> _calls = _invariants_1.getCalls();
-          for (final ConstraintCall call : _calls) {
-            Constraint _constraint = call.getConstraint();
-            String _fqn = this.fqn(_constraint);
-            types.add(_fqn);
-          }
-        }
-        Type _type = variable.getType();
-        this.addJavaImport(types, _type);
-        String _multiplicity = variable.getMultiplicity();
-        boolean _notEquals_1 = (!Objects.equal(_multiplicity, null));
-        if (_notEquals_1) {
-          String _name = List.class.getName();
-          types.add(_name);
-        }
-      }
-    }
-    TreeIterator<EObject> _eAllContents_1 = el.eAllContents();
-    Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(_eAllContents_1);
-    Iterable<Constraints> _filter_1 = Iterables.<Constraints>filter(_iterable_1, Constraints.class);
-    for (final Constraints constraints : _filter_1) {
-      EList<ConstraintCall> _calls = constraints.getCalls();
-      boolean _notEquals = (!Objects.equal(_calls, null));
-      if (_notEquals) {
-        EList<ConstraintCall> _calls_1 = constraints.getCalls();
-        for (final ConstraintCall call : _calls_1) {
-          {
-            Constraint constraint = call.getConstraint();
-            org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception = constraint.getException();
-            boolean _notEquals_1 = (!Objects.equal(_exception, null));
-            if (_notEquals_1) {
-              EObject _eContainer = constraint.eContainer();
-              Namespace ns = ((Namespace) _eContainer);
-              String _asPackage = this.asPackage(ns);
-              String _plus = (_asPackage + ".");
-              org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception_1 = constraint.getException();
-              String _name = _exception_1.getName();
-              String _plus_1 = (_plus + _name);
-              types.add(_plus_1);
-            }
-          }
-        }
-      }
-    }
-    TreeIterator<EObject> _eAllContents_2 = el.eAllContents();
-    Iterable<EObject> _iterable_2 = IteratorExtensions.<EObject>toIterable(_eAllContents_2);
-    Iterable<Method> _filter_2 = Iterables.<Method>filter(_iterable_2, Method.class);
-    for (final Method method : _filter_2) {
-      Method _refMethod = method.getRefMethod();
-      boolean _notEquals_1 = (!Objects.equal(_refMethod, null));
-      if (_notEquals_1) {
-        Method _refMethod_1 = method.getRefMethod();
-        Set<String> _createImportSet = this.createImportSet(_refMethod_1);
-        types.addAll(_createImportSet);
-      }
-    }
-    TreeIterator<EObject> _eAllContents_3 = el.eAllContents();
-    Iterable<EObject> _iterable_3 = IteratorExtensions.<EObject>toIterable(_eAllContents_3);
-    Iterable<ConstraintTarget> _filter_3 = Iterables.<ConstraintTarget>filter(_iterable_3, ConstraintTarget.class);
-    for (final ConstraintTarget constraintTarget : _filter_3) {
-      this.addJavaImport(types, constraintTarget);
-    }
-    return types;
-  }
-  
-  public String fqn(final Event event) {
-    Namespace ns = EObjectExtensions.getNamespace(event);
-    String _asPackage = this.asPackage(ns);
-    String _plus = (_asPackage + ".");
-    String _name = event.getName();
-    return (_plus + _name);
-  }
-  
-  public String fqn(final AbstractElement el) {
-    Namespace ns = EObjectExtensions.getNamespace(el);
-    String _asPackage = this.asPackage(ns);
-    String _plus = (_asPackage + ".");
-    String _name = el.getName();
-    return (_plus + _name);
-  }
-  
   public String asPackage(final Namespace ns) {
     String _pkg = this.getPkg();
     boolean _equals = Objects.equal(_pkg, null);
@@ -213,121 +109,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     String _plus_7 = (_plus_6 + ".");
     String _name_3 = ns.getName();
     return (_plus_7 + _name_3);
-  }
-  
-  public Boolean addJavaImport(final Set<String> imports, final EObject obj) {
-    Boolean _xblockexpression = null;
-    {
-      if ((!(obj instanceof AbstractElement))) {
-        return null;
-      }
-      AbstractElement type = ((AbstractElement) obj);
-      String name = type.getName();
-      Boolean _switchResult = null;
-      boolean _matched = false;
-      if (!_matched) {
-        if (Objects.equal(name,"UUID")) {
-          _matched=true;
-          _switchResult = Boolean.valueOf(imports.add("java.util.UUID"));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Date")) {
-          _matched=true;
-          _switchResult = Boolean.valueOf(imports.add("org.joda.time.LocalDate"));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Time")) {
-          _matched=true;
-          _switchResult = Boolean.valueOf(imports.add("org.joda.time.LocalTime"));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Timestamp")) {
-          _matched=true;
-          _switchResult = Boolean.valueOf(imports.add("org.joda.time.LocalDateTime"));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Currency")) {
-          _matched=true;
-          _switchResult = Boolean.valueOf(imports.add("java.util.Currency"));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"BigDecimal")) {
-          _matched=true;
-          _switchResult = Boolean.valueOf(imports.add("java.math.BigDecimal"));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Locale")) {
-          _matched=true;
-          _switchResult = Boolean.valueOf(imports.add("java.util.Locale"));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Byte")) {
-          _matched=true;
-          _switchResult = null;
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Short")) {
-          _matched=true;
-          _switchResult = null;
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Integer")) {
-          _matched=true;
-          _switchResult = null;
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Long")) {
-          _matched=true;
-          _switchResult = null;
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Float")) {
-          _matched=true;
-          _switchResult = null;
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Double")) {
-          _matched=true;
-          _switchResult = null;
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Boolean")) {
-          _matched=true;
-          _switchResult = null;
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"Character")) {
-          _matched=true;
-          _switchResult = null;
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(name,"String")) {
-          _matched=true;
-          _switchResult = null;
-        }
-      }
-      if (!_matched) {
-        String _fqn = this.fqn(type);
-        _switchResult = Boolean.valueOf(imports.add(_fqn));
-      }
-      _xblockexpression = _switchResult;
-    }
-    return _xblockexpression;
   }
   
   public String asJavaType(final Variable variable) {
@@ -418,40 +199,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       return name;
     }
     return (name + "[]");
-  }
-  
-  public CharSequence _imports(final EObject... elements) {
-    CharSequence _xblockexpression = null;
-    {
-      boolean _or = false;
-      boolean _equals = Objects.equal(elements, null);
-      if (_equals) {
-        _or = true;
-      } else {
-        int _length = elements.length;
-        boolean _equals_1 = (_length == 0);
-        _or = _equals_1;
-      }
-      if (_or) {
-        return "";
-      }
-      Set<String> imports = new HashSet<String>();
-      for (final EObject el : elements) {
-        Set<String> _createImportSet = this.createImportSet(el);
-        imports.addAll(_createImportSet);
-      }
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        for(final String imp : imports) {
-          _builder.append("import ");
-          _builder.append(imp, "");
-          _builder.append(";");
-          _builder.newLineIfNotEmpty();
-        }
-      }
-      _xblockexpression = _builder;
-    }
-    return _xblockexpression;
   }
   
   public CharSequence _methodDoc(final Constructor constructor) {
@@ -804,7 +551,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       _builder.append(" ");
       {
         String _nullable = v.getNullable();
-        boolean _equals = Objects.equal(_nullable, null);
+        boolean _equals = Objects.equal(_nullable, 
+          null);
         if (_equals) {
           _builder.append("@NotNull\t");
         }
