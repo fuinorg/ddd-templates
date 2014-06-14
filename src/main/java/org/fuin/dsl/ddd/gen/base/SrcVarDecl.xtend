@@ -30,14 +30,13 @@ class SrcVarDecl implements CodeSnippet {
 		this.visibility = visibility
 		this.xml = xml
 		this.variable = variable
-		
+
 		if (variable.nullable == null) {
-			ctx.requiresImport("javax.validation.constraints.NotNull")		
+			ctx.requiresImport("javax.validation.constraints.NotNull")
 		}
 		if (variable.multiplicity != null) {
 			ctx.requiresImport("java.util.List")
 		}
-		
 		ctx.requiresReference(variable.type.uniqueName)
 	}
 
@@ -45,13 +44,13 @@ class SrcVarDecl implements CodeSnippet {
 		if (variable.invariants != null) {
 			'''
 				«FOR cc : variable.invariants.calls SEPARATOR ' '»
-					«new SrcValidationAnnotation(ctx, cc)»	
+					«new SrcValidationAnnotation(ctx, cc)»
 				«ENDFOR»
 				«IF variable.nullable == null»
 					@NotNull
 				«ENDIF»
 				«IF xml»
-					«new SrcXmlAttributeOrElement(ctx, variable)»			
+					«new SrcXmlAttributeOrElement(ctx, variable)»
 				«ENDIF»
 				«visibility» «variable.type(ctx)» «variable.name»;
 			'''
@@ -61,7 +60,7 @@ class SrcVarDecl implements CodeSnippet {
 					@NotNull
 				«ENDIF»
 				«IF xml»
-					«new SrcXmlAttributeOrElement(ctx, variable)»			
+					«new SrcXmlAttributeOrElement(ctx, variable)»
 				«ENDIF»
 				«visibility» «variable.type(ctx)» «variable.name»;
 			'''

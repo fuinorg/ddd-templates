@@ -36,10 +36,10 @@ class SrcXmlAttributeOrElementTest {
 		val Variable idVar = aggregate.variables.get(0)
 		val SrcXmlAttributeOrElement testeeId = new SrcXmlAttributeOrElement(ctx, idVar)
 
-		ctx.resolve(refReg)
-
 		// TEST
 		val resultId = testeeId.toString
+		ctx.resolve(refReg)
+
 
 		// VERIFY
 		assertThat(resultId).isEqualTo('''@XmlAttribute(name = "id")''')

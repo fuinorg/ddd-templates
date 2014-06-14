@@ -73,7 +73,6 @@ public class SrcVarDecl implements CodeSnippet {
           }
           SrcValidationAnnotation _srcValidationAnnotation = new SrcValidationAnnotation(this.ctx, cc);
           _builder.append(_srcValidationAnnotation, "");
-          _builder.append("\t");
           _builder.newLineIfNotEmpty();
         }
       }
@@ -89,7 +88,6 @@ public class SrcVarDecl implements CodeSnippet {
         if (this.xml) {
           SrcXmlAttributeOrElement _srcXmlAttributeOrElement = new SrcXmlAttributeOrElement(this.ctx, this.variable);
           _builder.append(_srcXmlAttributeOrElement, "");
-          _builder.append("\t\t\t");
           _builder.newLineIfNotEmpty();
         }
       }
@@ -117,7 +115,6 @@ public class SrcVarDecl implements CodeSnippet {
         if (this.xml) {
           SrcXmlAttributeOrElement _srcXmlAttributeOrElement_1 = new SrcXmlAttributeOrElement(this.ctx, this.variable);
           _builder_1.append(_srcXmlAttributeOrElement_1, "");
-          _builder_1.append("\t\t\t");
           _builder_1.newLineIfNotEmpty();
         }
       }

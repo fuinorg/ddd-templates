@@ -39,8 +39,8 @@ public class SrcXmlAttributeOrElementTest {
     EList<Variable> _variables = aggregate.getVariables();
     final Variable idVar = _variables.get(0);
     final SrcXmlAttributeOrElement testeeId = new SrcXmlAttributeOrElement(ctx, idVar);
-    ctx.resolve(refReg);
     final String resultId = testeeId.toString();
+    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(resultId);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@XmlAttribute(name = \"id\")");
