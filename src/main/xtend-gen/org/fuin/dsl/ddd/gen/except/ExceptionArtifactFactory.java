@@ -68,144 +68,152 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
   }
   
   public CharSequence create(final SimpleCodeSnippetContext ctx, final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex, final String pkg, final String className) {
-    StringConcatenation _builder = new StringConcatenation();
-    String _copyrightHeader = this.getCopyrightHeader();
-    _builder.append(_copyrightHeader, "");
-    _builder.append(" ");
-    _builder.newLineIfNotEmpty();
-    _builder.append("package ");
-    _builder.append(pkg, "");
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    Set<String> _imports = ctx.getImports();
-    SrcImports _srcImports = new SrcImports(_imports);
-    _builder.append(_srcImports, "");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    String _doc = ex.getDoc();
-    String _text = StringExtensions.text(_doc);
-    _builder.append(_text, " ");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("public final class ");
-    _builder.append(className, "");
-    _builder.append(" extends ");
-    CharSequence __uniquelyNumberedException = this._uniquelyNumberedException(ex);
-    _builder.append(__uniquelyNumberedException, "");
-    _builder.append(" {");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("private static final long serialVersionUID = 1000L;");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    CharSequence __varsDecl = this._varsDecl(ex);
-    _builder.append(__varsDecl, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append("\t ");
-    _builder.append("* Constructs a new instance of the exception.");
-    _builder.newLine();
-    _builder.append("\t ");
-    _builder.append("*");
-    _builder.newLine();
+    CharSequence _xblockexpression = null;
     {
-      EList<Variable> _variables = ex.getVariables();
-      for(final Variable v : _variables) {
-        _builder.append("\t");
-        _builder.append("* @param ");
-        String _name = v.getName();
-        _builder.append(_name, "\t");
-        _builder.append(" ");
-        String _superDoc = VariableExtensions.superDoc(v);
-        _builder.append(_superDoc, "\t");
-        _builder.append(" ");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append("\t");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("public ");
-    String _name_1 = ex.getName();
-    _builder.append(_name_1, "\t");
-    _builder.append("(");
-    EList<Variable> _variables_1 = ex.getVariables();
-    CharSequence __paramsDecl = this._paramsDecl(_variables_1);
-    _builder.append(__paramsDecl, "\t");
-    _builder.append(") {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    _builder.append("super(");
-    {
-      int _cid = ex.getCid();
-      boolean _greaterThan = (_cid > 0);
-      if (_greaterThan) {
-        int _cid_1 = ex.getCid();
-        _builder.append(_cid_1, "\t\t");
-        _builder.append(", ");
-      }
-    }
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t    ");
-    _builder.append("KeyValue.replace(\"");
-    String _message = ex.getMessage();
-    _builder.append(_message, "\t\t    ");
-    _builder.append("\",");
-    _builder.newLineIfNotEmpty();
-    {
-      EList<Variable> _variables_2 = ex.getVariables();
-      boolean _hasElements = false;
-      for(final Variable v_1 : _variables_2) {
-        if (!_hasElements) {
-          _hasElements = true;
-        } else {
-          _builder.appendImmediate(",", "\t\t");
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("/**");
+      _builder.newLine();
+      _builder.append(" ");
+      _builder.append("* ");
+      String _doc = ex.getDoc();
+      String _text = StringExtensions.text(_doc);
+      _builder.append(_text, " ");
+      _builder.newLineIfNotEmpty();
+      _builder.append(" ");
+      _builder.append("*/");
+      _builder.newLine();
+      _builder.append("public final class ");
+      _builder.append(className, "");
+      _builder.append(" extends ");
+      CharSequence __uniquelyNumberedException = this._uniquelyNumberedException(ex);
+      _builder.append(__uniquelyNumberedException, "");
+      _builder.append(" {");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("private static final long serialVersionUID = 1000L;");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("\t");
+      CharSequence __varsDecl = this._varsDecl(ex);
+      _builder.append(__varsDecl, "\t");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("/**");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("* Constructs a new instance of the exception.");
+      _builder.newLine();
+      _builder.append("\t ");
+      _builder.append("*");
+      _builder.newLine();
+      {
+        EList<Variable> _variables = ex.getVariables();
+        for(final Variable v : _variables) {
+          _builder.append("\t");
+          _builder.append("* @param ");
+          String _name = v.getName();
+          _builder.append(_name, "\t");
+          _builder.append(" ");
+          String _superDoc = VariableExtensions.superDoc(v);
+          _builder.append(_superDoc, "\t");
+          _builder.append(" ");
+          _builder.newLineIfNotEmpty();
         }
-        _builder.append("\t\t");
-        _builder.append("new KeyValue(\"");
-        String _name_2 = v_1.getName();
-        _builder.append(_name_2, "\t\t");
-        _builder.append("\", ");
-        String _name_3 = v_1.getName();
-        _builder.append(_name_3, "\t\t");
-        _builder.append(")");
-        _builder.newLineIfNotEmpty();
       }
+      _builder.append("\t");
+      _builder.append("*/");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("public ");
+      String _name_1 = ex.getName();
+      _builder.append(_name_1, "\t");
+      _builder.append("(");
+      EList<Variable> _variables_1 = ex.getVariables();
+      CharSequence __paramsDecl = this._paramsDecl(_variables_1);
+      _builder.append(__paramsDecl, "\t");
+      _builder.append(") {");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t\t");
+      _builder.append("super(");
+      {
+        int _cid = ex.getCid();
+        boolean _greaterThan = (_cid > 0);
+        if (_greaterThan) {
+          int _cid_1 = ex.getCid();
+          _builder.append(_cid_1, "\t\t");
+          _builder.append(", ");
+        }
+      }
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t\t    ");
+      _builder.append("KeyValue.replace(\"");
+      String _message = ex.getMessage();
+      _builder.append(_message, "\t\t    ");
+      _builder.append("\",");
+      _builder.newLineIfNotEmpty();
+      {
+        EList<Variable> _variables_2 = ex.getVariables();
+        boolean _hasElements = false;
+        for(final Variable v_1 : _variables_2) {
+          if (!_hasElements) {
+            _hasElements = true;
+          } else {
+            _builder.appendImmediate(",", "\t\t");
+          }
+          _builder.append("\t\t");
+          _builder.append("new KeyValue(\"");
+          String _name_2 = v_1.getName();
+          _builder.append(_name_2, "\t\t");
+          _builder.append("\", ");
+          String _name_3 = v_1.getName();
+          _builder.append(_name_3, "\t\t");
+          _builder.append(")");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+      _builder.append("\t\t");
+      _builder.append("));");
+      _builder.newLine();
+      _builder.append("\t\t");
+      EList<Variable> _variables_3 = ex.getVariables();
+      CharSequence __paramsAssignment = this._paramsAssignment(_variables_3);
+      _builder.append(__paramsAssignment, "\t\t");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("\t");
+      EList<Variable> _variables_4 = ex.getVariables();
+      SrcGetters _srcGetters = new SrcGetters(ctx, "public final", _variables_4);
+      _builder.append(_srcGetters, "\t");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("}");
+      _builder.newLine();
+      final String src = _builder.toString();
+      StringConcatenation _builder_1 = new StringConcatenation();
+      String _copyrightHeader = this.getCopyrightHeader();
+      _builder_1.append(_copyrightHeader, "");
+      _builder_1.append(" ");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.append("package ");
+      _builder_1.append(pkg, "");
+      _builder_1.append(";");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      Set<String> _imports = ctx.getImports();
+      SrcImports _srcImports = new SrcImports(_imports);
+      _builder_1.append(_srcImports, "");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      _builder_1.append(src, "");
+      _builder_1.newLineIfNotEmpty();
+      _xblockexpression = _builder_1;
     }
-    _builder.append("\t\t");
-    _builder.append("));");
-    _builder.newLine();
-    _builder.append("\t\t");
-    EList<Variable> _variables_3 = ex.getVariables();
-    CharSequence __paramsAssignment = this._paramsAssignment(_variables_3);
-    _builder.append(__paramsAssignment, "\t\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("\t");
-    EList<Variable> _variables_4 = ex.getVariables();
-    SrcGetters _srcGetters = new SrcGetters(ctx, "public final", _variables_4);
-    _builder.append(_srcGetters, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder;
+    return _xblockexpression;
   }
   
   public CharSequence _varsDecl(final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {

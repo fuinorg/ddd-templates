@@ -5,6 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcImports
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -17,7 +18,6 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtension
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcImports
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
@@ -26,13 +26,13 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 	}
 
 	override create(Exception ex, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		
+
 		val className = ex.getName()
 		val Namespace ns = ex.eContainer() as Namespace;
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + ex.getName()
 		val filename = fqn.replace('.', '/') + ".java";
-		
+
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(ex.uniqueName, fqn)
 
@@ -41,29 +41,25 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 			// No code generation during preparation phase
 			return null
 		}
-		
+
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
 		ctx.addImports
 		ctx.addReferences(ex)
 		ctx.resolve(refReg)
-		
-		return new GeneratedArtifact(artifactName, filename, create(ctx, ex, pkg, className).toString().getBytes("UTF-8"));
+
+		return new GeneratedArtifact(artifactName, filename,
+			create(ctx, ex, pkg, className).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
 	}
-	
+
 	def addReferences(CodeSnippetContext ctx, Exception ex) {
 	}
-		
+
 	def create(SimpleCodeSnippetContext ctx, Exception ex, String pkg, String className) {
-		'''
-			«copyrightHeader» 
-			package «pkg»;
-			
-			«new SrcImports(ctx.imports)»
-			
+		val String src = ''' 
 			/**
 			 * «ex.doc.text»
 			 */
@@ -94,6 +90,18 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 			
 			}
 		'''
+
+		// Source code creation is splitted into two parts because imports are 
+		// added to the "ctx" during creation of above "src" variable
+		''' 
+			«copyrightHeader» 
+			package «pkg»;
+			
+			«new SrcImports(ctx.imports)»
+			
+			«src»
+		'''
+
 	}
 
 	def _varsDecl(Exception ex) {
