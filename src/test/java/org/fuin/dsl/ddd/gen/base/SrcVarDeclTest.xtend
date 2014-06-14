@@ -28,10 +28,10 @@ class SrcVarDeclTest {
 	def void testCreateWithConstraint() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
 		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("y.types.String", "java.lang.String")
+		refReg.putReference("a.types.String", "java.lang.String")
 		refReg.putReference("a.b.AnyConstraint", "x.y.z.AnyConstraint")
+		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(0)
@@ -39,16 +39,16 @@ class SrcVarDeclTest {
 
 		// TEST
 		val result = testee.toString
-		ctx.resolve(refReg)
 
 		// VERIFY
-		assertThat(result).isEqualTo('''
-		@AnyConstraint
-		@NotNull
-		private String str;
-		''')
-		assertThat(ctx.references).containsOnly("a.types.String", "a.b.AnyConstraint")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "x.y.z.AnyConstraint")
+		assertThat(result).isEqualTo(
+			'''
+				@AnyConstraint
+				@NotNull
+				private String str;
+			''')
+		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "x.y.z.AnyConstraint",
+			"java.lang.String")
 
 	}
 
@@ -56,10 +56,10 @@ class SrcVarDeclTest {
 	def void testCreateWithoutConstraint() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
 		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("y.types.String", "java.lang.String")
+		refReg.putReference("a.types.String", "java.lang.String")
 		refReg.putReference("a.b.AnyConstraint", "x.y.z.AnyConstraint")
+		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(1)
@@ -67,15 +67,14 @@ class SrcVarDeclTest {
 
 		// TEST
 		val result = testee.toString
-		ctx.resolve(refReg)
 
 		// VERIFY
-		assertThat(result).isEqualTo('''
-		@NotNull
-		private String str2;
-		''')
-		assertThat(ctx.references).containsOnly("a.types.String")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull")
+		assertThat(result).isEqualTo(
+			'''
+				@NotNull
+				private String str2;
+			''')
+		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "java.lang.String")
 
 	}
 
@@ -83,9 +82,9 @@ class SrcVarDeclTest {
 	def void testCreateWithoutConstraintNullable() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
 		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("y.types.String", "java.lang.String")
+		refReg.putReference("a.types.String", "java.lang.String")
+		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(2)
@@ -93,14 +92,13 @@ class SrcVarDeclTest {
 
 		// TEST
 		val result = testee.toString
-		ctx.resolve(refReg)
 
 		// VERIFY
-		assertThat(result).isEqualTo('''
-		private String str3;
-		''')
-		assertThat(ctx.references).containsOnly("a.types.String")
-		assertThat(ctx.imports).isEmpty()
+		assertThat(result).isEqualTo(
+			'''
+				private String str3;
+			''')
+		assertThat(ctx.imports).containsOnly("java.lang.String")
 
 	}
 
@@ -108,9 +106,9 @@ class SrcVarDeclTest {
 	def void testCreateWithXml() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
 		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("y.types.String", "java.lang.String")
+		refReg.putReference("a.types.String", "java.lang.String")
+		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(3)
@@ -118,46 +116,46 @@ class SrcVarDeclTest {
 
 		// TEST
 		val result = testee.toString
-		ctx.resolve(refReg)
 
 		// VERIFY
-		assertThat(result).isEqualTo('''
-		@NotNull
-		@XmlElement(name = "abc-def-ghi")
-		private String abcDefGhi;
-		''')
-		assertThat(ctx.references).containsOnly("a.types.String")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "javax.xml.bind.annotation.XmlElement")
+		assertThat(result).isEqualTo(
+			'''
+				@NotNull
+				@XmlElement(name = "abc-def-ghi")
+				private String abcDefGhi;
+			''')
+		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull",
+			"javax.xml.bind.annotation.XmlElement", "java.lang.String")
 
 	}
-	
+
 	private def DomainModel createModel() {
 		parser.parse(
 			'''
-			context a {
+				context a {
+					
+					namespace b {
+						
+						import a.types.*
 				
-				namespace b {
-					
-					import a.types.*
-			
-					constraint AnyConstraint on String {
-						message "message"
+						constraint AnyConstraint on String {
+							message "message"
+						}
+				
+						value-object MyValueObject {
+							String str invariants AnyConstraint
+							String str2
+							nullable String str3
+							String abcDefGhi
+						}
+				
 					}
-			
-					value-object MyValueObject {
-						String str invariants AnyConstraint
-						String str2
-						nullable String str3
-						String abcDefGhi
+				
+					namespace types {
+						type String
 					}
-			
+						
 				}
-			
-				namespace types {
-					type String
-				}
-					
-			}
 			'''
 		)
 	}

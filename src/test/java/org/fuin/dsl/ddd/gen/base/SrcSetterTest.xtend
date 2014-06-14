@@ -29,12 +29,11 @@ class SrcSetterTest {
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("ctx.types.String", "java.lang.String")
-		val ctx = new SimpleCodeSnippetContext()
+		val ctx = new SimpleCodeSnippetContext(refReg)
 		val SrcSetter testee = createTesteeNoMultiplicity(ctx)
 
 		// TEST
 		val result = testee.toString
-		ctx.resolve(refReg)
 
 		// VERIFY
 		assertThat(result).isEqualTo(
@@ -49,7 +48,6 @@ class SrcSetterTest {
 					this.name = name;
 				}
 			''')
-		assertThat(ctx.references).contains("ctx.types.String")
 		assertThat(ctx.imports).contains("javax.validation.constraints.NotNull", "java.lang.String",
 			"org.fuin.objects4j.common.Contract")
 
@@ -61,12 +59,11 @@ class SrcSetterTest {
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("ctx.types.String", "java.lang.String")
-		val ctx = new SimpleCodeSnippetContext()
+		val ctx = new SimpleCodeSnippetContext(refReg)
 		val SrcSetter testee = createTesteeWithMultiplicity(ctx)
 
 		// TEST
 		val result = testee.toString
-		ctx.resolve(refReg)
 
 		// VERIFY
 		assertThat(result).isEqualTo(
@@ -81,7 +78,6 @@ class SrcSetterTest {
 					this.names = names;
 				}
 			''')
-		assertThat(ctx.references).contains("ctx.types.String")
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "java.util.List",
 			"java.lang.String", "org.fuin.objects4j.common.Contract")
 

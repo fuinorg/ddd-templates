@@ -44,10 +44,9 @@ public class EntityIdArtifactFactory extends AbstractSource<EntityId> {
       if (preparationRun) {
         return null;
       }
-      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
       this.addImports(ctx);
       this.addReferences(ctx, entityId);
-      ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
       String _create = this.create(ctx, entityId, pkg, className);
       String _string = _create.toString();

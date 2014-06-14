@@ -28,9 +28,9 @@ class SrcXmlAttributeOrElementTest {
 	def void testCreateAggregateId() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("x.types.String", "java.lang.String")
+		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
 		val Variable idVar = aggregate.variables.get(0)
@@ -38,7 +38,6 @@ class SrcXmlAttributeOrElementTest {
 
 		// TEST
 		val resultId = testeeId.toString
-		ctx.resolve(refReg)
 
 
 		// VERIFY
@@ -51,15 +50,13 @@ class SrcXmlAttributeOrElementTest {
 	def void testCreateValueObject() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("x.types.String", "java.lang.String")
+		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
 		val Variable voVar = aggregate.variables.get(1)
 		val SrcXmlAttributeOrElement testeeVo = new SrcXmlAttributeOrElement(ctx, voVar)
-
-		ctx.resolve(refReg)
 
 		// TEST
 		val resultVo = testeeVo.toString

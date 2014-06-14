@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.base
 
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
+import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 
@@ -12,7 +13,8 @@ class SrcXmlAttributeTest {
 	def void testCreate() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
+		val refReg = new SimpleCodeReferenceRegistry()
+		val ctx = new SimpleCodeSnippetContext(refReg)
 		val variable = DomainDrivenDesignDslFactory.eINSTANCE.createVariable
 		variable.setName("AbcDefGhi")
 		val SrcXmlAttribute testee = new SrcXmlAttribute(ctx, variable)

@@ -10,6 +10,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,7 +28,8 @@ class SrcInvokeGetterTest {
 	def void testNullObjName() {
 
 		// PREPARE
-		val codeSnippetContext = new SimpleCodeSnippetContext();
+		val refReg = new SimpleCodeReferenceRegistry()
+		val codeSnippetContext = new SimpleCodeSnippetContext(refReg);
 		val SrcInvokeGetter testee = createTestee(codeSnippetContext, "ctx", "ns", "MyValueObject", null, "a")
 
 		// TEST
@@ -35,7 +37,6 @@ class SrcInvokeGetterTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo('''getA()''')
-		assertThat(codeSnippetContext.references).empty
 		assertThat(codeSnippetContext.imports).empty
 
 	}
@@ -44,7 +45,8 @@ class SrcInvokeGetterTest {
 	def void testWithObjName() {
 
 		// PREPARE
-		val codeSnippetContext = new SimpleCodeSnippetContext();
+		val refReg = new SimpleCodeReferenceRegistry()
+		val codeSnippetContext = new SimpleCodeSnippetContext(refReg);
 		val SrcInvokeGetter testee = createTestee(codeSnippetContext, "ctx", "ns", "MyValueObject", "x", "a")
 
 		// TEST
@@ -52,7 +54,6 @@ class SrcInvokeGetterTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo('''x.getA()''')
-		assertThat(codeSnippetContext.references).empty
 		assertThat(codeSnippetContext.imports).empty
 
 	}

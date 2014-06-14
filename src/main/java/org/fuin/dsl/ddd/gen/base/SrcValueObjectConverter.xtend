@@ -50,7 +50,7 @@ class SrcValueObjectConverter implements CodeSnippet {
 		this.implementsSingleEntityIdFactory = implementsSingleEntityIdFactory
 		this.className = voTypeName + "Converter"
 
-		ctx = new SimpleCodeSnippetContext()
+		ctx = new SimpleCodeSnippetContext(refReg)
 		ctx.requiresImport("javax.enterprise.context.ApplicationScoped")
 		ctx.requiresImport("javax.persistence.AttributeConverter")
 		ctx.requiresImport("javax.persistence.Converter")
@@ -61,7 +61,6 @@ class SrcValueObjectConverter implements CodeSnippet {
 		}
 		ctx.requiresReference(vo.uniqueName)
 		ctx.requiresReference(targetType.uniqueName)
-		ctx.resolve(refReg)
 
 	}
 

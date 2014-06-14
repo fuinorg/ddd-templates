@@ -21,6 +21,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcInvokeGetter;
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
+import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry;
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,36 +35,32 @@ public class SrcInvokeGetterTest {
   
   @Test
   public void testNullObjName() {
-    final SimpleCodeSnippetContext codeSnippetContext = new SimpleCodeSnippetContext();
+    final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
+    final SimpleCodeSnippetContext codeSnippetContext = new SimpleCodeSnippetContext(refReg);
     final SrcInvokeGetter testee = this.createTestee(codeSnippetContext, "ctx", "ns", "MyValueObject", null, "a");
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("getA()");
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = codeSnippetContext.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.isEmpty();
     Set<String> _imports = codeSnippetContext.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.isEmpty();
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.isEmpty();
   }
   
   @Test
   public void testWithObjName() {
-    final SimpleCodeSnippetContext codeSnippetContext = new SimpleCodeSnippetContext();
+    final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
+    final SimpleCodeSnippetContext codeSnippetContext = new SimpleCodeSnippetContext(refReg);
     final SrcInvokeGetter testee = this.createTestee(codeSnippetContext, "ctx", "ns", "MyValueObject", "x", "a");
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("x.getA()");
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = codeSnippetContext.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.isEmpty();
     Set<String> _imports = codeSnippetContext.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.isEmpty();
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.isEmpty();
   }
   
   private SrcInvokeGetter createTestee(final CodeSnippetContext codeSnippetContext, final String ctx, final String ns, final String type, final String objName, final String varName) {

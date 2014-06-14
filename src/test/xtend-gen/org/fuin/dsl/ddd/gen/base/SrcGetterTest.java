@@ -36,10 +36,9 @@ public class SrcGetterTest {
   public void testCreateNoMultiplicity() {
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("ctx.types.String", "java.lang.String");
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     final SrcGetter testee = this.createTesteeNoMultiplicity(ctx);
     final String result = testee.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/**");
@@ -67,22 +66,18 @@ public class SrcGetterTest {
     _builder.append("}");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("ctx.types.String");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("org.fuin.objects4j.common.NeverNull", "java.lang.String");
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("org.fuin.objects4j.common.NeverNull", "java.lang.String");
   }
   
   @Test
   public void testCreateWithMultiplicity() {
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("ctx.types.String", "java.lang.String");
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     final SrcGetter testee = this.createTesteeWithMultiplicity(ctx);
     final String result = testee.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/**");
@@ -110,12 +105,9 @@ public class SrcGetterTest {
     _builder.append("}");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("ctx.types.String");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("org.fuin.objects4j.common.NeverNull", "java.util.List", "java.lang.String");
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("org.fuin.objects4j.common.NeverNull", "java.util.List", "java.lang.String");
   }
   
   private SrcGetter createTesteeNoMultiplicity(final CodeSnippetContext codeSnippetContext) {

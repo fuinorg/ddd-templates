@@ -53,10 +53,9 @@ public class EventArtifactFactory extends AbstractSource<Event> {
         if (preparationRun) {
           return null;
         }
-        final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+        final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
         this.addImports(ctx);
         this.addReferences(ctx, event);
-        ctx.resolve(refReg);
         String _artifactName = this.getArtifactName();
         String _create = this.create(ctx, event, pkg, className);
         String _string = _create.toString();

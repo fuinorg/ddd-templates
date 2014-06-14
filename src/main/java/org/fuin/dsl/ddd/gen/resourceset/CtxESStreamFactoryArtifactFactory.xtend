@@ -51,10 +51,9 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 				return null
 			}
 
-			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext()
+			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg)
 			sctx.addImports
 			sctx.addReferences
-			sctx.resolve(refReg)
 
 			return new GeneratedArtifact(artifactName, filename,
 				create(sctx, ctx, pkg, className, aggregateIds, resourceSet).toString().getBytes("UTF-8"));

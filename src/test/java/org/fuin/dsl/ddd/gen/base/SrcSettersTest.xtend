@@ -31,12 +31,11 @@ class SrcSettersTest {
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("ctx.types.String", "java.lang.String")
 		refReg.putReference("ctx.types.Locale", "java.util.Locale")
-		val ctx = new SimpleCodeSnippetContext();
+		val ctx = new SimpleCodeSnippetContext(refReg);
 		val SrcSetters testee = createTestee(ctx)
 
 		// TEST
 		val result = testee.toString
-		ctx.resolve(refReg)
 
 		// VERIFY
 		assertThat(result).isEqualTo(
@@ -61,7 +60,6 @@ class SrcSettersTest {
 				}
 				
 			''')
-		assertThat(ctx.references).containsOnly("ctx.types.String", "ctx.types.Locale")
 		assertThat(ctx.imports).containsOnly("java.lang.String", "java.util.Locale",
 			"javax.validation.constraints.NotNull", "org.fuin.objects4j.common.Contract")
 

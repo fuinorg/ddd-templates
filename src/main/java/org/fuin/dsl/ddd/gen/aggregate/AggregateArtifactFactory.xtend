@@ -43,10 +43,9 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 			return null
 		}
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
+		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 		ctx.addImports
 		ctx.addReferences(aggregate)
-		ctx.resolve(refReg)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, aggregate, pkg, className).toString().getBytes("UTF-8"));

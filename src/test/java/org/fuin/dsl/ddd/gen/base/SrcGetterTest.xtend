@@ -29,12 +29,11 @@ class SrcGetterTest {
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("ctx.types.String", "java.lang.String")
-		val ctx = new SimpleCodeSnippetContext()
+		val ctx = new SimpleCodeSnippetContext(refReg)
 		val SrcGetter testee = createTesteeNoMultiplicity(ctx)
 
 		// TEST
 		val result = testee.toString
-		ctx.resolve(refReg)
 
 		// VERIFY
 		assertThat(result).isEqualTo(
@@ -49,7 +48,6 @@ class SrcGetterTest {
 					return name;
 				}
 			''')
-		assertThat(ctx.references).containsOnly("ctx.types.String")
 		assertThat(ctx.imports).containsOnly("org.fuin.objects4j.common.NeverNull", "java.lang.String")
 
 	}
@@ -60,12 +58,11 @@ class SrcGetterTest {
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("ctx.types.String", "java.lang.String")
-		val ctx = new SimpleCodeSnippetContext()
+		val ctx = new SimpleCodeSnippetContext(refReg)
 		val SrcGetter testee = createTesteeWithMultiplicity(ctx)
 
 		// TEST
 		val result = testee.toString
-		ctx.resolve(refReg)
 
 		// VERIFY
 		assertThat(result).isEqualTo(
@@ -80,7 +77,6 @@ class SrcGetterTest {
 					return names;
 				}
 			''')
-		assertThat(ctx.references).containsOnly("ctx.types.String")
 		assertThat(ctx.imports).containsOnly("org.fuin.objects4j.common.NeverNull", "java.util.List", "java.lang.String")
 
 	}

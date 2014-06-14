@@ -33,11 +33,11 @@ public class SrcValidationAnnotationTest {
   
   @Test
   public void testCreateNoArgConstraint() {
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("y.types.String", "java.lang.String");
     refReg.putReference("y.types.Integer", "java.lang.Integer");
     refReg.putReference("y.a.NoArgConstraint", "a.b.c.NoArgConstraint");
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final ValueObject valueObject = DomainModelExtensions.<ValueObject>find(_createModel, ValueObject.class, "MyValueObject");
     EList<Variable> _variables = valueObject.getVariables();
@@ -46,25 +46,21 @@ public class SrcValidationAnnotationTest {
     EList<ConstraintCall> _calls = _invariants.getCalls();
     final ConstraintCall constraintCall = _calls.get(0);
     final SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall);
-    ctx.resolve(refReg);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     _assertThat.isEqualTo("@NoArgConstraint");
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("y.a.NoArgConstraint");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("a.b.c.NoArgConstraint");
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("a.b.c.NoArgConstraint");
   }
   
   @Test
   public void testCreateOneArgConstraint() {
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("y.types.String", "java.lang.String");
     refReg.putReference("y.types.Integer", "java.lang.Integer");
     refReg.putReference("y.a.OneArgConstraint", "a.b.c.OneArgConstraint");
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final ValueObject valueObject = DomainModelExtensions.<ValueObject>find(_createModel, ValueObject.class, "MyValueObject");
     EList<Variable> _variables = valueObject.getVariables();
@@ -73,25 +69,21 @@ public class SrcValidationAnnotationTest {
     EList<ConstraintCall> _calls = _invariants.getCalls();
     final ConstraintCall constraintCall = _calls.get(0);
     final SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall);
-    ctx.resolve(refReg);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     _assertThat.isEqualTo("@OneArgConstraint(50)");
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("y.a.OneArgConstraint", "y.types.Integer");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("a.b.c.OneArgConstraint", "java.lang.Integer");
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("a.b.c.OneArgConstraint", "java.lang.Integer");
   }
   
   @Test
   public void testCreateTwoArgsConstraint() {
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("y.types.String", "java.lang.String");
     refReg.putReference("y.types.Integer", "java.lang.Integer");
     refReg.putReference("y.a.TwoArgsConstraint", "a.b.c.TwoArgsConstraint");
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final ValueObject valueObject = DomainModelExtensions.<ValueObject>find(_createModel, ValueObject.class, "MyValueObject");
     EList<Variable> _variables = valueObject.getVariables();
@@ -100,16 +92,12 @@ public class SrcValidationAnnotationTest {
     EList<ConstraintCall> _calls = _invariants.getCalls();
     final ConstraintCall constraintCall = _calls.get(0);
     final SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall);
-    ctx.resolve(refReg);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     _assertThat.isEqualTo("@TwoArgsConstraint(min = 1, max = 100)");
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("y.a.TwoArgsConstraint", "y.types.Integer");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("a.b.c.TwoArgsConstraint", "java.lang.Integer");
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("a.b.c.TwoArgsConstraint", "java.lang.Integer");
   }
   
   private DomainModel createModel() {

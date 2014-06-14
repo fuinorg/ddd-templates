@@ -31,16 +31,15 @@ public class SrcXmlAttributeOrElementTest {
   
   @Test
   public void testCreateAggregateId() {
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("x.types.String", "java.lang.String");
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
     EList<Variable> _variables = aggregate.getVariables();
     final Variable idVar = _variables.get(0);
     final SrcXmlAttributeOrElement testeeId = new SrcXmlAttributeOrElement(ctx, idVar);
     final String resultId = testeeId.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(resultId);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@XmlAttribute(name = \"id\")");
@@ -52,15 +51,14 @@ public class SrcXmlAttributeOrElementTest {
   
   @Test
   public void testCreateValueObject() {
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("x.types.String", "java.lang.String");
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
     EList<Variable> _variables = aggregate.getVariables();
     final Variable voVar = _variables.get(1);
     final SrcXmlAttributeOrElement testeeVo = new SrcXmlAttributeOrElement(ctx, voVar);
-    ctx.resolve(refReg);
     final String resultVo = testeeVo.toString();
     StringAssert _assertThat = Assertions.assertThat(resultVo);
     StringConcatenation _builder = new StringConcatenation();

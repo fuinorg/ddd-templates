@@ -36,10 +36,9 @@ public class SrcSetterTest {
   public void testCreateNoMultiplicity() {
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("ctx.types.String", "java.lang.String");
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     final SrcSetter testee = this.createTesteeNoMultiplicity(ctx);
     final String result = testee.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/**");
@@ -67,12 +66,9 @@ public class SrcSetterTest {
     _builder.append("}");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.contains("ctx.types.String");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.contains("javax.validation.constraints.NotNull", "java.lang.String", 
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.contains("javax.validation.constraints.NotNull", "java.lang.String", 
       "org.fuin.objects4j.common.Contract");
   }
   
@@ -80,10 +76,9 @@ public class SrcSetterTest {
   public void testCreateWithMultiplicity() {
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("ctx.types.String", "java.lang.String");
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     final SrcSetter testee = this.createTesteeWithMultiplicity(ctx);
     final String result = testee.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/**");
@@ -111,12 +106,9 @@ public class SrcSetterTest {
     _builder.append("}");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.contains("ctx.types.String");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("javax.validation.constraints.NotNull", "java.util.List", 
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("javax.validation.constraints.NotNull", "java.util.List", 
       "java.lang.String", "org.fuin.objects4j.common.Contract");
   }
   

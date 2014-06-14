@@ -44,10 +44,9 @@ public class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
       if (preparationRun) {
         return null;
       }
-      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
       this.addImports(ctx);
       this.addReferences(ctx, aggregateId);
-      ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
       String _create = this.create(ctx, aggregateId, pkg, className);
       String _string = _create.toString();

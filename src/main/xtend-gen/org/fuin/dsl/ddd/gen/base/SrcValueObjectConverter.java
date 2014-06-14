@@ -50,7 +50,7 @@ public class SrcValueObjectConverter implements CodeSnippet {
     this.targetTypeName = this.targetTypeName;
     this.implementsSingleEntityIdFactory = implementsSingleEntityIdFactory;
     this.className = (this.voTypeName + "Converter");
-    SimpleCodeSnippetContext _simpleCodeSnippetContext = new SimpleCodeSnippetContext();
+    SimpleCodeSnippetContext _simpleCodeSnippetContext = new SimpleCodeSnippetContext(refReg);
     this.ctx = _simpleCodeSnippetContext;
     this.ctx.requiresImport("javax.enterprise.context.ApplicationScoped");
     this.ctx.requiresImport("javax.persistence.AttributeConverter");
@@ -64,7 +64,6 @@ public class SrcValueObjectConverter implements CodeSnippet {
     this.ctx.requiresReference(_uniqueName);
     String _uniqueName_1 = AbstractElementExtensions.uniqueName(targetType);
     this.ctx.requiresReference(_uniqueName_1);
-    this.ctx.resolve(refReg);
   }
   
   public String toString() {

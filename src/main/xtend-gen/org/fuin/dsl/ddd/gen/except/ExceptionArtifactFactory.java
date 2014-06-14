@@ -46,10 +46,9 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
       if (preparationRun) {
         return null;
       }
-      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
       this.addImports(ctx);
       this.addReferences(ctx, ex);
-      ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
       String _create = this.create(ctx, ex, pkg, className);
       String _string = _create.toString();

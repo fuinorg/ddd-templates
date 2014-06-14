@@ -39,10 +39,9 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 			return null
 		}
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
+		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 		ctx.addImports
 		ctx.addReferences(enu)
-		ctx.resolve(refReg)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, enu, pkg, className).toString().getBytes("UTF-8"));

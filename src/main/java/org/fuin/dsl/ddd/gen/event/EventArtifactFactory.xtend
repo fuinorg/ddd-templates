@@ -50,10 +50,9 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				return null
 			}
 			
-			val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
+			val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 			ctx.addImports
 			ctx.addReferences(event)
-			ctx.resolve(refReg)
 			
 			return new GeneratedArtifact(artifactName, filename, create(ctx, event, pkg, className).toString().getBytes("UTF-8"));
 		}

@@ -43,10 +43,9 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 			return null
 		}
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
+		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 		ctx.addImports
 		ctx.addReferences(ex)
-		ctx.resolve(refReg)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, ex, pkg, className).toString().getBytes("UTF-8"));

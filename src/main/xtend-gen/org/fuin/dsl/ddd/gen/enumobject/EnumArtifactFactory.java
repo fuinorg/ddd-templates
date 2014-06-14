@@ -44,10 +44,9 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
       if (preparationRun) {
         return null;
       }
-      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
       this.addImports(ctx);
       this.addReferences(ctx, enu);
-      ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
       String _create = this.create(ctx, enu, pkg, className);
       String _string = _create.toString();

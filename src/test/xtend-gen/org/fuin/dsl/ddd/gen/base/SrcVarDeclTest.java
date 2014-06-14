@@ -31,17 +31,16 @@ public class SrcVarDeclTest {
   
   @Test
   public void testCreateWithConstraint() {
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
-    refReg.putReference("y.types.String", "java.lang.String");
+    refReg.putReference("a.types.String", "java.lang.String");
     refReg.putReference("a.b.AnyConstraint", "x.y.z.AnyConstraint");
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final ValueObject valueObject = DomainModelExtensions.<ValueObject>find(_createModel, ValueObject.class, "MyValueObject");
     EList<Variable> _variables = valueObject.getVariables();
     final Variable variable = _variables.get(0);
     final SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, variable);
     final String result = testee.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@AnyConstraint");
@@ -51,27 +50,24 @@ public class SrcVarDeclTest {
     _builder.append("private String str;");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("a.types.String", "a.b.AnyConstraint");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("javax.validation.constraints.NotNull", "x.y.z.AnyConstraint");
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("javax.validation.constraints.NotNull", "x.y.z.AnyConstraint", 
+      "java.lang.String");
   }
   
   @Test
   public void testCreateWithoutConstraint() {
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
-    refReg.putReference("y.types.String", "java.lang.String");
+    refReg.putReference("a.types.String", "java.lang.String");
     refReg.putReference("a.b.AnyConstraint", "x.y.z.AnyConstraint");
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final ValueObject valueObject = DomainModelExtensions.<ValueObject>find(_createModel, ValueObject.class, "MyValueObject");
     EList<Variable> _variables = valueObject.getVariables();
     final Variable variable = _variables.get(1);
     final SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, variable);
     final String result = testee.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@NotNull");
@@ -79,51 +75,43 @@ public class SrcVarDeclTest {
     _builder.append("private String str2;");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("a.types.String");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("javax.validation.constraints.NotNull");
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("javax.validation.constraints.NotNull", "java.lang.String");
   }
   
   @Test
   public void testCreateWithoutConstraintNullable() {
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
-    refReg.putReference("y.types.String", "java.lang.String");
+    refReg.putReference("a.types.String", "java.lang.String");
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final ValueObject valueObject = DomainModelExtensions.<ValueObject>find(_createModel, ValueObject.class, "MyValueObject");
     EList<Variable> _variables = valueObject.getVariables();
     final Variable variable = _variables.get(2);
     final SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, variable);
     final String result = testee.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("private String str3;");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("a.types.String");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.isEmpty();
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("java.lang.String");
   }
   
   @Test
   public void testCreateWithXml() {
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
-    refReg.putReference("y.types.String", "java.lang.String");
+    refReg.putReference("a.types.String", "java.lang.String");
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final ValueObject valueObject = DomainModelExtensions.<ValueObject>find(_createModel, ValueObject.class, "MyValueObject");
     EList<Variable> _variables = valueObject.getVariables();
     final Variable variable = _variables.get(3);
     final SrcVarDecl testee = new SrcVarDecl(ctx, "private", true, variable);
     final String result = testee.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@NotNull");
@@ -133,12 +121,10 @@ public class SrcVarDeclTest {
     _builder.append("private String abcDefGhi;");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("a.types.String");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("javax.validation.constraints.NotNull", "javax.xml.bind.annotation.XmlElement");
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("javax.validation.constraints.NotNull", 
+      "javax.xml.bind.annotation.XmlElement", "java.lang.String");
   }
   
   private DomainModel createModel() {

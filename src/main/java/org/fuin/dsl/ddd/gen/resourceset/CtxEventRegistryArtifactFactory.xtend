@@ -51,10 +51,9 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 				return null
 			}
 
-			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext()
+			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg)
 			sctx.addImports
 			sctx.addReferences
-			sctx.resolve(refReg)
 
 			return new GeneratedArtifact(artifactName, filename,
 				create(sctx, ctx, pkg, className, events, resourceSet).toString().getBytes("UTF-8"));

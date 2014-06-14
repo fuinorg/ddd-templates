@@ -28,25 +28,22 @@ class SrcValidationAnnotationTest {
 	def void testCreateNoArgConstraint() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("y.types.String", "java.lang.String")
 		refReg.putReference("y.types.Integer", "java.lang.Integer")
 		refReg.putReference("y.a.NoArgConstraint", "a.b.c.NoArgConstraint")
+		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(0)
 		val constraintCall = variable.invariants.calls.get(0)
 		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall)
 
-		ctx.resolve(refReg)
-
 		// TEST
 		val result = testee.toString
 
 		// VERIFY
 		assertThat(result).isEqualTo("@NoArgConstraint")
-		assertThat(ctx.references).containsOnly("y.a.NoArgConstraint")
 		assertThat(ctx.imports).containsOnly("a.b.c.NoArgConstraint")
 
 	}
@@ -55,25 +52,22 @@ class SrcValidationAnnotationTest {
 	def void testCreateOneArgConstraint() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("y.types.String", "java.lang.String")
 		refReg.putReference("y.types.Integer", "java.lang.Integer")
 		refReg.putReference("y.a.OneArgConstraint", "a.b.c.OneArgConstraint")
+		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(1)
 		val constraintCall = variable.invariants.calls.get(0)
 		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall)
 
-		ctx.resolve(refReg)
-
 		// TEST
 		val result = testee.toString
 
 		// VERIFY
 		assertThat(result).isEqualTo("@OneArgConstraint(50)")
-		assertThat(ctx.references).containsOnly("y.a.OneArgConstraint", "y.types.Integer")
 		assertThat(ctx.imports).containsOnly("a.b.c.OneArgConstraint", "java.lang.Integer")
 
 	}
@@ -82,25 +76,22 @@ class SrcValidationAnnotationTest {
 	def void testCreateTwoArgsConstraint() {
 
 		// PREPARE
-		val ctx = new SimpleCodeSnippetContext()
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("y.types.String", "java.lang.String")
 		refReg.putReference("y.types.Integer", "java.lang.Integer")
 		refReg.putReference("y.a.TwoArgsConstraint", "a.b.c.TwoArgsConstraint")
+		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(2)
 		val constraintCall = variable.invariants.calls.get(0)
 		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall)
 
-		ctx.resolve(refReg)
-
 		// TEST
 		val result = testee.toString
 
 		// VERIFY
 		assertThat(result).isEqualTo("@TwoArgsConstraint(min = 1, max = 100)")
-		assertThat(ctx.references).containsOnly("y.a.TwoArgsConstraint", "y.types.Integer")
 		assertThat(ctx.imports).containsOnly("a.b.c.TwoArgsConstraint", "java.lang.Integer")
 
 	}

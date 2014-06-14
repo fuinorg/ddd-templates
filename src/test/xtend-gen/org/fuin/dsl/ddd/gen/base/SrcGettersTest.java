@@ -38,10 +38,9 @@ public class SrcGettersTest {
     final SimpleCodeReferenceRegistry refReg = new SimpleCodeReferenceRegistry();
     refReg.putReference("ctx.types.String", "java.lang.String");
     refReg.putReference("ctx.types.Locale", "java.util.Locale");
-    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+    final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     final SrcGetters testee = this.createTestee(ctx);
     final String result = testee.toString();
-    ctx.resolve(refReg);
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/**");
@@ -92,12 +91,9 @@ public class SrcGettersTest {
     _builder.newLine();
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
-    Set<String> _references = ctx.getReferences();
-    CollectionAssert _assertThat_1 = Assertions.assertThat(_references);
-    _assertThat_1.containsOnly("ctx.types.String", "ctx.types.Locale");
     Set<String> _imports = ctx.getImports();
-    CollectionAssert _assertThat_2 = Assertions.assertThat(_imports);
-    _assertThat_2.containsOnly("java.lang.String", "java.util.Locale", 
+    CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
+    _assertThat_1.containsOnly("java.lang.String", "java.util.Locale", 
       "org.fuin.objects4j.common.NeverNull");
   }
   

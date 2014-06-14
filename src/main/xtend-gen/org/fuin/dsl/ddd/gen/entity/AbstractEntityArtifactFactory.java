@@ -52,10 +52,9 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
       if (preparationRun) {
         return null;
       }
-      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
       this.addImports(ctx);
       this.addReferences(ctx, entity);
-      ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
       String _create = this.create(ctx, entity, pkg, className);
       String _string = _create.toString();

@@ -45,10 +45,9 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 			return null
 		}
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
+		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 		ctx.addImports
 		ctx.addReferences(entity)
-		ctx.resolve(refReg)
 
 		return new GeneratedArtifact(artifactName, filename, create(ctx, entity, pkg, className).toString().getBytes("UTF-8"));
 	}

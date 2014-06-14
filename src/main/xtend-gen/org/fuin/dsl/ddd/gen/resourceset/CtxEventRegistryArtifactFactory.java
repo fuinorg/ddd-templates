@@ -63,10 +63,9 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
           if (preparationRun) {
             return null;
           }
-          final SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext();
+          final SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg);
           this.addImports(sctx);
           this.addReferences(sctx);
-          sctx.resolve(refReg);
           String _artifactName = this.getArtifactName();
           String _create = this.create(sctx, ctx, pkg, className, events, resourceSet);
           String _string = _create.toString();

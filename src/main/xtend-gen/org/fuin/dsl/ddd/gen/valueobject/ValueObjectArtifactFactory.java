@@ -44,9 +44,8 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
       if (preparationRun) {
         return null;
       }
-      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
       this.addImports(ctx);
-      ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
       String _create = this.create(ctx, valueObject, pkg, className);
       String _string = _create.toString();

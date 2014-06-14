@@ -44,10 +44,9 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 			return null
 		}
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext()
+		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 		ctx.addImports
 		ctx.addReferences(constraint)
-		ctx.resolve(refReg)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, constraint, pkg, className).toString().getBytes("UTF-8"));

@@ -56,10 +56,9 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
       if (preparationRun) {
         return null;
       }
-      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext();
+      final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
       this.addImports(ctx);
       this.addReferences(ctx, constraint);
-      ctx.resolve(refReg);
       String _artifactName = this.getArtifactName();
       String _pkg = this.getPkg();
       String _create = this.create(ctx, constraint, _pkg, className);
