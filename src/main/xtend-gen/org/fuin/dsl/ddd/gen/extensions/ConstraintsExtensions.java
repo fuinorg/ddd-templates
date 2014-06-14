@@ -32,4 +32,22 @@ public class ConstraintsExtensions {
     }
     return list;
   }
+  
+  public static List<Constraint> list(final Constraints constraints) {
+    boolean _equals = Objects.equal(constraints, null);
+    if (_equals) {
+      return Collections.<Constraint>emptyList();
+    }
+    List<Constraint> list = new ArrayList<Constraint>();
+    EList<ConstraintCall> _calls = constraints.getCalls();
+    for (final ConstraintCall call : _calls) {
+      Constraint _constraint = call.getConstraint();
+      boolean _notEquals = (!Objects.equal(_constraint, null));
+      if (_notEquals) {
+        Constraint _constraint_1 = call.getConstraint();
+        list.add(_constraint_1);
+      }
+    }
+    return list;
+  }
 }

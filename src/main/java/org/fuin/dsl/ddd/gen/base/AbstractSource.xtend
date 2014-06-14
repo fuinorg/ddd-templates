@@ -121,7 +121,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables,
 		Constraints constraints) {
 		'''
-			«new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, null)»
+			«new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, constraints.list)»
 			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx,
 				constraints.exceptionList)»{
 				super();
