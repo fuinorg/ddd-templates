@@ -12,6 +12,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
+import org.fuin.dsl.ddd.gen.base.SrcVarDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
@@ -95,7 +96,7 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
       _builder.newLine();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __varsDecl = this._varsDecl(ex);
+      CharSequence __varsDecl = this._varsDecl(ctx, ex);
       _builder.append(__varsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
@@ -131,7 +132,7 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
       _builder.append(_name_1, "\t");
       _builder.append("(");
       EList<Variable> _variables_1 = ex.getVariables();
-      CharSequence __paramsDecl = this._paramsDecl(_variables_1);
+      CharSequence __paramsDecl = this._paramsDecl(ctx, _variables_1);
       _builder.append(__paramsDecl, "\t");
       _builder.append(") {");
       _builder.newLineIfNotEmpty();
@@ -202,14 +203,14 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
     return _xblockexpression;
   }
   
-  public CharSequence _varsDecl(final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {
+  public CharSequence _varsDecl(final CodeSnippetContext ctx, final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<Variable> _variables = ex.getVariables();
       List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
       for(final Variable variable : _nullSafe) {
-        CharSequence __varDecl = this._varDecl(variable);
-        _builder.append(__varDecl, "");
+        SrcVarDecl _srcVarDecl = new SrcVarDecl(ctx, "private", false, variable);
+        _builder.append(_srcVarDecl, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
       }

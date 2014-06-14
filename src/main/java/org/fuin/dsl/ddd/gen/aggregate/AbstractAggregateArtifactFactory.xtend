@@ -73,7 +73,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				@NotNull
 				private «aggregate.idType.name» id;
 			
-				«_varsDecl(aggregate)»
+				«_varsDecl(ctx, aggregate, false)»
 			
 				@Override
 				public final EntityType getType() {				

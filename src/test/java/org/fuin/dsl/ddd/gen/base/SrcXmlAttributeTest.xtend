@@ -1,0 +1,29 @@
+package org.fuin.dsl.ddd.gen.base
+
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
+import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
+import org.junit.Test
+
+import static org.fest.assertions.Assertions.*
+
+class SrcXmlAttributeTest {
+
+	@Test
+	def void testCreate() {
+
+		// PREPARE
+		val ctx = new SimpleCodeSnippetContext()
+		val variable = DomainDrivenDesignDslFactory.eINSTANCE.createVariable
+		variable.setName("AbcDefGhi")
+		val SrcXmlAttribute testee = new SrcXmlAttribute(ctx, variable)
+
+		// TEST
+		val result = testee.toString
+
+		// VERIFY
+		assertThat(result).isEqualTo('''@XmlAttribute(name = "abc-def-ghi")''')
+		assertThat(ctx.imports).contains("javax.xml.bind.annotation.XmlAttribute")
+
+	}
+
+}

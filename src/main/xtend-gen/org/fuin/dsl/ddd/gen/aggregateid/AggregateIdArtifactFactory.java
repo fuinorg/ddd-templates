@@ -114,7 +114,7 @@ public class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __varsDecl = this._varsDecl(id);
+      CharSequence __varsDecl = this._varsDecl(ctx, id, false);
       _builder.append(__varsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

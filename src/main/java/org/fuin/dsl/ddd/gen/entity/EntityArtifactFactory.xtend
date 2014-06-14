@@ -99,7 +99,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 				* @param «v.name» «v.superDoc» 
 			«ENDFOR»
 			 */
-			public «entity.name»(final «entity.root.name» rootAggregate, «_paramsDecl(constructor.variables)») «new SrcThrowsExceptions(
+			public «entity.name»(final «entity.root.name» rootAggregate, «_paramsDecl(ctx, constructor.variables)») «new SrcThrowsExceptions(
 				ctx, constructor.allExceptions)»{
 				«_superCall(constructor.variables)»	
 			}

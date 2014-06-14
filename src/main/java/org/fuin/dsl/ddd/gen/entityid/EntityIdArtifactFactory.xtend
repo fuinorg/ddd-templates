@@ -73,7 +73,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 				/** Name that identifies the entity uniquely within the context. */	
 				public static final EntityType TYPE = new StringBasedEntityType("«id.entity.name»");
 			
-				«_varsDecl(id)»
+				«_varsDecl(ctx, id, false)»
 			
 				«_optionalDeserializationConstructor(id)»
 			

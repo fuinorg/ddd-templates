@@ -18,6 +18,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtension
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcVarDecl
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
@@ -67,7 +68,7 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 			
 				private static final long serialVersionUID = 1000L;
 			
-				«_varsDecl(ex)»
+				«_varsDecl(ctx, ex)»
 			
 				/**
 				 * Constructs a new instance of the exception.
@@ -76,7 +77,7 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 					* @param «v.name» «v.superDoc» 
 				«ENDFOR»
 				*/
-				public «ex.name»(«_paramsDecl(ex.variables)») {
+				public «ex.name»(«_paramsDecl(ctx, ex.variables)») {
 					super(«IF ex.cid > 0»«ex.cid», «ENDIF»
 					    KeyValue.replace("«ex.message»",
 					«FOR v : ex.variables SEPARATOR ','»
@@ -95,10 +96,10 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
 	}
 
-	def _varsDecl(Exception ex) {
+	def _varsDecl(CodeSnippetContext ctx, Exception ex) {
 		'''
 			«FOR variable : ex.variables.nullSafe»
-				«_varDecl(variable)»
+				«new SrcVarDecl(ctx, "private", false, variable)»
 				
 			«ENDFOR»
 		'''

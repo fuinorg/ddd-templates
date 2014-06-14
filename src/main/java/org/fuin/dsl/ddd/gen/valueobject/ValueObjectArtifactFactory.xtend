@@ -61,7 +61,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«_varsDecl(vo, (vo.base == null))»
+				«_varsDecl(ctx, vo, (vo.base == null))»
 			
 				«_optionalDeserializationConstructor(vo)»
 			

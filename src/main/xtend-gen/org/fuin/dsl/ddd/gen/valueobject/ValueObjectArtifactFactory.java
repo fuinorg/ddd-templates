@@ -97,7 +97,7 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
       _builder.append("\t");
       ExternalType _base_2 = vo.getBase();
       boolean _equals_1 = Objects.equal(_base_2, null);
-      CharSequence __varsDecl = this._varsDecl(vo, _equals_1);
+      CharSequence __varsDecl = this._varsDecl(ctx, vo, _equals_1);
       _builder.append(__varsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

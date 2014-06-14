@@ -90,7 +90,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 		Constraints constraints) {
 		'''
 			«_methodDoc("Constructor with all data.", variables, null)»
-			public «internalTypeName»(«_paramsDecl(variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
+			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
 				super();
 				// TODO Implement!
 			}

@@ -73,7 +73,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 				/** Name that identifies the aggregate uniquely within the context. */	
 				public static final EntityType TYPE = new StringBasedEntityType("«id.entity.name»");
 			
-				«_varsDecl(id)»
+				«_varsDecl(ctx, id, false)»
 			
 				«_optionalDeserializationConstructor(id)»
 			

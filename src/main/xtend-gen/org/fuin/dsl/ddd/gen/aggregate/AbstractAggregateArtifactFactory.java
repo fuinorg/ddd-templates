@@ -105,7 +105,7 @@ public class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> 
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __varsDecl = this._varsDecl(aggregate);
+      CharSequence __varsDecl = this._varsDecl(ctx, aggregate, false);
       _builder.append(__varsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

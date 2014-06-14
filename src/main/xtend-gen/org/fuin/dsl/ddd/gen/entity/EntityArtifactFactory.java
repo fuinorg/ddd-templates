@@ -174,7 +174,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     _builder.append(_name_2, "");
     _builder.append(" rootAggregate, ");
     EList<Variable> _variables_1 = constructor.getVariables();
-    CharSequence __paramsDecl = this._paramsDecl(_variables_1);
+    CharSequence __paramsDecl = this._paramsDecl(ctx, _variables_1);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = ConstructorExtensions.allExceptions(constructor);

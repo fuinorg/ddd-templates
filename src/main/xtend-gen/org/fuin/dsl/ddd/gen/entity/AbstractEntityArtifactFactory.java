@@ -111,7 +111,7 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __varsDecl = this._varsDecl(entity);
+      CharSequence __varsDecl = this._varsDecl(ctx, entity, false);
       _builder.append(__varsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
@@ -242,7 +242,7 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
     _builder.append(_name_2, "");
     _builder.append(" rootAggregate, ");
     EList<Variable> _variables_1 = constructor.getVariables();
-    CharSequence __paramsDecl = this._paramsDecl(_variables_1);
+    CharSequence __paramsDecl = this._paramsDecl(ctx, _variables_1);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = ConstructorExtensions.allExceptions(constructor);

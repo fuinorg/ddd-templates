@@ -18,7 +18,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintTarget;
@@ -27,7 +26,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType;
@@ -36,9 +34,10 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
+import org.fuin.dsl.ddd.gen.base.SrcValidationAnnotation;
+import org.fuin.dsl.ddd.gen.base.SrcVarDecl;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
@@ -540,175 +539,19 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _varsDecl(final InternalType internalType) {
-    return this._varsDecl(internalType, false);
-  }
-  
-  public CharSequence _varsDecl(final InternalType internalType, final boolean xml) {
+  public CharSequence _varsDecl(final CodeSnippetContext ctx, final InternalType internalType, final boolean xml) {
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<Variable> _variables = internalType.getVariables();
       List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
       for(final Variable variable : _nullSafe) {
-        CharSequence __varDecl = this._varDecl(variable, xml);
-        _builder.append(__varDecl, "");
+        SrcVarDecl _srcVarDecl = new SrcVarDecl(ctx, "private", xml, variable);
+        _builder.append(_srcVarDecl, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
       }
     }
     return _builder;
-  }
-  
-  public CharSequence _varDecl(final Variable v) {
-    return this._varDecl(v, false);
-  }
-  
-  public CharSequence _varDecl(final Variable v, final boolean xml) {
-    CharSequence _xifexpression = null;
-    Invariants _invariants = v.getInvariants();
-    boolean _notEquals = (!Objects.equal(_invariants, null));
-    if (_notEquals) {
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        Invariants _invariants_1 = v.getInvariants();
-        EList<ConstraintCall> _calls = _invariants_1.getCalls();
-        boolean _hasElements = false;
-        for(final ConstraintCall cc : _calls) {
-          if (!_hasElements) {
-            _hasElements = true;
-          } else {
-            _builder.appendImmediate(" ", "");
-          }
-          String __constraintCall = this._constraintCall(cc);
-          _builder.append(__constraintCall, "");
-          _builder.append("\t");
-          _builder.newLineIfNotEmpty();
-        }
-      }
-      {
-        String _nullable = v.getNullable();
-        boolean _equals = Objects.equal(_nullable, null);
-        if (_equals) {
-          _builder.append("@NotNull");
-          _builder.newLine();
-        }
-      }
-      {
-        if (xml) {
-          CharSequence __xmlAttributeOrElement = this._xmlAttributeOrElement(v);
-          _builder.append(__xmlAttributeOrElement, "");
-          _builder.append("\t\t\t");
-          _builder.newLineIfNotEmpty();
-        }
-      }
-      _builder.append("private ");
-      String _asJavaType = this.asJavaType(v);
-      _builder.append(_asJavaType, "");
-      _builder.append(" ");
-      String _name = v.getName();
-      _builder.append(_name, "");
-      _builder.append(";");
-      _builder.newLineIfNotEmpty();
-      _xifexpression = _builder;
-    } else {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      {
-        String _nullable_1 = v.getNullable();
-        boolean _equals_1 = Objects.equal(_nullable_1, null);
-        if (_equals_1) {
-          _builder_1.append("@NotNull");
-          _builder_1.newLine();
-        }
-      }
-      {
-        if (xml) {
-          CharSequence __xmlAttributeOrElement_1 = this._xmlAttributeOrElement(v);
-          _builder_1.append(__xmlAttributeOrElement_1, "");
-          _builder_1.append("\t\t\t");
-          _builder_1.newLineIfNotEmpty();
-        }
-      }
-      _builder_1.append("private ");
-      String _asJavaType_1 = this.asJavaType(v);
-      _builder_1.append(_asJavaType_1, "");
-      _builder_1.append(" ");
-      String _name_1 = v.getName();
-      _builder_1.append(_name_1, "");
-      _builder_1.append(";");
-      _builder_1.newLineIfNotEmpty();
-      _xifexpression = _builder_1;
-    }
-    return _xifexpression;
-  }
-  
-  public String _constraintCall(final ConstraintCall cc) {
-    Constraint constraint = cc.getConstraint();
-    EList<Variable> vars = constraint.getVariables();
-    EList<Literal> params = cc.getParams();
-    int _size = vars.size();
-    boolean _equals = (_size == 0);
-    if (_equals) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("@");
-      String _name = constraint.getName();
-      _builder.append(_name, "");
-      return _builder.toString();
-    } else {
-      int _size_1 = vars.size();
-      boolean _equals_1 = (_size_1 == 1);
-      if (_equals_1) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("@");
-        String _name_1 = constraint.getName();
-        _builder_1.append(_name_1, "");
-        _builder_1.append("(");
-        Literal _last = IterableExtensions.<Literal>last(params);
-        String _str = LiteralExtensions.str(_last);
-        _builder_1.append(_str, "");
-        _builder_1.append(")");
-        return _builder_1.toString();
-      } else {
-        int _size_2 = vars.size();
-        boolean _greaterThan = (_size_2 > 1);
-        if (_greaterThan) {
-          List<String> list = new ArrayList<String>();
-          int i = 0;
-          boolean _dowhile = false;
-          do {
-            {
-              Variable _get = vars.get(i);
-              String name = _get.getName();
-              Literal _get_1 = params.get(i);
-              String value = LiteralExtensions.str(_get_1);
-              list.add(((name + " = ") + value));
-              i = (i + 1);
-            }
-            int _size_3 = vars.size();
-            boolean _lessThan = (i < _size_3);
-            _dowhile = _lessThan;
-          } while(_dowhile);
-          StringConcatenation _builder_2 = new StringConcatenation();
-          _builder_2.append("@");
-          String _name_2 = constraint.getName();
-          _builder_2.append(_name_2, "");
-          _builder_2.append("(");
-          {
-            boolean _hasElements = false;
-            for(final String str : list) {
-              if (!_hasElements) {
-                _hasElements = true;
-              } else {
-                _builder_2.appendImmediate(", ", "");
-              }
-              _builder_2.append(str, "");
-            }
-          }
-          _builder_2.append(")");
-          return _builder_2.toString();
-        }
-      }
-    }
-    return null;
   }
   
   public CharSequence _constructorsDecl(final CodeSnippetContext ctx, final InternalType internalType) {
@@ -754,7 +597,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(internalTypeName, "");
     _builder.append("(");
     List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
-    CharSequence __paramsDecl = this._paramsDecl(_nullSafe);
+    CharSequence __paramsDecl = this._paramsDecl(ctx, _nullSafe);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
@@ -801,7 +644,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(_name, "");
     _builder.append("(");
     List<Variable> _allVariables = MethodExtensions.allVariables(method);
-    CharSequence __paramsDecl = this._paramsDecl(_allVariables);
+    CharSequence __paramsDecl = this._paramsDecl(ctx, _allVariables);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = MethodExtensions.allExceptions(method);
@@ -894,7 +737,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     }
   }
   
-  public CharSequence _paramsDecl(final List<Variable> vars) {
+  public CharSequence _paramsDecl(final CodeSnippetContext ctx, final List<Variable> vars) {
     CharSequence _xblockexpression = null;
     {
       boolean _equals = Objects.equal(vars, null);
@@ -910,7 +753,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
           } else {
             _builder.appendImmediate(", ", "");
           }
-          CharSequence __paramDecl = this._paramDecl(variable);
+          CharSequence __paramDecl = this._paramDecl(ctx, variable);
           _builder.append(__paramDecl, "");
         }
       }
@@ -919,7 +762,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _xblockexpression;
   }
   
-  public CharSequence _paramDecl(final Variable v) {
+  public CharSequence _paramDecl(final CodeSnippetContext ctx, final Variable v) {
     CharSequence _xifexpression = null;
     boolean _and = false;
     boolean _and_1 = false;
@@ -954,8 +797,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
           } else {
             _builder.appendImmediate(" ", "");
           }
-          String __constraintCall = this._constraintCall(cc);
-          _builder.append(__constraintCall, "");
+          SrcValidationAnnotation _srcValidationAnnotation = new SrcValidationAnnotation(ctx, cc);
+          _builder.append(_srcValidationAnnotation, "");
         }
       }
       _builder.append(" ");
@@ -1645,64 +1488,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("@XmlRootElement(name = \"");
     String _xmlName = StringExtensions.toXmlName(name);
-    _builder.append(_xmlName, "");
-    _builder.append("\")");
-    _builder.newLineIfNotEmpty();
-    return _builder;
-  }
-  
-  public CharSequence _xmlAttributeOrElement(final Variable v) {
-    Type _type = v.getType();
-    if ((_type instanceof ValueObject)) {
-      Type _type_1 = v.getType();
-      final ValueObject vo = ((ValueObject) _type_1);
-      ExternalType _base = vo.getBase();
-      boolean _notEquals = (!Objects.equal(_base, null));
-      if (_notEquals) {
-        return this._xmlAttribute(v);
-      }
-    } else {
-      Type _type_2 = v.getType();
-      if ((_type_2 instanceof EntityId)) {
-        Type _type_3 = v.getType();
-        final EntityId id = ((EntityId) _type_3);
-        ExternalType _base_1 = id.getBase();
-        boolean _notEquals_1 = (!Objects.equal(_base_1, null));
-        if (_notEquals_1) {
-          return this._xmlAttribute(v);
-        }
-      } else {
-        Type _type_4 = v.getType();
-        if ((_type_4 instanceof AggregateId)) {
-          Type _type_5 = v.getType();
-          final AggregateId id_1 = ((AggregateId) _type_5);
-          ExternalType _base_2 = id_1.getBase();
-          boolean _notEquals_2 = (!Objects.equal(_base_2, null));
-          if (_notEquals_2) {
-            return this._xmlAttribute(v);
-          }
-        }
-      }
-    }
-    return this._xmlElement(v);
-  }
-  
-  public CharSequence _xmlElement(final Variable v) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("@XmlElement(name = \"");
-    String _name = v.getName();
-    String _xmlName = StringExtensions.toXmlName(_name);
-    _builder.append(_xmlName, "");
-    _builder.append("\")");
-    _builder.newLineIfNotEmpty();
-    return _builder;
-  }
-  
-  public CharSequence _xmlAttribute(final Variable v) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("@XmlAttribute(name = \"");
-    String _name = v.getName();
-    String _xmlName = StringExtensions.toXmlName(_name);
     _builder.append(_xmlName, "");
     _builder.append("\")");
     _builder.newLineIfNotEmpty();

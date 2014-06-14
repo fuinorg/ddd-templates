@@ -72,7 +72,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 			
 				private «entity.idType.name» id;
 			
-				«_varsDecl(entity)»
+				«_varsDecl(ctx, entity, false)»
 			
 				«_constructorsDecl(ctx, entity, entity.constructors)»
 			
@@ -118,7 +118,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 				* @param «v.name» «v.superDoc» 
 			«ENDFOR»
 			 */
-			public Abstract«entity.name»(@NotNull final «entity.root.name» rootAggregate, «_paramsDecl(constructor.variables)») «new SrcThrowsExceptions(
+			public Abstract«entity.name»(@NotNull final «entity.root.name» rootAggregate, «_paramsDecl(ctx, constructor.variables)») «new SrcThrowsExceptions(
 				ctx, constructor.allExceptions)»{
 				super(rootAggregate);
 				«_paramsAssignment(constructor.variables)»	

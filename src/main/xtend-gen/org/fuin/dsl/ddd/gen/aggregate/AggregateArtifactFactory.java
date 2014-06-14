@@ -146,7 +146,7 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     _builder.append(internalTypeName, "");
     _builder.append("(");
     List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
-    CharSequence __paramsDecl = this._paramsDecl(_nullSafe);
+    CharSequence __paramsDecl = this._paramsDecl(ctx, _nullSafe);
     _builder.append(__paramsDecl, "");
     _builder.append(") ");
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(constraints);

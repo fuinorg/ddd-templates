@@ -64,9 +64,9 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 				«in.name»(«_methodCall(vo.variables, in.params)»)
 			«ENDFOR»;
 			
-				«_varsDecl(vo)»
+				«_varsDecl(ctx, vo, false)»
 			
-				private «vo.name»(«_paramsDecl(vo.variables)») {
+				private «vo.name»(«_paramsDecl(ctx, vo.variables)») {
 					«_paramsAssignment(vo.variables)»
 				}
 			

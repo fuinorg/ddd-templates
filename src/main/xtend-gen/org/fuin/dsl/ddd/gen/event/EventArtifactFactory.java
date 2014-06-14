@@ -15,6 +15,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
+import org.fuin.dsl.ddd.gen.base.SrcVarDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EventExtensions;
@@ -122,7 +123,7 @@ public class EventArtifactFactory extends AbstractSource<Event> {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __varsDecl = this._varsDecl(event);
+      CharSequence __varsDecl = this._varsDecl(ctx, event);
       _builder.append(__varsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
@@ -187,7 +188,7 @@ public class EventArtifactFactory extends AbstractSource<Event> {
       _builder.append(_name_5, "\t");
       _builder.append("(@NotNull final EntityIdPath entityIdPath, ");
       EList<Variable> _variables_1 = event.getVariables();
-      CharSequence __paramsDecl = this._paramsDecl(_variables_1);
+      CharSequence __paramsDecl = this._paramsDecl(ctx, _variables_1);
       _builder.append(__paramsDecl, "\t");
       _builder.append(") {");
       _builder.newLineIfNotEmpty();
@@ -270,14 +271,14 @@ public class EventArtifactFactory extends AbstractSource<Event> {
     return _xblockexpression;
   }
   
-  public CharSequence _varsDecl(final Event event) {
+  public CharSequence _varsDecl(final CodeSnippetContext ctx, final Event event) {
     StringConcatenation _builder = new StringConcatenation();
     {
       EList<Variable> _variables = event.getVariables();
       List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
       for(final Variable variable : _nullSafe) {
-        CharSequence __varDecl = this._varDecl(variable, true);
-        _builder.append(__varDecl, "");
+        SrcVarDecl _srcVarDecl = new SrcVarDecl(ctx, "private", true, variable);
+        _builder.append(_srcVarDecl, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
       }

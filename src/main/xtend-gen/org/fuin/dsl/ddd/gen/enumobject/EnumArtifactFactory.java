@@ -110,7 +110,7 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __varsDecl = this._varsDecl(vo);
+      CharSequence __varsDecl = this._varsDecl(ctx, vo, false);
       _builder.append(__varsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
@@ -120,7 +120,7 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
       _builder.append(_name_2, "\t");
       _builder.append("(");
       EList<Variable> _variables_1 = vo.getVariables();
-      CharSequence __paramsDecl = this._paramsDecl(_variables_1);
+      CharSequence __paramsDecl = this._paramsDecl(ctx, _variables_1);
       _builder.append(__paramsDecl, "\t");
       _builder.append(") {");
       _builder.newLineIfNotEmpty();

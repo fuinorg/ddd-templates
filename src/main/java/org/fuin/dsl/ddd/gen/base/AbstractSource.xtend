@@ -242,71 +242,13 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def _varsDecl(InternalType internalType) {
-		_varsDecl(internalType, false)
-	}
-
-	def _varsDecl(InternalType internalType, boolean xml) {
+	def _varsDecl(CodeSnippetContext ctx, InternalType internalType, boolean xml) {
 		'''
 			«FOR variable : internalType.variables.nullSafe»
-				«_varDecl(variable, xml)»
+				«new SrcVarDecl(ctx, "private", xml, variable)»
 				
 			«ENDFOR»
 		'''
-	}
-
-	def _varDecl(Variable v) {
-		_varDecl(v, false)
-	}
-
-	def _varDecl(Variable v, boolean xml) {
-		if (v.invariants != null) {
-			'''
-				«FOR cc : v.invariants.calls SEPARATOR ' '»
-					«_constraintCall(cc)»	
-				«ENDFOR»
-				«IF v.nullable == null»
-					@NotNull
-				«ENDIF»
-				«IF xml»
-					«_xmlAttributeOrElement(v)»			
-				«ENDIF»
-				private «asJavaType(v)» «v.name»;
-			'''
-		} else {
-			'''
-				«IF v.nullable == null»
-					@NotNull
-				«ENDIF»
-				«IF xml»
-					«_xmlAttributeOrElement(v)»			
-				«ENDIF»
-				private «asJavaType(v)» «v.name»;
-			'''
-		}
-	}
-
-	def _constraintCall(ConstraintCall cc) {
-		var constraint = cc.constraint;
-		var vars = constraint.variables;
-		var params = cc.params;
-
-		if (vars.size == 0) {
-			return '''@«constraint.name»''';
-		} else if (vars.size == 1) {
-			return '''@«constraint.name»(«params.last.str»)''';
-		} else if (vars.size() > 1) {
-			var List<String> list = new ArrayList<String>();
-			var int i = 0;
-			do {
-				var String name = vars.get(i).name;
-				var String value = params.get(i).str;
-				list.add(name + " = " + value);
-				i = i + 1;
-			} while (i < vars.size());
-			return '''@«constraint.name»(«FOR str : list SEPARATOR ', '»«str»«ENDFOR»)''';
-		}
-
 	}
 
 	def _constructorsDecl(CodeSnippetContext ctx, InternalType internalType) {
@@ -329,7 +271,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables, Constraints constraints) {
 		'''
 			«_methodDoc("Constructor with all data.", variables, null)»
-			public «internalTypeName»(«_paramsDecl(variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
+			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
 				super();
 				«_paramsAssignment(variables.nullSafe)»	
 			}
@@ -348,7 +290,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _methodDecl(CodeSnippetContext ctx, Method method) {
 		'''
 			«_methodDoc(method)»
-			public final void «method.name»(«_paramsDecl(method.allVariables)») «new SrcThrowsExceptions(ctx, method.allExceptions)»{
+			public final void «method.name»(«_paramsDecl(ctx, method.allVariables)») «new SrcThrowsExceptions(ctx, method.allExceptions)»{
 				// TODO Implement	
 			}
 		'''
@@ -382,16 +324,16 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		}
 	}
 
-	def _paramsDecl(List<Variable> vars) {
+	def _paramsDecl(CodeSnippetContext ctx, List<Variable> vars) {
 		if (vars == null) {
 			return "";
 		}
-		'''«FOR variable : vars SEPARATOR ', '»«_paramDecl(variable)»«ENDFOR»'''
+		'''«FOR variable : vars SEPARATOR ', '»«_paramDecl(ctx, variable)»«ENDFOR»'''
 	}
 
-	def _paramDecl(Variable v) {
+	def _paramDecl(CodeSnippetContext ctx, Variable v) {
 		if ((v.invariants != null) && (v.invariants.calls != null) && (v.invariants.calls.size > 0)) {
-			'''«FOR cc : v.invariants.calls SEPARATOR ' '»«_constraintCall(cc)»«ENDFOR» «IF v.nullable == null»@NotNull	«ENDIF»final «asJavaType(
+			'''«FOR cc : v.invariants.calls SEPARATOR ' '»«new SrcValidationAnnotation(ctx, cc)»«ENDFOR» «IF v.nullable == null»@NotNull	«ENDIF»final «asJavaType(
 				v)» «v.name»'''
 		} else {
 			'''«IF v.nullable == null»@NotNull «ENDIF»final «asJavaType(v)» «v.name»'''
@@ -678,38 +620,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _xmlRootElement(String name) {
 		'''
 			@XmlRootElement(name = "«name.toXmlName»")
-		'''
-	}
-
-	def _xmlAttributeOrElement(Variable v) {
-		if (v.type instanceof ValueObject) {
-			val ValueObject vo = (v.type as ValueObject);
-			if (vo.base != null) {
-				return _xmlAttribute(v)
-			}
-		} else if (v.type instanceof EntityId) {
-			val EntityId id = (v.type as EntityId);
-			if (id.base != null) {
-				return _xmlAttribute(v)
-			}
-		} else if (v.type instanceof AggregateId) {
-			val AggregateId id = (v.type as AggregateId);
-			if (id.base != null) {
-				return _xmlAttribute(v)
-			}
-		}
-		return _xmlElement(v)
-	}
-
-	def _xmlElement(Variable v) {
-		'''
-			@XmlElement(name = "«v.name.toXmlName»")
-		'''
-	}
-
-	def _xmlAttribute(Variable v) {
-		'''
-			@XmlAttribute(name = "«v.name.toXmlName»")
 		'''
 	}
 
