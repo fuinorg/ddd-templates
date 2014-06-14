@@ -5,8 +5,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-
 /**
  * Creates source code for one or more setters.
  */
@@ -20,9 +18,6 @@ class SrcSetters implements CodeSnippet {
 		this.ctx = ctx
 		this.visibility = visibility
 		this.variables = variables
-		for (Variable variable : variables) {
-			ctx.requiresReference(variable.type.uniqueName)
-		}
 	}
 
 	override toString() {

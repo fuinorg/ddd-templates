@@ -12,7 +12,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
@@ -28,18 +27,16 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
+import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.SrcValidationAnnotation;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
-import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.dsl.ddd.gen.extensions.LiteralExtensions;
 import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
-import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
@@ -201,69 +198,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return (name + "[]");
   }
   
-  public CharSequence _methodDoc(final Constructor constructor) {
-    String _doc = constructor.getDoc();
-    EList<Variable> _variables = constructor.getVariables();
-    List<Constraint> _allConstraints = ConstructorExtensions.allConstraints(constructor);
-    return this._methodDoc(_doc, _variables, _allConstraints);
-  }
-  
-  public CharSequence _methodDoc(final Method method) {
-    String _doc = method.getDoc();
-    List<Variable> _allVariables = MethodExtensions.allVariables(method);
-    List<Constraint> _allConstraints = MethodExtensions.allConstraints(method);
-    return this._methodDoc(_doc, _allVariables, _allConstraints);
-  }
-  
-  public CharSequence _methodDoc(final String doc, final List<Variable> variables, final List<Constraint> constraints) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append(" ");
-    SrcJavaDoc _srcJavaDoc = new SrcJavaDoc(doc);
-    _builder.append(_srcJavaDoc, " ");
-    _builder.newLineIfNotEmpty();
-    {
-      List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
-      for(final Variable v : _nullSafe) {
-        _builder.append("* @param ");
-        String _name = v.getName();
-        _builder.append(_name, "");
-        _builder.append(" ");
-        String _superDoc = VariableExtensions.superDoc(v);
-        _builder.append(_superDoc, "");
-        _builder.append(" ");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    {
-      List<Constraint> _nullSafe_1 = CollectionExtensions.<Constraint>nullSafe(constraints);
-      for(final Constraint constraint : _nullSafe_1) {
-        {
-          org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception = constraint.getException();
-          boolean _notEquals = (!Objects.equal(_exception, null));
-          if (_notEquals) {
-            _builder.append("* @throws ");
-            org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception_1 = constraint.getException();
-            String _name_1 = _exception_1.getName();
-            _builder.append(_name_1, "");
-            _builder.append(" Thrown if the constraint was violated: ");
-            String _doc = constraint.getDoc();
-            String _text = StringExtensions.text(_doc);
-            _builder.append(_text, "");
-            _builder.append(" ");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    return _builder;
-  }
-  
   public CharSequence _constructorsDecl(final CodeSnippetContext ctx, final InternalType internalType) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -300,8 +234,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   
   public CharSequence _constructorDecl(final CodeSnippetContext ctx, final String internalTypeName, final List<Variable> variables, final Constraints constraints) {
     StringConcatenation _builder = new StringConcatenation();
-    CharSequence __methodDoc = this._methodDoc("Constructor with all data.", variables, null);
-    _builder.append(__methodDoc, "");
+    SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, null);
+    _builder.append(_srcMethodJavaDoc, "");
     _builder.newLineIfNotEmpty();
     _builder.append("public ");
     _builder.append(internalTypeName, "");
@@ -346,8 +280,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   
   public CharSequence _methodDecl(final CodeSnippetContext ctx, final Method method) {
     StringConcatenation _builder = new StringConcatenation();
-    CharSequence __methodDoc = this._methodDoc(method);
-    _builder.append(__methodDoc, "");
+    SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(ctx, method);
+    _builder.append(_srcMethodJavaDoc, "");
     _builder.newLineIfNotEmpty();
     _builder.append("public final void ");
     String _name = method.getName();

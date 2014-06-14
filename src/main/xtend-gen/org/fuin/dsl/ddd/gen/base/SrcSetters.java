@@ -2,10 +2,8 @@ package org.fuin.dsl.ddd.gen.base;
 
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcSetter;
-import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.srcgen4j.core.emf.CodeSnippet;
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
 
@@ -24,11 +22,6 @@ public class SrcSetters implements CodeSnippet {
     this.ctx = ctx;
     this.visibility = visibility;
     this.variables = variables;
-    for (final Variable variable : variables) {
-      Type _type = variable.getType();
-      String _uniqueName = AbstractElementExtensions.uniqueName(_type);
-      ctx.requiresReference(_uniqueName);
-    }
   }
   
   public String toString() {

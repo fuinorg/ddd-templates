@@ -13,6 +13,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
+import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
@@ -139,8 +140,8 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
   
   public CharSequence _constructorDecl(final CodeSnippetContext ctx, final String internalTypeName, final List<Variable> variables, final Constraints constraints) {
     StringConcatenation _builder = new StringConcatenation();
-    CharSequence __methodDoc = this._methodDoc("Constructor with all data.", variables, null);
-    _builder.append(__methodDoc, "");
+    SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, null);
+    _builder.append(_srcMethodJavaDoc, "");
     _builder.newLineIfNotEmpty();
     _builder.append("public ");
     _builder.append(internalTypeName, "");

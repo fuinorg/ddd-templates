@@ -5,9 +5,7 @@ import java.util.List
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
@@ -24,12 +22,10 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.LiteralExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
@@ -105,30 +101,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	}
 
 	// --- Source code fragments (Method names should start with an underscore '_') ---
-	def _methodDoc(Constructor constructor) {
-		return _methodDoc(constructor.doc, constructor.variables, constructor.allConstraints)
-	}
-
-	def _methodDoc(Method method) {
-		return _methodDoc(method.doc, method.allVariables, method.allConstraints)
-	}
-
-	def _methodDoc(String doc, List<Variable> variables, List<Constraint> constraints) {
-		'''
-			 «new SrcJavaDoc(doc)»
-			«FOR v : variables.nullSafe»
-				* @param «v.name» «v.superDoc» 
-			«ENDFOR»
-			 *
-			«FOR constraint : constraints.nullSafe»
-				«IF constraint.exception != null»
-					* @throws «constraint.exception.name» Thrown if the constraint was violated: «constraint.doc.text» 
-				«ENDIF»
-			«ENDFOR»
-			 */
-		'''
-	}
-
 	def _constructorsDecl(CodeSnippetContext ctx, InternalType internalType) {
 		'''
 			«FOR constructor : internalType.constructors.nullSafe»
@@ -149,7 +121,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables,
 		Constraints constraints) {
 		'''
-			«_methodDoc("Constructor with all data.", variables, null)»
+			«new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, null)»
 			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx,
 				constraints.exceptionList)»{
 				super();
@@ -169,7 +141,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	def _methodDecl(CodeSnippetContext ctx, Method method) {
 		'''
-			«_methodDoc(method)»
+			«new SrcMethodJavaDoc(ctx, method)»
 			public final void «method.name»(«_paramsDecl(ctx, method.allVariables)») «new SrcThrowsExceptions(ctx,
 				method.allExceptions)»{
 				// TODO Implement	

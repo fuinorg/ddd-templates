@@ -8,6 +8,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -20,7 +22,6 @@ import static org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 
@@ -89,7 +90,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 	override _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables,
 		Constraints constraints) {
 		'''
-			«_methodDoc("Constructor with all data.", variables, null)»
+			«new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, null)»
 			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
 				super();
 				// TODO Implement!
