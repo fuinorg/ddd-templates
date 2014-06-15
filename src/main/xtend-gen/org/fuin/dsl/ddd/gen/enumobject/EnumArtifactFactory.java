@@ -13,6 +13,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
+import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
@@ -126,8 +127,8 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
       _builder.newLineIfNotEmpty();
       _builder.append("\t\t");
       EList<Variable> _variables_2 = vo.getVariables();
-      CharSequence __paramsAssignment = this._paramsAssignment(_variables_2);
-      _builder.append(__paramsAssignment, "\t\t");
+      SrcParamsAssignment _srcParamsAssignment = new SrcParamsAssignment(ctx, _variables_2);
+      _builder.append(_srcParamsAssignment, "\t\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
       _builder.append("}");

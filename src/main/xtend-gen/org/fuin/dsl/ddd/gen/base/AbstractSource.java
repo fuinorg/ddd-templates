@@ -29,6 +29,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
+import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.SrcValidationAnnotation;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
@@ -256,8 +257,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.newLine();
     _builder.append("\t");
     List<Variable> _nullSafe_1 = CollectionExtensions.<Variable>nullSafe(variables);
-    CharSequence __paramsAssignment = this._paramsAssignment(_nullSafe_1);
-    _builder.append(__paramsAssignment, "\t");
+    SrcParamsAssignment _srcParamsAssignment = new SrcParamsAssignment(ctx, _nullSafe_1);
+    _builder.append(_srcParamsAssignment, "\t");
     _builder.append("\t");
     _builder.newLineIfNotEmpty();
     _builder.append("}");
@@ -481,49 +482,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       _xifexpression = _builder_1;
     }
     return _xifexpression;
-  }
-  
-  public CharSequence _paramsAssignment(final List<Variable> vars) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      for(final Variable v : vars) {
-        {
-          String _nullable = v.getNullable();
-          boolean _equals = Objects.equal(_nullable, null);
-          if (_equals) {
-            _builder.append("Contract.requireArgNotNull(\"");
-            String _name = v.getName();
-            _builder.append(_name, "");
-            _builder.append("\", ");
-            String _name_1 = v.getName();
-            _builder.append(_name_1, "");
-            _builder.append(");");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-      }
-    }
-    {
-      for(final Variable v_1 : vars) {
-        CharSequence __paramAssignment = this._paramAssignment(v_1);
-        _builder.append(__paramAssignment, "");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    return _builder;
-  }
-  
-  public CharSequence _paramAssignment(final Variable v) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("this.");
-    String _name = v.getName();
-    _builder.append(_name, "");
-    _builder.append(" = ");
-    String _name_1 = v.getName();
-    _builder.append(_name_1, "");
-    _builder.append(";");
-    _builder.newLineIfNotEmpty();
-    return _builder;
   }
   
   public CharSequence _eventAbstractMethodsDecl(final AbstractEntity entity) {

@@ -9,6 +9,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -99,7 +100,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				*/
 				public «event.name»(@NotNull final EntityIdPath entityIdPath, «_paramsDecl(ctx, event.variables)») {
 					super(entityIdPath);
-					«_paramsAssignment(event.variables)»
+					«new SrcParamsAssignment(ctx, event.variables)»
 				}
 			
 				@Override

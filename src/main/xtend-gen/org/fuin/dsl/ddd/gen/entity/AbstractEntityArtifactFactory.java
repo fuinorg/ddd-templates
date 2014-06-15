@@ -18,6 +18,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
+import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment;
 import org.fuin.dsl.ddd.gen.base.SrcSetters;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
@@ -256,8 +257,8 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
     _builder.newLine();
     _builder.append("\t");
     EList<Variable> _variables_2 = constructor.getVariables();
-    CharSequence __paramsAssignment = this._paramsAssignment(_variables_2);
-    _builder.append(__paramsAssignment, "\t");
+    SrcParamsAssignment _srcParamsAssignment = new SrcParamsAssignment(ctx, _variables_2);
+    _builder.append(_srcParamsAssignment, "\t");
     _builder.append("\t");
     _builder.newLineIfNotEmpty();
     _builder.append("}");

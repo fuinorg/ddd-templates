@@ -125,7 +125,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx,
 				constraints.exceptionList)»{
 				super();
-				«_paramsAssignment(variables.nullSafe)»	
+				«new SrcParamsAssignment(ctx, variables.nullSafe)»	
 			}
 		'''
 	}
@@ -191,25 +191,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		} else {
 			'''«IF v.nullable == null»@NotNull «ENDIF»final «asJavaType(v)» «v.name»'''
 		}
-	}
-
-	def _paramsAssignment(List<Variable> vars) {
-		'''	
-			«FOR v : vars»	
-				«IF v.nullable == null»
-					Contract.requireArgNotNull("«v.name»", «v.name»);
-				«ENDIF»
-			«ENDFOR»
-			«FOR v : vars»	
-				«_paramAssignment(v)»
-			«ENDFOR»
-		'''
-	}
-
-	def _paramAssignment(Variable v) {
-		'''	
-			this.«v.name» = «v.name»;
-		'''
 	}
 
 	def _eventAbstractMethodsDecl(AbstractEntity entity) {

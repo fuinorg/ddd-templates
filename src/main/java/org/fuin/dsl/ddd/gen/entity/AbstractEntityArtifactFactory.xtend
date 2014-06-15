@@ -9,6 +9,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcSetters
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
@@ -122,7 +123,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 			public Abstract«entity.name»(@NotNull final «entity.root.name» rootAggregate, «_paramsDecl(ctx, constructor.variables)») «new SrcThrowsExceptions(
 				ctx, constructor.allExceptions)»{
 				super(rootAggregate);
-				«_paramsAssignment(constructor.variables)»	
+				«new SrcParamsAssignment(ctx, constructor.variables)»	
 			}
 		'''
 	}
