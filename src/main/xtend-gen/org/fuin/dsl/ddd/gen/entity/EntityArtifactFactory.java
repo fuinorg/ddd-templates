@@ -15,6 +15,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
+import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
@@ -174,8 +175,8 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     _builder.append(_name_2, "");
     _builder.append(" rootAggregate, ");
     EList<Variable> _variables_1 = constructor.getVariables();
-    CharSequence __paramsDecl = this._paramsDecl(ctx, _variables_1);
-    _builder.append(__paramsDecl, "");
+    SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _variables_1);
+    _builder.append(_srcParamsDecl, "");
     _builder.append(") ");
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = ConstructorExtensions.allExceptions(constructor);
     SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _allExceptions);

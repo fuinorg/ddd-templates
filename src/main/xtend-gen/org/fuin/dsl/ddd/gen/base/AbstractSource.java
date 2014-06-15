@@ -14,7 +14,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
@@ -23,7 +22,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Invariants;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
@@ -31,8 +29,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment;
+import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
-import org.fuin.dsl.ddd.gen.base.SrcValidationAnnotation;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
@@ -244,8 +242,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(internalTypeName, "");
     _builder.append("(");
     List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
-    CharSequence __paramsDecl = this._paramsDecl(ctx, _nullSafe);
-    _builder.append(__paramsDecl, "");
+    SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _nullSafe);
+    _builder.append(_srcParamsDecl, "");
     _builder.append(") ");
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
     SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _exceptionList);
@@ -291,8 +289,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append(_name, "");
     _builder.append("(");
     List<Variable> _allVariables = MethodExtensions.allVariables(method);
-    CharSequence __paramsDecl = this._paramsDecl(ctx, _allVariables);
-    _builder.append(__paramsDecl, "");
+    SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _allVariables);
+    _builder.append(_srcParamsDecl, "");
     _builder.append(") ");
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = MethodExtensions.allExceptions(method);
     SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _allExceptions);
@@ -382,106 +380,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       _builder.append(");");
       return _builder.toString();
     }
-  }
-  
-  public CharSequence _paramsDecl(final CodeSnippetContext ctx, final List<Variable> vars) {
-    CharSequence _xblockexpression = null;
-    {
-      boolean _equals = Objects.equal(vars, null);
-      if (_equals) {
-        return "";
-      }
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        boolean _hasElements = false;
-        for(final Variable variable : vars) {
-          if (!_hasElements) {
-            _hasElements = true;
-          } else {
-            _builder.appendImmediate(", ", "");
-          }
-          CharSequence __paramDecl = this._paramDecl(ctx, variable);
-          _builder.append(__paramDecl, "");
-        }
-      }
-      _xblockexpression = _builder;
-    }
-    return _xblockexpression;
-  }
-  
-  public CharSequence _paramDecl(final CodeSnippetContext ctx, final Variable v) {
-    CharSequence _xifexpression = null;
-    boolean _and = false;
-    boolean _and_1 = false;
-    Invariants _invariants = v.getInvariants();
-    boolean _notEquals = (!Objects.equal(_invariants, null));
-    if (!_notEquals) {
-      _and_1 = false;
-    } else {
-      Invariants _invariants_1 = v.getInvariants();
-      EList<ConstraintCall> _calls = _invariants_1.getCalls();
-      boolean _notEquals_1 = (!Objects.equal(_calls, null));
-      _and_1 = _notEquals_1;
-    }
-    if (!_and_1) {
-      _and = false;
-    } else {
-      Invariants _invariants_2 = v.getInvariants();
-      EList<ConstraintCall> _calls_1 = _invariants_2.getCalls();
-      int _size = _calls_1.size();
-      boolean _greaterThan = (_size > 0);
-      _and = _greaterThan;
-    }
-    if (_and) {
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        Invariants _invariants_3 = v.getInvariants();
-        EList<ConstraintCall> _calls_2 = _invariants_3.getCalls();
-        boolean _hasElements = false;
-        for(final ConstraintCall cc : _calls_2) {
-          if (!_hasElements) {
-            _hasElements = true;
-          } else {
-            _builder.appendImmediate(" ", "");
-          }
-          SrcValidationAnnotation _srcValidationAnnotation = new SrcValidationAnnotation(ctx, cc);
-          _builder.append(_srcValidationAnnotation, "");
-        }
-      }
-      _builder.append(" ");
-      {
-        String _nullable = v.getNullable();
-        boolean _equals = Objects.equal(_nullable, 
-          null);
-        if (_equals) {
-          _builder.append("@NotNull\t");
-        }
-      }
-      _builder.append("final ");
-      String _asJavaType = this.asJavaType(v);
-      _builder.append(_asJavaType, "");
-      _builder.append(" ");
-      String _name = v.getName();
-      _builder.append(_name, "");
-      _xifexpression = _builder;
-    } else {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      {
-        String _nullable_1 = v.getNullable();
-        boolean _equals_1 = Objects.equal(_nullable_1, null);
-        if (_equals_1) {
-          _builder_1.append("@NotNull ");
-        }
-      }
-      _builder_1.append("final ");
-      String _asJavaType_1 = this.asJavaType(v);
-      _builder_1.append(_asJavaType_1, "");
-      _builder_1.append(" ");
-      String _name_1 = v.getName();
-      _builder_1.append(_name_1, "");
-      _xifexpression = _builder_1;
-    }
-    return _xifexpression;
   }
   
   public CharSequence _eventAbstractMethodsDecl(final AbstractEntity entity) {

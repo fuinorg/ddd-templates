@@ -7,6 +7,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
+import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -76,7 +77,7 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 					* @param «v.name» «v.superDoc» 
 				«ENDFOR»
 				*/
-				public «ex.name»(«_paramsDecl(ctx, ex.variables)») {
+				public «ex.name»(«new SrcParamsDecl(ctx, ex.variables)») {
 					super(«IF ex.cid > 0»«ex.cid», «ENDIF»
 					    KeyValue.replace("«ex.message»",
 					«FOR v : ex.variables SEPARATOR ','»

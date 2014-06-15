@@ -14,6 +14,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
+import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
@@ -147,8 +148,8 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     _builder.append(internalTypeName, "");
     _builder.append("(");
     List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
-    CharSequence __paramsDecl = this._paramsDecl(ctx, _nullSafe);
-    _builder.append(__paramsDecl, "");
+    SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _nullSafe);
+    _builder.append(_srcParamsDecl, "");
     _builder.append(") ");
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
     SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _exceptionList);

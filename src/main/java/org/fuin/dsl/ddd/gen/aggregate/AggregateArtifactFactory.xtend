@@ -10,6 +10,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -91,7 +92,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 		Constraints constraints) {
 		'''
 			«new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, null)»
-			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
+			public «internalTypeName»(«new SrcParamsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
 				super();
 				// TODO Implement!
 			}

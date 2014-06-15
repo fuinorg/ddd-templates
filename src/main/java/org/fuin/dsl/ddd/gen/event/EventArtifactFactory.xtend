@@ -9,7 +9,9 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
+import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement
 import org.fuin.srcgen4j.commons.GenerateException
@@ -23,7 +25,6 @@ import static org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class EventArtifactFactory extends AbstractSource<Event> {
 
@@ -36,27 +37,28 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		val EObject container = method.eContainer();
 		if (container instanceof AbstractEntity) {
 			val AbstractEntity entity = container as AbstractEntity;
-			
+
 			val className = event.getName()
 			val Namespace ns = entity.eContainer() as Namespace;
 			val pkg = ns.asPackage
 			val fqn = pkg + "." + event.getName()
 			val filename = fqn.replace('.', '/') + ".java";
-			
+
 			val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 			refReg.putReference(event.uniqueName, fqn)
 
 			if (preparationRun) {
-	
+
 				// No code generation during preparation phase
 				return null
 			}
-			
+
 			val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 			ctx.addImports
 			ctx.addReferences(event)
-			
-			return new GeneratedArtifact(artifactName, filename, create(ctx, event, pkg, className).toString().getBytes("UTF-8"));
+
+			return new GeneratedArtifact(artifactName, filename,
+				create(ctx, event, pkg, className).toString().getBytes("UTF-8"));
 		}
 	}
 
@@ -64,12 +66,12 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		var AbstractEntity abstractEntity = (event.eContainer.eContainer as AbstractEntity);
 		return abstractEntity.idType
 	}
-	
+
 	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
-	}	
+	}
 
-	def addReferences(CodeSnippetContext ctx, Event event) {		
+	def addReferences(CodeSnippetContext ctx, Event event) {
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
@@ -100,7 +102,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 					* @param «v.name» «v.superDoc» 
 				«ENDFOR»
 				*/
-				public «event.name»(@NotNull final EntityIdPath entityIdPath, «_paramsDecl(ctx, event.variables)») {
+				public «event.name»(@NotNull final EntityIdPath entityIdPath, «new SrcParamsDecl(ctx, event.variables)») {
 					super(entityIdPath);
 					«new SrcParamsAssignment(ctx, event.variables)»
 				}

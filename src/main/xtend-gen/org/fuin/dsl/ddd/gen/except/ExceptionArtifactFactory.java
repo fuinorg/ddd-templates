@@ -12,6 +12,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment;
+import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
@@ -130,8 +131,8 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
       _builder.append(_name_1, "\t");
       _builder.append("(");
       EList<Variable> _variables_1 = ex.getVariables();
-      CharSequence __paramsDecl = this._paramsDecl(ctx, _variables_1);
-      _builder.append(__paramsDecl, "\t");
+      SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _variables_1);
+      _builder.append(_srcParamsDecl, "\t");
       _builder.append(") {");
       _builder.newLineIfNotEmpty();
       _builder.append("\t\t");

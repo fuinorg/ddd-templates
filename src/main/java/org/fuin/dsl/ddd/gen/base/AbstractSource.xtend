@@ -121,7 +121,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		Constraints constraints) {
 		'''
 			«new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, constraints.list)»
-			public «internalTypeName»(«_paramsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx,
+			public «internalTypeName»(«new SrcParamsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx,
 				constraints.exceptionList)»{
 				super();
 				«new SrcParamsAssignment(ctx, variables.nullSafe)»	
@@ -141,7 +141,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _methodDecl(CodeSnippetContext ctx, Method method) {
 		'''
 			«new SrcMethodJavaDoc(ctx, method)»
-			public final void «method.name»(«_paramsDecl(ctx, method.allVariables)») «new SrcThrowsExceptions(ctx,
+			public final void «method.name»(«new SrcParamsDecl(ctx, method.allVariables)») «new SrcThrowsExceptions(ctx,
 				method.allExceptions)»{
 				// TODO Implement	
 			}
@@ -173,22 +173,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 			return "super();";
 		} else {
 			return '''super(«FOR v : vars SEPARATOR ', '»«v.name»«ENDFOR»);''';
-		}
-	}
-
-	def _paramsDecl(CodeSnippetContext ctx, List<Variable> vars) {
-		if (vars == null) {
-			return "";
-		}
-		'''«FOR variable : vars SEPARATOR ', '»«_paramDecl(ctx, variable)»«ENDFOR»'''
-	}
-
-	def _paramDecl(CodeSnippetContext ctx, Variable v) {
-		if ((v.invariants != null) && (v.invariants.calls != null) && (v.invariants.calls.size > 0)) {
-			'''«FOR cc : v.invariants.calls SEPARATOR ' '»«new SrcValidationAnnotation(ctx, cc)»«ENDFOR» «IF v.nullable ==
-				null»@NotNull	«ENDIF»final «asJavaType(v)» «v.name»'''
-		} else {
-			'''«IF v.nullable == null»@NotNull «ENDIF»final «asJavaType(v)» «v.name»'''
 		}
 	}
 

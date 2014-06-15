@@ -8,6 +8,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -21,7 +23,6 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtension
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class EntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -36,7 +37,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + entity.getName()
 		val filename = fqn.replace('.', '/') + ".java";
-		
+
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(entity.uniqueName, fqn)
 
@@ -50,7 +51,8 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 		ctx.addImports
 		ctx.addReferences(entity)
 
-		return new GeneratedArtifact(artifactName, filename, create(ctx, entity, pkg, className).toString().getBytes("UTF-8"));
+		return new GeneratedArtifact(artifactName, filename,
+			create(ctx, entity, pkg, className).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
@@ -77,7 +79,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 		'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
-		
+
 	}
 
 	def _constructorsDecl(CodeSnippetContext ctx, Entity entity, List<Constructor> constructors) {
@@ -99,7 +101,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 				* @param «v.name» «v.superDoc» 
 			«ENDFOR»
 			 */
-			public «entity.name»(final «entity.root.name» rootAggregate, «_paramsDecl(ctx, constructor.variables)») «new SrcThrowsExceptions(
+			public «entity.name»(final «entity.root.name» rootAggregate, «new SrcParamsDecl(ctx, constructor.variables)») «new SrcThrowsExceptions(
 				ctx, constructor.allExceptions)»{
 				«_superCall(constructor.variables)»	
 			}

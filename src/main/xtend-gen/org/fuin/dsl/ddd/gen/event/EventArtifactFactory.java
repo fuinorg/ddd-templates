@@ -16,6 +16,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment;
+import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement;
 import org.fuin.dsl.ddd.gen.base.Utils;
@@ -185,8 +186,8 @@ public class EventArtifactFactory extends AbstractSource<Event> {
       _builder.append(_name_5, "\t");
       _builder.append("(@NotNull final EntityIdPath entityIdPath, ");
       EList<Variable> _variables_1 = event.getVariables();
-      CharSequence __paramsDecl = this._paramsDecl(ctx, _variables_1);
-      _builder.append(__paramsDecl, "\t");
+      SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _variables_1);
+      _builder.append(_srcParamsDecl, "\t");
       _builder.append(") {");
       _builder.newLineIfNotEmpty();
       _builder.append("\t\t");
