@@ -1,13 +1,11 @@
 package org.fuin.dsl.ddd.gen.base;
 
 import com.google.common.base.Objects;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
@@ -17,12 +15,10 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
@@ -35,7 +31,6 @@ import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
-import org.fuin.dsl.ddd.gen.extensions.LiteralExtensions;
 import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
@@ -303,83 +298,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     _builder.append("}");
     _builder.newLine();
     return _builder;
-  }
-  
-  public String _methodCall(final List<Variable> vars) {
-    String _xblockexpression = null;
-    {
-      List<Literal> params = new ArrayList<Literal>();
-      for (final Variable v : vars) {
-        {
-          Literal name = DomainDrivenDesignDslFactory.eINSTANCE.createLiteral();
-          String _name = v.getName();
-          name.setValue(_name);
-          params.add(name);
-        }
-      }
-      _xblockexpression = this._methodCall(vars, params);
-    }
-    return _xblockexpression;
-  }
-  
-  public String _methodCall(final List<Variable> vars, final List<Literal> params) {
-    int _size = vars.size();
-    boolean _equals = (_size == 0);
-    if (_equals) {
-      return "";
-    } else {
-      int _size_1 = vars.size();
-      boolean _equals_1 = (_size_1 == 1);
-      if (_equals_1) {
-        Literal _last = IterableExtensions.<Literal>last(params);
-        return LiteralExtensions.str(_last);
-      } else {
-        int _size_2 = vars.size();
-        boolean _greaterThan = (_size_2 > 1);
-        if (_greaterThan) {
-          StringConcatenation _builder = new StringConcatenation();
-          {
-            boolean _hasElements = false;
-            for(final Literal p : params) {
-              if (!_hasElements) {
-                _hasElements = true;
-              } else {
-                _builder.appendImmediate(", ", "");
-              }
-              String _str = LiteralExtensions.str(p);
-              _builder.append(_str, "");
-            }
-          }
-          return _builder.toString();
-        }
-      }
-    }
-    return null;
-  }
-  
-  public String _superCall(final List<Variable> vars) {
-    int _size = vars.size();
-    boolean _equals = (_size == 0);
-    if (_equals) {
-      return "super();";
-    } else {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("super(");
-      {
-        boolean _hasElements = false;
-        for(final Variable v : vars) {
-          if (!_hasElements) {
-            _hasElements = true;
-          } else {
-            _builder.appendImmediate(", ", "");
-          }
-          String _name = v.getName();
-          _builder.append(_name, "");
-        }
-      }
-      _builder.append(");");
-      return _builder.toString();
-    }
   }
   
   public CharSequence _eventAbstractMethodsDecl(final AbstractEntity entity) {

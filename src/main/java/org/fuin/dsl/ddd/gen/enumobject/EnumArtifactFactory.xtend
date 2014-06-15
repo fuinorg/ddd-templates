@@ -5,6 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
@@ -17,6 +18,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 
 class EnumArtifactFactory extends AbstractSource<EnumObject> {
@@ -63,7 +65,7 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 			
 			«FOR in : vo.instances SEPARATOR ','»
 				«in.doc»
-				«in.name»(«_methodCall(vo.variables, in.params)»)
+				«new SrcInvokeMethod(ctx, in.name, in.params.litNames)»
 			«ENDFOR»;
 			
 				«new SrcVarsDecl(ctx, "private", false, vo)»

@@ -1,10 +1,10 @@
 package org.fuin.dsl.ddd.gen.base
 
+import java.util.List
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
+import java.util.ArrayList
 
 /**
  * Provides utility methods for templates.
@@ -53,5 +53,18 @@ class Utils {
 		}
 		return reg
 	}
+
+	/**
+	 * Combines a element and a list into a new list.
+	 * 
+	 * @param t First element of the new list.
+	 * @param list Rest elements of the new list.
+	 */
+	def static <T> List<T> union(T t, List<T> list) {
+		val result = new ArrayList<T>()
+		result.add(t)
+		result.addAll(list)
+		return result
+	} 
 
 }

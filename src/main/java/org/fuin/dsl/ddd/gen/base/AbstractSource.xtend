@@ -148,34 +148,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def _methodCall(List<Variable> vars) {
-		var List<Literal> params = new ArrayList<Literal>();
-		for (v : vars) {
-			var Literal name = DomainDrivenDesignDslFactory.eINSTANCE.createLiteral();
-			name.setValue(v.name)
-			params.add(name);
-		}
-		_methodCall(vars, params)
-	}
-
-	def _methodCall(List<Variable> vars, List<Literal> params) {
-		if (vars.size == 0) {
-			return "";
-		} else if (vars.size == 1) {
-			return params.last.str;
-		} else if (vars.size() > 1) {
-			return '''«FOR p : params SEPARATOR ', '»«p.str»«ENDFOR»''';
-		}
-	}
-
-	def _superCall(List<Variable> vars) {
-		if (vars.size == 0) {
-			return "super();";
-		} else {
-			return '''super(«FOR v : vars SEPARATOR ', '»«v.name»«ENDFOR»);''';
-		}
-	}
-
 	def _eventAbstractMethodsDecl(AbstractEntity entity) {
 		'''
 			«FOR method : entity.constructorsAndMethods»

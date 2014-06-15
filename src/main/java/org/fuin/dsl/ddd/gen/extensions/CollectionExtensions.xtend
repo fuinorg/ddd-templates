@@ -4,6 +4,8 @@ import java.util.ArrayList
 import java.util.Collections
 import java.util.List
 import java.util.Map
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 
 /**
  * Provides extension methods for collections.
@@ -69,5 +71,38 @@ class CollectionExtensions {
 		return map
 	}
 
+	/**
+	 * Returns a list of names from all variables.
+	 * 
+	 * @param vars Variable list.
+	 * 
+	 * @return List with names in the same order as the variables.
+	 */
+	def static List<String> varNames(List<Variable> vars) {
+		val List<String> result = new ArrayList<String>()
+		if (vars != null) {
+			for (v : vars) {
+				result.add(v.name)
+			}
+		}
+		return result
+	}
+
+	/**
+	 * Returns a list of names from all variables.
+	 * 
+	 * @param vars Variable list.
+	 * 
+	 * @return List with names in the same order as the variables.
+	 */
+	def static List<String> litNames(List<Literal> literals) {
+		val List<String> result = new ArrayList<String>()
+		if (literals != null) {
+			for (literal : literals) {
+				result.add(literal.value)
+			}
+		}
+		return result
+	}
 
 }

@@ -14,11 +14,13 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
+import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
+import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
@@ -185,37 +187,14 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     EList<Variable> _variables_2 = constructor.getVariables();
-    String __superCall = this._superCall(_variables_2);
-    _builder.append(__superCall, "\t");
+    List<String> _varNames = CollectionExtensions.varNames(_variables_2);
+    List<String> _union = Utils.<String>union("rootAggregate", _varNames);
+    SrcInvokeMethod _srcInvokeMethod = new SrcInvokeMethod(ctx, "super", _union);
+    _builder.append(_srcInvokeMethod, "\t");
     _builder.append("\t");
     _builder.newLineIfNotEmpty();
     _builder.append("}");
     _builder.newLine();
     return _builder;
-  }
-  
-  public String _superCall(final List<Variable> vars) {
-    int _size = vars.size();
-    boolean _equals = (_size == 0);
-    if (_equals) {
-      return "super(rootAggregate);";
-    } else {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("super(rootAggregate, ");
-      {
-        boolean _hasElements = false;
-        for(final Variable v : vars) {
-          if (!_hasElements) {
-            _hasElements = true;
-          } else {
-            _builder.appendImmediate(", ", "");
-          }
-          String _name = v.getName();
-          _builder.append(_name, "");
-        }
-      }
-      _builder.append(");");
-      return _builder.toString();
-    }
   }
 }

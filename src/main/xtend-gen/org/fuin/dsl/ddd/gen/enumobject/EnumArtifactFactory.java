@@ -1,5 +1,6 @@
 package org.fuin.dsl.ddd.gen.enumobject;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
@@ -13,11 +14,13 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
+import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod;
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment;
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
+import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
@@ -97,13 +100,10 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
           _builder.append(_doc_1, "");
           _builder.newLineIfNotEmpty();
           String _name_1 = in.getName();
-          _builder.append(_name_1, "");
-          _builder.append("(");
-          EList<Variable> _variables = vo.getVariables();
           EList<Literal> _params = in.getParams();
-          String __methodCall = this._methodCall(_variables, _params);
-          _builder.append(__methodCall, "");
-          _builder.append(")");
+          List<String> _litNames = CollectionExtensions.litNames(_params);
+          SrcInvokeMethod _srcInvokeMethod = new SrcInvokeMethod(ctx, _name_1, _litNames);
+          _builder.append(_srcInvokeMethod, "");
           _builder.newLineIfNotEmpty();
           _builder.append("\t\t\t");
         }
@@ -121,14 +121,14 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
       String _name_2 = vo.getName();
       _builder.append(_name_2, "\t");
       _builder.append("(");
-      EList<Variable> _variables_1 = vo.getVariables();
-      SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _variables_1);
+      EList<Variable> _variables = vo.getVariables();
+      SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _variables);
       _builder.append(_srcParamsDecl, "\t");
       _builder.append(") {");
       _builder.newLineIfNotEmpty();
       _builder.append("\t\t");
-      EList<Variable> _variables_2 = vo.getVariables();
-      SrcParamsAssignment _srcParamsAssignment = new SrcParamsAssignment(ctx, _variables_2);
+      EList<Variable> _variables_1 = vo.getVariables();
+      SrcParamsAssignment _srcParamsAssignment = new SrcParamsAssignment(ctx, _variables_1);
       _builder.append(_srcParamsAssignment, "\t\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");

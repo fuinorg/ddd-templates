@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 
 /**
  * Provides extension methods for collections.
@@ -90,5 +92,43 @@ public class CollectionExtensions {
       return Collections.<K, V>emptyMap();
     }
     return map;
+  }
+  
+  /**
+   * Returns a list of names from all variables.
+   * 
+   * @param vars Variable list.
+   * 
+   * @return List with names in the same order as the variables.
+   */
+  public static List<String> varNames(final List<Variable> vars) {
+    final List<String> result = new ArrayList<String>();
+    boolean _notEquals = (!Objects.equal(vars, null));
+    if (_notEquals) {
+      for (final Variable v : vars) {
+        String _name = v.getName();
+        result.add(_name);
+      }
+    }
+    return result;
+  }
+  
+  /**
+   * Returns a list of names from all variables.
+   * 
+   * @param vars Variable list.
+   * 
+   * @return List with names in the same order as the variables.
+   */
+  public static List<String> litNames(final List<Literal> literals) {
+    final List<String> result = new ArrayList<String>();
+    boolean _notEquals = (!Objects.equal(literals, null));
+    if (_notEquals) {
+      for (final Literal literal : literals) {
+        String _value = literal.getValue();
+        result.add(_value);
+      }
+    }
+    return result;
   }
 }

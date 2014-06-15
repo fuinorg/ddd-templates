@@ -5,7 +5,6 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
@@ -20,9 +19,11 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
 
 class EntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -103,17 +104,9 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 			 */
 			public «entity.name»(final «entity.root.name» rootAggregate, «new SrcParamsDecl(ctx, constructor.variables)») «new SrcThrowsExceptions(
 				ctx, constructor.allExceptions)»{
-				«_superCall(constructor.variables)»	
+				«new SrcInvokeMethod(ctx, "super", union("rootAggregate", constructor.variables.varNames))»	
 			}
 		'''
-	}
-
-	override _superCall(List<Variable> vars) {
-		if (vars.size == 0) {
-			return "super(rootAggregate);";
-		} else {
-			return '''super(rootAggregate, «FOR v : vars SEPARATOR ', '»«v.name»«ENDFOR»);''';
-		}
 	}
 
 }

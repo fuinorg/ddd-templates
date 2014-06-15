@@ -7,6 +7,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -101,13 +102,13 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 					final «asJavaType(v)» «v.name» = null;
 				«ENDFOR»
 			
-					return new «event.name»(new EntityIdPath(aId), «_methodCall(event.variables)»);
+					return new «new SrcInvokeMethod(ctx, event.name, union("new EntityIdPath(aId)", event.variables.varNames))»
 				}				
 				
-			  protected final XmlAdapter<?, ?>[] createAdapter() {
-					final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new EmsEntityIdFactory());
-					return new XmlAdapter[] { entityIdPathConverter };
-			  }
+			 protected final XmlAdapter<?, ?>[] createAdapter() {
+			 final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new EmsEntityIdFactory());
+			 return new XmlAdapter[] { entityIdPathConverter };
+			 }
 				
 			}
 			// CHECKSTYLE:ON

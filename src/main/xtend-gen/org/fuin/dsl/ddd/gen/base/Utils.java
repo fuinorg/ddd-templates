@@ -1,6 +1,8 @@
 package org.fuin.dsl.ddd.gen.base;
 
 import com.google.common.base.Objects;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry;
@@ -57,5 +59,18 @@ public class Utils {
       map.put(Utils.CODE_REFERENCE_REGISTRY_KEY, reg);
     }
     return reg;
+  }
+  
+  /**
+   * Combines a element and a list into a new list.
+   * 
+   * @param t First element of the new list.
+   * @param list Rest elements of the new list.
+   */
+  public static <T extends Object> List<T> union(final T t, final List<T> list) {
+    final ArrayList<T> result = new ArrayList<T>();
+    result.add(t);
+    result.addAll(list);
+    return result;
   }
 }
