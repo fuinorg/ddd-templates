@@ -2,6 +2,7 @@ package org.fuin.dsl.ddd.gen.base;
 
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
@@ -49,6 +50,15 @@ public class SrcJavaDoc implements CodeSnippet {
    */
   public SrcJavaDoc(final InternalType internalType) {
     this(internalType.getDoc());
+  }
+  
+  /**
+   * Constructor with event.
+   * 
+   * @param event Event with doc.
+   */
+  public SrcJavaDoc(final Event event) {
+    this(event.getDoc());
   }
   
   public String toString() {

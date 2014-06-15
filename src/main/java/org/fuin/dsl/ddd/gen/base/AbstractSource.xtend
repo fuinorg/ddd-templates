@@ -25,7 +25,6 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.LiteralExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
@@ -448,12 +447,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 			protected «internalType.name»() {
 				super();
 			}
-		'''
-	}
-
-	def _xmlRootElement(String name) {
-		'''
-			@XmlRootElement(name = "«name.toXmlName»")
 		'''
 	}
 

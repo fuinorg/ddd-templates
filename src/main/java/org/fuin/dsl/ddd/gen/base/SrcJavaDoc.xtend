@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.base
 
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.srcgen4j.core.emf.CodeSnippet
@@ -48,6 +49,15 @@ class SrcJavaDoc implements CodeSnippet {
 	 */
 	new(InternalType internalType) {
 		this(internalType.doc)
+	}
+
+	/**
+	 * Constructor with event.
+	 * 
+	 * @param event Event with doc.
+	 */
+	new(Event event) {
+		this(event.doc)
 	}
 
 	override toString() {

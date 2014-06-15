@@ -16,6 +16,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
+import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
@@ -69,23 +70,21 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
       SrcJavaDoc _srcJavaDoc = new SrcJavaDoc(vo);
       _builder.append(_srcJavaDoc, "");
       _builder.newLineIfNotEmpty();
-      _builder.newLine();
       {
         ExternalType _base = vo.getBase();
         boolean _equals = Objects.equal(_base, null);
         if (_equals) {
-          String _name = vo.getName();
-          CharSequence __xmlRootElement = this._xmlRootElement(_name);
-          _builder.append(__xmlRootElement, "");
+          SrcXmlRootElement _srcXmlRootElement = new SrcXmlRootElement(ctx, vo);
+          _builder.append(_srcXmlRootElement, "");
           _builder.newLineIfNotEmpty();
         }
       }
       _builder.append("public final class ");
       _builder.append(className, "");
       _builder.append(" ");
-      String _name_1 = vo.getName();
+      String _name = vo.getName();
       ExternalType _base_1 = vo.getBase();
-      String _optionalExtendsForBase = this.optionalExtendsForBase(_name_1, _base_1);
+      String _optionalExtendsForBase = this.optionalExtendsForBase(_name, _base_1);
       _builder.append(_optionalExtendsForBase, "");
       _builder.append("implements ValueObject {");
       _builder.newLineIfNotEmpty();
@@ -121,9 +120,9 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      String _name_2 = vo.getName();
+      String _name_1 = vo.getName();
       ExternalType _base_3 = vo.getBase();
-      CharSequence __optionalBaseMethods = this._optionalBaseMethods(_name_2, _base_3);
+      CharSequence __optionalBaseMethods = this._optionalBaseMethods(_name_1, _base_3);
       _builder.append(__optionalBaseMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");

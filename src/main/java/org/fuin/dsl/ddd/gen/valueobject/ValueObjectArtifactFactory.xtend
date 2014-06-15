@@ -8,6 +8,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
+import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -54,9 +55,8 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 	def create(SimpleCodeSnippetContext ctx, ValueObject vo, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDoc(vo)»
-			
 			«IF vo.base == null»
-				«_xmlRootElement(vo.name)»
+				«new SrcXmlRootElement(ctx, vo)»
 			«ENDIF»
 			public final class «className» «optionalExtendsForBase(vo.name, vo.base)»implements ValueObject {
 			

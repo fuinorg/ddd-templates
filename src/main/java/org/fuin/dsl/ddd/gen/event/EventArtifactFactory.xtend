@@ -11,6 +11,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
+import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -22,6 +23,7 @@ import static org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 
 class EventArtifactFactory extends AbstractSource<Event> {
 
@@ -72,8 +74,8 @@ class EventArtifactFactory extends AbstractSource<Event> {
 
 	def create(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
 		val String src = ''' 
-			/** «event.doc.text» */
-			«_xmlRootElement(event.name)»
+			«new SrcJavaDoc(event)»
+			«new SrcXmlRootElement(ctx, event.name)»
 			public final class «className» extends AbstractDomainEvent<«event.entityIdType.name»> {
 			
 				private static final long serialVersionUID = 1000L;
