@@ -23,6 +23,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
+import org.fuin.dsl.ddd.gen.base.SrcMethod;
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment;
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
@@ -31,7 +32,6 @@ import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
-import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
@@ -265,38 +265,12 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       EList<Method> _methods = internalType.getMethods();
       List<Method> _nullSafe = CollectionExtensions.<Method>nullSafe(_methods);
       for(final Method method : _nullSafe) {
-        CharSequence __methodDecl = this._methodDecl(ctx, method);
-        _builder.append(__methodDecl, "");
+        SrcMethod _srcMethod = new SrcMethod(ctx, "public final", false, method);
+        _builder.append(_srcMethod, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
       }
     }
-    return _builder;
-  }
-  
-  public CharSequence _methodDecl(final CodeSnippetContext ctx, final Method method) {
-    StringConcatenation _builder = new StringConcatenation();
-    SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(ctx, method);
-    _builder.append(_srcMethodJavaDoc, "");
-    _builder.newLineIfNotEmpty();
-    _builder.append("public final void ");
-    String _name = method.getName();
-    _builder.append(_name, "");
-    _builder.append("(");
-    List<Variable> _allVariables = MethodExtensions.allVariables(method);
-    SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _allVariables);
-    _builder.append(_srcParamsDecl, "");
-    _builder.append(") ");
-    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _allExceptions = MethodExtensions.allExceptions(method);
-    SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _allExceptions);
-    _builder.append(_srcThrowsExceptions, "");
-    _builder.append("{");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("// TODO Implement\t");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
     return _builder;
   }
   

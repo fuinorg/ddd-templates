@@ -9,7 +9,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.commons.ArtifactFactory
@@ -20,7 +19,6 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
@@ -128,19 +126,9 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _methodsDecl(CodeSnippetContext ctx, InternalType internalType) {
 		'''
 			«FOR method : internalType.methods.nullSafe»
-				«_methodDecl(ctx, method)»
+				«new SrcMethod(ctx, "public final", false, method)»
 				
 			«ENDFOR»
-		'''
-	}
-
-	def _methodDecl(CodeSnippetContext ctx, Method method) {
-		'''
-			«new SrcMethodJavaDoc(ctx, method)»
-			public final void «method.name»(«new SrcParamsDecl(ctx, method.allVariables)») «new SrcThrowsExceptions(ctx,
-				method.allExceptions)»{
-				// TODO Implement	
-			}
 		'''
 	}
 
