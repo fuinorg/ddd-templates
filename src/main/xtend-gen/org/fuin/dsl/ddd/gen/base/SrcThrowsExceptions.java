@@ -44,6 +44,7 @@ public class SrcThrowsExceptions implements CodeSnippet {
         return "";
       }
       StringConcatenation _builder = new StringConcatenation();
+      _builder.append(" ");
       _builder.append("throws ");
       {
         boolean _hasElements = false;
@@ -51,10 +52,10 @@ public class SrcThrowsExceptions implements CodeSnippet {
           if (!_hasElements) {
             _hasElements = true;
           } else {
-            _builder.appendImmediate(", ", "");
+            _builder.appendImmediate(", ", " ");
           }
           String _name = ex.getName();
-          _builder.append(_name, "");
+          _builder.append(_name, " ");
         }
       }
       _xblockexpression = _builder.toString();

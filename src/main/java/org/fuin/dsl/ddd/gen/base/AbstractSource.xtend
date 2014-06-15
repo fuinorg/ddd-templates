@@ -1,17 +1,14 @@
 package org.fuin.dsl.ddd.gen.base
 
-import java.util.ArrayList
 import java.util.List
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
@@ -23,7 +20,6 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.LiteralExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {

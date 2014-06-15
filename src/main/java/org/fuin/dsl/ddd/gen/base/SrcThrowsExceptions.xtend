@@ -29,7 +29,7 @@ class SrcThrowsExceptions implements CodeSnippet {
 		if ((exceptions == null) || (exceptions.size == 0)) {
 			return ""
 		}
-		'''throws «FOR ex : exceptions SEPARATOR ', '»«ex.name»«ENDFOR»'''
+		''' throws «FOR ex : exceptions SEPARATOR ', '»«ex.name»«ENDFOR»'''
 	}
 
 }
