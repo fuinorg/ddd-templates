@@ -27,7 +27,7 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	new(CodeSnippetContext ctx, InternalType type) {
 		this.ctx = ctx
 		this.constructors = new ArrayList<ConstructorData>()
-		for (con : type.constructors) {
+		for (con : type.constructors.nullSafe) {
 			this.constructors.add(new ConstructorData("public", type.name, con))
 		}
 	}

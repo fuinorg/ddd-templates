@@ -1,8 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
+import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+
+import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
 
 /**
  * Creates source code for a single method.
@@ -10,9 +13,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 class SrcMethod implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String modifiers
-	val boolean makeAbstract
-	val Method method
+	val MethodData method
 
 	/**
 	 * Constructor with all mandatory data.
@@ -22,23 +23,35 @@ class SrcMethod implements CodeSnippet {
 	 * @param makeAbstract TRUE for an abstract method or FALSE for a non-abstract method with "// TODO Implement!".
 	 * @param method Method to create the source for.
 	 */
-	new(CodeSnippetContext ctx, String modifiers, boolean makeAbstract, Method method) {
+	new(CodeSnippetContext ctx, List<String> annotations, String modifiers, boolean makeAbstract, Method method) {
+		this(ctx,
+			new MethodData(method.doc, annotations, modifiers, makeAbstract, method.name, method.variables,
+				method.allExceptions))
+	}
+
+	/**
+	 * Constructor with all mandatory data.
+	 * 
+	 * @param ctx Context.
+	 * @param modifiers Modifiers (Don't include "abstract" - Use next argument instead).
+	 * @param makeAbstract TRUE for an abstract method or FALSE for a non-abstract method with "// TODO Implement!".
+	 * @param method Method to create the source for.
+	 */
+	new(CodeSnippetContext ctx, MethodData method) {
 		this.ctx = ctx
-		this.modifiers = modifiers
-		this.makeAbstract = makeAbstract
 		this.method = method
 	}
 
 	override toString() {
-		if (makeAbstract) {
+		if (method.makeAbstract) {
 			'''	
 				«new SrcMethodJavaDoc(ctx, method)»
-				«new SrcMethodSignature(ctx, modifiers, makeAbstract, method)»;
+				«new SrcMethodSignature(ctx, method)»;
 			'''
 		} else {
 			'''	
 				«new SrcMethodJavaDoc(ctx, method)»
-				«new SrcMethodSignature(ctx, modifiers, makeAbstract, method)» {
+				«new SrcMethodSignature(ctx, method)» {
 					// TODO Implement!
 				}
 			'''

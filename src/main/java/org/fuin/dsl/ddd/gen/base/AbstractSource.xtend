@@ -3,8 +3,6 @@ package org.fuin.dsl.ddd.gen.base
 import java.util.List
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
@@ -17,7 +15,6 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {
@@ -94,44 +91,23 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	}
 
 	// --- Source code fragments (Method names should start with an underscore '_') ---
-
-	def _methodsDecl(CodeSnippetContext ctx, InternalType internalType) {
-		'''
-			«FOR method : internalType.methods.nullSafe»
-				«new SrcMethod(ctx, "public final", false, method)»
-				
-			«ENDFOR»
-		'''
-	}
-
-	def _eventAbstractMethodsDecl(AbstractEntity entity) {
+	def _eventAbstractMethodsDecl(CodeSnippetContext ctx, AbstractEntity entity) {
 		'''
 			«FOR method : entity.constructorsAndMethods»
-				«_eventAbstractMethods(method.events)»
+				«_eventAbstractMethods(ctx, method.events)»
 			«ENDFOR»
 		'''
 	}
 
-	def _eventAbstractMethods(List<Event> events) {
+	def _eventAbstractMethods(CodeSnippetContext ctx, List<Event> events) {
 		if (events == null) {
 			return "";
 		}
 		'''
 			«FOR event : events»
-				«_eventAbstractMethod(event)»
+				«new SrcAbstractHandleEventMethod(ctx, event)»
 				
 			«ENDFOR»
-		'''
-	}
-
-	def _eventAbstractMethod(Event event) {
-		'''
-			/**
-			 * Handles: «event.name».
-			 *
-			 * @param event Event to handle.
-			 */
-			protected abstract void handle(final «event.name» event);
 		'''
 	}
 

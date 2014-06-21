@@ -36,7 +36,8 @@ public class SrcConstructorsWithParamsAssignment implements CodeSnippet {
     ArrayList<ConstructorData> _arrayList = new ArrayList<ConstructorData>();
     this.constructors = _arrayList;
     EList<Constructor> _constructors = type.getConstructors();
-    for (final Constructor con : _constructors) {
+    List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
+    for (final Constructor con : _nullSafe) {
       String _name = type.getName();
       ConstructorData _constructorData = new ConstructorData("public", _name, con);
       this.constructors.add(_constructorData);

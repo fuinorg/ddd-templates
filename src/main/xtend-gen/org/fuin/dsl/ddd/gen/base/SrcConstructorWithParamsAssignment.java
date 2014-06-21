@@ -56,11 +56,7 @@ public class SrcConstructorWithParamsAssignment implements CodeSnippet {
     SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(this.ctx, _doc, _variables, _exceptions);
     _builder.append(_srcMethodJavaDoc, "");
     _builder.newLineIfNotEmpty();
-    String _modifiers = this.constructorData.getModifiers();
-    String _typeName = this.constructorData.getTypeName();
-    List<Variable> _variables_1 = this.constructorData.getVariables();
-    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptions_1 = this.constructorData.getExceptions();
-    SrcConstructorSignature _srcConstructorSignature = new SrcConstructorSignature(this.ctx, _modifiers, _typeName, _variables_1, _exceptions_1);
+    SrcConstructorSignature _srcConstructorSignature = new SrcConstructorSignature(this.ctx, this.constructorData);
     _builder.append(_srcConstructorSignature, "");
     _builder.append(" {");
     _builder.newLineIfNotEmpty();
@@ -68,8 +64,8 @@ public class SrcConstructorWithParamsAssignment implements CodeSnippet {
     _builder.append("super();");
     _builder.newLine();
     _builder.append("\t");
-    List<Variable> _variables_2 = this.constructorData.getVariables();
-    SrcParamsAssignment _srcParamsAssignment = new SrcParamsAssignment(this.ctx, _variables_2);
+    List<Variable> _variables_1 = this.constructorData.getVariables();
+    SrcParamsAssignment _srcParamsAssignment = new SrcParamsAssignment(this.ctx, _variables_1);
     _builder.append(_srcParamsAssignment, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("}");

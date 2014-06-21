@@ -1,19 +1,14 @@
 package org.fuin.dsl.ddd.gen.aggregate
 
-import java.util.List
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorSignature
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc
-import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
-import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
-import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
+import org.fuin.dsl.ddd.gen.base.SrcMethods
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -24,7 +19,6 @@ import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
 
 class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 
@@ -86,7 +80,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 			
 				«_childEntityLocatorMethods(aggregate)»
 				
-				«_methodsDecl(ctx, aggregate)»
+				«new SrcMethods(ctx, aggregate)»
 			
 				«_eventMethodsDecl(aggregate)»
 			

@@ -7,7 +7,9 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcMethods
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
 import org.fuin.srcgen4j.commons.GenerateException
@@ -23,7 +25,6 @@ import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
 
 class EntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -72,7 +73,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 			
 				«_childEntityLocatorMethods(entity)»
 				
-				«_methodsDecl(ctx, entity)»
+				«new SrcMethods(ctx, entity)»
 			
 				«_eventMethodsDecl(entity)»
 			

@@ -194,7 +194,7 @@ public class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> 
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __eventAbstractMethodsDecl = this._eventAbstractMethodsDecl(aggregate);
+      CharSequence __eventAbstractMethodsDecl = this._eventAbstractMethodsDecl(ctx, aggregate);
       _builder.append(__eventAbstractMethodsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

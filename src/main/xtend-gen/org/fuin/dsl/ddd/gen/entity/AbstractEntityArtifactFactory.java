@@ -176,7 +176,7 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __eventAbstractMethodsDecl = this._eventAbstractMethodsDecl(entity);
+      CharSequence __eventAbstractMethodsDecl = this._eventAbstractMethodsDecl(ctx, entity);
       _builder.append(__eventAbstractMethodsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

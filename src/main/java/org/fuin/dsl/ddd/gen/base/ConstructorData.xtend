@@ -10,85 +10,47 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 /**
  * Data required to create a constructor. 
  */
-class ConstructorData {
-
-	String doc
-	String modifiers
-	String typeName
-	List<Variable> variables
-	List<Exception> exceptions
+class ConstructorData extends AbstractMethodData {
 
 	/**
 	 * Constructor with constructor.
 	 * 
-	 * @param modifiers Modifiers (Don't include "abstract" - Use next argument instead).
+	 * @param modifiers Modifiers.
 	 * @param typeName Name of the type the constructor belongs to.
 	 * @param constructor Constructor.
 	 */
 	new(String modifiers, String typeName, Constructor constructor) {
-		this(constructor.doc, modifiers, typeName, constructor.variables, constructor.allExceptions)
+		super(constructor.doc, modifiers, typeName, constructor.variables, constructor.allExceptions)
 	}
 
 	/**
-	 * Constructor with all data.
+	 * Constructor without annotations.
 	 * 
-	 * @param ctx Documentation for the constructor.
-	 * @param modifiers Modifiers (Don't include "abstract" - Use next argument instead).
+	 * @param doc Documentation.
+	 * @param annotations Annotations.
+	 * @param modifiers Modifiers.
 	 * @param typeName Name of the type the constructor belongs to.
 	 * @param variables Variables for the constructor.
 	 * @param exceptions Exceptions for the constructor.
 	 */
-	new(String doc, String modifiers, String typeName, List<Variable> variables, List<Exception> exceptions) {
-		this.doc = doc
-		this.modifiers = modifiers
-		this.typeName = typeName
-		this.variables = variables
-		this.exceptions = exceptions
+	new(String doc, String modifiers, String typeName, List<Variable> variables,
+		List<Exception> exceptions) {
+		super(doc, modifiers, typeName, variables, exceptions)
 	}
-
+	
 	/**
-	 * Returns the documentation.
+	 * Constructor with all data.
 	 * 
-	 * @return Documentation.
+	 * @param doc Documentation.
+	 * @param annotations Annotations.
+	 * @param modifiers Modifiers.
+	 * @param typeName Name of the type the constructor belongs to.
+	 * @param variables Variables for the constructor.
+	 * @param exceptions Exceptions for the constructor.
 	 */
-	def getDoc() {
-		doc
-	}
-
-	/**
-	 * Returns the modifiers.
-	 * 
-	 * @return Modifiers.
-	 */
-	def getModifiers() {
-		modifiers
-	}
-
-	/**
-	 * Returns name of the type the constructor belongs to.
-	 * 
-	 * @return Type name.
-	 */
-	def getTypeName() {
-		typeName
-	}
-
-	/**
-	 * Returns the variables.
-	 * 
-	 * @return Variables.
-	 */
-	def getVariables() {
-		variables
-	}
-
-	/**
-	 * Returns the exceptions.
-	 * 
-	 * @return Exceptions.
-	 */
-	def getExceptions() {
-		exceptions
+	new(String doc, List<String> annotations, String modifiers, String typeName, List<Variable> variables,
+		List<Exception> exceptions) {
+		super(doc, annotations, modifiers, typeName, variables, exceptions)
 	}
 
 }

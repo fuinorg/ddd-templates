@@ -16,11 +16,10 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
-import org.fuin.dsl.ddd.gen.base.SrcMethod;
+import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethod;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
@@ -185,28 +184,13 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return (name + "[]");
   }
   
-  public CharSequence _methodsDecl(final CodeSnippetContext ctx, final InternalType internalType) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      EList<Method> _methods = internalType.getMethods();
-      List<Method> _nullSafe = CollectionExtensions.<Method>nullSafe(_methods);
-      for(final Method method : _nullSafe) {
-        SrcMethod _srcMethod = new SrcMethod(ctx, "public final", false, method);
-        _builder.append(_srcMethod, "");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
-    return _builder;
-  }
-  
-  public CharSequence _eventAbstractMethodsDecl(final AbstractEntity entity) {
+  public CharSequence _eventAbstractMethodsDecl(final CodeSnippetContext ctx, final AbstractEntity entity) {
     StringConcatenation _builder = new StringConcatenation();
     {
       List<AbstractMethod> _constructorsAndMethods = AbstractEntityExtensions.constructorsAndMethods(entity);
       for(final AbstractMethod method : _constructorsAndMethods) {
         EList<Event> _events = method.getEvents();
-        CharSequence __eventAbstractMethods = this._eventAbstractMethods(_events);
+        CharSequence __eventAbstractMethods = this._eventAbstractMethods(ctx, _events);
         _builder.append(__eventAbstractMethods, "");
         _builder.newLineIfNotEmpty();
       }
@@ -214,7 +198,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _eventAbstractMethods(final List<Event> events) {
+  public CharSequence _eventAbstractMethods(final CodeSnippetContext ctx, final List<Event> events) {
     CharSequence _xblockexpression = null;
     {
       boolean _equals = Objects.equal(events, null);
@@ -224,8 +208,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       StringConcatenation _builder = new StringConcatenation();
       {
         for(final Event event : events) {
-          CharSequence __eventAbstractMethod = this._eventAbstractMethod(event);
-          _builder.append(__eventAbstractMethod, "");
+          SrcAbstractHandleEventMethod _srcAbstractHandleEventMethod = new SrcAbstractHandleEventMethod(ctx, event);
+          _builder.append(_srcAbstractHandleEventMethod, "");
           _builder.newLineIfNotEmpty();
           _builder.newLine();
         }
@@ -233,33 +217,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       _xblockexpression = _builder;
     }
     return _xblockexpression;
-  }
-  
-  public CharSequence _eventAbstractMethod(final Event event) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Handles: ");
-    String _name = event.getName();
-    _builder.append(_name, " ");
-    _builder.append(".");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param event Event to handle.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("protected abstract void handle(final ");
-    String _name_1 = event.getName();
-    _builder.append(_name_1, "");
-    _builder.append(" event);");
-    _builder.newLineIfNotEmpty();
-    return _builder;
   }
   
   public CharSequence _eventMethodsDecl(final AbstractEntity entity) {

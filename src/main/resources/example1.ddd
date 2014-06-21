@@ -31,15 +31,22 @@ context x {
 			/** Does some cool things. */
 			method doSomething {
 				
-				/** Unique aggregate identifier. */
 				MyAggregateId id
-				
-				/** Example value object. */
-				   nullable MyValueObject vo
+				nullable MyValueObject vo
 				   
-				   constraints {
-				   	AnyConstraint	
-				   }
+				constraints {
+				   AnyConstraint	
+				}
+				
+				/** MyAggregate did something event. */   
+				event DidSomethingEvent {
+					MyAggregateId id
+					nullable MyValueObject vo
+				}
+				
+				/** Something happened in MyAggregate. */
+				event SomethingHappenedEvent {
+				}
 				   
 			}
 			

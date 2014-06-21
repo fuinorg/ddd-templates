@@ -4,7 +4,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 
 /**
  * Creates source code for a single method.
@@ -12,12 +12,10 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
 class SrcMethodSignature implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String modifiers
-	val boolean makeAbstract
-	val Method method
+	val MethodData methodData
 
 	/**
-	 * Constructor with all mandatory data.
+	 * Constructor with method.
 	 * 
 	 * @param ctx Context.
 	 * @param modifiers Modifiers (Don't include "abstract" - Use next argument instead).
@@ -25,14 +23,27 @@ class SrcMethodSignature implements CodeSnippet {
 	 * @param method Method to create the source for.
 	 */
 	new(CodeSnippetContext ctx, String modifiers, boolean makeAbstract, Method method) {
+		this(ctx, new MethodData(modifiers, makeAbstract, method));
+	}
+
+	/**
+	 * Constructor with all mandatory data.
+	 * 
+	 * @param ctx Context.
+	 * @param methodData Method data.
+	 */
+	new(CodeSnippetContext ctx, MethodData methodData) {
 		this.ctx = ctx
-		this.modifiers = modifiers
-		this.makeAbstract = makeAbstract
-		this.method = method
+		this.methodData = methodData
 	}
 
 	override toString() {
-		'''«modifiers» «IF makeAbstract»abstract «ENDIF»void «method.name»(«new SrcParamsDecl(ctx, method.allVariables)»)«new SrcThrowsExceptions(ctx, method.allExceptions)»'''
+		'''
+			«FOR annotation : methodData.annotations.nullSafe»
+				«annotation»
+			«ENDFOR»
+			«methodData.modifiers» «IF methodData.makeAbstract»abstract «ENDIF»void «methodData.name»(«new SrcParamsDecl(ctx,
+				methodData.variables)»)«new SrcThrowsExceptions(ctx, methodData.exceptions)»'''
 	}
 
 }

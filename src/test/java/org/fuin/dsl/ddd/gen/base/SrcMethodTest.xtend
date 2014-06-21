@@ -34,7 +34,8 @@ class SrcMethodTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
-		val SrcMethod testee = new SrcMethod(ctx, "public", false, method)
+		val annotations = #["@One", "@Two(\"2\")"]
+		val SrcMethod testee = new SrcMethod(ctx, annotations, "public", false, method)
 
 		// TEST
 		val result = testee.toString
@@ -50,6 +51,8 @@ class SrcMethodTest {
 				 *
 				 * @throws ConstraintViolatedException The constraint was violated.
 				 */
+				@One
+				@Two("2")
 				public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException {
 					// TODO Implement!
 				}
@@ -70,7 +73,7 @@ class SrcMethodTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
-		val SrcMethod testee = new SrcMethod(ctx, "public", true, method)
+		val SrcMethod testee = new SrcMethod(ctx, null, "public", true, method)
 
 		// TEST
 		val result = testee.toString

@@ -100,7 +100,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				«new SrcSetters(ctx, "protected final", aggregate.variables)»
 				«_abstractChildEntityLocatorMethods(aggregate)»
 			
-				«_eventAbstractMethodsDecl(aggregate)»
+				«_eventAbstractMethodsDecl(ctx, aggregate)»
 			
 			}
 		'''

@@ -45,6 +45,16 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	}
 
 	/**
+	 * Constructor with method data.
+	 * 
+	 * @param ctx Context.
+	 * @param method Method data.
+	 */
+	new(CodeSnippetContext ctx, AbstractMethodData method) {
+		this(ctx, method.doc, method.variables, method.exceptions)
+	}
+
+	/**
 	 * Constructor with mandatory data.
 	 * 
 	 * @param ctx Context.

@@ -1,6 +1,9 @@
 package org.fuin.dsl.ddd.gen.base;
 
+import com.google.common.collect.Lists;
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -42,7 +45,8 @@ public class SrcMethodTest {
     final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
     EList<Method> _methods = aggregate.getMethods();
     final Method method = _methods.get(0);
-    final SrcMethod testee = new SrcMethod(ctx, "public", false, method);
+    final List<String> annotations = Collections.<String>unmodifiableList(Lists.<String>newArrayList("@One", "@Two(\"2\")"));
+    final SrcMethod testee = new SrcMethod(ctx, annotations, "public", false, method);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
@@ -69,6 +73,10 @@ public class SrcMethodTest {
     _builder.append(" ");
     _builder.append("*/");
     _builder.newLine();
+    _builder.append("@One");
+    _builder.newLine();
+    _builder.append("@Two(\"2\")");
+    _builder.newLine();
     _builder.append("public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException {");
     _builder.newLine();
     _builder.append("\t");
@@ -94,7 +102,7 @@ public class SrcMethodTest {
     final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
     EList<Method> _methods = aggregate.getMethods();
     final Method method = _methods.get(0);
-    final SrcMethod testee = new SrcMethod(ctx, "public", true, method);
+    final SrcMethod testee = new SrcMethod(ctx, null, "public", true, method);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();

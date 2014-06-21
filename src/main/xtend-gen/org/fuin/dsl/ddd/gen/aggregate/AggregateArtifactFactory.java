@@ -15,6 +15,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcConstructorSignature;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
+import org.fuin.dsl.ddd.gen.base.SrcMethods;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
@@ -135,8 +136,8 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __methodsDecl = this._methodsDecl(ctx, aggregate);
-      _builder.append(__methodsDecl, "\t");
+      SrcMethods _srcMethods = new SrcMethods(ctx, aggregate);
+      _builder.append(_srcMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");

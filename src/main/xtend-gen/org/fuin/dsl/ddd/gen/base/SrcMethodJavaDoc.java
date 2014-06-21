@@ -5,6 +5,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
+import org.fuin.dsl.ddd.gen.base.AbstractMethodData;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
 import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
@@ -44,6 +45,16 @@ public class SrcMethodJavaDoc implements CodeSnippet {
    */
   public SrcMethodJavaDoc(final CodeSnippetContext ctx, final Method method) {
     this(ctx, method.getDoc(), MethodExtensions.allVariables(method), MethodExtensions.allExceptions(method));
+  }
+  
+  /**
+   * Constructor with method data.
+   * 
+   * @param ctx Context.
+   * @param method Method data.
+   */
+  public SrcMethodJavaDoc(final CodeSnippetContext ctx, final AbstractMethodData method) {
+    this(ctx, method.getDoc(), method.getVariables(), method.getExceptions());
   }
   
   /**

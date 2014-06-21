@@ -16,6 +16,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
+import org.fuin.dsl.ddd.gen.base.SrcMethods;
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.Utils;
@@ -103,8 +104,8 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __methodsDecl = this._methodsDecl(ctx, entity);
-      _builder.append(__methodsDecl, "\t");
+      SrcMethods _srcMethods = new SrcMethods(ctx, entity);
+      _builder.append(_srcMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");

@@ -93,7 +93,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 				«new SrcSetters(ctx, "protected final", entity.variables)»
 				«_abstractChildEntityLocatorMethods(entity)»
 				
-				«_eventAbstractMethodsDecl(entity)»
+				«_eventAbstractMethodsDecl(ctx, entity)»
 			
 			}
 		'''
