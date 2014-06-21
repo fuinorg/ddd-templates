@@ -4,10 +4,12 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
+import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
+
 /**
  * Creates source code for a single method.
  */
-class SrcMethod implements CodeSnippet {
+class SrcMethodSignature implements CodeSnippet {
 
 	val CodeSnippetContext ctx
 	val String modifiers
@@ -30,19 +32,7 @@ class SrcMethod implements CodeSnippet {
 	}
 
 	override toString() {
-		if (makeAbstract) {
-			'''	
-				«new SrcMethodJavaDoc(ctx, method)»
-				«new SrcMethodSignature(ctx, modifiers, makeAbstract, method)»;
-			'''
-		} else {
-			'''	
-				«new SrcMethodJavaDoc(ctx, method)»
-				«new SrcMethodSignature(ctx, modifiers, makeAbstract, method)» {
-					// TODO Implement!
-				}
-			'''
-		}
+		'''«modifiers» «IF makeAbstract»abstract «ENDIF»void «method.name»(«new SrcParamsDecl(ctx, method.allVariables)»)«new SrcThrowsExceptions(ctx, method.allExceptions)»'''
 	}
 
 }

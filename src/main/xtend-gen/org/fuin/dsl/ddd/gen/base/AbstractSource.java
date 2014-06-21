@@ -11,8 +11,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
@@ -23,14 +21,10 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
+import org.fuin.dsl.ddd.gen.base.SrcConstructorWithParamsAssignment;
 import org.fuin.dsl.ddd.gen.base.SrcMethod;
-import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
-import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment;
-import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
-import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
-import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
@@ -199,11 +193,10 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       EList<Constructor> _constructors = internalType.getConstructors();
       List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
       for(final Constructor constructor : _nullSafe) {
+        String _doc = constructor.getDoc();
         String _name = internalType.getName();
-        EList<Variable> _variables = constructor.getVariables();
-        Constraints _constraints = constructor.getConstraints();
-        CharSequence __constructorDecl = this._constructorDecl(ctx, _name, _variables, _constraints);
-        _builder.append(__constructorDecl, "");
+        SrcConstructorWithParamsAssignment _srcConstructorWithParamsAssignment = new SrcConstructorWithParamsAssignment(ctx, _doc, _name, constructor);
+        _builder.append(_srcConstructorWithParamsAssignment, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
       }
@@ -211,8 +204,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _constructorsDecl(final CodeSnippetContext ctx, final AbstractVO vo) {
-    CharSequence _xifexpression = null;
+  public Object _constructorsDecl(final CodeSnippetContext ctx, final AbstractVO vo) {
+    Object _xifexpression = null;
     EList<Constructor> _constructors = vo.getConstructors();
     List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
     int _size = _nullSafe.size();
@@ -220,45 +213,26 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     if (_equals) {
       String _name = vo.getName();
       EList<Variable> _variables = vo.getVariables();
-      _xifexpression = this._constructorDecl(ctx, _name, _variables, null);
+      _xifexpression = new SrcConstructorWithParamsAssignment(ctx, "Constructor with all data.", "public", _name, _variables, null);
     } else {
       _xifexpression = this._constructorsDecl(ctx, ((InternalType) vo));
     }
     return _xifexpression;
   }
   
-  public CharSequence _constructorDecl(final CodeSnippetContext ctx, final String internalTypeName, final List<Variable> variables, final Constraints constraints) {
-    StringConcatenation _builder = new StringConcatenation();
-    List<Constraint> _list = ConstraintsExtensions.list(constraints);
-    SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, _list);
-    _builder.append(_srcMethodJavaDoc, "");
-    _builder.newLineIfNotEmpty();
-    _builder.append("public ");
-    _builder.append(internalTypeName, "");
-    _builder.append("(");
-    List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
-    SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _nullSafe);
-    _builder.append(_srcParamsDecl, "");
-    _builder.append(") ");
-    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
-    SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _exceptionList);
-    _builder.append(_srcThrowsExceptions, "");
-    _builder.append("{");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("super();");
-    _builder.newLine();
-    _builder.append("\t");
-    List<Variable> _nullSafe_1 = CollectionExtensions.<Variable>nullSafe(variables);
-    SrcParamsAssignment _srcParamsAssignment = new SrcParamsAssignment(ctx, _nullSafe_1);
-    _builder.append(_srcParamsAssignment, "\t");
-    _builder.append("\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder;
-  }
-  
+  /**
+   * def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables,
+   * Constraints constraints) {
+   * '''
+   * «new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, constraints.list)»
+   * public «internalTypeName»(«new SrcParamsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx,
+   * constraints.exceptionList)»{
+   * super();
+   * «new SrcParamsAssignment(ctx, variables.nullSafe)»
+   * }
+   * '''
+   * }
+   */
   public CharSequence _methodsDecl(final CodeSnippetContext ctx, final InternalType internalType) {
     StringConcatenation _builder = new StringConcatenation();
     {

@@ -26,6 +26,9 @@ class SrcParamsAssignment implements CodeSnippet {
 	}
 
 	override toString() {
+		if ((vars == null) || (vars.size == 0)) {
+			return ""
+		}
 		'''	
 			«FOR v : vars»	
 				«IF v.nullable == null»

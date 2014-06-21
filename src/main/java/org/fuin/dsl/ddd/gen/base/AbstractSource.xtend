@@ -97,7 +97,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _constructorsDecl(CodeSnippetContext ctx, InternalType internalType) {
 		'''
 			«FOR constructor : internalType.constructors.nullSafe»
-				«_constructorDecl(ctx, internalType.name, constructor.variables, constructor.constraints)»
+				«new SrcConstructorWithParamsAssignment(ctx, constructor.doc, internalType.name, constructor)»
 				
 			«ENDFOR»
 		'''
@@ -105,12 +105,13 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	def _constructorsDecl(CodeSnippetContext ctx, AbstractVO vo) {
 		if (vo.constructors.nullSafe.size == 0) {
-			_constructorDecl(ctx, vo.name, vo.variables, null)
+			new SrcConstructorWithParamsAssignment(ctx, "Constructor with all data.", "public", vo.name, vo.variables, null)
 		} else {
 			_constructorsDecl(ctx, vo as InternalType)
 		}
 	}
 
+	/*
 	def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables,
 		Constraints constraints) {
 		'''
@@ -122,6 +123,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 			}
 		'''
 	}
+	*/	
 
 	def _methodsDecl(CodeSnippetContext ctx, InternalType internalType) {
 		'''

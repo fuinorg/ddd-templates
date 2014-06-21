@@ -18,7 +18,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
-class SrcMethodTest {
+class SrcMethodSignatureSignatureTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
@@ -34,26 +34,14 @@ class SrcMethodTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
-		val SrcMethod testee = new SrcMethod(ctx, "public", false, method)
+		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", false, method)
 
 		// TEST
 		val result = testee.toString
 
 		// VERIFY
 		assertThat(result).isEqualTo(
-			'''
-				/*
-				 * Does some cool things.
-				 *
-				 * @param id Unique aggregate identifier.
-				 * @param vo Example value object.
-				 *
-				 * @throws ConstraintViolatedException The constraint was violated.
-				 */
-				public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException {
-					// TODO Implement!
-				}
-			''')
+			'''public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException''')
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyAggregateId",
 			"a.b.c.MyValueObject", "a.b.c.ConstraintViolatedException")
 
@@ -70,24 +58,14 @@ class SrcMethodTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
-		val SrcMethod testee = new SrcMethod(ctx, "public", true, method)
+		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", true, method)
 
 		// TEST
 		val result = testee.toString
 
 		// VERIFY
 		assertThat(result).isEqualTo(
-			'''
-				/*
-				 * Does some cool things.
-				 *
-				 * @param id Unique aggregate identifier.
-				 * @param vo Example value object.
-				 *
-				 * @throws ConstraintViolatedException The constraint was violated.
-				 */
-				public abstract void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException;
-			''')
+			'''public abstract void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException''')
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyAggregateId",
 			"a.b.c.MyValueObject", "a.b.c.ConstraintViolatedException")
 

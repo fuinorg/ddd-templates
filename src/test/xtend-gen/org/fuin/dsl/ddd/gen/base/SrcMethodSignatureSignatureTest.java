@@ -16,7 +16,7 @@ import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
-import org.fuin.dsl.ddd.gen.base.SrcMethod;
+import org.fuin.dsl.ddd.gen.base.SrcMethodSignature;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions;
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry;
@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 @InjectWith(DomainDrivenDesignDslInjectorProvider.class)
 @RunWith(XtextRunner.class)
 @SuppressWarnings("all")
-public class SrcMethodTest {
+public class SrcMethodSignatureSignatureTest {
   @Inject
   private ParseHelper<DomainModel> parser;
   
@@ -42,40 +42,11 @@ public class SrcMethodTest {
     final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
     EList<Method> _methods = aggregate.getMethods();
     final Method method = _methods.get(0);
-    final SrcMethod testee = new SrcMethod(ctx, "public", false, method);
+    final SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", false, method);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Does some cool things.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param id Unique aggregate identifier.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param vo Example value object.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @throws ConstraintViolatedException The constraint was violated.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("// TODO Implement!");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
+    _builder.append("public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException");
     _assertThat.isEqualTo(_builder.toString());
     Set<String> _imports = ctx.getImports();
     CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
@@ -94,35 +65,11 @@ public class SrcMethodTest {
     final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
     EList<Method> _methods = aggregate.getMethods();
     final Method method = _methods.get(0);
-    final SrcMethod testee = new SrcMethod(ctx, "public", true, method);
+    final SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", true, method);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Does some cool things.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param id Unique aggregate identifier.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param vo Example value object.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @throws ConstraintViolatedException The constraint was violated.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("public abstract void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException;");
-    _builder.newLine();
+    _builder.append("public abstract void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException");
     _assertThat.isEqualTo(_builder.toString());
     Set<String> _imports = ctx.getImports();
     CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
@@ -132,7 +79,7 @@ public class SrcMethodTest {
   
   private DomainModel createModel() {
     try {
-      Class<? extends SrcMethodTest> _class = this.getClass();
+      Class<? extends SrcMethodSignatureSignatureTest> _class = this.getClass();
       URL _resource = _class.getResource("/example1.ddd");
       String _readAsString = Utils.readAsString(_resource);
       return this.parser.parse(_readAsString);

@@ -46,7 +46,7 @@ class SrcMethodJavaDocTest {
 				 * @param a Abc.
 				 * @param b Def.
 				 *
-				 * @throws WhateverException Thrown if the constraint was violated: Makes sure that this is compliant. 
+				 * @throws WhateverException Argh...
 				 */
 			''')
 		assertThat(ctx.imports).isEmpty()

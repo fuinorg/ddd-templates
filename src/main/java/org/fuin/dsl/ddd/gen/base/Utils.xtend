@@ -1,10 +1,13 @@
 package org.fuin.dsl.ddd.gen.base
 
+import java.io.InputStream
+import java.net.URL
+import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import org.apache.commons.io.IOUtils
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
-import java.util.ArrayList
 
 /**
  * Provides utility methods for templates.
@@ -65,6 +68,28 @@ class Utils {
 		result.add(t)
 		result.addAll(list)
 		return result
-	} 
+	}
+
+	/**
+	 * Reads the URL and returns the bytes as String.
+	 * 
+	 * @param url URL.
+	 * 
+	 * @return Content from the URL converted into a String. 
+	 */
+	def static String readAsString(URL url) {
+		val InputStream in = url.openStream()
+		try {
+			val List<String> lines = IOUtils.readLines(in)
+			val StringBuffer sb = new StringBuffer()
+			for (line : lines) {
+				sb.append(line)
+				sb.append("\n")
+			}
+			return sb.toString()
+		} finally {
+			in.close()
+		}
+	}
 
 }

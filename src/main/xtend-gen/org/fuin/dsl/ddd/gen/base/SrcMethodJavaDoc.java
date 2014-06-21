@@ -1,9 +1,7 @@
 package org.fuin.dsl.ddd.gen.base;
 
-import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
@@ -26,7 +24,7 @@ public class SrcMethodJavaDoc implements CodeSnippet {
   
   private final List<Variable> variables;
   
-  private final List<Constraint> constraints;
+  private final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions;
   
   /**
    * Constructor with constructor.
@@ -35,7 +33,7 @@ public class SrcMethodJavaDoc implements CodeSnippet {
    * @param constructor Constructor.
    */
   public SrcMethodJavaDoc(final CodeSnippetContext ctx, final Constructor constructor) {
-    this(ctx, constructor.getDoc(), constructor.getVariables(), ConstructorExtensions.allConstraints(constructor));
+    this(ctx, constructor.getDoc(), constructor.getVariables(), ConstructorExtensions.allExceptions(constructor));
   }
   
   /**
@@ -45,7 +43,7 @@ public class SrcMethodJavaDoc implements CodeSnippet {
    * @param method method.
    */
   public SrcMethodJavaDoc(final CodeSnippetContext ctx, final Method method) {
-    this(ctx, method.getDoc(), MethodExtensions.allVariables(method), MethodExtensions.allConstraints(method));
+    this(ctx, method.getDoc(), MethodExtensions.allVariables(method), MethodExtensions.allExceptions(method));
   }
   
   /**
@@ -54,13 +52,13 @@ public class SrcMethodJavaDoc implements CodeSnippet {
    * @param ctx Context.
    * @param doc Original doc.
    * @param variables Variables.
-   * @param constraints Constraints.
+   * @param exceptions Exceptions.
    */
-  public SrcMethodJavaDoc(final CodeSnippetContext ctx, final String doc, final List<Variable> variables, final List<Constraint> constraints) {
+  public SrcMethodJavaDoc(final CodeSnippetContext ctx, final String doc, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
     this.ctx = ctx;
     this.doc = doc;
     this.variables = variables;
-    this.constraints = constraints;
+    this.exceptions = exceptions;
   }
   
   public String sp() {
@@ -97,26 +95,18 @@ public class SrcMethodJavaDoc implements CodeSnippet {
     _builder.append("*");
     _builder.newLine();
     {
-      List<Constraint> _nullSafe_1 = CollectionExtensions.<Constraint>nullSafe(this.constraints);
-      for(final Constraint constraint : _nullSafe_1) {
-        {
-          org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception = constraint.getException();
-          boolean _notEquals = (!Objects.equal(_exception, null));
-          if (_notEquals) {
-            String _sp_1 = this.sp();
-            _builder.append(_sp_1, "");
-            _builder.append("* @throws ");
-            org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception_1 = constraint.getException();
-            String _name_1 = _exception_1.getName();
-            _builder.append(_name_1, "");
-            _builder.append(" Thrown if the constraint was violated: ");
-            String _doc = constraint.getDoc();
-            String _text_1 = StringExtensions.text(_doc);
-            _builder.append(_text_1, "");
-            _builder.append(" ");
-            _builder.newLineIfNotEmpty();
-          }
-        }
+      List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _nullSafe_1 = CollectionExtensions.<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception>nullSafe(this.exceptions);
+      for(final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception exception : _nullSafe_1) {
+        String _sp_1 = this.sp();
+        _builder.append(_sp_1, "");
+        _builder.append("* @throws ");
+        String _name_1 = exception.getName();
+        _builder.append(_name_1, "");
+        _builder.append(" ");
+        String _doc = exception.getDoc();
+        String _text_1 = StringExtensions.text(_doc);
+        _builder.append(_text_1, "");
+        _builder.newLineIfNotEmpty();
       }
     }
     _builder.append(" ");

@@ -1,0 +1,73 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+	}
+	
+	namespace a {
+		
+		import x.types.*
+
+		/** Example value object. */
+		value-object MyValueObject {}
+
+		/** Checks something. */
+		constraint AnyConstraint exception ConstraintViolatedException {
+			message "Any constraint"
+		}
+		
+		/** The constraint was violated. */
+		exception ConstraintViolatedException {
+			message "Constraint violated"
+		}
+
+		/** Unique aggregate identifier. */
+		aggregate-id MyAggregateId identifies MyAggregate base String {}
+
+		/** Example aggregate. */
+		aggregate MyAggregate identifier MyAggregateId {
+			
+			/** Does some cool things. */
+			method doSomething {
+				
+				/** Unique aggregate identifier. */
+				MyAggregateId id
+				
+				/** Example value object. */
+				   nullable MyValueObject vo
+				   
+				   constraints {
+				   	AnyConstraint	
+				   }
+				   
+			}
+			
+		}
+
+		/** Unique entity identifier. */
+		entity-id MyEntityId identifies MyEntity base String {}
+
+		/** Example entity. */
+		entity MyEntity identifier MyEntityId root MyAggregate {
+			
+			/** Creates the entity. */
+			constructor create {
+				
+				MyEntityId id
+				
+				/** Example value object. */
+				nullable MyValueObject vo
+				   
+				constraints {
+				   	AnyConstraint
+				}
+
+			}
+			
+		}
+
+	}
+
+}
+

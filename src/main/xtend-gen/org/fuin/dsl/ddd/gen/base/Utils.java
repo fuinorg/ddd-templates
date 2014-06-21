@@ -1,9 +1,13 @@
 package org.fuin.dsl.ddd.gen.base;
 
 import com.google.common.base.Objects;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.io.IOUtils;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry;
 
@@ -72,5 +76,33 @@ public class Utils {
     result.add(t);
     result.addAll(list);
     return result;
+  }
+  
+  /**
+   * Reads the URL and returns the bytes as String.
+   * 
+   * @param url URL.
+   * 
+   * @return Content from the URL converted into a String.
+   */
+  public static String readAsString(final URL url) {
+    try {
+      final InputStream in = url.openStream();
+      try {
+        final List<String> lines = IOUtils.readLines(in);
+        final StringBuffer sb = new StringBuffer();
+        for (final String line : lines) {
+          {
+            sb.append(line);
+            sb.append("\n");
+          }
+        }
+        return sb.toString();
+      } finally {
+        in.close();
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
 }

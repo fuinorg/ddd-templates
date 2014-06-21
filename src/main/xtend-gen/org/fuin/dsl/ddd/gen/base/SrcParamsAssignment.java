@@ -30,33 +30,49 @@ public class SrcParamsAssignment implements CodeSnippet {
   }
   
   public String toString() {
-    StringConcatenation _builder = new StringConcatenation();
+    String _xblockexpression = null;
     {
-      for(final Variable v : this.vars) {
-        {
-          String _nullable = v.getNullable();
-          boolean _equals = Objects.equal(_nullable, null);
-          if (_equals) {
-            _builder.append("Contract.requireArgNotNull(\"");
-            String _name = v.getName();
-            _builder.append(_name, "");
-            _builder.append("\", ");
-            String _name_1 = v.getName();
-            _builder.append(_name_1, "");
-            _builder.append(");");
-            _builder.newLineIfNotEmpty();
+      boolean _or = false;
+      boolean _equals = Objects.equal(this.vars, null);
+      if (_equals) {
+        _or = true;
+      } else {
+        int _size = this.vars.size();
+        boolean _equals_1 = (_size == 0);
+        _or = _equals_1;
+      }
+      if (_or) {
+        return "";
+      }
+      StringConcatenation _builder = new StringConcatenation();
+      {
+        for(final Variable v : this.vars) {
+          {
+            String _nullable = v.getNullable();
+            boolean _equals_2 = Objects.equal(_nullable, null);
+            if (_equals_2) {
+              _builder.append("Contract.requireArgNotNull(\"");
+              String _name = v.getName();
+              _builder.append(_name, "");
+              _builder.append("\", ");
+              String _name_1 = v.getName();
+              _builder.append(_name_1, "");
+              _builder.append(");");
+              _builder.newLineIfNotEmpty();
+            }
           }
         }
       }
-    }
-    _builder.newLine();
-    {
-      for(final Variable v_1 : this.vars) {
-        SrcParamAssignment _srcParamAssignment = new SrcParamAssignment(this.ctx, v_1);
-        _builder.append(_srcParamAssignment, "");
-        _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      {
+        for(final Variable v_1 : this.vars) {
+          SrcParamAssignment _srcParamAssignment = new SrcParamAssignment(this.ctx, v_1);
+          _builder.append(_srcParamAssignment, "");
+          _builder.newLineIfNotEmpty();
+        }
       }
+      _xblockexpression = _builder.toString();
     }
-    return _builder.toString();
+    return _xblockexpression;
   }
 }

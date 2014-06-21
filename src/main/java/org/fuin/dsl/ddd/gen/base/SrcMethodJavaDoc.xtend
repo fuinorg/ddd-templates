@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
@@ -22,7 +22,7 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	val CodeSnippetContext ctx
 	val String doc
 	val List<Variable> variables
-	val List<Constraint> constraints
+	val List<Exception> exceptions
 
 	/**
 	 * Constructor with constructor.
@@ -31,7 +31,7 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	 * @param constructor Constructor.
 	 */
 	new(CodeSnippetContext ctx, Constructor constructor) {
-		this(ctx, constructor.doc, constructor.variables, constructor.allConstraints)
+		this(ctx, constructor.doc, constructor.variables, constructor.allExceptions)
 	}
 
 	/**
@@ -41,7 +41,7 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	 * @param method method.
 	 */
 	new(CodeSnippetContext ctx, Method method) {
-		this(ctx, method.doc, method.allVariables, method.allConstraints)
+		this(ctx, method.doc, method.allVariables, method.allExceptions)
 	}
 
 	/**
@@ -50,13 +50,13 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	 * @param ctx Context.
 	 * @param doc Original doc.
 	 * @param variables Variables.
-	 * @param constraints Constraints.
+	 * @param exceptions Exceptions.
 	 */
-	new(CodeSnippetContext ctx, String doc, List<Variable> variables, List<Constraint> constraints) {
+	new(CodeSnippetContext ctx, String doc, List<Variable> variables, List<Exception> exceptions) {
 		this.ctx = ctx
 		this.doc = doc
 		this.variables = variables
-		this.constraints = constraints
+		this.exceptions = exceptions
 	}
 
 	def sp() {
@@ -72,10 +72,8 @@ class SrcMethodJavaDoc implements CodeSnippet {
 				«sp»* @param «v.name» «v.superDoc»
 			«ENDFOR»
 			 *
-			«FOR constraint : constraints.nullSafe»
-				«IF constraint.exception != null»
-					«sp»* @throws «constraint.exception.name» Thrown if the constraint was violated: «constraint.doc.text» 
-				«ENDIF»
+			«FOR exception : exceptions.nullSafe»
+				«sp»* @throws «exception.name» «exception.doc.text»
 			«ENDFOR»
 			 */
 		'''

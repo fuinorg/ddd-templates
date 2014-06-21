@@ -59,7 +59,7 @@ public class SrcMethodJavaDocTest {
     _builder.append("*");
     _builder.newLine();
     _builder.append(" ");
-    _builder.append("* @throws WhateverException Thrown if the constraint was violated: Makes sure that this is compliant. ");
+    _builder.append("* @throws WhateverException Argh...");
     _builder.newLine();
     _builder.append(" ");
     _builder.append("*/");
