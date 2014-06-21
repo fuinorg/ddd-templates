@@ -2,8 +2,6 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
@@ -15,7 +13,6 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.DomainDrivenDesignDslFactoryExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {
@@ -289,26 +286,12 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def _abstractChildEntityLocatorMethods(AbstractEntity parent) {
+	def _abstractChildEntityLocatorMethods(CodeSnippetContext ctx, AbstractEntity parent) {
 		'''
 			«FOR child : parent.childEntities»
-				«_abstractChildEntityLocatorMethod(child)»
+				«new SrcAbstractChildEntityLocatorMethod(ctx, child)»
 				
 			«ENDFOR»
-		'''
-	}
-
-	def _abstractChildEntityLocatorMethod(AbstractEntity entity) {
-		'''
-			/**
-			 * Locates the child entity of type «entity.name».
-			 *
-			 * @param «entity.idType.name.toFirstLower» Unique identifier of the child entity to find.
-			 *
-			 * @return Child entity or NULL if no entity with the given identifier was found.
-			 */
-			protected abstract «entity.name» find«entity.name»(final «entity.idType.name» «entity.idType.name.toFirstLower»);
-			
 		'''
 	}
 

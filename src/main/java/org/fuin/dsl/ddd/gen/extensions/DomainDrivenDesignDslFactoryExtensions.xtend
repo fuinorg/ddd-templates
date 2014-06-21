@@ -49,4 +49,24 @@ class DomainDrivenDesignDslFactoryExtensions {
 		return v
 	}
 
+	/**
+	 * Creates a variable with type, name and "nullable" information.
+	 * 
+	 * @param factory Factory.
+	 * @param doc Documentation.
+	 * @param type Type.
+	 * @param name Name.
+	 * @param nullable TRUE if nullable, else false.
+	 */
+	def static createVariable(DomainDrivenDesignDslFactory factory, String doc, Type type, String name, boolean nullable) {
+		var v = factory.createVariable
+		v.setDoc(doc)
+		v.setName(name)
+		if (nullable) {
+			v.setNullable("nullable")
+		}
+		v.setType(type)
+		return v
+	}
+
 }

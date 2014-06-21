@@ -19,7 +19,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
-class SrcChildEntityLocatorMethodTest {
+class SrcAbstractChildEntityLocatorMethodTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
@@ -33,7 +33,7 @@ class SrcChildEntityLocatorMethodTest {
 		refReg.putReference("x.a.MyEntityId", "a.b.c.MyEntityId")
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Entity entity = createModel().find(Entity, "MyEntity")
-		val SrcChildEntityLocatorMethod testee = new SrcChildEntityLocatorMethod(ctx, entity)
+		val SrcAbstractChildEntityLocatorMethod testee = new SrcAbstractChildEntityLocatorMethod(ctx, entity)
 
 		// TEST
 		val result = testee.toString
@@ -41,12 +41,14 @@ class SrcChildEntityLocatorMethodTest {
 		// VERIFY
 		assertThat(result).isEqualTo(
 			'''
-			@Override
-			@ChildEntityLocator
-			protected final MyEntity findMyEntity(@NotNull final MyEntityId myEntityId) {
-				// TODO Implement!
-				return null;
-			}
+			/**
+			 * Locates a child entity of type MyEntity.
+			 *
+			 * @param myEntityId Unique identifier of the child entity to find.
+			 *
+			 * @return Child entity or NULL if no entity with the given identifier was found.
+			 */
+			protected abstract MyEntity findMyEntity(@NotNull final MyEntityId myEntityId);
 			''')
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyEntity", "a.b.c.MyEntityId")
 

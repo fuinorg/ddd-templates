@@ -193,7 +193,7 @@ public class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> 
       _builder.append(_srcSetters, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
-      CharSequence __abstractChildEntityLocatorMethods = this._abstractChildEntityLocatorMethods(aggregate);
+      CharSequence __abstractChildEntityLocatorMethods = this._abstractChildEntityLocatorMethods(ctx, aggregate);
       _builder.append(__abstractChildEntityLocatorMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

@@ -53,7 +53,7 @@ public class SrcConstructorWithParamsAssignment implements CodeSnippet {
     String _doc = this.constructorData.getDoc();
     List<Variable> _variables = this.constructorData.getVariables();
     List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptions = this.constructorData.getExceptions();
-    SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(this.ctx, _doc, _variables, _exceptions);
+    SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(this.ctx, _doc, null, _variables, _exceptions);
     _builder.append(_srcMethodJavaDoc, "");
     _builder.newLineIfNotEmpty();
     SrcConstructorSignature _srcConstructorSignature = new SrcConstructorSignature(this.ctx, this.constructorData);

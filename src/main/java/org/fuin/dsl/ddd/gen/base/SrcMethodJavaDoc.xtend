@@ -4,6 +4,7 @@ import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
@@ -13,6 +14,8 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
+
 
 /**
  * Creates source code for the JavaDoc of a constructor or method.
@@ -21,6 +24,7 @@ class SrcMethodJavaDoc implements CodeSnippet {
 
 	val CodeSnippetContext ctx
 	val String doc
+	val Type returnType
 	val List<Variable> variables
 	val List<Exception> exceptions
 
@@ -31,7 +35,7 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	 * @param constructor Constructor.
 	 */
 	new(CodeSnippetContext ctx, Constructor constructor) {
-		this(ctx, constructor.doc, constructor.variables, constructor.allExceptions)
+		this(ctx, constructor.doc, null, constructor.variables, constructor.allExceptions)
 	}
 
 	/**
@@ -41,7 +45,17 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	 * @param method method.
 	 */
 	new(CodeSnippetContext ctx, Method method) {
-		this(ctx, method.doc, method.allVariables, method.allExceptions)
+		this(ctx, method.doc, null/* TODO ReturnType */, method.allVariables, method.allExceptions)
+	}
+
+	/**
+	 * Constructor with constructor data.
+	 * 
+	 * @param ctx Context.
+	 * @param method Method data.
+	 */
+	new(CodeSnippetContext ctx, ConstructorData constructor) {
+		this(ctx, constructor.doc, null, constructor.variables, constructor.exceptions)
 	}
 
 	/**
@@ -50,8 +64,8 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	 * @param ctx Context.
 	 * @param method Method data.
 	 */
-	new(CodeSnippetContext ctx, AbstractMethodData method) {
-		this(ctx, method.doc, method.variables, method.exceptions)
+	new(CodeSnippetContext ctx, MethodData method) {
+		this(ctx, method.doc, method.returnType, method.variables, method.exceptions)
 	}
 
 	/**
@@ -59,12 +73,14 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	 * 
 	 * @param ctx Context.
 	 * @param doc Original doc.
+	 * @param returnType Return type.
 	 * @param variables Variables.
 	 * @param exceptions Exceptions.
 	 */
-	new(CodeSnippetContext ctx, String doc, List<Variable> variables, List<Exception> exceptions) {
+	new(CodeSnippetContext ctx, String doc, Type returnType, List<Variable> variables, List<Exception> exceptions) {
 		this.ctx = ctx
 		this.doc = doc
+		this.returnType = returnType
 		this.variables = variables
 		this.exceptions = exceptions
 	}
@@ -74,6 +90,9 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	}
 
 	override toString() {
+		if (doc == null) {
+			return ""
+		}
 		'''
 			/**
 			 * «doc.text»
@@ -85,6 +104,9 @@ class SrcMethodJavaDoc implements CodeSnippet {
 			«FOR exception : exceptions.nullSafe»
 				«sp»* @throws «exception.name» «exception.doc.text»
 			«ENDFOR»
+			«IF returnType != null»
+				«sp»* @return «returnType.doc.text»
+			«ENDIF»
 			 */
 		'''
 	}

@@ -6,9 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
@@ -17,6 +15,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
+import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethod;
 import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethod;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
@@ -671,68 +670,17 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _xblockexpression;
   }
   
-  public CharSequence _abstractChildEntityLocatorMethods(final AbstractEntity parent) {
+  public CharSequence _abstractChildEntityLocatorMethods(final CodeSnippetContext ctx, final AbstractEntity parent) {
     StringConcatenation _builder = new StringConcatenation();
     {
       Set<Entity> _childEntities = AbstractEntityExtensions.childEntities(parent);
       for(final Entity child : _childEntities) {
-        CharSequence __abstractChildEntityLocatorMethod = this._abstractChildEntityLocatorMethod(child);
-        _builder.append(__abstractChildEntityLocatorMethod, "");
+        SrcAbstractChildEntityLocatorMethod _srcAbstractChildEntityLocatorMethod = new SrcAbstractChildEntityLocatorMethod(ctx, child);
+        _builder.append(_srcAbstractChildEntityLocatorMethod, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
       }
     }
-    return _builder;
-  }
-  
-  public CharSequence _abstractChildEntityLocatorMethod(final AbstractEntity entity) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Locates the child entity of type ");
-    String _name = entity.getName();
-    _builder.append(_name, " ");
-    _builder.append(".");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param ");
-    AbstractEntityId _idType = entity.getIdType();
-    String _name_1 = _idType.getName();
-    String _firstLower = StringExtensions.toFirstLower(_name_1);
-    _builder.append(_firstLower, " ");
-    _builder.append(" Unique identifier of the child entity to find.");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @return Child entity or NULL if no entity with the given identifier was found.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("protected abstract ");
-    String _name_2 = entity.getName();
-    _builder.append(_name_2, "");
-    _builder.append(" find");
-    String _name_3 = entity.getName();
-    _builder.append(_name_3, "");
-    _builder.append("(final ");
-    AbstractEntityId _idType_1 = entity.getIdType();
-    String _name_4 = _idType_1.getName();
-    _builder.append(_name_4, "");
-    _builder.append(" ");
-    AbstractEntityId _idType_2 = entity.getIdType();
-    String _name_5 = _idType_2.getName();
-    String _firstLower_1 = StringExtensions.toFirstLower(_name_5);
-    _builder.append(_firstLower_1, "");
-    _builder.append(");");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
     return _builder;
   }
   

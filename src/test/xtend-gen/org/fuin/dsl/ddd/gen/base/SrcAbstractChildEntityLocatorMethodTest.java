@@ -14,7 +14,7 @@ import org.fest.assertions.StringAssert;
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
-import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethod;
+import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethod;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions;
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry;
@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
 @InjectWith(DomainDrivenDesignDslInjectorProvider.class)
 @RunWith(XtextRunner.class)
 @SuppressWarnings("all")
-public class SrcChildEntityLocatorMethodTest {
+public class SrcAbstractChildEntityLocatorMethodTest {
   @Inject
   private ParseHelper<DomainModel> parser;
   
@@ -37,23 +37,31 @@ public class SrcChildEntityLocatorMethodTest {
     final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final Entity entity = DomainModelExtensions.<Entity>find(_createModel, Entity.class, "MyEntity");
-    final SrcChildEntityLocatorMethod testee = new SrcChildEntityLocatorMethod(ctx, entity);
+    final SrcAbstractChildEntityLocatorMethod testee = new SrcAbstractChildEntityLocatorMethod(ctx, entity);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("@Override");
+    _builder.append("/**");
     _builder.newLine();
-    _builder.append("@ChildEntityLocator");
+    _builder.append(" ");
+    _builder.append("* Locates a child entity of type MyEntity.");
     _builder.newLine();
-    _builder.append("protected final MyEntity findMyEntity(@NotNull final MyEntityId myEntityId) {");
+    _builder.append(" ");
+    _builder.append("*");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("// TODO Implement!");
+    _builder.append(" ");
+    _builder.append("* @param myEntityId Unique identifier of the child entity to find.");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("return null;");
+    _builder.append(" ");
+    _builder.append("*");
     _builder.newLine();
-    _builder.append("}");
+    _builder.append(" ");
+    _builder.append("* @return Child entity or NULL if no entity with the given identifier was found.");
+    _builder.newLine();
+    _builder.append(" ");
+    _builder.append("*/");
+    _builder.newLine();
+    _builder.append("protected abstract MyEntity findMyEntity(@NotNull final MyEntityId myEntityId);");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
     Set<String> _imports = ctx.getImports();
@@ -63,7 +71,7 @@ public class SrcChildEntityLocatorMethodTest {
   
   private DomainModel createModel() {
     try {
-      Class<? extends SrcChildEntityLocatorMethodTest> _class = this.getClass();
+      Class<? extends SrcAbstractChildEntityLocatorMethodTest> _class = this.getClass();
       URL _resource = _class.getResource("/example1.ddd");
       String _readAsString = Utils.readAsString(_resource);
       return this.parser.parse(_readAsString);

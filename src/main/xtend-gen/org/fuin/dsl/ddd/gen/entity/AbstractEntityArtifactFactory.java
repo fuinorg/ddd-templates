@@ -173,7 +173,7 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
       _builder.append(_srcSetters, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
-      CharSequence __abstractChildEntityLocatorMethods = this._abstractChildEntityLocatorMethods(entity);
+      CharSequence __abstractChildEntityLocatorMethods = this._abstractChildEntityLocatorMethods(ctx, entity);
       _builder.append(__abstractChildEntityLocatorMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
