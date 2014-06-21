@@ -43,7 +43,7 @@ class SrcMethodTest {
 		// VERIFY
 		assertThat(result).isEqualTo(
 			'''
-				/*
+				/**
 				 * Does some cool things.
 				 *
 				 * @param id Unique aggregate identifier.
@@ -81,7 +81,7 @@ class SrcMethodTest {
 		// VERIFY
 		assertThat(result).isEqualTo(
 			'''
-				/*
+				/**
 				 * Does some cool things.
 				 *
 				 * @param id Unique aggregate identifier.

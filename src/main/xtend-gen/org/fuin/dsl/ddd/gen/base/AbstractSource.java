@@ -9,18 +9,15 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
-import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethod;
-import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethod;
+import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethod;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
@@ -183,77 +180,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       return name;
     }
     return (name + "[]");
-  }
-  
-  public CharSequence _eventAbstractMethodsDecl(final CodeSnippetContext ctx, final AbstractEntity entity) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      List<AbstractMethod> _constructorsAndMethods = AbstractEntityExtensions.constructorsAndMethods(entity);
-      for(final AbstractMethod method : _constructorsAndMethods) {
-        EList<Event> _events = method.getEvents();
-        List<Event> _nullSafe = CollectionExtensions.<Event>nullSafe(_events);
-        CharSequence __eventAbstractMethods = this._eventAbstractMethods(ctx, _nullSafe);
-        _builder.append(__eventAbstractMethods, "");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    return _builder;
-  }
-  
-  private CharSequence _eventAbstractMethods(final CodeSnippetContext ctx, final List<Event> events) {
-    CharSequence _xblockexpression = null;
-    {
-      boolean _equals = Objects.equal(events, null);
-      if (_equals) {
-        return "";
-      }
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        for(final Event event : events) {
-          SrcAbstractHandleEventMethod _srcAbstractHandleEventMethod = new SrcAbstractHandleEventMethod(ctx, event);
-          _builder.append(_srcAbstractHandleEventMethod, "");
-          _builder.newLineIfNotEmpty();
-          _builder.newLine();
-        }
-      }
-      _xblockexpression = _builder;
-    }
-    return _xblockexpression;
-  }
-  
-  public CharSequence _eventMethodsDecl(final CodeSnippetContext ctx, final AbstractEntity entity) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      List<AbstractMethod> _constructorsAndMethods = AbstractEntityExtensions.constructorsAndMethods(entity);
-      for(final AbstractMethod method : _constructorsAndMethods) {
-        EList<Event> _events = method.getEvents();
-        CharSequence __eventMethods = this._eventMethods(ctx, _events);
-        _builder.append(__eventMethods, "");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    return _builder;
-  }
-  
-  private CharSequence _eventMethods(final CodeSnippetContext ctx, final List<Event> events) {
-    CharSequence _xblockexpression = null;
-    {
-      boolean _equals = Objects.equal(events, null);
-      if (_equals) {
-        return "";
-      }
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        for(final Event event : events) {
-          SrcHandleEventMethod _srcHandleEventMethod = new SrcHandleEventMethod(ctx, event);
-          _builder.append(_srcHandleEventMethod, "");
-          _builder.newLineIfNotEmpty();
-          _builder.newLine();
-        }
-      }
-      _xblockexpression = _builder;
-    }
-    return _xblockexpression;
   }
   
   public String optionalExtendsForBase(final String typeName, final ExternalType base) {
@@ -810,52 +736,17 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _childEntityLocatorMethods(final AbstractEntity parent) {
+  public CharSequence _childEntityLocatorMethods(final CodeSnippetContext ctx, final AbstractEntity parent) {
     StringConcatenation _builder = new StringConcatenation();
     {
       Set<Entity> _childEntities = AbstractEntityExtensions.childEntities(parent);
       for(final Entity child : _childEntities) {
-        CharSequence __childEntityLocatorMethod = this._childEntityLocatorMethod(child);
-        _builder.append(__childEntityLocatorMethod, "");
+        SrcChildEntityLocatorMethod _srcChildEntityLocatorMethod = new SrcChildEntityLocatorMethod(ctx, child);
+        _builder.append(_srcChildEntityLocatorMethod, "");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
       }
     }
-    return _builder;
-  }
-  
-  public CharSequence _childEntityLocatorMethod(final AbstractEntity entity) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("@ChildEntityLocator");
-    _builder.newLine();
-    _builder.append("protected final ");
-    String _name = entity.getName();
-    _builder.append(_name, "");
-    _builder.append(" find");
-    String _name_1 = entity.getName();
-    _builder.append(_name_1, "");
-    _builder.append("(final ");
-    AbstractEntityId _idType = entity.getIdType();
-    String _name_2 = _idType.getName();
-    _builder.append(_name_2, "");
-    _builder.append(" ");
-    AbstractEntityId _idType_1 = entity.getIdType();
-    String _name_3 = _idType_1.getName();
-    String _firstLower = StringExtensions.toFirstLower(_name_3);
-    _builder.append(_firstLower, "");
-    _builder.append(") {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("// TODO Implement!");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("return null;");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
     return _builder;
   }
   

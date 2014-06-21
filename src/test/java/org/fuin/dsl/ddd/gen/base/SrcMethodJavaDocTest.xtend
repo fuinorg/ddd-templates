@@ -40,7 +40,7 @@ class SrcMethodJavaDocTest {
 		// VERIFY
 		assertThat(result).isEqualTo(
 			'''
-				/*
+				/**
 				 * This method does cool things.
 				 *
 				 * @param a Abc.

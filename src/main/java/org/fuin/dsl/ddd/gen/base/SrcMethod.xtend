@@ -25,8 +25,8 @@ class SrcMethod implements CodeSnippet {
 	 */
 	new(CodeSnippetContext ctx, List<String> annotations, String modifiers, boolean makeAbstract, Method method) {
 		this(ctx,
-			new MethodData(method.doc, annotations, modifiers, makeAbstract, method.name, method.variables,
-				method.allExceptions))
+			new MethodData(method.doc, annotations, modifiers, makeAbstract, null/* TODO method.returnType */,
+				method.name, method.variables, method.allExceptions))
 	}
 
 	/**
@@ -53,6 +53,7 @@ class SrcMethod implements CodeSnippet {
 				«new SrcMethodJavaDoc(ctx, method)»
 				«new SrcMethodSignature(ctx, method)» {
 					// TODO Implement!
+					«IF method.returnType != null»return null;«ENDIF»
 				}
 			'''
 		}

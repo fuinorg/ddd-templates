@@ -1,12 +1,15 @@
 package org.fuin.dsl.ddd.gen.base;
 
+import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.MethodData;
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
+import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.srcgen4j.core.emf.CodeSnippet;
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
@@ -19,6 +22,8 @@ public class SrcMethodSignature implements CodeSnippet {
   private final CodeSnippetContext ctx;
   
   private final MethodData methodData;
+  
+  private final String returnType;
   
   /**
    * Constructor with method.
@@ -41,6 +46,18 @@ public class SrcMethodSignature implements CodeSnippet {
   public SrcMethodSignature(final CodeSnippetContext ctx, final MethodData methodData) {
     this.ctx = ctx;
     this.methodData = methodData;
+    Type _returnType = methodData.getReturnType();
+    boolean _equals = Objects.equal(_returnType, null);
+    if (_equals) {
+      this.returnType = "void";
+    } else {
+      Type _returnType_1 = methodData.getReturnType();
+      String _name = _returnType_1.getName();
+      this.returnType = _name;
+      Type _returnType_2 = methodData.getReturnType();
+      String _uniqueName = AbstractElementExtensions.uniqueName(_returnType_2);
+      ctx.requiresReference(_uniqueName);
+    }
   }
   
   public String toString() {
@@ -62,7 +79,8 @@ public class SrcMethodSignature implements CodeSnippet {
         _builder.append("abstract ");
       }
     }
-    _builder.append("void ");
+    _builder.append(this.returnType, "");
+    _builder.append(" ");
     String _name = this.methodData.getName();
     _builder.append(_name, "");
     _builder.append("(");

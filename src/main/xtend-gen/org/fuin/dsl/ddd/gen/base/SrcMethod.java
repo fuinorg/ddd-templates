@@ -1,8 +1,10 @@
 package org.fuin.dsl.ddd.gen.base;
 
+import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.gen.base.MethodData;
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcMethodSignature;
@@ -29,8 +31,8 @@ public class SrcMethod implements CodeSnippet {
    */
   public SrcMethod(final CodeSnippetContext ctx, final List<String> annotations, final String modifiers, final boolean makeAbstract, final Method method) {
     this(ctx, 
-      new MethodData(method.getDoc(), annotations, modifiers, makeAbstract, method.getName(), method.getVariables(), 
-        MethodExtensions.allExceptions(method)));
+      new MethodData(method.getDoc(), annotations, modifiers, makeAbstract, null, 
+        method.getName(), method.getVariables(), MethodExtensions.allExceptions(method)));
   }
   
   /**
@@ -71,6 +73,15 @@ public class SrcMethod implements CodeSnippet {
       _builder_1.append("\t");
       _builder_1.append("// TODO Implement!");
       _builder_1.newLine();
+      _builder_1.append("\t");
+      {
+        Type _returnType = this.method.getReturnType();
+        boolean _notEquals = (!Objects.equal(_returnType, null));
+        if (_notEquals) {
+          _builder_1.append("return null;");
+        }
+      }
+      _builder_1.newLineIfNotEmpty();
       _builder_1.append("}");
       _builder_1.newLine();
       _xifexpression = _builder_1.toString();

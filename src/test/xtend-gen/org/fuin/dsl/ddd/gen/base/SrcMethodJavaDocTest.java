@@ -41,7 +41,7 @@ public class SrcMethodJavaDocTest {
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/*");
+    _builder.append("/**");
     _builder.newLine();
     _builder.append(" ");
     _builder.append("* This method does cool things.");

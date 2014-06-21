@@ -75,7 +75,7 @@ class SrcMethodJavaDoc implements CodeSnippet {
 
 	override toString() {
 		'''
-			/*
+			/**
 			 * «doc.text»
 			 *
 			«FOR v : variables.nullSafe»

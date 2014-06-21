@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.base
 
-import java.util.List
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
@@ -15,6 +15,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.DomainDrivenDesignDslFactoryExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {
@@ -91,46 +92,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	}
 
 	// --- Source code fragments (Method names should start with an underscore '_') ---
-	def _eventAbstractMethodsDecl(CodeSnippetContext ctx, AbstractEntity entity) {
-		'''
-			«FOR method : entity.constructorsAndMethods»
-				«_eventAbstractMethods(ctx, method.events.nullSafe)»
-			«ENDFOR»
-		'''
-	}
-
-	private def _eventAbstractMethods(CodeSnippetContext ctx, List<Event> events) {
-		if (events == null) {
-			return "";
-		}
-		'''
-			«FOR event : events»
-				«new SrcAbstractHandleEventMethod(ctx, event)»
-				
-			«ENDFOR»
-		'''
-	}
-
-	def _eventMethodsDecl(CodeSnippetContext ctx, AbstractEntity entity) {
-		'''
-			«FOR method : entity.constructorsAndMethods»
-				«_eventMethods(ctx, method.events)»
-			«ENDFOR»
-		'''
-	}
-
-	private def _eventMethods(CodeSnippetContext ctx, List<Event> events) {
-		if (events == null) {
-			return "";
-		}
-		'''
-			«FOR event : events»
-				«new SrcHandleEventMethod(ctx, event)»
-				
-			«ENDFOR»
-		'''
-	}
-
 	def optionalExtendsForBase(String typeName, ExternalType base) {
 		if (base == null) {
 			return ""
@@ -351,24 +312,12 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def _childEntityLocatorMethods(AbstractEntity parent) {
+	def _childEntityLocatorMethods(CodeSnippetContext ctx, AbstractEntity parent) {
 		'''
 			«FOR child : parent.childEntities»
-				«_childEntityLocatorMethod(child)»
+				«new SrcChildEntityLocatorMethod(ctx, child)»
 				
 			«ENDFOR»
-		'''
-	}
-
-	def _childEntityLocatorMethod(AbstractEntity entity) {
-		'''
-			@Override
-			@ChildEntityLocator
-			protected final «entity.name» find«entity.name»(final «entity.idType.name» «entity.idType.name.toFirstLower») {
-				// TODO Implement!
-				return null;
-			}
-			
 		'''
 	}
 

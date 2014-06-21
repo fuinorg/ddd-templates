@@ -5,6 +5,7 @@ import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
@@ -18,7 +19,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
-class SrcConstructorWithParamsAssignmentTest {
+class SrcChildEntityLocatorMethodTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
@@ -28,14 +29,11 @@ class SrcConstructorWithParamsAssignmentTest {
 
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
+		refReg.putReference("x.a.MyEntity", "a.b.c.MyEntity")
 		refReg.putReference("x.a.MyEntityId", "a.b.c.MyEntityId")
-		refReg.putReference("x.a.MyValueObject", "a.b.c.MyValueObject")
-		refReg.putReference("x.a.ConstraintViolatedException", "a.b.c.ConstraintViolatedException")
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Entity entity = createModel().find(Entity, "MyEntity")
-		val constructor = entity.constructors.get(0)
-		val SrcConstructorWithParamsAssignment testee = new SrcConstructorWithParamsAssignment(ctx, "public",
-			entity.getName(), constructor)
+		val SrcChildEntityLocatorMethod testee = new SrcChildEntityLocatorMethod(ctx, entity)
 
 		// TEST
 		val result = testee.toString
@@ -43,24 +41,20 @@ class SrcConstructorWithParamsAssignmentTest {
 		// VERIFY
 		assertThat(result).isEqualTo(
 			'''
-				/**
-				 * Creates the entity.
-				 *
-				 * @param id Unique entity identifier.
-				 * @param vo Example value object.
-				 *
-				 * @throws ConstraintViolatedException The constraint was violated.
-				 */
-				public MyEntity(@NotNull final MyEntityId id, final MyValueObject vo) throws ConstraintViolatedException {
-					super();
-					Contract.requireArgNotNull("id", id);
-					
-					this.id = id;
-					this.vo = vo;
-				}
+			/**
+			 * Locates a MyEntity by it's unique identifier.
+			 *
+			 * @param myEntityId Unique entity identifier.
+			 *
+			 */
+			@Override
+			@ChildEntityLocator
+			protected final MyEntity findMyEntity(@NotNull final MyEntityId myEntityId) {
+				// TODO Implement!
+				return null;
+			}
 			''')
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyEntityId",
-			"a.b.c.MyValueObject", "a.b.c.ConstraintViolatedException", "org.fuin.objects4j.common.Contract")
+		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyEntity", "a.b.c.MyEntityId")
 
 	}
 

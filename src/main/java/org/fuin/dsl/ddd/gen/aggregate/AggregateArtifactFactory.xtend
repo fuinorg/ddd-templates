@@ -6,6 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorSignature
+import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcMethods
@@ -18,6 +19,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 
 class AggregateArtifactFactory extends AbstractSource<Aggregate> {
@@ -33,11 +35,12 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + aggregate.getName()
 		val filename = fqn.replace('.', '/') + ".java";
-		
+
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(aggregate.uniqueName, fqn)
 
 		if (preparationRun) {
+
 			// No code generation during preparation phase
 			return null
 		}
@@ -78,18 +81,17 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 				
 			«ENDFOR»
 			
-				«_childEntityLocatorMethods(aggregate)»
+				«_childEntityLocatorMethods(ctx, aggregate)»
 				
 				«new SrcMethods(ctx, aggregate)»
 			
-				«_eventMethodsDecl(ctx, aggregate)»
+				«new SrcHandleEventMethods(ctx, aggregate.allEvents)»
 			
 			}
 		'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 	}
-	
 
 	def _constructors(CodeSnippetContext ctx, Aggregate aggregate, String className) {
 		'''

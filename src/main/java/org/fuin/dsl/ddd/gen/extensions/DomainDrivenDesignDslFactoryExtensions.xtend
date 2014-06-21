@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.extensions
 
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type
 
 class DomainDrivenDesignDslFactoryExtensions {
 
@@ -27,6 +28,24 @@ class DomainDrivenDesignDslFactoryExtensions {
 		if (nullable) {
 			v.setNullable("nullable")
 		}
+		return v
+	}
+
+	/**
+	 * Creates a variable with type, name and "nullable" information.
+	 * 
+	 * @param factory Factory.
+	 * @param type Type.
+	 * @param name Name.
+	 * @param nullable TRUE if nullable, else false.
+	 */
+	def static createVariable(DomainDrivenDesignDslFactory factory, Type type, String name, boolean nullable) {
+		var v = factory.createVariable
+		v.setName(name)
+		if (nullable) {
+			v.setNullable("nullable")
+		}
+		v.setType(type)
 		return v
 	}
 

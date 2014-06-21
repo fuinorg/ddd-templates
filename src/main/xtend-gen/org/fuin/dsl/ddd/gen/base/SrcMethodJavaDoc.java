@@ -78,7 +78,7 @@ public class SrcMethodJavaDoc implements CodeSnippet {
   
   public String toString() {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/*");
+    _builder.append("/**");
     _builder.newLine();
     _builder.append(" ");
     _builder.append("* ");

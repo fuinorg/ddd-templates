@@ -2,6 +2,7 @@ package org.fuin.dsl.ddd.gen.base;
 
 import java.util.List;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractMethodData;
 import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
@@ -13,6 +14,8 @@ import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
 public class MethodData extends AbstractMethodData {
   private final boolean makeAbstract;
   
+  private final Type returnType;
+  
   /**
    * Method with method.
    * 
@@ -23,6 +26,7 @@ public class MethodData extends AbstractMethodData {
   public MethodData(final String modifiers, final boolean makeAbstract, final Method method) {
     super(method.getDoc(), modifiers, method.getName(), MethodExtensions.allVariables(method), MethodExtensions.allExceptions(method));
     this.makeAbstract = makeAbstract;
+    this.returnType = null;
   }
   
   /**
@@ -31,13 +35,15 @@ public class MethodData extends AbstractMethodData {
    * @param doc Documentation.
    * @param modifiers Modifiers (Don't include "abstract" - Use next argument instead).
    * @param makeAbstract Abstract method?
+   * @param returnType Return type.
    * @param methodName Name of the method.
    * @param variables Variables for the method.
    * @param exceptions Exceptions for the method.
    */
-  public MethodData(final String doc, final String modifiers, final boolean makeAbstract, final String methodName, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
+  public MethodData(final String doc, final String modifiers, final boolean makeAbstract, final Type type, final String methodName, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
     super(doc, null, modifiers, methodName, variables, exceptions);
     this.makeAbstract = makeAbstract;
+    this.returnType = this.returnType;
   }
   
   /**
@@ -47,13 +53,15 @@ public class MethodData extends AbstractMethodData {
    * @param annotations Annotations.
    * @param modifiers Modifiers (Don't include "abstract" - Use next argument instead).
    * @param makeAbstract Abstract method?
+   * @param returnType Return type.
    * @param methodName Name of the method.
    * @param variables Variables for the method.
    * @param exceptions Exceptions for the method.
    */
-  public MethodData(final String doc, final List<String> annotations, final String modifiers, final boolean makeAbstract, final String methodName, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
+  public MethodData(final String doc, final List<String> annotations, final String modifiers, final boolean makeAbstract, final Type returnType, final String methodName, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
     super(doc, annotations, modifiers, methodName, variables, exceptions);
     this.makeAbstract = makeAbstract;
+    this.returnType = returnType;
   }
   
   /**
@@ -63,5 +71,14 @@ public class MethodData extends AbstractMethodData {
    */
   public boolean isMakeAbstract() {
     return this.makeAbstract;
+  }
+  
+  /**
+   * Returns the result type of a method.
+   * 
+   * @return Type returned by a method.
+   */
+  public Type getReturnType() {
+    return this.returnType;
   }
 }

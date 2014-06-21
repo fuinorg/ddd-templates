@@ -50,7 +50,7 @@ public class SrcMethodTest {
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/*");
+    _builder.append("/**");
     _builder.newLine();
     _builder.append(" ");
     _builder.append("* Does some cool things.");
@@ -106,7 +106,7 @@ public class SrcMethodTest {
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/*");
+    _builder.append("/**");
     _builder.newLine();
     _builder.append(" ");
     _builder.append("* Does some cool things.");
