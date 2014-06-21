@@ -5,6 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
@@ -78,7 +79,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 				«_optionalDeserializationConstructor(id)»
 			
-				«_constructorsDecl(ctx, id)»
+				«new SrcConstructorsWithParamsAssignment(ctx, id)»
 			
 				«new SrcGetters(ctx, "public final", id.variables)»
 			

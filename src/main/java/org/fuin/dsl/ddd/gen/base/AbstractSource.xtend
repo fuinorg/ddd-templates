@@ -94,36 +94,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	}
 
 	// --- Source code fragments (Method names should start with an underscore '_') ---
-	def _constructorsDecl(CodeSnippetContext ctx, InternalType internalType) {
-		'''
-			«FOR constructor : internalType.constructors.nullSafe»
-				«new SrcConstructorWithParamsAssignment(ctx, constructor.doc, internalType.name, constructor)»
-				
-			«ENDFOR»
-		'''
-	}
-
-	def _constructorsDecl(CodeSnippetContext ctx, AbstractVO vo) {
-		if (vo.constructors.nullSafe.size == 0) {
-			new SrcConstructorWithParamsAssignment(ctx, "Constructor with all data.", "public", vo.name, vo.variables, null)
-		} else {
-			_constructorsDecl(ctx, vo as InternalType)
-		}
-	}
-
-	/*
-	def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables,
-		Constraints constraints) {
-		'''
-			«new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, constraints.list)»
-			public «internalTypeName»(«new SrcParamsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx,
-				constraints.exceptionList)»{
-				super();
-				«new SrcParamsAssignment(ctx, variables.nullSafe)»	
-			}
-		'''
-	}
-	*/	
 
 	def _methodsDecl(CodeSnippetContext ctx, InternalType internalType) {
 		'''

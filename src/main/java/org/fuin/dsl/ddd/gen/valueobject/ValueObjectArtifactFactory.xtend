@@ -5,6 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
@@ -66,7 +67,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			
 				«_optionalDeserializationConstructor(vo)»
 			
-				«_constructorsDecl(ctx, vo)»
+				«new SrcConstructorsWithParamsAssignment(ctx, vo)»
 				
 				«new SrcGetters(ctx, "public final", vo.variables)»
 				

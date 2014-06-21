@@ -10,7 +10,6 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
@@ -21,7 +20,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
-import org.fuin.dsl.ddd.gen.base.SrcConstructorWithParamsAssignment;
 import org.fuin.dsl.ddd.gen.base.SrcMethod;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
@@ -187,52 +185,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return (name + "[]");
   }
   
-  public CharSequence _constructorsDecl(final CodeSnippetContext ctx, final InternalType internalType) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      EList<Constructor> _constructors = internalType.getConstructors();
-      List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
-      for(final Constructor constructor : _nullSafe) {
-        String _doc = constructor.getDoc();
-        String _name = internalType.getName();
-        SrcConstructorWithParamsAssignment _srcConstructorWithParamsAssignment = new SrcConstructorWithParamsAssignment(ctx, _doc, _name, constructor);
-        _builder.append(_srcConstructorWithParamsAssignment, "");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
-    return _builder;
-  }
-  
-  public Object _constructorsDecl(final CodeSnippetContext ctx, final AbstractVO vo) {
-    Object _xifexpression = null;
-    EList<Constructor> _constructors = vo.getConstructors();
-    List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
-    int _size = _nullSafe.size();
-    boolean _equals = (_size == 0);
-    if (_equals) {
-      String _name = vo.getName();
-      EList<Variable> _variables = vo.getVariables();
-      _xifexpression = new SrcConstructorWithParamsAssignment(ctx, "Constructor with all data.", "public", _name, _variables, null);
-    } else {
-      _xifexpression = this._constructorsDecl(ctx, ((InternalType) vo));
-    }
-    return _xifexpression;
-  }
-  
-  /**
-   * def _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables,
-   * Constraints constraints) {
-   * '''
-   * «new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, constraints.list)»
-   * public «internalTypeName»(«new SrcParamsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx,
-   * constraints.exceptionList)»{
-   * super();
-   * «new SrcParamsAssignment(ctx, variables.nullSafe)»
-   * }
-   * '''
-   * }
-   */
   public CharSequence _methodsDecl(final CodeSnippetContext ctx, final InternalType internalType) {
     StringConcatenation _builder = new StringConcatenation();
     {

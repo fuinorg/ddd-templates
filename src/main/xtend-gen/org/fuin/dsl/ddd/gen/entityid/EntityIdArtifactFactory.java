@@ -13,6 +13,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
+import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
@@ -127,8 +128,8 @@ public class EntityIdArtifactFactory extends AbstractSource<EntityId> {
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      Object __constructorsDecl = this._constructorsDecl(ctx, id);
-      _builder.append(__constructorsDecl, "\t");
+      SrcConstructorsWithParamsAssignment _srcConstructorsWithParamsAssignment = new SrcConstructorsWithParamsAssignment(ctx, id);
+      _builder.append(_srcConstructorsWithParamsAssignment, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");

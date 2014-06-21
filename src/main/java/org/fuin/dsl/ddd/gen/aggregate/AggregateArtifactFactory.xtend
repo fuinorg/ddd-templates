@@ -8,8 +8,10 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcConstructorSignature
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
 import org.fuin.srcgen4j.commons.GenerateException
@@ -73,7 +75,14 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 					super();
 				}
 			
-				«_constructorsDecl(ctx, aggregate)»
+			«FOR constructor : aggregate.constructors.nullSafe»
+				«new SrcMethodJavaDoc(ctx, constructor)»
+				«new SrcConstructorSignature(ctx, "public", className, constructor)» {
+					super();
+					// TODO Implement!
+				}
+				
+			«ENDFOR»
 			
 				«_childEntityLocatorMethods(aggregate)»
 				
@@ -88,14 +97,16 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 	}
 	
 
-	override _constructorDecl(CodeSnippetContext ctx, String internalTypeName, List<Variable> variables,
-		Constraints constraints) {
+	def _constructors(CodeSnippetContext ctx, Aggregate aggregate, String className) {
 		'''
-			«new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, null)»
-			public «internalTypeName»(«new SrcParamsDecl(ctx, variables.nullSafe)») «new SrcThrowsExceptions(ctx, constraints.exceptionList)»{
-				super();
-				// TODO Implement!
-			}
+			«FOR constructor : aggregate.constructors.nullSafe»
+				«new SrcMethodJavaDoc(ctx, constructor)»
+				«new SrcConstructorSignature(ctx, "public", className, constructor)» {
+					super();
+					// TODO Implement!
+				}
+				
+			«ENDFOR»
 		'''
 	}
 

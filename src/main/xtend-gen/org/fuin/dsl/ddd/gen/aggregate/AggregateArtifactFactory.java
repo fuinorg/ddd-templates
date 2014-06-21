@@ -3,23 +3,21 @@ package org.fuin.dsl.ddd.gen.aggregate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
+import org.fuin.dsl.ddd.gen.base.SrcConstructorSignature;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
-import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
-import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
-import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
@@ -107,10 +105,28 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
       _builder.append("}");
       _builder.newLine();
       _builder.newLine();
-      _builder.append("\t");
-      CharSequence __constructorsDecl = this._constructorsDecl(ctx, aggregate);
-      _builder.append(__constructorsDecl, "\t");
-      _builder.newLineIfNotEmpty();
+      {
+        EList<Constructor> _constructors = aggregate.getConstructors();
+        List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
+        for(final Constructor constructor : _nullSafe) {
+          SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(ctx, constructor);
+          _builder.append(_srcMethodJavaDoc, "");
+          _builder.newLineIfNotEmpty();
+          SrcConstructorSignature _srcConstructorSignature = new SrcConstructorSignature(ctx, "public", className, constructor);
+          _builder.append(_srcConstructorSignature, "");
+          _builder.append(" {");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("super();");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("// TODO Implement!");
+          _builder.newLine();
+          _builder.append("}");
+          _builder.newLine();
+          _builder.newLine();
+        }
+      }
       _builder.newLine();
       _builder.append("\t");
       CharSequence __childEntityLocatorMethods = this._childEntityLocatorMethods(aggregate);
@@ -139,31 +155,30 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     return _xblockexpression;
   }
   
-  public CharSequence _constructorDecl(final CodeSnippetContext ctx, final String internalTypeName, final List<Variable> variables, final Constraints constraints) {
+  public CharSequence _constructors(final CodeSnippetContext ctx, final Aggregate aggregate, final String className) {
     StringConcatenation _builder = new StringConcatenation();
-    SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(ctx, "Constructor with all data.", variables, null);
-    _builder.append(_srcMethodJavaDoc, "");
-    _builder.newLineIfNotEmpty();
-    _builder.append("public ");
-    _builder.append(internalTypeName, "");
-    _builder.append("(");
-    List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(variables);
-    SrcParamsDecl _srcParamsDecl = new SrcParamsDecl(ctx, _nullSafe);
-    _builder.append(_srcParamsDecl, "");
-    _builder.append(") ");
-    List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> _exceptionList = ConstraintsExtensions.exceptionList(constraints);
-    SrcThrowsExceptions _srcThrowsExceptions = new SrcThrowsExceptions(ctx, _exceptionList);
-    _builder.append(_srcThrowsExceptions, "");
-    _builder.append("{");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("super();");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("// TODO Implement!");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
+    {
+      EList<Constructor> _constructors = aggregate.getConstructors();
+      List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
+      for(final Constructor constructor : _nullSafe) {
+        SrcMethodJavaDoc _srcMethodJavaDoc = new SrcMethodJavaDoc(ctx, constructor);
+        _builder.append(_srcMethodJavaDoc, "");
+        _builder.newLineIfNotEmpty();
+        SrcConstructorSignature _srcConstructorSignature = new SrcConstructorSignature(ctx, "public", className, constructor);
+        _builder.append(_srcConstructorSignature, "");
+        _builder.append(" {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("super();");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("// TODO Implement!");
+        _builder.newLine();
+        _builder.append("}");
+        _builder.newLine();
+        _builder.newLine();
+      }
+    }
     return _builder;
   }
 }

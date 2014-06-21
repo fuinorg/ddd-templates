@@ -1,13 +1,8 @@
 package org.fuin.dsl.ddd.gen.base
 
-import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
-
-import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 
 /**
  * Creates source code for a single constructor. In the constructor the 
@@ -16,11 +11,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 class SrcConstructorWithParamsAssignment implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String doc
-	val String modifiers
-	val String typeName
-	val List<Variable> variables
-	val List<Exception> exceptions
+	val ConstructorData constructorData
 
 	/**
 	 * Constructor with all mandatory data.
@@ -31,7 +22,7 @@ class SrcConstructorWithParamsAssignment implements CodeSnippet {
 	 * @param constructor Constructor to create the source for.
 	 */
 	new(CodeSnippetContext ctx, String modifiers, String typeName, Constructor constructor) {
-		this(ctx, constructor.doc, modifiers, typeName, constructor.variables, constructor.allExceptions)
+		this(ctx, new ConstructorData(modifiers, typeName, constructor))
 	}
 
 	/**
@@ -44,22 +35,18 @@ class SrcConstructorWithParamsAssignment implements CodeSnippet {
 	 * @param variables Variables for the constructor.
 	 * @param exceptions Exceptions for the constructor.
 	 */
-	new(CodeSnippetContext ctx, String doc, String modifiers, String typeName, List<Variable> variables,
-		List<Exception> exceptions) {
+	new(CodeSnippetContext ctx, ConstructorData constructorData) {
 		this.ctx = ctx
-		this.doc = doc
-		this.modifiers = modifiers
-		this.typeName = typeName
-		this.variables = variables
-		this.exceptions = exceptions
+		this.constructorData = constructorData
 	}
 
 	override toString() {
 		'''	
-			«new SrcMethodJavaDoc(ctx, doc, variables, exceptions)»
-			«new SrcConstructorSignature(ctx, modifiers, typeName, variables, exceptions)» {
+			«new SrcMethodJavaDoc(ctx, constructorData.doc, constructorData.variables, constructorData.exceptions)»
+			«new SrcConstructorSignature(ctx, constructorData.modifiers, constructorData.typeName, constructorData.variables,
+				constructorData.exceptions)» {
 				super();
-				«new SrcParamsAssignment(ctx, variables)»
+				«new SrcParamsAssignment(ctx, constructorData.variables)»
 			}
 		'''
 	}

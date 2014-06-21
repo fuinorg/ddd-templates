@@ -17,6 +17,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 
 class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 
@@ -79,7 +80,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 				
 				«_optionalDeserializationConstructor(id)»
 			
-				«_constructorsDecl(ctx, id)»
+				«new SrcConstructorsWithParamsAssignment(ctx, id)»
 			
 				«new SrcGetters(ctx, "public final", id.variables)»
 			
