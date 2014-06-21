@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.MethodData;
@@ -46,16 +47,18 @@ public class SrcMethodSignature implements CodeSnippet {
   public SrcMethodSignature(final CodeSnippetContext ctx, final MethodData methodData) {
     this.ctx = ctx;
     this.methodData = methodData;
-    Type _returnType = methodData.getReturnType();
+    ReturnType _returnType = methodData.getReturnType();
     boolean _equals = Objects.equal(_returnType, null);
     if (_equals) {
       this.returnType = "void";
     } else {
-      Type _returnType_1 = methodData.getReturnType();
-      String _name = _returnType_1.getName();
+      ReturnType _returnType_1 = methodData.getReturnType();
+      Type _type = _returnType_1.getType();
+      String _name = _type.getName();
       this.returnType = _name;
-      Type _returnType_2 = methodData.getReturnType();
-      String _uniqueName = AbstractElementExtensions.uniqueName(_returnType_2);
+      ReturnType _returnType_2 = methodData.getReturnType();
+      Type _type_1 = _returnType_2.getType();
+      String _uniqueName = AbstractElementExtensions.uniqueName(_type_1);
       ctx.requiresReference(_uniqueName);
     }
   }

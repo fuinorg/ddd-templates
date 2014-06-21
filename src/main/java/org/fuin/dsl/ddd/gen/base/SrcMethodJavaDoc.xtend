@@ -4,7 +4,7 @@ import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
@@ -14,8 +14,6 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
-
 
 /**
  * Creates source code for the JavaDoc of a constructor or method.
@@ -24,7 +22,7 @@ class SrcMethodJavaDoc implements CodeSnippet {
 
 	val CodeSnippetContext ctx
 	val String doc
-	val Type returnType
+	val ReturnType returnType
 	val List<Variable> variables
 	val List<Exception> exceptions
 
@@ -77,7 +75,7 @@ class SrcMethodJavaDoc implements CodeSnippet {
 	 * @param variables Variables.
 	 * @param exceptions Exceptions.
 	 */
-	new(CodeSnippetContext ctx, String doc, Type returnType, List<Variable> variables, List<Exception> exceptions) {
+	new(CodeSnippetContext ctx, String doc, ReturnType returnType, List<Variable> variables, List<Exception> exceptions) {
 		this.ctx = ctx
 		this.doc = doc
 		this.returnType = returnType

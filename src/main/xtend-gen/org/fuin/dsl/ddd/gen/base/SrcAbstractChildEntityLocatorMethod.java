@@ -8,6 +8,8 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.MethodData;
 import org.fuin.dsl.ddd.gen.base.SrcMethod;
@@ -23,7 +25,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
 public class SrcAbstractChildEntityLocatorMethod implements CodeSnippet {
   private final CodeSnippetContext ctx;
   
-  private final Entity entity;
+  private final ReturnType returnType;
   
   private final List<String> annotations = null;
   
@@ -33,12 +35,16 @@ public class SrcAbstractChildEntityLocatorMethod implements CodeSnippet {
   
   public SrcAbstractChildEntityLocatorMethod(final CodeSnippetContext ctx, final Entity entity) {
     this.ctx = ctx;
-    this.entity = entity;
+    ReturnType _createReturnType = DomainDrivenDesignDslFactory.eINSTANCE.createReturnType();
+    this.returnType = _createReturnType;
+    this.returnType.setDoc("Child entity or NULL if no entity with the given identifier was found.");
+    this.returnType.setType(entity);
     EntityId _idType = entity.getIdType();
     EntityId _idType_1 = entity.getIdType();
     String _name = _idType_1.getName();
     String _firstLower = StringExtensions.toFirstLower(_name);
-    final Variable variable = DomainDrivenDesignDslFactoryExtensions.createVariable(DomainDrivenDesignDslFactory.eINSTANCE, "Unique identifier of the child entity to find.", _idType, _firstLower, false);
+    final Variable variable = DomainDrivenDesignDslFactoryExtensions.createVariable(DomainDrivenDesignDslFactory.eINSTANCE, 
+      "Unique identifier of the child entity to find.", _idType, _firstLower, false);
     this.variables = Collections.<Variable>unmodifiableList(Lists.<Variable>newArrayList(variable));
     String _uniqueName = AbstractElementExtensions.uniqueName(entity);
     ctx.requiresReference(_uniqueName);
@@ -49,13 +55,15 @@ public class SrcAbstractChildEntityLocatorMethod implements CodeSnippet {
   
   public String toString() {
     StringConcatenation _builder = new StringConcatenation();
-    String _name = this.entity.getName();
+    Type _type = this.returnType.getType();
+    String _name = _type.getName();
     String _plus = ("Locates a child entity of type " + _name);
     String _plus_1 = (_plus + ".");
-    String _name_1 = this.entity.getName();
+    Type _type_1 = this.returnType.getType();
+    String _name_1 = _type_1.getName();
     String _plus_2 = ("find" + _name_1);
-    MethodData _methodData = new MethodData(_plus_1, this.annotations, "protected", true, 
-      this.entity, _plus_2, this.variables, this.exceptions);
+    MethodData _methodData = new MethodData(_plus_1, this.annotations, "protected", 
+      true, this.returnType, _plus_2, this.variables, this.exceptions);
     SrcMethod _srcMethod = new SrcMethod(this.ctx, _methodData);
     _builder.append(_srcMethod, "");
     return _builder.toString();

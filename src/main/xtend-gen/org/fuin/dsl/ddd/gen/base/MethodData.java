@@ -2,6 +2,7 @@ package org.fuin.dsl.ddd.gen.base;
 
 import java.util.List;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractMethodData;
@@ -14,7 +15,7 @@ import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
 public class MethodData extends AbstractMethodData {
   private final boolean makeAbstract;
   
-  private final Type returnType;
+  private final ReturnType returnType;
   
   /**
    * Method with method.
@@ -26,7 +27,8 @@ public class MethodData extends AbstractMethodData {
   public MethodData(final String modifiers, final boolean makeAbstract, final Method method) {
     super(method.getDoc(), modifiers, method.getName(), MethodExtensions.allVariables(method), MethodExtensions.allExceptions(method));
     this.makeAbstract = makeAbstract;
-    this.returnType = null;
+    ReturnType _returnType = method.getReturnType();
+    this.returnType = _returnType;
   }
   
   /**
@@ -58,7 +60,7 @@ public class MethodData extends AbstractMethodData {
    * @param variables Variables for the method.
    * @param exceptions Exceptions for the method.
    */
-  public MethodData(final String doc, final List<String> annotations, final String modifiers, final boolean makeAbstract, final Type returnType, final String methodName, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
+  public MethodData(final String doc, final List<String> annotations, final String modifiers, final boolean makeAbstract, final ReturnType returnType, final String methodName, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
     super(doc, annotations, modifiers, methodName, variables, exceptions);
     this.makeAbstract = makeAbstract;
     this.returnType = returnType;
@@ -78,7 +80,7 @@ public class MethodData extends AbstractMethodData {
    * 
    * @return Type returned by a method.
    */
-  public Type getReturnType() {
+  public ReturnType getReturnType() {
     return this.returnType;
   }
 }

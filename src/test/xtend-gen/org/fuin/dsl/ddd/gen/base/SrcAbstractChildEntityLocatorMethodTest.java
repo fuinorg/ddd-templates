@@ -66,7 +66,8 @@ public class SrcAbstractChildEntityLocatorMethodTest {
     _assertThat.isEqualTo(_builder.toString());
     Set<String> _imports = ctx.getImports();
     CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
-    _assertThat_1.containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyEntity", "a.b.c.MyEntityId");
+    _assertThat_1.containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyEntity", 
+      "a.b.c.MyEntityId");
   }
   
   private DomainModel createModel() {

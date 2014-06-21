@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType;
 import org.fuin.dsl.ddd.gen.base.MethodData;
 import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcMethodSignature;
@@ -75,7 +75,7 @@ public class SrcMethod implements CodeSnippet {
       _builder_1.newLine();
       _builder_1.append("\t");
       {
-        Type _returnType = this.method.getReturnType();
+        ReturnType _returnType = this.method.getReturnType();
         boolean _notEquals = (!Objects.equal(_returnType, null));
         if (_notEquals) {
           _builder_1.append("return null;");

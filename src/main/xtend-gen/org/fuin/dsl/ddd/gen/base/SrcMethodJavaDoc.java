@@ -5,7 +5,7 @@ import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.ConstructorData;
 import org.fuin.dsl.ddd.gen.base.MethodData;
@@ -13,7 +13,6 @@ import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
 import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
-import org.fuin.dsl.ddd.gen.extensions.TypeExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.core.emf.CodeSnippet;
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
@@ -27,7 +26,7 @@ public class SrcMethodJavaDoc implements CodeSnippet {
   
   private final String doc;
   
-  private final Type returnType;
+  private final ReturnType returnType;
   
   private final List<Variable> variables;
   
@@ -82,7 +81,7 @@ public class SrcMethodJavaDoc implements CodeSnippet {
    * @param variables Variables.
    * @param exceptions Exceptions.
    */
-  public SrcMethodJavaDoc(final CodeSnippetContext ctx, final String doc, final Type returnType, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
+  public SrcMethodJavaDoc(final CodeSnippetContext ctx, final String doc, final ReturnType returnType, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
     this.ctx = ctx;
     this.doc = doc;
     this.returnType = returnType;
@@ -150,7 +149,7 @@ public class SrcMethodJavaDoc implements CodeSnippet {
           String _sp_2 = this.sp();
           _builder.append(_sp_2, "");
           _builder.append("* @return ");
-          String _doc_1 = TypeExtensions.doc(this.returnType);
+          String _doc_1 = this.returnType.getDoc();
           String _text_2 = StringExtensions.text(_doc_1);
           _builder.append(_text_2, "");
           _builder.newLineIfNotEmpty();

@@ -8,6 +8,8 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.MethodData;
 import org.fuin.dsl.ddd.gen.base.SrcMethod;
@@ -23,7 +25,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
 public class SrcChildEntityLocatorMethod implements CodeSnippet {
   private final CodeSnippetContext ctx;
   
-  private final Entity entity;
+  private final ReturnType returnType;
   
   private final List<String> annotations;
   
@@ -33,7 +35,9 @@ public class SrcChildEntityLocatorMethod implements CodeSnippet {
   
   public SrcChildEntityLocatorMethod(final CodeSnippetContext ctx, final Entity entity) {
     this.ctx = ctx;
-    this.entity = entity;
+    ReturnType _createReturnType = DomainDrivenDesignDslFactory.eINSTANCE.createReturnType();
+    this.returnType = _createReturnType;
+    this.returnType.setType(entity);
     this.annotations = Collections.<String>unmodifiableList(Lists.<String>newArrayList("@Override", "@ChildEntityLocator"));
     EntityId _idType = entity.getIdType();
     EntityId _idType_1 = entity.getIdType();
@@ -50,10 +54,11 @@ public class SrcChildEntityLocatorMethod implements CodeSnippet {
   
   public String toString() {
     StringConcatenation _builder = new StringConcatenation();
-    String _name = this.entity.getName();
+    Type _type = this.returnType.getType();
+    String _name = _type.getName();
     String _plus = ("find" + _name);
     MethodData _methodData = new MethodData(null, this.annotations, 
-      "protected final", false, this.entity, _plus, this.variables, this.exceptions);
+      "protected final", false, this.returnType, _plus, this.variables, this.exceptions);
     SrcMethod _srcMethod = new SrcMethod(this.ctx, _methodData);
     _builder.append(_srcMethod, "");
     return _builder.toString();

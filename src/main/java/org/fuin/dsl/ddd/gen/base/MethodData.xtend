@@ -3,6 +3,7 @@ package org.fuin.dsl.ddd.gen.base
 import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 
@@ -15,7 +16,7 @@ class MethodData extends AbstractMethodData {
 
 	val boolean makeAbstract
 
-	val Type returnType
+	val ReturnType returnType
 
 	/**
 	 * Method with method.
@@ -27,8 +28,7 @@ class MethodData extends AbstractMethodData {
 	new(String modifiers, boolean makeAbstract, Method method) {
 		super(method.doc, modifiers, method.name, method.allVariables, method.allExceptions)
 		this.makeAbstract = makeAbstract
-		// TODO this.returnType = method.returnType 
-		this.returnType = null
+		this.returnType = method.returnType 
 	}
 
 	/**
@@ -60,7 +60,7 @@ class MethodData extends AbstractMethodData {
 	 * @param variables Variables for the method.
 	 * @param exceptions Exceptions for the method.
 	 */
-	new(String doc, List<String> annotations, String modifiers, boolean makeAbstract, Type returnType, String methodName, List<Variable> variables, List<Exception> exceptions) {
+	new(String doc, List<String> annotations, String modifiers, boolean makeAbstract, ReturnType returnType, String methodName, List<Variable> variables, List<Exception> exceptions) {
 		super(doc, annotations, modifiers, methodName, variables, exceptions)
 		this.makeAbstract = makeAbstract
 		this.returnType = returnType
