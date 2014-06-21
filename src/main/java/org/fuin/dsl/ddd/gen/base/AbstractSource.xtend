@@ -94,12 +94,12 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	def _eventAbstractMethodsDecl(CodeSnippetContext ctx, AbstractEntity entity) {
 		'''
 			«FOR method : entity.constructorsAndMethods»
-				«_eventAbstractMethods(ctx, method.events)»
+				«_eventAbstractMethods(ctx, method.events.nullSafe)»
 			«ENDFOR»
 		'''
 	}
 
-	def _eventAbstractMethods(CodeSnippetContext ctx, List<Event> events) {
+	private def _eventAbstractMethods(CodeSnippetContext ctx, List<Event> events) {
 		if (events == null) {
 			return "";
 		}
@@ -111,33 +111,23 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		'''
 	}
 
-	def _eventMethodsDecl(AbstractEntity entity) {
+	def _eventMethodsDecl(CodeSnippetContext ctx, AbstractEntity entity) {
 		'''
 			«FOR method : entity.constructorsAndMethods»
-				«_eventMethods(method.events)»
+				«_eventMethods(ctx, method.events)»
 			«ENDFOR»
 		'''
 	}
 
-	def _eventMethods(List<Event> events) {
+	private def _eventMethods(CodeSnippetContext ctx, List<Event> events) {
 		if (events == null) {
 			return "";
 		}
 		'''
 			«FOR event : events»
-				«_eventMethod(event)»
+				«new SrcHandleEventMethod(ctx, event)»
 				
 			«ENDFOR»
-		'''
-	}
-
-	def _eventMethod(Event event) {
-		'''
-			@Override
-			@EventHandler
-			protected final void handle(final «event.name» event) {
-				// TODO Handle event!
-			}
 		'''
 	}
 

@@ -82,7 +82,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 				
 				«new SrcMethods(ctx, aggregate)»
 			
-				«_eventMethodsDecl(aggregate)»
+				«_eventMethodsDecl(ctx, aggregate)»
 			
 			}
 		'''

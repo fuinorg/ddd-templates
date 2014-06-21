@@ -109,7 +109,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __eventMethodsDecl = this._eventMethodsDecl(entity);
+      CharSequence __eventMethodsDecl = this._eventMethodsDecl(ctx, entity);
       _builder.append(__eventMethodsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

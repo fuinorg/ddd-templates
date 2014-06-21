@@ -141,7 +141,7 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __eventMethodsDecl = this._eventMethodsDecl(aggregate);
+      CharSequence __eventMethodsDecl = this._eventMethodsDecl(ctx, aggregate);
       _builder.append(__eventMethodsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

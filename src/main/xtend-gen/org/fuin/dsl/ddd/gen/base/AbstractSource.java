@@ -20,6 +20,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethod;
+import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethod;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
@@ -190,7 +191,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       List<AbstractMethod> _constructorsAndMethods = AbstractEntityExtensions.constructorsAndMethods(entity);
       for(final AbstractMethod method : _constructorsAndMethods) {
         EList<Event> _events = method.getEvents();
-        CharSequence __eventAbstractMethods = this._eventAbstractMethods(ctx, _events);
+        List<Event> _nullSafe = CollectionExtensions.<Event>nullSafe(_events);
+        CharSequence __eventAbstractMethods = this._eventAbstractMethods(ctx, _nullSafe);
         _builder.append(__eventAbstractMethods, "");
         _builder.newLineIfNotEmpty();
       }
@@ -198,7 +200,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _eventAbstractMethods(final CodeSnippetContext ctx, final List<Event> events) {
+  private CharSequence _eventAbstractMethods(final CodeSnippetContext ctx, final List<Event> events) {
     CharSequence _xblockexpression = null;
     {
       boolean _equals = Objects.equal(events, null);
@@ -219,13 +221,13 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _xblockexpression;
   }
   
-  public CharSequence _eventMethodsDecl(final AbstractEntity entity) {
+  public CharSequence _eventMethodsDecl(final CodeSnippetContext ctx, final AbstractEntity entity) {
     StringConcatenation _builder = new StringConcatenation();
     {
       List<AbstractMethod> _constructorsAndMethods = AbstractEntityExtensions.constructorsAndMethods(entity);
       for(final AbstractMethod method : _constructorsAndMethods) {
         EList<Event> _events = method.getEvents();
-        CharSequence __eventMethods = this._eventMethods(_events);
+        CharSequence __eventMethods = this._eventMethods(ctx, _events);
         _builder.append(__eventMethods, "");
         _builder.newLineIfNotEmpty();
       }
@@ -233,7 +235,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return _builder;
   }
   
-  public CharSequence _eventMethods(final List<Event> events) {
+  private CharSequence _eventMethods(final CodeSnippetContext ctx, final List<Event> events) {
     CharSequence _xblockexpression = null;
     {
       boolean _equals = Objects.equal(events, null);
@@ -243,8 +245,8 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       StringConcatenation _builder = new StringConcatenation();
       {
         for(final Event event : events) {
-          CharSequence __eventMethod = this._eventMethod(event);
-          _builder.append(__eventMethod, "");
+          SrcHandleEventMethod _srcHandleEventMethod = new SrcHandleEventMethod(ctx, event);
+          _builder.append(_srcHandleEventMethod, "");
           _builder.newLineIfNotEmpty();
           _builder.newLine();
         }
@@ -252,25 +254,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       _xblockexpression = _builder;
     }
     return _xblockexpression;
-  }
-  
-  public CharSequence _eventMethod(final Event event) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("@EventHandler");
-    _builder.newLine();
-    _builder.append("protected final void handle(final ");
-    String _name = event.getName();
-    _builder.append(_name, "");
-    _builder.append(" event) {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("// TODO Handle event!");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder;
   }
   
   public String optionalExtendsForBase(final String typeName, final ExternalType base) {

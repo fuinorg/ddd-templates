@@ -75,7 +75,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 				
 				«new SrcMethods(ctx, entity)»
 			
-				«_eventMethodsDecl(entity)»
+				«_eventMethodsDecl(ctx, entity)»
 			
 			}
 		'''
