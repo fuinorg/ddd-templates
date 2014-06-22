@@ -7,16 +7,24 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod;
 import org.fuin.dsl.ddd.gen.base.Utils;
+import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EventExtensions;
+import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
@@ -68,10 +76,35 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
   
   public void addImports(final CodeSnippetContext ctx) {
     ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter");
+    ctx.requiresImport("static org.fest.assertions.Assertions.*");
+    ctx.requiresImport("org.junit.Test");
+    ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter");
+    ctx.requiresImport("static org.fuin.units4j.Units4JUtils.serialize");
+    ctx.requiresImport("static org.fuin.units4j.Units4JUtils.deserialize");
+    ctx.requiresImport("static org.fuin.units4j.Units4JUtils.marshal");
+    ctx.requiresImport("static org.fuin.units4j.Units4JUtils.unmarshal");
   }
   
-  public Object addReferences(final CodeSnippetContext ctx, final Event event) {
-    return null;
+  public void addReferences(final CodeSnippetContext ctx, final Event event) {
+    String _uniqueName = EventExtensions.uniqueName(event);
+    ctx.requiresReference(_uniqueName);
+    Aggregate _aggregate = EObjectExtensions.getAggregate(event);
+    AggregateId _idType = _aggregate.getIdType();
+    String _uniqueName_1 = AbstractElementExtensions.uniqueName(_idType);
+    ctx.requiresReference(_uniqueName_1);
+    EList<Variable> _variables = event.getVariables();
+    List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
+    for (final Variable v : _nullSafe) {
+      Type _type = v.getType();
+      String _uniqueName_2 = AbstractElementExtensions.uniqueName(_type);
+      ctx.requiresReference(_uniqueName_2);
+    }
+    Context _context = EObjectExtensions.getContext(event);
+    String _name = _context.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    String _plus = (_firstUpper + "EntityIdFactory");
+    ctx.requiresReference(_plus);
   }
   
   public String create(final SimpleCodeSnippetContext ctx, final Event event, final String pkg, final String className) {
@@ -83,7 +116,7 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
       _builder.append("public final class ");
       String _name = event.getName();
       _builder.append(_name, "");
-      _builder.append("Test extends AbstractBaseTest {");
+      _builder.append("Test {");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
@@ -168,7 +201,7 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
       _builder.newLine();
       _builder.newLine();
       _builder.append("\t");
-      _builder.append("}\t\t");
+      _builder.append("}");
       _builder.newLine();
       _builder.newLine();
       _builder.append("\t");
@@ -177,52 +210,61 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
       _builder.append(_name_7, "\t");
       _builder.append(" createTestee() {");
       _builder.newLineIfNotEmpty();
-      _builder.append("\t");
-      _builder.append("final AId aId = null;");
+      _builder.append("\t\t");
+      _builder.append("// TODO Set test values");
       _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("final ");
+      Aggregate _aggregate = EObjectExtensions.getAggregate(event);
+      AggregateId _idType = _aggregate.getIdType();
+      String _name_8 = _idType.getName();
+      _builder.append(_name_8, "\t    ");
+      _builder.append(" entityId = null;");
+      _builder.newLineIfNotEmpty();
       {
         EList<Variable> _variables = event.getVariables();
         List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
         for(final Variable v : _nullSafe) {
-          _builder.append("\t");
           _builder.append("final ");
-          String _asJavaType = this.asJavaType(v);
-          _builder.append(_asJavaType, "\t");
+          String _type = VariableExtensions.type(v, ctx);
+          _builder.append(_type, "");
           _builder.append(" ");
-          String _name_8 = v.getName();
-          _builder.append(_name_8, "\t");
+          String _name_9 = v.getName();
+          _builder.append(_name_9, "");
           _builder.append(" = null;");
           _builder.newLineIfNotEmpty();
         }
       }
-      _builder.newLine();
       _builder.append("\t\t");
       _builder.append("return new ");
-      String _name_9 = event.getName();
+      String _name_10 = event.getName();
       EList<Variable> _variables_1 = event.getVariables();
       List<String> _varNames = CollectionExtensions.varNames(_variables_1);
       List<String> _union = Utils.<String>union("new EntityIdPath(aId)", _varNames);
-      SrcInvokeMethod _srcInvokeMethod = new SrcInvokeMethod(ctx, _name_9, _union);
+      SrcInvokeMethod _srcInvokeMethod = new SrcInvokeMethod(ctx, _name_10, _union);
       _builder.append(_srcInvokeMethod, "\t\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
-      _builder.append("}\t\t\t\t");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.newLine();
-      _builder.append(" ");
-      _builder.append("protected final XmlAdapter<?, ?>[] createAdapter() {");
-      _builder.newLine();
-      _builder.append(" ");
-      _builder.append("final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new EmsEntityIdFactory());");
-      _builder.newLine();
-      _builder.append(" ");
-      _builder.append("return new XmlAdapter[] { entityIdPathConverter };");
-      _builder.newLine();
-      _builder.append(" ");
       _builder.append("}");
       _builder.newLine();
-      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("protected final XmlAdapter<?, ?>[] createAdapter() {");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new ");
+      Context _context = EObjectExtensions.getContext(event);
+      String _name_11 = _context.getName();
+      String _firstUpper = StringExtensions.toFirstUpper(_name_11);
+      _builder.append(_firstUpper, "        ");
+      _builder.append("EntityIdFactory());");
+      _builder.newLineIfNotEmpty();
+      _builder.append("        ");
+      _builder.append("return new XmlAdapter[] { entityIdPathConverter };");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("}");
+      _builder.newLine();
       _builder.newLine();
       _builder.append("}");
       _builder.newLine();

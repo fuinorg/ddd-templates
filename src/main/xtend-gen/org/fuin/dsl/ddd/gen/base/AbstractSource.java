@@ -78,36 +78,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return (_plus_7 + _name_3);
   }
   
-  public String asJavaType(final Variable variable) {
-    Type _type = variable.getType();
-    String name = _type.getName();
-    boolean _matched = false;
-    if (!_matched) {
-      if (Objects.equal(name,"Date")) {
-        _matched=true;
-        name = "LocalDate";
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(name,"Time")) {
-        _matched=true;
-        name = "LocalTime";
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(name,"Timestamp")) {
-        _matched=true;
-        name = "LocalDateTime";
-      }
-    }
-    String _multiplicity = variable.getMultiplicity();
-    boolean _equals = Objects.equal(_multiplicity, null);
-    if (_equals) {
-      return name;
-    }
-    return (("List<" + name) + ">");
-  }
-  
   public String asJavaPrimitive(final Variable variable) {
     Type _type = variable.getType();
     String name = _type.getName();

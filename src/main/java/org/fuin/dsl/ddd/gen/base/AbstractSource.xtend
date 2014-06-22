@@ -1,14 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.commons.ArtifactFactory
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
-import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
@@ -52,19 +49,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 			return getBasePkg() + "." + ns.context.name + "." + ns.name;
 		}
 		return getBasePkg() + "." + ns.context.name + "." + getPkg() + "." + ns.name;
-	}
-
-	def String asJavaType(Variable variable) {
-		var String name = variable.type.name;
-		switch name {
-			case 'Date': name = 'LocalDate'
-			case 'Time': name = 'LocalTime'
-			case 'Timestamp': name = 'LocalDateTime'
-		}
-		if (variable.multiplicity == null) {
-			return name;
-		}
-		return "List<" + name + ">";
 	}
 
 	def String asJavaPrimitive(Variable variable) {

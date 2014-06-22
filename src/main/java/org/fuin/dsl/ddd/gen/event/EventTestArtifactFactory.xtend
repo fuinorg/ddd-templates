@@ -16,8 +16,11 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 class EventTestArtifactFactory extends AbstractSource<Event> {
 
@@ -57,15 +60,29 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 
 	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
+		ctx.requiresImport("static org.fest.assertions.Assertions.*")
+		ctx.requiresImport("org.junit.Test")
+		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
+		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.serialize")
+		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.deserialize")
+		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.marshal")
+		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.unmarshal")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Event event) {
+		ctx.requiresReference(event.uniqueName)
+		ctx.requiresReference(event.aggregate.idType.uniqueName)
+	    for (v : event.variables.nullSafe) {
+			ctx.requiresReference(v.type.uniqueName)
+	    }
+	    ctx.requiresReference(event.context.name.toFirstUpper + "EntityIdFactory")
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
 		val String src = ''' 
 			// CHECKSTYLE:OFF
-			public final class «event.name»Test extends AbstractBaseTest {
+			public final class «event.name»Test {
 			
 				@Test
 				public final void testSerializeDeserialize() {
@@ -94,22 +111,22 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 					// VERIFY
 					assertThat(original).isEqualTo(copy);
 			
-				}		
+				}
 			
 				private «event.name» createTestee() {
-				final AId aId = null;
-				«FOR v : event.variables.nullSafe»
-					final «asJavaType(v)» «v.name» = null;
-				«ENDFOR»
-			
+					// TODO Set test values
+				    final «event.aggregate.idType.name» entityId = null;
+				    «FOR v : event.variables.nullSafe»
+					final «v.type(ctx)» «v.name» = null;
+				    «ENDFOR»
 					return new «new SrcInvokeMethod(ctx, event.name, union("new EntityIdPath(aId)", event.variables.varNames))»
-				}				
-				
-			 protected final XmlAdapter<?, ?>[] createAdapter() {
-			 final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new EmsEntityIdFactory());
-			 return new XmlAdapter[] { entityIdPathConverter };
-			 }
-				
+				}
+			
+			    protected final XmlAdapter<?, ?>[] createAdapter() {
+			        final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new «event.context.name.toFirstUpper»EntityIdFactory());
+			        return new XmlAdapter[] { entityIdPathConverter };
+			    }
+			
 			}
 			// CHECKSTYLE:ON
 		'''

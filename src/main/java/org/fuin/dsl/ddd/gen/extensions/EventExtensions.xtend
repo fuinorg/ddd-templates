@@ -1,8 +1,11 @@
 package org.fuin.dsl.ddd.gen.extensions
 
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import static org.fuin.dsl.ddd.gen.base.Utils.*
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
+
+import static org.fuin.dsl.ddd.gen.base.Utils.*
+
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 /**
  * Provides extension methods for Event.
@@ -28,5 +31,5 @@ class EventExtensions {
 		}
 		return separated(".", event.context.name, event.namespace.name, event.name)
 	}
-	
+
 }

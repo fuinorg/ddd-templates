@@ -8,7 +8,7 @@ import java.util.Map
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId
 import org.fuin.dsl.ddd.gen.base.AbstractSource
-import org.fuin.dsl.ddd.gen.base.SrcImports
+import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -18,7 +18,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcAll
 
 class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 
