@@ -63,4 +63,20 @@ class StringExtensions {
 		return sb.toString();
 	}
 
+	/**
+	 * Returns the package without the class name.
+	 * 
+	 * @param packageAndClassName Package and name (like 'a.b.c.MyClass')
+	 * 
+	 * @return Package without class (like 'MyClass')
+	 */
+	def static String onlyPackage(String packageAndClassName) {
+		val p = packageAndClassName.lastIndexOf('.')
+		if (p == -1) {
+			return packageAndClassName
+		}
+		return packageAndClassName.substring(0, p)
+	} 
+
+
 }

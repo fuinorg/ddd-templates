@@ -1,9 +1,13 @@
 package org.fuin.dsl.ddd.gen.base;
 
 import com.google.common.base.Objects;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Conversions;
+import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.srcgen4j.core.emf.CodeSnippet;
 
 /**
@@ -11,10 +15,37 @@ import org.fuin.srcgen4j.core.emf.CodeSnippet;
  */
 @SuppressWarnings("all")
 public class SrcImports implements CodeSnippet {
-  private final Set<String> imports;
+  private final List<String> imports;
   
-  public SrcImports(final Set<String> imports) {
-    this.imports = imports;
+  public SrcImports(final String currentPkg, final Set<String> importSet) {
+    ArrayList<String> _arrayList = new ArrayList<String>();
+    this.imports = _arrayList;
+    for (final String imp : importSet) {
+      boolean _and = false;
+      boolean _and_1 = false;
+      boolean _startsWith = imp.startsWith("java.lang.");
+      boolean _not = (!_startsWith);
+      if (!_not) {
+        _and_1 = false;
+      } else {
+        String _trim = imp.trim();
+        int _length = _trim.length();
+        boolean _greaterThan = (_length > 0);
+        _and_1 = _greaterThan;
+      }
+      if (!_and_1) {
+        _and = false;
+      } else {
+        String _onlyPackage = StringExtensions.onlyPackage(imp);
+        boolean _equals = currentPkg.equals(_onlyPackage);
+        boolean _not_1 = (!_equals);
+        _and = _not_1;
+      }
+      if (_and) {
+        this.imports.add(imp);
+      }
+    }
+    Collections.<String>sort(this.imports);
   }
   
   public String toString() {

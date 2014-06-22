@@ -33,7 +33,6 @@ class SrcAllTest {
 				 */
 				package org.fuin.dsl.ddd.gen;
 				
-				import java.lang.Integer;
 				import static org.fest.assertions.Assertions.assertThat;
 				
 				public class Dummy {}

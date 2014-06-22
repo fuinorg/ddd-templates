@@ -40,14 +40,15 @@ class SrcChildEntityLocatorMethodTest {
 		// VERIFY
 		assertThat(result).isEqualTo(
 			'''
-			@Override
-			@ChildEntityLocator
-			protected final MyEntity findMyEntity(@NotNull final MyEntityId myEntityId) {
-				// TODO Implement!
-				return null;
-			}
+				@Override
+				@ChildEntityLocator
+				protected final MyEntity findMyEntity(@NotNull final MyEntityId myEntityId) {
+					// TODO Implement!
+					return null;
+				}
 			''')
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyEntity", "a.b.c.MyEntityId")
+		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull",
+			"org.fuin.ddd4j.ddd.ChildEntityLocator", "a.b.c.MyEntity", "a.b.c.MyEntityId")
 
 	}
 

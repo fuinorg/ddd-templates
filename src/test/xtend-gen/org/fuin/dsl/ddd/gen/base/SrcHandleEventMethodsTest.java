@@ -102,7 +102,8 @@ public class SrcHandleEventMethodsTest {
     _assertThat.isEqualTo(_builder.toString());
     Set<String> _imports = ctx.getImports();
     CollectionAssert _assertThat_1 = Assertions.assertThat(_imports);
-    _assertThat_1.containsOnly("javax.validation.constraints.NotNull", "a.b.c.DidSomethingEvent", "a.b.c.SomethingHappenedEvent");
+    _assertThat_1.containsOnly("javax.validation.constraints.NotNull", 
+      "org.fuin.ddd4j.ddd.EventHandler", "a.b.c.DidSomethingEvent", "a.b.c.SomethingHappenedEvent");
   }
   
   private DomainModel createModel() {

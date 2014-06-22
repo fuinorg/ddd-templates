@@ -43,7 +43,7 @@ public class SrcAll implements CodeSnippet {
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    SrcImports _srcImports = new SrcImports(this.imports);
+    SrcImports _srcImports = new SrcImports(this.pkg, this.imports);
     _builder.append(_srcImports, "");
     _builder.newLineIfNotEmpty();
     _builder.newLine();

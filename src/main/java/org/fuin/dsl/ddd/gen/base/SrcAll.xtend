@@ -33,7 +33,7 @@ class SrcAll implements CodeSnippet {
 			«copyrightHeader» 
 			package «pkg»;
 			
-			«new SrcImports(imports)»
+			«new SrcImports(pkg, imports)»
 			
 			«src»
 		'''

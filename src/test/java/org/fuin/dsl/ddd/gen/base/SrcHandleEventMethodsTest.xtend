@@ -41,30 +41,31 @@ class SrcHandleEventMethodsTest {
 		// VERIFY
 		assertThat(result).isEqualTo(
 			'''
-			/**
-			 * Handles: DidSomethingEvent.
-			 *
-			 * @param event Event to handle.
-			 */
-			@Override
-			@EventHandler
-			protected final void handle(@NotNull final DidSomethingEvent event) {
-				// TODO Handle event!
-			}
-			
-			/**
-			 * Handles: SomethingHappenedEvent.
-			 *
-			 * @param event Event to handle.
-			 */
-			@Override
-			@EventHandler
-			protected final void handle(@NotNull final SomethingHappenedEvent event) {
-				// TODO Handle event!
-			}
-			
+				/**
+				 * Handles: DidSomethingEvent.
+				 *
+				 * @param event Event to handle.
+				 */
+				@Override
+				@EventHandler
+				protected final void handle(@NotNull final DidSomethingEvent event) {
+					// TODO Handle event!
+				}
+				
+				/**
+				 * Handles: SomethingHappenedEvent.
+				 *
+				 * @param event Event to handle.
+				 */
+				@Override
+				@EventHandler
+				protected final void handle(@NotNull final SomethingHappenedEvent event) {
+					// TODO Handle event!
+				}
+				
 			''')
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.DidSomethingEvent", "a.b.c.SomethingHappenedEvent")
+		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull",
+			"org.fuin.ddd4j.ddd.EventHandler", "a.b.c.DidSomethingEvent", "a.b.c.SomethingHappenedEvent")
 
 	}
 

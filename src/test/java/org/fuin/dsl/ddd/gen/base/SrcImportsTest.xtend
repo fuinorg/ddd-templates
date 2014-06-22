@@ -10,8 +10,8 @@ class SrcImportsTest {
 	def void test() {
 
 		// PREPARE
-		val imports = #{"a.b.C", "c.d.e.F"}
-		val testee = new SrcImports(imports)
+		val imports = #{"a.b.C", "c.d.e.F", "java.lang.String", "java.lang.Integer"}
+		val testee = new SrcImports("a.b", imports)
 
 		// TEST
 		val result = testee.toString
@@ -19,7 +19,6 @@ class SrcImportsTest {
 		// VERIFY
 		assertThat(result).isEqualTo(
 			'''
-				import a.b.C;
 				import c.d.e.F;
 			''')
 

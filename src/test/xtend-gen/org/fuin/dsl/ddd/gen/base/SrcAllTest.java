@@ -47,8 +47,6 @@ public class SrcAllTest {
     _builder_1.append("package org.fuin.dsl.ddd.gen;");
     _builder_1.newLine();
     _builder_1.newLine();
-    _builder_1.append("import java.lang.Integer;");
-    _builder_1.newLine();
     _builder_1.append("import static org.fest.assertions.Assertions.assertThat;");
     _builder_1.newLine();
     _builder_1.newLine();

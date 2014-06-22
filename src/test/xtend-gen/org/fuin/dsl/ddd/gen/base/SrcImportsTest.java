@@ -13,13 +13,11 @@ import org.junit.Test;
 public class SrcImportsTest {
   @Test
   public void test() {
-    final Set<String> imports = Collections.<String>unmodifiableSet(Sets.<String>newHashSet("a.b.C", "c.d.e.F"));
-    final SrcImports testee = new SrcImports(imports);
+    final Set<String> imports = Collections.<String>unmodifiableSet(Sets.<String>newHashSet("a.b.C", "c.d.e.F", "java.lang.String", "java.lang.Integer"));
+    final SrcImports testee = new SrcImports("a.b", imports);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("import a.b.C;");
-    _builder.newLine();
     _builder.append("import c.d.e.F;");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
