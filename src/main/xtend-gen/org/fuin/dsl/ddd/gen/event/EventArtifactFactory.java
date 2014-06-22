@@ -126,7 +126,7 @@ public class EventArtifactFactory extends AbstractSource<Event> {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      SrcVarsDecl _srcVarsDecl = new SrcVarsDecl(ctx, "private", false, event);
+      SrcVarsDecl _srcVarsDecl = new SrcVarsDecl(ctx, "private", true, event);
       _builder.append(_srcVarsDecl, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
