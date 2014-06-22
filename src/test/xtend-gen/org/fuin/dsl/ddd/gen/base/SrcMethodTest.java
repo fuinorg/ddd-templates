@@ -1,38 +1,30 @@
 package org.fuin.dsl.ddd.gen.base;
 
 import com.google.common.collect.Lists;
-import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.junit4.InjectWith;
-import org.eclipse.xtext.junit4.XtextRunner;
-import org.eclipse.xtext.junit4.util.ParseHelper;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fest.assertions.Assertions;
 import org.fest.assertions.CollectionAssert;
 import org.fest.assertions.StringAssert;
-import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.gen.base.SrcMethod;
-import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions;
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry;
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@InjectWith(DomainDrivenDesignDslInjectorProvider.class)
-@RunWith(XtextRunner.class)
+/* @InjectWith(DomainDrivenDesignDslInjectorProvider.class) */@RunWith(void.class)
 @SuppressWarnings("all")
 public class SrcMethodTest {
   @Inject
-  private ParseHelper<DomainModel> parser;
+  private /* ParseHelper<DomainModel> */Object parser;
   
   @Test
   public void testCreate() {
@@ -139,13 +131,7 @@ public class SrcMethodTest {
   }
   
   private DomainModel createModel() {
-    try {
-      Class<? extends SrcMethodTest> _class = this.getClass();
-      URL _resource = _class.getResource("/example1.ddd");
-      String _readAsString = Utils.readAsString(_resource);
-      return this.parser.parse(_readAsString);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nparse cannot be resolved");
   }
 }

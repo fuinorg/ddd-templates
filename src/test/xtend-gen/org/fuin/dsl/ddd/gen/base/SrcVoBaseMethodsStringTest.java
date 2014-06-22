@@ -3,14 +3,9 @@ package org.fuin.dsl.ddd.gen.base;
 import java.util.Set;
 import javax.inject.Inject;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.junit4.InjectWith;
-import org.eclipse.xtext.junit4.XtextRunner;
-import org.eclipse.xtext.junit4.util.ParseHelper;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fest.assertions.Assertions;
 import org.fest.assertions.CollectionAssert;
 import org.fest.assertions.StringAssert;
-import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel;
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethodsString;
@@ -20,12 +15,11 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@InjectWith(DomainDrivenDesignDslInjectorProvider.class)
-@RunWith(XtextRunner.class)
+/* @InjectWith(DomainDrivenDesignDslInjectorProvider.class) */@RunWith(void.class)
 @SuppressWarnings("all")
 public class SrcVoBaseMethodsStringTest {
   @Inject
-  private ParseHelper<DomainModel> parser;
+  private /* ParseHelper<DomainModel> */Object parser;
   
   @Test
   public void testString() {
@@ -140,52 +134,7 @@ public class SrcVoBaseMethodsStringTest {
   }
   
   private DomainModel createModel() {
-    try {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("context y {");
-      _builder.newLine();
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("namespace types {");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("type String");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("}");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("namespace a {");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("import y.types.*");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("aggregate-id MyAggregateId identifies MyAggregate base String {}");
-      _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.newLine();
-      _builder.append("\t\t");
-      _builder.append("aggregate MyAggregate identifier MyAggregateId {}");
-      _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.append("}");
-      _builder.newLine();
-      _builder.append("\t");
-      _builder.newLine();
-      _builder.append("}");
-      _builder.newLine();
-      return this.parser.parse(_builder);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nparse cannot be resolved");
   }
 }

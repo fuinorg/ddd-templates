@@ -33,35 +33,40 @@ public class SrcVoBaseMethods implements CodeSnippet {
     if (_equals) {
       throw new IllegalArgumentException("vo cannot be null");
     }
+    this.vo = vo;
     ExternalType _baseType = AbstractVOExtensions.baseType(vo);
     boolean _equals_1 = Objects.equal(_baseType, null);
     if (_equals_1) {
-      throw new IllegalArgumentException("vo.base cannot be null");
+      this.baseName = null;
+    } else {
+      ExternalType _baseType_1 = AbstractVOExtensions.baseType(vo);
+      String _name = _baseType_1.getName();
+      this.baseName = _name;
     }
-    this.vo = vo;
-    ExternalType _baseType_1 = AbstractVOExtensions.baseType(vo);
-    String _name = _baseType_1.getName();
-    this.baseName = _name;
   }
   
   public String toString() {
-    boolean _equals = this.baseName.equals("String");
+    boolean _equals = Objects.equal(this.baseName, null);
     if (_equals) {
+      return "";
+    }
+    boolean _equals_1 = this.baseName.equals("String");
+    if (_equals_1) {
       SrcVoBaseMethodsString _srcVoBaseMethodsString = new SrcVoBaseMethodsString(this.ctx, this.vo);
       return _srcVoBaseMethodsString.toString();
     }
-    boolean _equals_1 = this.baseName.equals("UUID");
-    if (_equals_1) {
+    boolean _equals_2 = this.baseName.equals("UUID");
+    if (_equals_2) {
       SrcVoBaseMethodsUUID _srcVoBaseMethodsUUID = new SrcVoBaseMethodsUUID(this.ctx, this.vo);
       return _srcVoBaseMethodsUUID.toString();
     }
     boolean _or = false;
-    boolean _equals_2 = this.baseName.equals("Integer");
-    if (_equals_2) {
+    boolean _equals_3 = this.baseName.equals("Integer");
+    if (_equals_3) {
       _or = true;
     } else {
-      boolean _equals_3 = this.baseName.equals("Long");
-      _or = _equals_3;
+      boolean _equals_4 = this.baseName.equals("Long");
+      _or = _equals_4;
     }
     if (_or) {
       SrcVoBaseMethodsNumber _srcVoBaseMethodsNumber = new SrcVoBaseMethodsNumber(this.ctx, this.vo);

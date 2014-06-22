@@ -28,14 +28,18 @@ class SrcVoBaseMethods implements CodeSnippet {
 		if (vo == null) {
 			throw new IllegalArgumentException("vo cannot be null")
 		}
-		if (vo.baseType == null) {
-			throw new IllegalArgumentException("vo.base cannot be null")
-		}
 		this.vo = vo
-		this.baseName = vo.baseType.name
+		if (vo.baseType == null) {
+			this.baseName = null
+		} else {
+			this.baseName = vo.baseType.name
+		}
 	}
 
 	override toString() {
+		if (baseName == null) {
+			return ""
+		}
 		if (baseName.equals("String")) {
 			return new SrcVoBaseMethodsString(ctx, vo).toString()
 		}
