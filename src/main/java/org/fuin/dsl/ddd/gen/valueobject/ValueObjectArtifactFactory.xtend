@@ -9,6 +9,7 @@ import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
+import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethods
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
 import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement
 import org.fuin.srcgen4j.commons.GenerateException
@@ -67,13 +68,11 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 				
 				«new SrcVarsDecl(ctx, "private", (vo.base == null), vo)»
 			
-				«_optionalDeserializationConstructor(vo)»
-			
 				«new SrcConstructorsWithParamsAssignment(ctx, vo)»
 				
 				«new SrcGetters(ctx, "public final", vo.variables)»
 				
-				«_optionalBaseMethods(ctx, vo)»
+				«new SrcVoBaseMethods(ctx, vo)»
 				
 			}
 		'''

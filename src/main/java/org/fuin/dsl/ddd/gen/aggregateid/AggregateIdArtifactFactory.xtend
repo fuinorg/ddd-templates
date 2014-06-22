@@ -9,6 +9,7 @@ import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
+import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethods
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -78,8 +79,6 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 				«new SrcVarsDecl(ctx, "private", false, id)»
 			
-				«_optionalDeserializationConstructor(id)»
-			
 				«new SrcConstructorsWithParamsAssignment(ctx, id)»
 			
 				«new SrcGetters(ctx, "public final", id.variables)»
@@ -94,7 +93,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 					return TYPE + " " + asString();
 				}
 			
-				«_optionalBaseMethods(ctx, id)»
+				«new SrcVoBaseMethods(ctx, id)»
 			}
 		'''
 

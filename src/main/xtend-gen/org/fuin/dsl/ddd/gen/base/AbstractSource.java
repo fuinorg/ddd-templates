@@ -1,27 +1,18 @@
 package org.fuin.dsl.ddd.gen.base;
 
 import com.google.common.base.Objects;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethod;
 import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethod;
-import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethodsNumber;
-import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethodsUUID;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
-import org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
@@ -183,200 +174,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       return name;
     }
     return (name + "[]");
-  }
-  
-  public CharSequence _optionalBaseMethods(final CodeSnippetContext ctx, final AbstractVO vo) {
-    boolean _equals = Objects.equal(vo, null);
-    if (_equals) {
-      return "";
-    }
-    ExternalType _baseType = AbstractVOExtensions.baseType(vo);
-    boolean _equals_1 = Objects.equal(_baseType, null);
-    if (_equals_1) {
-      return "";
-    }
-    final String typeName = vo.getName();
-    final ExternalType base = AbstractVOExtensions.baseType(vo);
-    String _name = base.getName();
-    boolean _equals_2 = _name.equals("String");
-    if (_equals_2) {
-      return this._optionalBaseMethodsString(typeName);
-    }
-    String _name_1 = base.getName();
-    boolean _equals_3 = _name_1.equals("UUID");
-    if (_equals_3) {
-      SrcVoBaseMethodsUUID _srcVoBaseMethodsUUID = new SrcVoBaseMethodsUUID(ctx, vo);
-      return _srcVoBaseMethodsUUID.toString();
-    }
-    boolean _or = false;
-    String _name_2 = base.getName();
-    boolean _equals_4 = _name_2.equals("Integer");
-    if (_equals_4) {
-      _or = true;
-    } else {
-      String _name_3 = base.getName();
-      boolean _equals_5 = _name_3.equals("Long");
-      _or = _equals_5;
-    }
-    if (_or) {
-      SrcVoBaseMethodsNumber _srcVoBaseMethodsNumber = new SrcVoBaseMethodsNumber(ctx, vo);
-      return _srcVoBaseMethodsNumber.toString();
-    }
-    return "";
-  }
-  
-  public CharSequence _optionalBaseMethodsString(final String typeName) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Returns the information if a given string can be converted into");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* an instance of this class. A <code>null</code> value returns <code>true</code>.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param value");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*            Value to check.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @return TRUE if it\'s a valid string, else FALSE.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("public static boolean isValid(final String value) {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("if (value == null) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return true;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("// TODO Verify the value is valid!");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("return true;");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Parses a given string and returns a new instance of this class.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param value");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*            Value to convert. A <code>null</code> value returns");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*            <code>null</code>.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @return Converted value.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("public static ");
-    _builder.append(typeName, "");
-    _builder.append(" valueOf(final String value) {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("if (value == null) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return null;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("// TODO Parse string value and return new instance! ");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("// return new ");
-    _builder.append(typeName, "\t");
-    _builder.append("(value);");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("return null;");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    return _builder;
-  }
-  
-  /**
-   * Generates source for a protected default constructor
-   * if no other constructor with no arguments exists.
-   * 
-   * @param internalType Type to optionally generate the default constructor for.
-   */
-  public String _optionalDeserializationConstructor(final InternalType internalType) {
-    String _xblockexpression = null;
-    {
-      EList<Constructor> _constructors = internalType.getConstructors();
-      List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
-      for (final Constructor constructor : _nullSafe) {
-        boolean _or = false;
-        boolean _equals = Objects.equal(constructor, null);
-        if (_equals) {
-          _or = true;
-        } else {
-          EList<Variable> _variables = constructor.getVariables();
-          List<Variable> _nullSafe_1 = CollectionExtensions.<Variable>nullSafe(_variables);
-          int _size = _nullSafe_1.size();
-          boolean _equals_1 = (_size == 0);
-          _or = _equals_1;
-        }
-        if (_or) {
-          return "";
-        }
-      }
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("/**");
-      _builder.newLine();
-      _builder.append(" ");
-      _builder.append("* Default constructor only for de-serialization.");
-      _builder.newLine();
-      _builder.append(" ");
-      _builder.append("*/");
-      _builder.newLine();
-      _builder.append("protected ");
-      String _name = internalType.getName();
-      _builder.append(_name, "");
-      _builder.append("() {");
-      _builder.newLineIfNotEmpty();
-      _builder.append("\t");
-      _builder.append("super();");
-      _builder.newLine();
-      _builder.append("}");
-      _builder.newLine();
-      _xblockexpression = _builder.toString();
-    }
-    return _xblockexpression;
   }
   
   public CharSequence _abstractChildEntityLocatorMethods(final CodeSnippetContext ctx, final AbstractEntity parent) {
