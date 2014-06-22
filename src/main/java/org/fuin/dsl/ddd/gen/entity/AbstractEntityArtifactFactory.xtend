@@ -6,6 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
@@ -24,10 +25,10 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 
 class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -93,7 +94,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 			
 				«new SrcGetters(ctx, "protected final", entity.variables)»				
 				«new SrcSetters(ctx, "protected final", entity.variables)»
-				«_abstractChildEntityLocatorMethods(ctx, entity)»
+				«new SrcAbstractChildEntityLocatorMethods(ctx, entity)»
 				
 				«new SrcAbstractHandleEventMethods(ctx, entity.allEvents)»
 			

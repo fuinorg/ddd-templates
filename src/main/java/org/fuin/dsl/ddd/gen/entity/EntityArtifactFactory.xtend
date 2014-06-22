@@ -7,6 +7,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
@@ -22,11 +23,11 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 
 class EntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -73,7 +74,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 			
 				«_constructorsDecl(ctx, entity, entity.constructors)»
 			
-				«_childEntityLocatorMethods(ctx, entity)»
+				«new SrcChildEntityLocatorMethods(ctx, entity)»
 				
 				«new SrcMethods(ctx, entity)»
 			

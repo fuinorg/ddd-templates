@@ -13,6 +13,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
+import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethods;
 import org.fuin.dsl.ddd.gen.base.SrcConstructorSignature;
 import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethods;
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc;
@@ -133,8 +134,8 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
       }
       _builder.newLine();
       _builder.append("\t");
-      CharSequence __childEntityLocatorMethods = this._childEntityLocatorMethods(ctx, aggregate);
-      _builder.append(__childEntityLocatorMethods, "\t");
+      SrcChildEntityLocatorMethods _srcChildEntityLocatorMethods = new SrcChildEntityLocatorMethods(ctx, aggregate);
+      _builder.append(_srcChildEntityLocatorMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
       _builder.newLine();

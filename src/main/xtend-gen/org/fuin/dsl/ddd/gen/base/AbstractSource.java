@@ -2,22 +2,14 @@ package org.fuin.dsl.ddd.gen.base;
 
 import com.google.common.base.Objects;
 import java.util.Map;
-import java.util.Set;
-import org.eclipse.xtend2.lib.StringConcatenation;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
-import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethod;
-import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethod;
-import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
-import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
 
 @SuppressWarnings("all")
 public abstract class AbstractSource<T extends Object> implements ArtifactFactory<T> {
@@ -174,33 +166,5 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
       return name;
     }
     return (name + "[]");
-  }
-  
-  public CharSequence _abstractChildEntityLocatorMethods(final CodeSnippetContext ctx, final AbstractEntity parent) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      Set<Entity> _childEntities = AbstractEntityExtensions.childEntities(parent);
-      for(final Entity child : _childEntities) {
-        SrcAbstractChildEntityLocatorMethod _srcAbstractChildEntityLocatorMethod = new SrcAbstractChildEntityLocatorMethod(ctx, child);
-        _builder.append(_srcAbstractChildEntityLocatorMethod, "");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
-    return _builder;
-  }
-  
-  public CharSequence _childEntityLocatorMethods(final CodeSnippetContext ctx, final AbstractEntity parent) {
-    StringConcatenation _builder = new StringConcatenation();
-    {
-      Set<Entity> _childEntities = AbstractEntityExtensions.childEntities(parent);
-      for(final Entity child : _childEntities) {
-        SrcChildEntityLocatorMethod _srcChildEntityLocatorMethod = new SrcChildEntityLocatorMethod(ctx, child);
-        _builder.append(_srcChildEntityLocatorMethod, "");
-        _builder.newLineIfNotEmpty();
-        _builder.newLine();
-      }
-    }
-    return _builder;
   }
 }

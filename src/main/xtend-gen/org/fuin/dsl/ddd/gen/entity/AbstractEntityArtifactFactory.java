@@ -16,6 +16,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethods;
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethods;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.SrcGetters;
@@ -173,8 +174,8 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
       _builder.append(_srcSetters, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
-      CharSequence __abstractChildEntityLocatorMethods = this._abstractChildEntityLocatorMethods(ctx, entity);
-      _builder.append(__abstractChildEntityLocatorMethods, "\t");
+      SrcAbstractChildEntityLocatorMethods _srcAbstractChildEntityLocatorMethods = new SrcAbstractChildEntityLocatorMethods(ctx, entity);
+      _builder.append(_srcAbstractChildEntityLocatorMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
       _builder.newLine();

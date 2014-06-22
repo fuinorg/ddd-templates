@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
@@ -33,14 +33,14 @@ public class SrcAbstractChildEntityLocatorMethod implements CodeSnippet {
   
   private final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions = null;
   
-  public SrcAbstractChildEntityLocatorMethod(final CodeSnippetContext ctx, final Entity entity) {
+  public SrcAbstractChildEntityLocatorMethod(final CodeSnippetContext ctx, final AbstractEntity entity) {
     this.ctx = ctx;
     ReturnType _createReturnType = DomainDrivenDesignDslFactory.eINSTANCE.createReturnType();
     this.returnType = _createReturnType;
     this.returnType.setDoc("Child entity or NULL if no entity with the given identifier was found.");
     this.returnType.setType(entity);
-    EntityId _idType = entity.getIdType();
-    EntityId _idType_1 = entity.getIdType();
+    AbstractEntityId _idType = entity.getIdType();
+    AbstractEntityId _idType_1 = entity.getIdType();
     String _name = _idType_1.getName();
     String _firstLower = StringExtensions.toFirstLower(_name);
     final Variable variable = DomainDrivenDesignDslFactoryExtensions.createVariable(DomainDrivenDesignDslFactory.eINSTANCE, 
@@ -48,7 +48,7 @@ public class SrcAbstractChildEntityLocatorMethod implements CodeSnippet {
     this.variables = Collections.<Variable>unmodifiableList(Lists.<Variable>newArrayList(variable));
     String _uniqueName = AbstractElementExtensions.uniqueName(entity);
     ctx.requiresReference(_uniqueName);
-    EntityId _idType_2 = entity.getIdType();
+    AbstractEntityId _idType_2 = entity.getIdType();
     String _uniqueName_1 = AbstractElementExtensions.uniqueName(_idType_2);
     ctx.requiresReference(_uniqueName_1);
   }

@@ -5,6 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcConstructorSignature
 import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
@@ -81,7 +82,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 				
 			«ENDFOR»
 			
-				«_childEntityLocatorMethods(ctx, aggregate)»
+				«new SrcChildEntityLocatorMethods(ctx, aggregate)»
 				
 				«new SrcMethods(ctx, aggregate)»
 			

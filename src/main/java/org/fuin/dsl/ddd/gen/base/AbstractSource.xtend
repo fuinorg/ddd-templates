@@ -2,7 +2,6 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.commons.ArtifactFactory
@@ -85,26 +84,5 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		}
 		return name + "[]";
 	}
-
-	// --- Source code fragments (Method names should start with an underscore '_') ---
-
-	def _abstractChildEntityLocatorMethods(CodeSnippetContext ctx, AbstractEntity parent) {
-		'''
-			«FOR child : parent.childEntities»
-				«new SrcAbstractChildEntityLocatorMethod(ctx, child)»
-				
-			«ENDFOR»
-		'''
-	}
-
-	def _childEntityLocatorMethods(CodeSnippetContext ctx, AbstractEntity parent) {
-		'''
-			«FOR child : parent.childEntities»
-				«new SrcChildEntityLocatorMethod(ctx, child)»
-				
-			«ENDFOR»
-		'''
-	}
-
 
 }
