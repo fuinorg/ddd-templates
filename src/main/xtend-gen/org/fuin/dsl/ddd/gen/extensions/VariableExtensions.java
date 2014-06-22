@@ -53,4 +53,23 @@ public class VariableExtensions {
     }
     return (("List<" + name) + ">");
   }
+  
+  /**
+   * Returns the corresponding Java primitive type.
+   * 
+   * @param variable Variable
+   * 
+   * @return Primitive type or original type name.
+   */
+  public static String asJavaPrimitive(final Variable variable) {
+    String _multiplicity = variable.getMultiplicity();
+    boolean _equals = Objects.equal(_multiplicity, null);
+    if (_equals) {
+      Type _type = variable.getType();
+      return TypeExtensions.asJavaPrimitive(_type);
+    }
+    Type _type_1 = variable.getType();
+    String _asJavaPrimitive = TypeExtensions.asJavaPrimitive(_type_1);
+    return (_asJavaPrimitive + "[]");
+  }
 }

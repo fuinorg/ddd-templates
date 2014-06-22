@@ -14,6 +14,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static extension org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 
@@ -89,12 +90,12 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 			
 				«IF c.variables.size == 1»
 					«c.variables.last.doc»
-					«asJavaPrimitive(c.variables.last)» value();
+					«c.variables.last.asJavaPrimitive» value();
 					
 				«ELSEIF c.variables.size > 1»
 					«FOR v:c.variables»	
 						«v.doc»
-						«asJavaPrimitive(v)» «v.name»();
+						«v.asJavaPrimitive» «v.name»();
 						
 					«ENDFOR»
 				«ENDIF»
@@ -103,7 +104,7 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 		'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
-		
+
 	}
 
 }

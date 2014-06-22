@@ -17,6 +17,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
+import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
@@ -156,7 +157,7 @@ public class ValidatorAnnotationArtifactFactory extends AbstractSource<Constrain
           _builder.append("\t");
           EList<Variable> _variables_2 = c.getVariables();
           Variable _last_1 = IterableExtensions.<Variable>last(_variables_2);
-          String _asJavaPrimitive = this.asJavaPrimitive(_last_1);
+          String _asJavaPrimitive = VariableExtensions.asJavaPrimitive(_last_1);
           _builder.append(_asJavaPrimitive, "\t");
           _builder.append(" value();");
           _builder.newLineIfNotEmpty();
@@ -175,7 +176,7 @@ public class ValidatorAnnotationArtifactFactory extends AbstractSource<Constrain
                 _builder.append(_doc_2, "\t");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t");
-                String _asJavaPrimitive_1 = this.asJavaPrimitive(v);
+                String _asJavaPrimitive_1 = VariableExtensions.asJavaPrimitive(v);
                 _builder.append(_asJavaPrimitive_1, "\t");
                 _builder.append(" ");
                 String _name_2 = v.getName();

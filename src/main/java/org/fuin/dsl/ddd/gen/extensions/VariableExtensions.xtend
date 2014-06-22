@@ -43,4 +43,18 @@ class VariableExtensions {
 		return "List<" + name + ">";
 	}
 
+	/**
+	 * Returns the corresponding Java primitive type.
+	 * 
+	 * @param variable Variable 
+	 * 
+	 * @return Primitive type or original type name. 
+	 */
+	def static String asJavaPrimitive(Variable variable) {
+		if (variable.multiplicity == null) {
+			return variable.type.asJavaPrimitive;
+		}
+		return (variable.type.asJavaPrimitive + "[]");
+	}
+
 }

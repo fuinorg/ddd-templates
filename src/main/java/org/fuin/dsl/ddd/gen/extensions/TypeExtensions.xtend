@@ -45,4 +45,26 @@ class TypeExtensions {
 		return name.substring(p + 1)
 	}
 
+	/**
+	 * Returns the corresponding Java primitive type if one exists.
+	 * 
+	 * @param type Type 
+	 * 
+	 * @return Java primitive or original type name.
+	 */
+	def static String asJavaPrimitive(Type type) {
+		var String name = type.name;
+		switch name {
+			case 'Byte': name = 'byte'
+			case 'Short': name = 'short'
+			case 'Integer': name = 'int'
+			case 'Long': name = 'long'
+			case 'Float': name = 'float'
+			case 'Double': name = 'double'
+			case 'Boolean': name = 'boolean'
+			case 'Character': name = 'char'
+		}
+		return name;
+	}
+
 }

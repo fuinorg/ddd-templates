@@ -51,22 +51,4 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		return getBasePkg() + "." + ns.context.name + "." + getPkg() + "." + ns.name;
 	}
 
-	def String asJavaPrimitive(Variable variable) {
-		var String name = variable.type.name;
-		switch name {
-			case 'Byte': name = 'byte'
-			case 'Short': name = 'short'
-			case 'Integer': name = 'int'
-			case 'Long': name = 'long'
-			case 'Float': name = 'float'
-			case 'Double': name = 'double'
-			case 'Boolean': name = 'boolean'
-			case 'Character': name = 'char'
-		}
-		if (variable.multiplicity == null) {
-			return name;
-		}
-		return name + "[]";
-	}
-
 }

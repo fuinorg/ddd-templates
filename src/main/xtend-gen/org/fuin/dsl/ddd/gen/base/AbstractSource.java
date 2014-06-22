@@ -4,8 +4,6 @@ import com.google.common.base.Objects;
 import java.util.Map;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
@@ -76,65 +74,5 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     String _plus_7 = (_plus_6 + ".");
     String _name_3 = ns.getName();
     return (_plus_7 + _name_3);
-  }
-  
-  public String asJavaPrimitive(final Variable variable) {
-    Type _type = variable.getType();
-    String name = _type.getName();
-    boolean _matched = false;
-    if (!_matched) {
-      if (Objects.equal(name,"Byte")) {
-        _matched=true;
-        name = "byte";
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(name,"Short")) {
-        _matched=true;
-        name = "short";
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(name,"Integer")) {
-        _matched=true;
-        name = "int";
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(name,"Long")) {
-        _matched=true;
-        name = "long";
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(name,"Float")) {
-        _matched=true;
-        name = "float";
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(name,"Double")) {
-        _matched=true;
-        name = "double";
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(name,"Boolean")) {
-        _matched=true;
-        name = "boolean";
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(name,"Character")) {
-        _matched=true;
-        name = "char";
-      }
-    }
-    String _multiplicity = variable.getMultiplicity();
-    boolean _equals = Objects.equal(_multiplicity, null);
-    if (_equals) {
-      return name;
-    }
-    return (name + "[]");
   }
 }
