@@ -1,28 +1,36 @@
 package org.fuin.dsl.ddd.gen.base;
 
+import java.net.URL;
 import java.util.Set;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.junit4.InjectWith;
+import org.eclipse.xtext.junit4.XtextRunner;
+import org.eclipse.xtext.junit4.util.ParseHelper;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fest.assertions.Assertions;
 import org.fest.assertions.CollectionAssert;
 import org.fest.assertions.StringAssert;
+import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethods;
+import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions;
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry;
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/* @InjectWith(DomainDrivenDesignDslInjectorProvider.class) */@RunWith(void.class)
+@InjectWith(DomainDrivenDesignDslInjectorProvider.class)
+@RunWith(XtextRunner.class)
 @SuppressWarnings("all")
 public class SrcHandleEventMethodsTest {
   @Inject
-  private /* ParseHelper<DomainModel> */Object parser;
+  private ParseHelper<DomainModel> parser;
   
   @Test
   public void testCreate() {
@@ -98,7 +106,13 @@ public class SrcHandleEventMethodsTest {
   }
   
   private DomainModel createModel() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nparse cannot be resolved");
+    try {
+      Class<? extends SrcHandleEventMethodsTest> _class = this.getClass();
+      URL _resource = _class.getResource("/example1.ddd");
+      String _readAsString = Utils.readAsString(_resource);
+      return this.parser.parse(_readAsString);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
 }

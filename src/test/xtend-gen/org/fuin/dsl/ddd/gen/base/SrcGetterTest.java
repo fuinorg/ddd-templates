@@ -2,11 +2,22 @@ package org.fuin.dsl.ddd.gen.base;
 
 import java.util.Set;
 import javax.inject.Inject;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.junit4.InjectWith;
+import org.eclipse.xtext.junit4.XtextRunner;
+import org.eclipse.xtext.junit4.util.ParseHelper;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fest.assertions.Assertions;
 import org.fest.assertions.CollectionAssert;
 import org.fest.assertions.StringAssert;
+import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcGetter;
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext;
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry;
@@ -14,11 +25,12 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/* @InjectWith(DomainDrivenDesignDslInjectorProvider.class) */@RunWith(void.class)
+@InjectWith(DomainDrivenDesignDslInjectorProvider.class)
+@RunWith(XtextRunner.class)
 @SuppressWarnings("all")
 public class SrcGetterTest {
   @Inject
-  private /* ParseHelper<DomainModel> */Object parser;
+  private ParseHelper<DomainModel> parser;
   
   @Test
   public void testCreateNoMultiplicity() {
@@ -99,24 +111,136 @@ public class SrcGetterTest {
   }
   
   private SrcGetter createTesteeNoMultiplicity(final CodeSnippetContext codeSnippetContext) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nparse cannot be resolved"
-      + "\ncontexts cannot be resolved"
-      + "\nget cannot be resolved"
-      + "\nnamespaces cannot be resolved"
-      + "\nget cannot be resolved"
-      + "\nelements cannot be resolved"
-      + "\nget cannot be resolved");
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("context ctx {");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("namespace a.b {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("import ctx.types.*");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("value-object MyValueObject {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("/** Human readable name. */");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("String name");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("namespace types {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("type String");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("}");
+      _builder.newLine();
+      final DomainModel model = this.parser.parse(_builder);
+      EList<Context> _contexts = model.getContexts();
+      Context _get = _contexts.get(0);
+      EList<Namespace> _namespaces = _get.getNamespaces();
+      Namespace _get_1 = _namespaces.get(0);
+      EList<AbstractElement> _elements = _get_1.getElements();
+      AbstractElement _get_2 = _elements.get(0);
+      final ValueObject valueObject = ((ValueObject) _get_2);
+      EList<Variable> _variables = valueObject.getVariables();
+      final Variable variable = _variables.get(0);
+      return new SrcGetter(codeSnippetContext, "public", variable);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   private SrcGetter createTesteeWithMultiplicity(final CodeSnippetContext codeSnippetContext) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nparse cannot be resolved"
-      + "\ncontexts cannot be resolved"
-      + "\nget cannot be resolved"
-      + "\nnamespaces cannot be resolved"
-      + "\nget cannot be resolved"
-      + "\nelements cannot be resolved"
-      + "\nget cannot be resolved");
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("context ctx {");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("namespace a.b {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("import ctx.types.*");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("value-object MyValueObject {");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("/** List of human readable names. */");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("String* names");
+      _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("namespace types {");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("type String");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("}");
+      _builder.newLine();
+      final DomainModel model = this.parser.parse(_builder);
+      EList<Context> _contexts = model.getContexts();
+      Context _get = _contexts.get(0);
+      EList<Namespace> _namespaces = _get.getNamespaces();
+      Namespace _get_1 = _namespaces.get(0);
+      EList<AbstractElement> _elements = _get_1.getElements();
+      AbstractElement _get_2 = _elements.get(0);
+      final ValueObject valueObject = ((ValueObject) _get_2);
+      EList<Variable> _variables = valueObject.getVariables();
+      final Variable variable = _variables.get(0);
+      return new SrcGetter(codeSnippetContext, "public", variable);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
 }
