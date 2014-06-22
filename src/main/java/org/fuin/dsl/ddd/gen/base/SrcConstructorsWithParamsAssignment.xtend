@@ -2,8 +2,8 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
 import java.util.List
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
@@ -19,16 +19,16 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	val List<ConstructorData> constructors
 
 	/**
-	 * Constructor with internal type.
+	 * Constructor with entity.
 	 * 
 	 * @param ctx Context.
-	 * @param type Type.
+	 * @param entity Entity.
 	 */
-	new(CodeSnippetContext ctx, InternalType type) {
+	new(CodeSnippetContext ctx, AbstractEntity entity) {
 		this.ctx = ctx
 		this.constructors = new ArrayList<ConstructorData>()
-		for (con : type.constructors.nullSafe) {
-			this.constructors.add(new ConstructorData("public", type.name, con))
+		for (con : entity.constructors.nullSafe) {
+			this.constructors.add(new ConstructorData("public", entity.name, con))
 		}
 	}
 
@@ -38,15 +38,18 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	 * @param ctx Context.
 	 * @param vo Value object.
 	 */
-	new(CodeSnippetContext ctx, String typeName, AbstractVO vo) {
+	new(CodeSnippetContext ctx, AbstractVO vo) {
 		this.ctx = ctx
 		this.constructors = new ArrayList<ConstructorData>()
-		constructors.add(new ConstructorData("/** Default constructor. */", "protected", typeName, null, null))
-		if ((vo.variables == null) || (vo.variables.size == 0)) {
+		constructors.add(new ConstructorData("/** Default constructor. */", "protected", vo.name, null, null))
+		if ((vo.constructors == null) || (vo.constructors.size == 0)) {
 			constructors.add(
-				new ConstructorData("/** Constructor with all data. */", "public", typeName, vo.variables, null))
+				new ConstructorData("/** Constructor with all data. */", "public", vo.name, vo.variables, null))
+		} else {
+			for (con : vo.constructors.nullSafe) {
+				this.constructors.add(new ConstructorData("public", vo.name, con))
+			}
 		}
-
 	}
 
 	/**
@@ -58,7 +61,7 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	 */
 	new(CodeSnippetContext ctx, String typeName, List<ConstructorData> constructorData) {
 		this.ctx = ctx
-		this.constructors = constructors
+		this.constructors = constructorData
 	}
 
 	override toString() {

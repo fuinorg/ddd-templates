@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.ConstructorData;
 import org.fuin.dsl.ddd.gen.base.SrcConstructorWithParamsAssignment;
@@ -26,19 +26,19 @@ public class SrcConstructorsWithParamsAssignment implements CodeSnippet {
   private final List<ConstructorData> constructors;
   
   /**
-   * Constructor with internal type.
+   * Constructor with entity.
    * 
    * @param ctx Context.
-   * @param type Type.
+   * @param entity Entity.
    */
-  public SrcConstructorsWithParamsAssignment(final CodeSnippetContext ctx, final InternalType type) {
+  public SrcConstructorsWithParamsAssignment(final CodeSnippetContext ctx, final AbstractEntity entity) {
     this.ctx = ctx;
     ArrayList<ConstructorData> _arrayList = new ArrayList<ConstructorData>();
     this.constructors = _arrayList;
-    EList<Constructor> _constructors = type.getConstructors();
+    EList<Constructor> _constructors = entity.getConstructors();
     List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors);
     for (final Constructor con : _nullSafe) {
-      String _name = type.getName();
+      String _name = entity.getName();
       ConstructorData _constructorData = new ConstructorData("public", _name, con);
       this.constructors.add(_constructorData);
     }
@@ -50,27 +50,37 @@ public class SrcConstructorsWithParamsAssignment implements CodeSnippet {
    * @param ctx Context.
    * @param vo Value object.
    */
-  public SrcConstructorsWithParamsAssignment(final CodeSnippetContext ctx, final String typeName, final AbstractVO vo) {
+  public SrcConstructorsWithParamsAssignment(final CodeSnippetContext ctx, final AbstractVO vo) {
     this.ctx = ctx;
     ArrayList<ConstructorData> _arrayList = new ArrayList<ConstructorData>();
     this.constructors = _arrayList;
-    ConstructorData _constructorData = new ConstructorData("/** Default constructor. */", "protected", typeName, null, null);
+    String _name = vo.getName();
+    ConstructorData _constructorData = new ConstructorData("/** Default constructor. */", "protected", _name, null, null);
     this.constructors.add(_constructorData);
     boolean _or = false;
-    EList<Variable> _variables = vo.getVariables();
-    boolean _equals = Objects.equal(_variables, null);
+    EList<Constructor> _constructors = vo.getConstructors();
+    boolean _equals = Objects.equal(_constructors, null);
     if (_equals) {
       _or = true;
     } else {
-      EList<Variable> _variables_1 = vo.getVariables();
-      int _size = _variables_1.size();
+      EList<Constructor> _constructors_1 = vo.getConstructors();
+      int _size = _constructors_1.size();
       boolean _equals_1 = (_size == 0);
       _or = _equals_1;
     }
     if (_or) {
-      EList<Variable> _variables_2 = vo.getVariables();
-      ConstructorData _constructorData_1 = new ConstructorData("/** Constructor with all data. */", "public", typeName, _variables_2, null);
+      String _name_1 = vo.getName();
+      EList<Variable> _variables = vo.getVariables();
+      ConstructorData _constructorData_1 = new ConstructorData("/** Constructor with all data. */", "public", _name_1, _variables, null);
       this.constructors.add(_constructorData_1);
+    } else {
+      EList<Constructor> _constructors_2 = vo.getConstructors();
+      List<Constructor> _nullSafe = CollectionExtensions.<Constructor>nullSafe(_constructors_2);
+      for (final Constructor con : _nullSafe) {
+        String _name_2 = vo.getName();
+        ConstructorData _constructorData_2 = new ConstructorData("public", _name_2, con);
+        this.constructors.add(_constructorData_2);
+      }
     }
   }
   
@@ -83,7 +93,7 @@ public class SrcConstructorsWithParamsAssignment implements CodeSnippet {
    */
   public SrcConstructorsWithParamsAssignment(final CodeSnippetContext ctx, final String typeName, final List<ConstructorData> constructorData) {
     this.ctx = ctx;
-    this.constructors = this.constructors;
+    this.constructors = constructorData;
   }
   
   public String toString() {
