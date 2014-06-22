@@ -9,6 +9,7 @@ import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
+import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -68,7 +69,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			«new SrcJavaDoc(id)»
 			@Immutable
 			@XmlJavaTypeAdapter(«id.name»Converter.class)
-			public final class «className» «optionalExtendsForBase(id.name, id.base)»implements AggregateRootId, ValueObject {
+			public final class «className» «new SrcVoBaseOptionalExtends(ctx, id.base)»implements AggregateRootId, ValueObject {
 			
 				private static final long serialVersionUID = 1000L;
 			

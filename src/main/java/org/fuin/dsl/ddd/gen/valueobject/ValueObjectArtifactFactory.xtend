@@ -9,6 +9,7 @@ import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
+import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
 import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -27,13 +28,13 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 	}
 
 	override create(ValueObject valueObject, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		
+
 		val className = valueObject.getName()
 		val Namespace ns = valueObject.eContainer() as Namespace;
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + valueObject.getName()
 		val filename = fqn.replace('.', '/') + ".java";
-		
+
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(valueObject.uniqueName, fqn)
 
@@ -42,11 +43,12 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			// No code generation during preparation phase
 			return null
 		}
-		
+
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 		ctx.addImports
-		
-		return new GeneratedArtifact(artifactName, filename, create(ctx, valueObject, pkg, className).toString().getBytes("UTF-8"));
+
+		return new GeneratedArtifact(artifactName, filename,
+			create(ctx, valueObject, pkg, className).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
@@ -59,7 +61,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			«IF vo.base == null»
 				«new SrcXmlRootElement(ctx, vo)»
 			«ENDIF»
-			public final class «className» «optionalExtendsForBase(vo.name, vo.base)»implements ValueObject {
+			public final class «className» «new SrcVoBaseOptionalExtends(ctx, vo.base)»implements ValueObject {
 			
 				private static final long serialVersionUID = 1000L;
 				

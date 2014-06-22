@@ -5,9 +5,11 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
+import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -17,7 +19,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 
 class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 
@@ -69,7 +70,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 			«new SrcJavaDoc(id)»
 			@Immutable
 			@XmlJavaTypeAdapter(«id.name»Converter.class)
-			public final class «className» «optionalExtendsForBase(id.name, id.base)»implements EntityId, ValueObject {
+			public final class «className» «new SrcVoBaseOptionalExtends(ctx, id.base)»implements EntityId, ValueObject {
 			
 				private static final long serialVersionUID = 1000L;
 				

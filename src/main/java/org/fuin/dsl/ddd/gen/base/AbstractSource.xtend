@@ -89,24 +89,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	}
 
 	// --- Source code fragments (Method names should start with an underscore '_') ---
-	def optionalExtendsForBase(String typeName, ExternalType base) {
-		if (base == null) {
-			return ""
-		}
-		if (base.name.equals("String")) {
-			return "extends AbstractStringValueObject "
-		}
-		if (base.name.equals("UUID")) {
-			return "extends AbstractUUIDVO "
-		}
-		if (base.name.equals("Integer")) {
-			return "extends AbstractIntegerValueObject "
-		}
-		if (base.name.equals("Long")) {
-			return "extends AbstractLongValueObject "
-		}
-		return ""
-	}
 
 	def _optionalBaseMethods(String typeName, ExternalType base) {
 		if (base == null) {

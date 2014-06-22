@@ -181,34 +181,6 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return (name + "[]");
   }
   
-  public String optionalExtendsForBase(final String typeName, final ExternalType base) {
-    boolean _equals = Objects.equal(base, null);
-    if (_equals) {
-      return "";
-    }
-    String _name = base.getName();
-    boolean _equals_1 = _name.equals("String");
-    if (_equals_1) {
-      return "extends AbstractStringValueObject ";
-    }
-    String _name_1 = base.getName();
-    boolean _equals_2 = _name_1.equals("UUID");
-    if (_equals_2) {
-      return "extends AbstractUUIDVO ";
-    }
-    String _name_2 = base.getName();
-    boolean _equals_3 = _name_2.equals("Integer");
-    if (_equals_3) {
-      return "extends AbstractIntegerValueObject ";
-    }
-    String _name_3 = base.getName();
-    boolean _equals_4 = _name_3.equals("Long");
-    if (_equals_4) {
-      return "extends AbstractLongValueObject ";
-    }
-    return "";
-  }
-  
   public CharSequence _optionalBaseMethods(final String typeName, final ExternalType base) {
     boolean _equals = Objects.equal(base, null);
     if (_equals) {
