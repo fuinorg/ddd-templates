@@ -122,7 +122,7 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
       _builder.append("/**");
       _builder.newLine();
       _builder.append(" ");
-      _builder.append("* Creates a stream for all known EMS aggregates based on a AggregateRootId.");
+      _builder.append("* Creates a stream for all known aggregates based on a AggregateRootId.");
       _builder.newLine();
       _builder.append(" ");
       _builder.append("*/");

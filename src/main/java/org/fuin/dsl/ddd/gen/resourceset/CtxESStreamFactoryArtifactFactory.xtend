@@ -86,7 +86,7 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 		ResourceSet resourceSet) {
 		val String src = ''' 
 			/**
-			 * Creates a stream for all known EMS aggregates based on a AggregateRootId.
+			 * Creates a stream for all known aggregates based on a AggregateRootId.
 			 */
 			@ApplicationScoped
 			public class «className» implements IdStreamFactory {
