@@ -20,6 +20,7 @@ import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement;
 import org.fuin.dsl.ddd.gen.base.Utils;
+import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EventExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
@@ -79,10 +80,16 @@ public class EventArtifactFactory extends AbstractSource<Event> {
   
   public void addImports(final CodeSnippetContext ctx) {
     ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter");
+    ctx.requiresImport("org.fuin.objects4j.vo.KeyValue");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EventType");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractDomainEvent");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath");
   }
   
-  public Object addReferences(final CodeSnippetContext ctx, final Event event) {
-    return null;
+  public void addReferences(final CodeSnippetContext ctx, final Event event) {
+    AbstractEntityId _entityIdType = this.getEntityIdType(event);
+    String _uniqueName = AbstractElementExtensions.uniqueName(_entityIdType);
+    ctx.requiresReference(_uniqueName);
   }
   
   public String create(final SimpleCodeSnippetContext ctx, final Event event, final String pkg, final String className) {

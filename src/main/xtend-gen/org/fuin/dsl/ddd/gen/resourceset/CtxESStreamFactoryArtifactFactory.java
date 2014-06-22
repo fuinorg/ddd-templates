@@ -49,12 +49,7 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
           final List<AggregateId> aggregateIds = contextAggregateIds.get(ctx);
           String _firstUpper = StringExtensions.toFirstUpper(ctx);
           final String className = (_firstUpper + "StreamFactory");
-          String _basePkg = this.getBasePkg();
-          String _plus = (_basePkg + ".");
-          String _plus_1 = (_plus + ctx);
-          String _plus_2 = (_plus_1 + ".");
-          String _pkg = this.getPkg();
-          final String pkg = (_plus_2 + _pkg);
+          final String pkg = this.contextPkg(ctx);
           final String fqn = ((pkg + ".") + className);
           String _replace = fqn.replace(".", "/");
           final String filename = (_replace + ".java");

@@ -3,10 +3,10 @@ package org.fuin.dsl.ddd.gen.except;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
@@ -16,6 +16,7 @@ import org.fuin.dsl.ddd.gen.base.SrcParamsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
@@ -33,11 +34,9 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
   public GeneratedArtifact create(final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = ex.getName();
-      EObject _eContainer = ex.eContainer();
-      final Namespace ns = ((Namespace) _eContainer);
+      final Namespace ns = EObjectExtensions.getNamespace(ex);
       final String pkg = this.asPackage(ns);
-      String _name = ex.getName();
-      final String fqn = ((pkg + ".") + _name);
+      final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
@@ -47,7 +46,7 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
         return null;
       }
       final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
-      this.addImports(ctx);
+      this.addImports(ctx, ex);
       this.addReferences(ctx, ex);
       String _artifactName = this.getArtifactName();
       String _create = this.create(ctx, ex, pkg, className);
@@ -59,12 +58,24 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
     }
   }
   
-  public void addImports(final CodeSnippetContext ctx) {
+  public void addImports(final CodeSnippetContext ctx, final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {
     ctx.requiresImport("org.fuin.objects4j.vo.KeyValue");
+    ctx.requiresImport("org.fuin.objects4j.common.NeverNull");
+    ctx.requiresImport("org.fuin.objects4j.common.Contract");
+    int _cid = ex.getCid();
+    boolean _greaterThan = (_cid > 0);
+    if (_greaterThan) {
+      ctx.requiresImport("org.fuin.objects4j.common.UniquelyNumberedException");
+    }
   }
   
-  public Object addReferences(final CodeSnippetContext ctx, final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {
-    return null;
+  public void addReferences(final CodeSnippetContext ctx, final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex) {
+    EList<Variable> _variables = ex.getVariables();
+    for (final Variable v : _variables) {
+      Type _type = v.getType();
+      String _uniqueName = AbstractElementExtensions.uniqueName(_type);
+      ctx.requiresReference(_uniqueName);
+    }
   }
   
   public String create(final SimpleCodeSnippetContext ctx, final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex, final String pkg, final String className) {

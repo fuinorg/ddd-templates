@@ -39,7 +39,7 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 			val List<AggregateId> aggregateIds = contextAggregateIds.get(ctx)
 
 			val className = ctx.toFirstUpper + "StreamFactory"
-			val String pkg = getBasePkg() + "." + ctx + "." + getPkg()
+			val String pkg = contextPkg(ctx)
 			val fqn = pkg + "." + className
 			val filename = fqn.replace('.', '/') + ".java";
 

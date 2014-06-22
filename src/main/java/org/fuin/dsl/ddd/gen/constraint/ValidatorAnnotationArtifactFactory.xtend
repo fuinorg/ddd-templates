@@ -13,6 +13,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
@@ -28,8 +29,9 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 		}
 
 		val className = constraint.getName()
-		val Namespace ns = constraint.eContainer() as Namespace;
-		val fqn = ns.asPackage + "." + className
+		val Namespace ns = constraint.namespace
+		val pkg = ns.asPackage
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
@@ -55,7 +57,12 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 		ctx.requiresImport("java.lang.annotation.Target")
 		ctx.requiresImport("javax.validation.Constraint")
 		ctx.requiresImport("javax.validation.Payload")
-
+		ctx.requiresImport("static java.lang.annotation.ElementType.ANNOTATION_TYPE")
+		ctx.requiresImport("static java.lang.annotation.ElementType.FIELD")
+		ctx.requiresImport("static java.lang.annotation.ElementType.METHOD")
+		ctx.requiresImport("static java.lang.annotation.ElementType.PARAMETER")
+		ctx.requiresImport("static java.lang.annotation.RetentionPolicy.RUNTIME")
+		ctx.requiresImport("static java.lang.annotation.ElementType.TYPE")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Constraint constraint) {

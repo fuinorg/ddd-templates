@@ -2,7 +2,6 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.commons.ArtifactFactory
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 
@@ -28,12 +27,16 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		return artifactName
 	}
 
-	def String getBasePkg() {
+	private def String getBasePkg() {
 		return varMap.nullSafe.get("basepkg")
 	}
 
-	def String getPkg() {
+	private def String getPkg() {
 		return varMap.nullSafe.get("pkg")
+	}
+
+	def String contextPkg(String ctxName) {
+		return getBasePkg() + "." + ctxName + "." + getPkg()
 	}
 
 	def String getCopyrightHeader() {

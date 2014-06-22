@@ -17,6 +17,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
@@ -39,7 +40,7 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 			val List<AbstractEntityId> entityIds = contextEntityIds.get(ctx)
 
 			val className = ctx.toFirstUpper + "EntityIdFactory"
-			val String pkg = getBasePkg() + "." + ctx + "." + getPkg()
+			val String pkg = contextPkg(ctx)
 			val fqn = pkg + "." + className
 			val filename = fqn.replace('.', '/') + ".java";
 
@@ -53,7 +54,7 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 
 			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg)
 			sctx.addImports
-			sctx.addReferences
+			sctx.addReferences(entityIds)
 
 			return new GeneratedArtifact(artifactName, filename,
 				create(sctx, ctx, pkg, className, entityIds, resourceSet).toString().getBytes("UTF-8"));
@@ -63,9 +64,19 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 	}
 
 	def addImports(CodeSnippetContext ctx) {
+		ctx.requiresImport("javax.enterprise.context.ApplicationScoped")
+		ctx.requiresImport("java.util.Map")
+		ctx.requiresImport("java.util.HashMap")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdFactory")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.SingleEntityIdFactory")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityId")
 	}
 
-	def addReferences(CodeSnippetContext ctx) {
+	def addReferences(CodeSnippetContext ctx, List<AbstractEntityId> entityIds) {
+		for (entityId : entityIds) {
+			ctx.requiresReference(entityId.uniqueName)
+			ctx.requiresReference(entityId.uniqueName + "Converter")
+		}
 	}
 
 	def contextEntityIdMap(ResourceSet resourceSet) {

@@ -45,6 +45,21 @@ class EObjectExtensions {
 		return getContext(obj.eContainer)
 	}
 
+
+	/**
+	 * Returns the path in the model to the object.
+	 * 
+	 * @param obj Object to return the path for.
+	 * 
+	 * @return Path or empty string if the object is not inside one.
+	 */
+	def static String getPath(EObject obj) {
+		if (obj == null) {
+			return ""
+		}
+		return getPath(obj.eContainer) + "/" + obj
+	}
+
 	/**
 	 * Returns the parent entity for an object.
 	 * 

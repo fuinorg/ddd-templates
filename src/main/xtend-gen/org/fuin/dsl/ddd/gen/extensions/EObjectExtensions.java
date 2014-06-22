@@ -51,6 +51,24 @@ public class EObjectExtensions {
   }
   
   /**
+   * Returns the path in the model to the object.
+   * 
+   * @param obj Object to return the path for.
+   * 
+   * @return Path or empty string if the object is not inside one.
+   */
+  public static String getPath(final EObject obj) {
+    boolean _equals = Objects.equal(obj, null);
+    if (_equals) {
+      return "";
+    }
+    EObject _eContainer = obj.eContainer();
+    String _path = EObjectExtensions.getPath(_eContainer);
+    String _plus = (_path + "/");
+    return (_plus + obj);
+  }
+  
+  /**
    * Returns the parent entity for an object.
    * 
    * @param obj Object to return the parent entity for.

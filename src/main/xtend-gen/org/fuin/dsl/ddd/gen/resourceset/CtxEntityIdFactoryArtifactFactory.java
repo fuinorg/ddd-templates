@@ -19,6 +19,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.Utils;
+import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
@@ -49,12 +50,7 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
           final List<AbstractEntityId> entityIds = contextEntityIds.get(ctx);
           String _firstUpper = StringExtensions.toFirstUpper(ctx);
           final String className = (_firstUpper + "EntityIdFactory");
-          String _basePkg = this.getBasePkg();
-          String _plus = (_basePkg + ".");
-          String _plus_1 = (_plus + ctx);
-          String _plus_2 = (_plus_1 + ".");
-          String _pkg = this.getPkg();
-          final String pkg = (_plus_2 + _pkg);
+          final String pkg = this.contextPkg(ctx);
           final String fqn = ((pkg + ".") + className);
           String _replace = fqn.replace(".", "/");
           final String filename = (_replace + ".java");
@@ -65,7 +61,7 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
           }
           final SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg);
           this.addImports(sctx);
-          this.addReferences(sctx);
+          this.addReferences(sctx, entityIds);
           String _artifactName = this.getArtifactName();
           String _create = this.create(sctx, ctx, pkg, className, entityIds, resourceSet);
           String _string = _create.toString();
@@ -79,12 +75,25 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     }
   }
   
-  public Object addImports(final CodeSnippetContext ctx) {
-    return null;
+  public void addImports(final CodeSnippetContext ctx) {
+    ctx.requiresImport("javax.enterprise.context.ApplicationScoped");
+    ctx.requiresImport("java.util.Map");
+    ctx.requiresImport("java.util.HashMap");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdFactory");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.SingleEntityIdFactory");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EntityId");
   }
   
-  public Object addReferences(final CodeSnippetContext ctx) {
-    return null;
+  public void addReferences(final CodeSnippetContext ctx, final List<AbstractEntityId> entityIds) {
+    for (final AbstractEntityId entityId : entityIds) {
+      {
+        String _uniqueName = AbstractElementExtensions.uniqueName(entityId);
+        ctx.requiresReference(_uniqueName);
+        String _uniqueName_1 = AbstractElementExtensions.uniqueName(entityId);
+        String _plus = (_uniqueName_1 + "Converter");
+        ctx.requiresReference(_plus);
+      }
+    }
   }
   
   public Map<String,List<AbstractEntityId>> contextEntityIdMap(final ResourceSet resourceSet) {

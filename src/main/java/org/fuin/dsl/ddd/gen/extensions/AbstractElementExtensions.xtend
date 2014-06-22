@@ -21,10 +21,10 @@ class AbstractElementExtensions {
 			throw new IllegalArgumentException("argument 'el' cannot be null")
 		}
 		if (el.context == null) {
-			throw new IllegalArgumentException("argument 'el.context' cannot be null")
+			throw new IllegalArgumentException("argument 'el.context' cannot be null: " + el.path)
 		}
 		if (el.namespace == null) {
-			throw new IllegalArgumentException("argument 'el.namespace' cannot be null")
+			throw new IllegalArgumentException("argument 'el.namespace' cannot be null: " + el.path)
 		}
 		return separated(".", el.context.name, el.namespace.name, el.name)
 	}

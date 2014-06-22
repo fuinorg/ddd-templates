@@ -30,14 +30,23 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return this.artifactName;
   }
   
-  public String getBasePkg() {
+  private String getBasePkg() {
     Map<String,String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
     return _nullSafe.get("basepkg");
   }
   
-  public String getPkg() {
+  private String getPkg() {
     Map<String,String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
     return _nullSafe.get("pkg");
+  }
+  
+  public String contextPkg(final String ctxName) {
+    String _basePkg = this.getBasePkg();
+    String _plus = (_basePkg + ".");
+    String _plus_1 = (_plus + ctxName);
+    String _plus_2 = (_plus_1 + ".");
+    String _pkg = this.getPkg();
+    return (_plus_2 + _pkg);
   }
   
   public String getCopyrightHeader() {

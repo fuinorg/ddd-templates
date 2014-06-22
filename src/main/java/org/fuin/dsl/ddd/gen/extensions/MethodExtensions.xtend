@@ -35,14 +35,10 @@ class MethodExtensions {
 
 	def static List<Variable> allVariables(Method method) {
 		var List<Variable> list = new ArrayList<Variable>();
+		list.addAll(method.variables);
 		if ((method.refMethod != null) && (method != method.refMethod)) {
-			var Variable refVar = createVariableForRef(method.refMethod);
-			if (refVar != null) {
-				list.add(refVar);
-			}
 			list.addAll(method.refMethod.allVariables);
 		}
-		list.addAll(method.variables);
 		return list;
 	}
 
@@ -57,24 +53,4 @@ class MethodExtensions {
 		return list;
 	}
 	
-	def static Variable createVariableForRef(Method method) {
-		if (method.eContainer instanceof AbstractVO) {
-			var AbstractVO vo = method.eContainer as AbstractVO;
-			var Variable v = DomainDrivenDesignDslFactory::eINSTANCE.createVariable();
-			v.setName(vo.name.toFirstLower);
-			v.setType(vo);
-			return v;
-		} else if (method.eContainer instanceof AbstractEntity) {
-			var ExternalType et = DomainDrivenDesignDslFactory::eINSTANCE.createExternalType();
-			et.setName("EntityIdPath");
-			var Variable v = DomainDrivenDesignDslFactory::eINSTANCE.createVariable();
-			v.setName("entityIdPath");
-			v.setType(et);
-			return v;
-		}
-		return null;
-	}
-	
-
-
 }

@@ -44,15 +44,14 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
       final String className = (_name + "Validator");
       EObject _eContainer = constraint.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
-      String _asPackage = this.asPackage(ns);
-      String _plus = (_asPackage + ".");
-      final String fqn = (_plus + className);
+      final String pkg = this.asPackage(ns);
+      final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
       String _uniqueName = AbstractElementExtensions.uniqueName(constraint);
-      String _plus_1 = (_uniqueName + "Validator");
-      refReg.putReference(_plus_1, fqn);
+      String _plus = (_uniqueName + "Validator");
+      refReg.putReference(_plus, fqn);
       if (preparationRun) {
         return null;
       }
@@ -60,8 +59,7 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
       this.addImports(ctx);
       this.addReferences(ctx, constraint);
       String _artifactName = this.getArtifactName();
-      String _pkg = this.getPkg();
-      String _create = this.create(ctx, constraint, _pkg, className);
+      String _create = this.create(ctx, constraint, pkg, className);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);

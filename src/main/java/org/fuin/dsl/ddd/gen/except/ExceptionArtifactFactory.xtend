@@ -20,6 +20,7 @@ import static org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
@@ -30,9 +31,9 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 	override create(Exception ex, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
 		val className = ex.getName()
-		val Namespace ns = ex.eContainer() as Namespace;
+		val Namespace ns = ex.namespace
 		val pkg = ns.asPackage
-		val fqn = pkg + "." + ex.getName()
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
@@ -45,18 +46,26 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 		}
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports
+		ctx.addImports(ex)
 		ctx.addReferences(ex)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, ex, pkg, className).toString().getBytes("UTF-8"));
 	}
 
-	def addImports(CodeSnippetContext ctx) {
+	def addImports(CodeSnippetContext ctx, Exception ex) {
 		ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
+		ctx.requiresImport("org.fuin.objects4j.common.NeverNull")
+		ctx.requiresImport("org.fuin.objects4j.common.Contract")
+		if (ex.cid > 0) {
+			ctx.requiresImport("org.fuin.objects4j.common.UniquelyNumberedException")		
+		}
 	}
 
 	def addReferences(CodeSnippetContext ctx, Exception ex) {
+		for (v : ex.variables) {
+			ctx.requiresReference(v.type.uniqueName)
+		}
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Exception ex, String pkg, String className) {

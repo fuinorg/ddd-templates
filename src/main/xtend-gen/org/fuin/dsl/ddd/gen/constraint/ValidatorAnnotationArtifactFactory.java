@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -16,6 +15,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
@@ -38,11 +38,9 @@ public class ValidatorAnnotationArtifactFactory extends AbstractSource<Constrain
         return null;
       }
       final String className = constraint.getName();
-      EObject _eContainer = constraint.eContainer();
-      final Namespace ns = ((Namespace) _eContainer);
-      String _asPackage = this.asPackage(ns);
-      String _plus = (_asPackage + ".");
-      final String fqn = (_plus + className);
+      final Namespace ns = EObjectExtensions.getNamespace(constraint);
+      final String pkg = this.asPackage(ns);
+      final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
@@ -55,8 +53,7 @@ public class ValidatorAnnotationArtifactFactory extends AbstractSource<Constrain
       this.addImports(ctx);
       this.addReferences(ctx, constraint);
       String _artifactName = this.getArtifactName();
-      String _pkg = this.getPkg();
-      String _create = this.create(ctx, constraint, _pkg, className);
+      String _create = this.create(ctx, constraint, pkg, className);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);
@@ -71,6 +68,12 @@ public class ValidatorAnnotationArtifactFactory extends AbstractSource<Constrain
     ctx.requiresImport("java.lang.annotation.Target");
     ctx.requiresImport("javax.validation.Constraint");
     ctx.requiresImport("javax.validation.Payload");
+    ctx.requiresImport("static java.lang.annotation.ElementType.ANNOTATION_TYPE");
+    ctx.requiresImport("static java.lang.annotation.ElementType.FIELD");
+    ctx.requiresImport("static java.lang.annotation.ElementType.METHOD");
+    ctx.requiresImport("static java.lang.annotation.ElementType.PARAMETER");
+    ctx.requiresImport("static java.lang.annotation.RetentionPolicy.RUNTIME");
+    ctx.requiresImport("static java.lang.annotation.ElementType.TYPE");
   }
   
   public void addReferences(final CodeSnippetContext ctx, final Constraint constraint) {

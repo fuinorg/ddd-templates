@@ -25,6 +25,7 @@ import static org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 
 class EventArtifactFactory extends AbstractSource<Event> {
 
@@ -69,9 +70,14 @@ class EventArtifactFactory extends AbstractSource<Event> {
 
 	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
+		ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")	
+		ctx.requiresImport("org.fuin.ddd4j.ddd.EventType")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractDomainEvent")	
+		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Event event) {
+		ctx.requiresReference(event.entityIdType.uniqueName)
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {

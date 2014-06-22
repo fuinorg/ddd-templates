@@ -18,6 +18,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 
 class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 
@@ -39,7 +40,7 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			val List<Event> events = contextEvents.get(ctx)
 
 			val className = ctx.toFirstUpper + "EventRegistry"
-			val String pkg = getBasePkg() + "." + ctx + "." + getPkg()
+			val String pkg = contextPkg(ctx)
 			val fqn = pkg + "." + className
 			val filename = fqn.replace('.', '/') + ".java";
 
@@ -53,7 +54,7 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 
 			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg)
 			sctx.addImports
-			sctx.addReferences
+			sctx.addReferences(events)
 
 			return new GeneratedArtifact(artifactName, filename,
 				create(sctx, ctx, pkg, className, events, resourceSet).toString().getBytes("UTF-8"));
@@ -62,9 +63,25 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 	}
 
 	def addImports(CodeSnippetContext ctx) {
+		ctx.requiresImport("javax.enterprise.context.ApplicationScoped")
+		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
+		ctx.requiresImport("java.nio.charset.Charset")
+		ctx.requiresImport("javax.inject.Inject")
+		ctx.requiresImport("javax.annotation.PostConstruct")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.SerializerDeserializerRegistry")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.Deserializer")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.Serializer")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdFactory")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.BasicEventMetaData")		
+		ctx.requiresImport("org.fuin.ddd4j.ddd.XmlDeSerializer")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.SimpleSerializerDeserializerRegistry")
 	}
 
-	def addReferences(CodeSnippetContext ctx) {
+	def addReferences(CodeSnippetContext ctx, List<Event> events) {
+		for (event : events) {
+			ctx.requiresReference(event.uniqueName)
+		}
 	}
 
 	def contextEventMap(ResourceSet resourceSet) {
@@ -90,7 +107,7 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			@ApplicationScoped
 			public class «className» implements SerializerDeserializerRegistry {
 			
-			    private SerializerDeserializerRegistry registry;
+			    private SimpleSerializerDeserializerRegistry registry;
 			
 			    @Inject
 			    private EntityIdFactory entityIdFactory;
@@ -101,7 +118,7 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 					final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(entityIdFactory);
 					final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { entityIdPathConverter };
 					
-					registry = new SerializerDeserializerRegistry();
+					registry = new SimpleSerializerDeserializerRegistry();
 					registry.add(new XmlDeSerializer("BasicEventMetaData", BasicEventMetaData.class));
 					«FOR event : events»
 						registry.add(new XmlDeSerializer(«event.name».EVENT_TYPE.asBaseType(), adapters, «event.name».class));

@@ -20,6 +20,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EventExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
@@ -49,12 +50,7 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
           final List<Event> events = contextEvents.get(ctx);
           String _firstUpper = StringExtensions.toFirstUpper(ctx);
           final String className = (_firstUpper + "EventRegistry");
-          String _basePkg = this.getBasePkg();
-          String _plus = (_basePkg + ".");
-          String _plus_1 = (_plus + ctx);
-          String _plus_2 = (_plus_1 + ".");
-          String _pkg = this.getPkg();
-          final String pkg = (_plus_2 + _pkg);
+          final String pkg = this.contextPkg(ctx);
           final String fqn = ((pkg + ".") + className);
           String _replace = fqn.replace(".", "/");
           final String filename = (_replace + ".java");
@@ -65,7 +61,7 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
           }
           final SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg);
           this.addImports(sctx);
-          this.addReferences(sctx);
+          this.addReferences(sctx, events);
           String _artifactName = this.getArtifactName();
           String _create = this.create(sctx, ctx, pkg, className, events, resourceSet);
           String _string = _create.toString();
@@ -79,12 +75,27 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     }
   }
   
-  public Object addImports(final CodeSnippetContext ctx) {
-    return null;
+  public void addImports(final CodeSnippetContext ctx) {
+    ctx.requiresImport("javax.enterprise.context.ApplicationScoped");
+    ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter");
+    ctx.requiresImport("java.nio.charset.Charset");
+    ctx.requiresImport("javax.inject.Inject");
+    ctx.requiresImport("javax.annotation.PostConstruct");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.SerializerDeserializerRegistry");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.Deserializer");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.Serializer");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdFactory");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.BasicEventMetaData");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.XmlDeSerializer");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.SimpleSerializerDeserializerRegistry");
   }
   
-  public Object addReferences(final CodeSnippetContext ctx) {
-    return null;
+  public void addReferences(final CodeSnippetContext ctx, final List<Event> events) {
+    for (final Event event : events) {
+      String _uniqueName = EventExtensions.uniqueName(event);
+      ctx.requiresReference(_uniqueName);
+    }
   }
   
   public Map<String,List<Event>> contextEventMap(final ResourceSet resourceSet) {
@@ -135,7 +146,7 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("    ");
-      _builder.append("private SerializerDeserializerRegistry registry;");
+      _builder.append("private SimpleSerializerDeserializerRegistry registry;");
       _builder.newLine();
       _builder.newLine();
       _builder.append("    ");
@@ -162,7 +173,7 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
       _builder.append("\t\t");
       _builder.newLine();
       _builder.append("\t\t");
-      _builder.append("registry = new SerializerDeserializerRegistry();");
+      _builder.append("registry = new SimpleSerializerDeserializerRegistry();");
       _builder.newLine();
       _builder.append("\t\t");
       _builder.append("registry.add(new XmlDeSerializer(\"BasicEventMetaData\", BasicEventMetaData.class));");

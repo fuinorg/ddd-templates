@@ -32,7 +32,8 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 
 		val className = constraint.getName() + "Validator"
 		val Namespace ns = constraint.eContainer() as Namespace;
-		val fqn = ns.asPackage + "." + className
+		val pkg = ns.asPackage
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 		
 		val CodeReferenceRegistry refReg = context.codeReferenceRegistry

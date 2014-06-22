@@ -4,15 +4,9 @@ import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.xbase.lib.StringExtensions;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraints;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions;
@@ -54,6 +48,8 @@ public class MethodExtensions {
   
   public static List<Variable> allVariables(final Method method) {
     List<Variable> list = new ArrayList<Variable>();
+    EList<Variable> _variables = method.getVariables();
+    list.addAll(_variables);
     boolean _and = false;
     Method _refMethod = method.getRefMethod();
     boolean _notEquals = (!Objects.equal(_refMethod, null));
@@ -66,17 +62,9 @@ public class MethodExtensions {
     }
     if (_and) {
       Method _refMethod_2 = method.getRefMethod();
-      Variable refVar = MethodExtensions.createVariableForRef(_refMethod_2);
-      boolean _notEquals_2 = (!Objects.equal(refVar, null));
-      if (_notEquals_2) {
-        list.add(refVar);
-      }
-      Method _refMethod_3 = method.getRefMethod();
-      List<Variable> _allVariables = MethodExtensions.allVariables(_refMethod_3);
+      List<Variable> _allVariables = MethodExtensions.allVariables(_refMethod_2);
       list.addAll(_allVariables);
     }
-    EList<Variable> _variables = method.getVariables();
-    list.addAll(_variables);
     return list;
   }
   
@@ -105,30 +93,5 @@ public class MethodExtensions {
       list.addAll(_exceptionList);
     }
     return list;
-  }
-  
-  public static Variable createVariableForRef(final Method method) {
-    EObject _eContainer = method.eContainer();
-    if ((_eContainer instanceof AbstractVO)) {
-      EObject _eContainer_1 = method.eContainer();
-      AbstractVO vo = ((AbstractVO) _eContainer_1);
-      Variable v = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
-      String _name = vo.getName();
-      String _firstLower = StringExtensions.toFirstLower(_name);
-      v.setName(_firstLower);
-      v.setType(vo);
-      return v;
-    } else {
-      EObject _eContainer_2 = method.eContainer();
-      if ((_eContainer_2 instanceof AbstractEntity)) {
-        ExternalType et = DomainDrivenDesignDslFactory.eINSTANCE.createExternalType();
-        et.setName("EntityIdPath");
-        Variable v_1 = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
-        v_1.setName("entityIdPath");
-        v_1.setType(et);
-        return v_1;
-      }
-    }
-    return null;
   }
 }

@@ -27,12 +27,16 @@ public class AbstractElementExtensions {
     Context _context = EObjectExtensions.getContext(el);
     boolean _equals_1 = Objects.equal(_context, null);
     if (_equals_1) {
-      throw new IllegalArgumentException("argument \'el.context\' cannot be null");
+      String _path = EObjectExtensions.getPath(el);
+      String _plus = ("argument \'el.context\' cannot be null: " + _path);
+      throw new IllegalArgumentException(_plus);
     }
     Namespace _namespace = EObjectExtensions.getNamespace(el);
     boolean _equals_2 = Objects.equal(_namespace, null);
     if (_equals_2) {
-      throw new IllegalArgumentException("argument \'el.namespace\' cannot be null");
+      String _path_1 = EObjectExtensions.getPath(el);
+      String _plus_1 = ("argument \'el.namespace\' cannot be null: " + _path_1);
+      throw new IllegalArgumentException(_plus_1);
     }
     Context _context_1 = EObjectExtensions.getContext(el);
     String _name = _context_1.getName();
