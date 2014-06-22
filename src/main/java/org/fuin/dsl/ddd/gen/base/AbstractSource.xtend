@@ -106,7 +106,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 			return _optionalBaseMethodsString(typeName)
 		}
 		if (base.name.equals("UUID")) {
-			return _optionalBaseMethodsUUID(typeName)
+			return new SrcVoBaseMethodsUUID(ctx, vo).toString()
 		}
 		if (base.name.equals("Integer") || base.name.equals("Long")) {
 			return new SrcVoBaseMethodsNumber(ctx, vo).toString()
@@ -149,39 +149,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 				// TODO Parse string value and return new instance! 
 				// return new «typeName»(value);
 				return null;
-			}
-		'''
-	}
-
-	def _optionalBaseMethodsUUID(String typeName) {
-		'''	
-			/**
-			 * Returns the information if a given string can be converted into
-			 * an instance of this class. A <code>null</code> value returns <code>true</code>.
-			 * 
-			 * @param value
-			 *            Value to check.
-			 * 
-			 * @return TRUE if it's a valid string, else FALSE.
-			 */
-			public static boolean isValid(final String value) {
-				return UUIDStrValidator.isValid(value);
-			}
-			
-			/**
-			 * Parses a given string and returns a new instance of this class.
-			 * 
-			 * @param value
-			 *            Value to convert. A <code>null</code> value returns
-			 *            <code>null</code>.
-			 * 
-			 * @return Converted value.
-			 */
-			public static «typeName» valueOf(final String value) {
-				if (value == null) {
-					return null;
-				}
-				return new «typeName»(UUID.fromString(value));
 			}
 		'''
 	}
