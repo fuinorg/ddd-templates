@@ -40,7 +40,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 		val className = entity.getName()
 		val Namespace ns = entity.eContainer() as Namespace;
 		val pkg = ns.asPackage
-		val fqn = pkg + "." + entity.getName()
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)

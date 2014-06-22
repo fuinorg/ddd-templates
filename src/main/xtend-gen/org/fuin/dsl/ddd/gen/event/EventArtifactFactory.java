@@ -21,6 +21,7 @@ import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EventExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
@@ -43,11 +44,9 @@ public class EventArtifactFactory extends AbstractSource<Event> {
       if ((container instanceof AbstractEntity)) {
         final AbstractEntity entity = ((AbstractEntity) container);
         final String className = event.getName();
-        EObject _eContainer = entity.eContainer();
-        final Namespace ns = ((Namespace) _eContainer);
+        final Namespace ns = EObjectExtensions.getNamespace(entity);
         final String pkg = this.asPackage(ns);
-        String _name = event.getName();
-        final String fqn = ((pkg + ".") + _name);
+        final String fqn = ((pkg + ".") + className);
         String _replace = fqn.replace(".", "/");
         final String filename = (_replace + ".java");
         final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);

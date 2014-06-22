@@ -21,6 +21,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -31,9 +32,9 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 	override create(ValueObject valueObject, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
 		val className = valueObject.getName()
-		val Namespace ns = valueObject.eContainer() as Namespace;
+		val Namespace ns = valueObject.namespace;
 		val pkg = ns.asPackage
-		val fqn = pkg + "." + valueObject.getName()
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)

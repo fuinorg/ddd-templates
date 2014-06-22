@@ -11,6 +11,7 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.base.Utils.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
 
@@ -23,7 +24,7 @@ class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
 			return null;
 		}
 		val className = entityId.getName() + "Converter"
-		val Namespace ns = entityId.eContainer() as Namespace;
+		val Namespace ns = entityId.namespace;
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";

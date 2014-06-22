@@ -27,7 +27,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 		val className = aggregate.getName() + "Repository"
 		val Namespace ns = aggregate.eContainer() as Namespace;
 		val pkg = ns.asPackage
-		val fqn = pkg + "." + aggregate.getName()
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)

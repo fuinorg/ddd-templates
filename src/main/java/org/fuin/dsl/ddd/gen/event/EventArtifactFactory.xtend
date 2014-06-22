@@ -26,6 +26,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 class EventArtifactFactory extends AbstractSource<Event> {
 
@@ -40,9 +41,9 @@ class EventArtifactFactory extends AbstractSource<Event> {
 			val AbstractEntity entity = container as AbstractEntity;
 
 			val className = event.getName()
-			val Namespace ns = entity.eContainer() as Namespace;
+			val Namespace ns = entity.namespace;
 			val pkg = ns.asPackage
-			val fqn = pkg + "." + event.getName()
+			val fqn = pkg + "." + className
 			val filename = fqn.replace('.', '/') + ".java";
 
 			val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)

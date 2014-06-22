@@ -28,7 +28,7 @@ class ESJpaStreamArtifactFactory extends AbstractSource<Aggregate> implements Ar
 		val className = aggregate.getName() + "Stream"
 		val Namespace ns = aggregate.eContainer() as Namespace;
 		val pkg = ns.asPackage
-		val fqn = pkg + "." + aggregate.getName()
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)

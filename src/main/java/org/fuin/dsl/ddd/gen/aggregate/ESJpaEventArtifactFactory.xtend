@@ -28,7 +28,7 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 		val className = aggregate.getName() + "Event"
 		val Namespace ns = aggregate.eContainer() as Namespace;
 		val pkg = ns.asPackage
-		val fqn = pkg + "." + aggregate.getName()
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)

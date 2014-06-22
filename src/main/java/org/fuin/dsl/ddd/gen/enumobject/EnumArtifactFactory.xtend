@@ -20,6 +20,7 @@ import static org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 class EnumArtifactFactory extends AbstractSource<EnumObject> {
 
@@ -30,9 +31,9 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 	override create(EnumObject enu, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
 		val className = enu.getName()
-		val Namespace ns = enu.eContainer() as Namespace;
+		val Namespace ns = enu.namespace;
 		val pkg = ns.asPackage
-		val fqn = pkg + "." + enu.getName()
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)

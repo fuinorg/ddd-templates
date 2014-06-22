@@ -47,8 +47,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
       EObject _eContainer = entity.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
       final String pkg = this.asPackage(ns);
-      String _name = entity.getName();
-      final String fqn = ((pkg + ".") + _name);
+      final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);

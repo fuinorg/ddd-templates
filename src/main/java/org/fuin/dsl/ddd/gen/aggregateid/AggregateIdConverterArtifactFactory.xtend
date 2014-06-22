@@ -10,6 +10,7 @@ import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 class AggregateIdConverterArtifactFactory extends AbstractSource<AggregateId> {
@@ -23,8 +24,9 @@ class AggregateIdConverterArtifactFactory extends AbstractSource<AggregateId> {
 			return null;
 		}
 		val className = aggregateId.getName() + "Converter"
-		val Namespace ns = aggregateId.eContainer() as Namespace;
-		val String fqn = ns.asPackage + "." + className
+		val Namespace ns = aggregateId.namespace;
+		val pkg = ns.asPackage
+		val String fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 		
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
@@ -39,7 +41,7 @@ class AggregateIdConverterArtifactFactory extends AbstractSource<AggregateId> {
 		return new GeneratedArtifact(
 			artifactName,
 			filename,
-			new SrcValueObjectConverter(refReg, copyrightHeader, ns.asPackage, aggregateId, aggregateId.base, true).
+			new SrcValueObjectConverter(refReg, copyrightHeader, pkg, aggregateId, aggregateId.base, true).
 				toString().getBytes("UTF-8")
 		);
 	}

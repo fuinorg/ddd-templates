@@ -2,7 +2,6 @@ package org.fuin.dsl.ddd.gen.valueobject;
 
 import com.google.common.base.Objects;
 import java.util.Map;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
@@ -11,6 +10,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcValueObjectConverter;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
@@ -30,8 +30,7 @@ public class ValueObjectConverterArtifactFactory extends AbstractSource<ValueObj
       }
       String _name = valueObject.getName();
       final String className = (_name + "Converter");
-      EObject _eContainer = valueObject.eContainer();
-      final Namespace ns = ((Namespace) _eContainer);
+      final Namespace ns = EObjectExtensions.getNamespace(valueObject);
       String _asPackage = this.asPackage(ns);
       String _plus = (_asPackage + ".");
       final String fqn = (_plus + className);

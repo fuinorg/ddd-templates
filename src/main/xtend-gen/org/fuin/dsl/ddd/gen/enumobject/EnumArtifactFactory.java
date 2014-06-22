@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumInstance;
@@ -21,6 +20,7 @@ import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
@@ -37,11 +37,9 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
   public GeneratedArtifact create(final EnumObject enu, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = enu.getName();
-      EObject _eContainer = enu.eContainer();
-      final Namespace ns = ((Namespace) _eContainer);
+      final Namespace ns = EObjectExtensions.getNamespace(enu);
       final String pkg = this.asPackage(ns);
-      String _name = enu.getName();
-      final String fqn = ((pkg + ".") + _name);
+      final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);

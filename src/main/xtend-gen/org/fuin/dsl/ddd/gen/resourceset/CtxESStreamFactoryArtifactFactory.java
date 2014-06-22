@@ -19,6 +19,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
 import org.fuin.dsl.ddd.gen.base.Utils;
+import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
@@ -60,7 +61,7 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
           }
           final SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg);
           this.addImports(sctx);
-          this.addReferences(sctx);
+          this.addReferences(sctx, aggregateIds);
           String _artifactName = this.getArtifactName();
           String _create = this.create(sctx, ctx, pkg, className, aggregateIds, resourceSet);
           String _string = _create.toString();
@@ -74,12 +75,22 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     }
   }
   
-  public Object addImports(final CodeSnippetContext ctx) {
-    return null;
+  public void addImports(final CodeSnippetContext ctx) {
+    ctx.requiresImport("javax.enterprise.context.ApplicationScoped");
+    ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.IdStreamFactory");
+    ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.Stream");
+    ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.StreamId");
+    ctx.requiresImport("java.util.Map");
+    ctx.requiresImport("java.util.HashMap");
+    ctx.requiresImport("");
+    ctx.requiresImport("");
   }
   
-  public Object addReferences(final CodeSnippetContext ctx) {
-    return null;
+  public void addReferences(final CodeSnippetContext ctx, final List<AggregateId> aggregateIds) {
+    for (final AggregateId aggregateId : aggregateIds) {
+      String _uniqueName = AbstractElementExtensions.uniqueName(aggregateId);
+      ctx.requiresReference(_uniqueName);
+    }
   }
   
   public Map<String,List<AggregateId>> contextAggregateIdMap(final ResourceSet resourceSet) {

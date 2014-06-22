@@ -35,9 +35,9 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			val AbstractEntity entity = container as AbstractEntity;
 
 			val className = event.getName() + "Test"
-			val Namespace ns = entity.eContainer() as Namespace;
+			val Namespace ns = entity.namespace;
 			val pkg = ns.asPackage
-			val fqn = pkg + "." + event.getName()
+			val fqn = pkg + "." + className
 			val filename = fqn.replace('.', '/') + ".java";
 
 			val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
@@ -64,6 +64,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 		ctx.requiresImport("org.junit.Test")
 		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
 		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.serialize")
 		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.deserialize")
 		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.marshal")
@@ -75,6 +76,9 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 		ctx.requiresReference(event.aggregate.idType.uniqueName)
 	    for (v : event.variables.nullSafe) {
 			ctx.requiresReference(v.type.uniqueName)
+			if (v.multiplicity != null) {
+				ctx.requiresImport("java.util.List")
+			}
 	    }
 	    ctx.requiresReference(event.context.name.toFirstUpper + "EntityIdFactory")
 	}
@@ -116,10 +120,10 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 				private «event.name» createTestee() {
 					// TODO Set test values
 				    final «event.aggregate.idType.name» entityId = null;
-				    «FOR v : event.variables.nullSafe»
+					«FOR v : event.variables.nullSafe»
 					final «v.type(ctx)» «v.name» = null;
-				    «ENDFOR»
-					return new «new SrcInvokeMethod(ctx, event.name, union("new EntityIdPath(aId)", event.variables.varNames))»
+					«ENDFOR»
+					return new «new SrcInvokeMethod(ctx, event.name, union("new EntityIdPath(entityId)", event.variables.varNames))»
 				}
 			
 			    protected final XmlAdapter<?, ?>[] createAdapter() {

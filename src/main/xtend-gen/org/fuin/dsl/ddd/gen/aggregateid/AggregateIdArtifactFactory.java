@@ -39,8 +39,7 @@ public class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
       EObject _eContainer = aggregateId.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
       final String pkg = this.asPackage(ns);
-      String _name = aggregateId.getName();
-      final String fqn = ((pkg + ".") + _name);
+      final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);

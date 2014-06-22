@@ -18,6 +18,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 
 class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 
@@ -53,7 +54,7 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 
 			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg)
 			sctx.addImports
-			sctx.addReferences
+			sctx.addReferences(aggregateIds)
 
 			return new GeneratedArtifact(artifactName, filename,
 				create(sctx, ctx, pkg, className, aggregateIds, resourceSet).toString().getBytes("UTF-8"));
@@ -62,9 +63,20 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 	}
 
 	def addImports(CodeSnippetContext ctx) {
+		ctx.requiresImport("javax.enterprise.context.ApplicationScoped")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.IdStreamFactory")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.Stream")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.StreamId")
+		ctx.requiresImport("java.util.Map")
+		ctx.requiresImport("java.util.HashMap")		
+		ctx.requiresImport("")
+		ctx.requiresImport("")
 	}
 
-	def addReferences(CodeSnippetContext ctx) {
+	def addReferences(CodeSnippetContext ctx, List<AggregateId> aggregateIds) {
+		for (aggregateId : aggregateIds) {
+			ctx.requiresReference(aggregateId.uniqueName)
+		}
 	}
 
 	def contextAggregateIdMap(ResourceSet resourceSet) {

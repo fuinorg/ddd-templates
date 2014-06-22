@@ -2,7 +2,6 @@ package org.fuin.dsl.ddd.gen.entityid;
 
 import com.google.common.base.Objects;
 import java.util.Map;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
@@ -11,6 +10,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcValueObjectConverter;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
@@ -30,8 +30,7 @@ public class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
       }
       String _name = entityId.getName();
       final String className = (_name + "Converter");
-      EObject _eContainer = entityId.eContainer();
-      final Namespace ns = ((Namespace) _eContainer);
+      final Namespace ns = EObjectExtensions.getNamespace(entityId);
       final String pkg = this.asPackage(ns);
       final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");

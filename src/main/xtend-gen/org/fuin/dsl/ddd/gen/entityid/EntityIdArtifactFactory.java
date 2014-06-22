@@ -3,7 +3,6 @@ package org.fuin.dsl.ddd.gen.entityid;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
@@ -21,6 +20,7 @@ import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethods;
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
@@ -36,11 +36,9 @@ public class EntityIdArtifactFactory extends AbstractSource<EntityId> {
   public GeneratedArtifact create(final EntityId entityId, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = entityId.getName();
-      EObject _eContainer = entityId.eContainer();
-      final Namespace ns = ((Namespace) _eContainer);
+      final Namespace ns = EObjectExtensions.getNamespace(entityId);
       final String pkg = this.asPackage(ns);
-      String _name = entityId.getName();
-      final String fqn = ((pkg + ".") + _name);
+      final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);

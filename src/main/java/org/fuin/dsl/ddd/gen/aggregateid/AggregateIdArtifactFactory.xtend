@@ -32,7 +32,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 		val className = aggregateId.getName()
 		val Namespace ns = aggregateId.eContainer() as Namespace;
 		val pkg = ns.asPackage
-		val fqn = pkg + "." + aggregateId.getName()
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
 		refReg.putReference(aggregateId.uniqueName, fqn)

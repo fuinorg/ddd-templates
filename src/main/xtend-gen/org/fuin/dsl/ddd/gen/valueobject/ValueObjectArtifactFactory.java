@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType;
@@ -22,6 +21,7 @@ import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends;
 import org.fuin.dsl.ddd.gen.base.SrcXmlRootElement;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
@@ -37,11 +37,9 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
   public GeneratedArtifact create(final ValueObject valueObject, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = valueObject.getName();
-      EObject _eContainer = valueObject.eContainer();
-      final Namespace ns = ((Namespace) _eContainer);
+      final Namespace ns = EObjectExtensions.getNamespace(valueObject);
       final String pkg = this.asPackage(ns);
-      String _name = valueObject.getName();
-      final String fqn = ((pkg + ".") + _name);
+      final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);

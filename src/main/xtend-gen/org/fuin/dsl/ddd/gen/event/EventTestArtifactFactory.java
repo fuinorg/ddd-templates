@@ -1,5 +1,6 @@
 package org.fuin.dsl.ddd.gen.event;
 
+import com.google.common.base.Objects;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -45,11 +46,9 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
         final AbstractEntity entity = ((AbstractEntity) container);
         String _name = event.getName();
         final String className = (_name + "Test");
-        EObject _eContainer = entity.eContainer();
-        final Namespace ns = ((Namespace) _eContainer);
+        final Namespace ns = EObjectExtensions.getNamespace(entity);
         final String pkg = this.asPackage(ns);
-        String _name_1 = event.getName();
-        final String fqn = ((pkg + ".") + _name_1);
+        final String fqn = ((pkg + ".") + className);
         String _replace = fqn.replace(".", "/");
         final String filename = (_replace + ".java");
         final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
@@ -80,6 +79,7 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
     ctx.requiresImport("org.junit.Test");
     ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter");
     ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath");
     ctx.requiresImport("static org.fuin.units4j.Units4JUtils.serialize");
     ctx.requiresImport("static org.fuin.units4j.Units4JUtils.deserialize");
     ctx.requiresImport("static org.fuin.units4j.Units4JUtils.marshal");
@@ -96,9 +96,16 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
     EList<Variable> _variables = event.getVariables();
     List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
     for (final Variable v : _nullSafe) {
-      Type _type = v.getType();
-      String _uniqueName_2 = AbstractElementExtensions.uniqueName(_type);
-      ctx.requiresReference(_uniqueName_2);
+      {
+        Type _type = v.getType();
+        String _uniqueName_2 = AbstractElementExtensions.uniqueName(_type);
+        ctx.requiresReference(_uniqueName_2);
+        String _multiplicity = v.getMultiplicity();
+        boolean _notEquals = (!Objects.equal(_multiplicity, null));
+        if (_notEquals) {
+          ctx.requiresImport("java.util.List");
+        }
+      }
     }
     Context _context = EObjectExtensions.getContext(event);
     String _name = _context.getName();
@@ -225,12 +232,13 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
         EList<Variable> _variables = event.getVariables();
         List<Variable> _nullSafe = CollectionExtensions.<Variable>nullSafe(_variables);
         for(final Variable v : _nullSafe) {
+          _builder.append("\t\t");
           _builder.append("final ");
           String _type = VariableExtensions.type(v, ctx);
-          _builder.append(_type, "");
+          _builder.append(_type, "\t\t");
           _builder.append(" ");
           String _name_9 = v.getName();
-          _builder.append(_name_9, "");
+          _builder.append(_name_9, "\t\t");
           _builder.append(" = null;");
           _builder.newLineIfNotEmpty();
         }
@@ -240,7 +248,7 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
       String _name_10 = event.getName();
       EList<Variable> _variables_1 = event.getVariables();
       List<String> _varNames = CollectionExtensions.varNames(_variables_1);
-      List<String> _union = Utils.<String>union("new EntityIdPath(aId)", _varNames);
+      List<String> _union = Utils.<String>union("new EntityIdPath(entityId)", _varNames);
       SrcInvokeMethod _srcInvokeMethod = new SrcInvokeMethod(ctx, _name_10, _union);
       _builder.append(_srcInvokeMethod, "\t\t");
       _builder.newLineIfNotEmpty();
