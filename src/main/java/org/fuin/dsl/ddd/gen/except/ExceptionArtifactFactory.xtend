@@ -96,4 +96,14 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
 	}
 
+
+	def _uniquelyNumberedException(Exception ex) {
+		if (ex.cid > 0) {
+			'''UniquelyNumberedException'''
+		} else {
+			'''Exception'''
+		}
+
+	}
+
 }
