@@ -7,6 +7,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
@@ -17,7 +18,9 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethod;
 import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethod;
+import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethodsNumber;
 import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
+import org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.srcgen4j.commons.ArtifactFactory;
@@ -181,226 +184,43 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
     return (name + "[]");
   }
   
-  public CharSequence _optionalBaseMethods(final String typeName, final ExternalType base) {
-    boolean _equals = Objects.equal(base, null);
+  public CharSequence _optionalBaseMethods(final CodeSnippetContext ctx, final AbstractVO vo) {
+    boolean _equals = Objects.equal(vo, null);
     if (_equals) {
       return "";
     }
-    String _name = base.getName();
-    boolean _equals_1 = _name.equals("String");
+    ExternalType _baseType = AbstractVOExtensions.baseType(vo);
+    boolean _equals_1 = Objects.equal(_baseType, null);
     if (_equals_1) {
+      return "";
+    }
+    final String typeName = vo.getName();
+    final ExternalType base = AbstractVOExtensions.baseType(vo);
+    String _name = base.getName();
+    boolean _equals_2 = _name.equals("String");
+    if (_equals_2) {
       return this._optionalBaseMethodsString(typeName);
     }
     String _name_1 = base.getName();
-    boolean _equals_2 = _name_1.equals("UUID");
-    if (_equals_2) {
+    boolean _equals_3 = _name_1.equals("UUID");
+    if (_equals_3) {
       return this._optionalBaseMethodsUUID(typeName);
     }
     boolean _or = false;
     String _name_2 = base.getName();
-    boolean _equals_3 = _name_2.equals("Integer");
-    if (_equals_3) {
+    boolean _equals_4 = _name_2.equals("Integer");
+    if (_equals_4) {
       _or = true;
     } else {
       String _name_3 = base.getName();
-      boolean _equals_4 = _name_3.equals("Long");
-      _or = _equals_4;
+      boolean _equals_5 = _name_3.equals("Long");
+      _or = _equals_5;
     }
     if (_or) {
-      String _name_4 = base.getName();
-      return this._optionalBaseMethodsNumber(typeName, _name_4);
+      SrcVoBaseMethodsNumber _srcVoBaseMethodsNumber = new SrcVoBaseMethodsNumber(ctx, vo);
+      return _srcVoBaseMethodsNumber.toString();
     }
     return "";
-  }
-  
-  public CharSequence _optionalBaseMethodsNumber(final String typeName, final String baseName) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Returns the information if a given ");
-    _builder.append(baseName, " ");
-    _builder.append(" can be converted into");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("* an instance of this class. A <code>null</code> value returns <code>true</code>.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param value");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*            Value to check.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @return TRUE if it\'s a valid ");
-    _builder.append(baseName, " ");
-    _builder.append(", else FALSE.");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("public static boolean isValid(final ");
-    _builder.append(baseName, "");
-    _builder.append(" value) {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("if (value == null) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return true;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("try {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append(baseName, "\t\t");
-    _builder.append(".valueOf(value);");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("} catch (final NumberFormatException ex) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return false;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("return true;");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Parses a given ");
-    _builder.append(baseName, " ");
-    _builder.append(" and returns a new instance of this class.");
-    _builder.newLineIfNotEmpty();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param value");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*            Value to convert. A <code>null</code> value returns");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*            <code>null</code>.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @return Converted value.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("public static ");
-    _builder.append(typeName, "");
-    _builder.append(" valueOf(final ");
-    _builder.append(baseName, "");
-    _builder.append(" value) {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("if (value == null) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return null;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("return new ");
-    _builder.append(typeName, "\t");
-    _builder.append("(value);");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("public Integer asBaseType() {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("return val;");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("@Override");
-    _builder.newLine();
-    _builder.append("public String asString() {");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("return \"\" + val;");
-    _builder.newLine();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    _builder.append("/**");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* Parses a given String and returns a new instance of this class.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @param value");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*            Value to convert. A <code>null</code> value returns");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*            <code>null</code>.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* ");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("* @return Converted value.");
-    _builder.newLine();
-    _builder.append(" ");
-    _builder.append("*/");
-    _builder.newLine();
-    _builder.append("public static ");
-    _builder.append(typeName, "");
-    _builder.append(" valueOf(final String value) {");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("if (value == null) {");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("return null;");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("}");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("return new ");
-    _builder.append(typeName, "\t");
-    _builder.append("(");
-    _builder.append(baseName, "\t");
-    _builder.append(".valueOf(value));");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
-    _builder.newLine();
-    return _builder;
   }
   
   public CharSequence _optionalBaseMethodsString(final String typeName) {

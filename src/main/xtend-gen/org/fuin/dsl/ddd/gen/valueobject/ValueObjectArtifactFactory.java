@@ -121,9 +121,7 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      String _name = vo.getName();
-      ExternalType _base_3 = vo.getBase();
-      CharSequence __optionalBaseMethods = this._optionalBaseMethods(_name, _base_3);
+      CharSequence __optionalBaseMethods = this._optionalBaseMethods(ctx, vo);
       _builder.append(__optionalBaseMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");

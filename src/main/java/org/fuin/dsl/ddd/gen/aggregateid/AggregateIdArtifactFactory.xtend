@@ -94,7 +94,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 					return TYPE + " " + asString();
 				}
 			
-				«_optionalBaseMethods(id.name, id.base)»
+				«_optionalBaseMethods(ctx, id)»
 			}
 		'''
 

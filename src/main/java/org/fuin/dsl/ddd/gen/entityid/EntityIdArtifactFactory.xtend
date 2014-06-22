@@ -95,7 +95,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 					return TYPE + " " + asString();
 				}
 				
-				«_optionalBaseMethods(id.name, id.base)»
+				«_optionalBaseMethods(ctx, id)»
 				
 			}
 		'''

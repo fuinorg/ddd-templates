@@ -2,6 +2,7 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
@@ -12,6 +13,7 @@ import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
@@ -90,10 +92,16 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	// --- Source code fragments (Method names should start with an underscore '_') ---
 
-	def _optionalBaseMethods(String typeName, ExternalType base) {
-		if (base == null) {
+	def _optionalBaseMethods(CodeSnippetContext ctx, AbstractVO vo) {
+		if (vo == null) {
 			return ""
 		}
+		if (vo.baseType == null) {
+			return ""
+		}
+		val String typeName = vo.name
+		val ExternalType base = vo.baseType
+		
 		if (base.name.equals("String")) {
 			return _optionalBaseMethodsString(typeName)
 		}
@@ -101,77 +109,9 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 			return _optionalBaseMethodsUUID(typeName)
 		}
 		if (base.name.equals("Integer") || base.name.equals("Long")) {
-			return _optionalBaseMethodsNumber(typeName, base.name)
+			return new SrcVoBaseMethodsNumber(ctx, vo).toString()
 		}
 		return ""
-	}
-
-	def _optionalBaseMethodsNumber(String typeName, String baseName) {
-		'''	
-			/**
-			 * Returns the information if a given «baseName» can be converted into
-			 * an instance of this class. A <code>null</code> value returns <code>true</code>.
-			 * 
-			 * @param value
-			 *            Value to check.
-			 * 
-			 * @return TRUE if it's a valid «baseName», else FALSE.
-			 */
-			public static boolean isValid(final «baseName» value) {
-				if (value == null) {
-					return true;
-				}
-				try {
-					«baseName».valueOf(value);
-				} catch (final NumberFormatException ex) {
-					return false;
-				}
-				return true;
-			}
-			
-			/**
-			 * Parses a given «baseName» and returns a new instance of this class.
-			 * 
-			 * @param value
-			 *            Value to convert. A <code>null</code> value returns
-			 *            <code>null</code>.
-			 * 
-			 * @return Converted value.
-			 */
-			public static «typeName» valueOf(final «baseName» value) {
-				if (value == null) {
-					return null;
-				}
-				return new «typeName»(value);
-			}
-			
-			@Override
-			public Integer asBaseType() {
-				return val;
-			}
-			
-			@Override
-			public String asString() {
-				return "" + val;
-			}
-			
-			/**
-			 * Parses a given String and returns a new instance of this class.
-			 * 
-			 * @param value
-			 *            Value to convert. A <code>null</code> value returns
-			 *            <code>null</code>.
-			 * 
-			 * @return Converted value.
-			 */
-			public static «typeName» valueOf(final String value) {
-				if (value == null) {
-					return null;
-				}
-				return new «typeName»(«baseName».valueOf(value));
-			}
-			
-		'''
 	}
 
 	def _optionalBaseMethodsString(String typeName) {

@@ -167,9 +167,7 @@ public class EntityIdArtifactFactory extends AbstractSource<EntityId> {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      String _name_2 = id.getName();
-      ExternalType _base_1 = id.getBase();
-      CharSequence __optionalBaseMethods = this._optionalBaseMethods(_name_2, _base_1);
+      CharSequence __optionalBaseMethods = this._optionalBaseMethods(ctx, id);
       _builder.append(__optionalBaseMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");

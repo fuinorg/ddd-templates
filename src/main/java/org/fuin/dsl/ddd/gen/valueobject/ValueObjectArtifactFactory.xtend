@@ -73,7 +73,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 				
 				«new SrcGetters(ctx, "public final", vo.variables)»
 				
-				«_optionalBaseMethods(vo.name, vo.base)»
+				«_optionalBaseMethods(ctx, vo)»
 				
 			}
 		'''
