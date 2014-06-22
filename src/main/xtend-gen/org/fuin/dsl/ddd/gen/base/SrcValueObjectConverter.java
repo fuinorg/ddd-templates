@@ -47,7 +47,8 @@ public class SrcValueObjectConverter implements CodeSnippet {
     this.pkg = pkg;
     String _name = vo.getName();
     this.voTypeName = _name;
-    this.targetTypeName = this.targetTypeName;
+    String _name_1 = targetType.getName();
+    this.targetTypeName = _name_1;
     this.implementsSingleEntityIdFactory = implementsSingleEntityIdFactory;
     this.className = (this.voTypeName + "Converter");
     SimpleCodeSnippetContext _simpleCodeSnippetContext = new SimpleCodeSnippetContext(refReg);
@@ -59,6 +60,7 @@ public class SrcValueObjectConverter implements CodeSnippet {
     this.ctx.requiresImport("org.fuin.objects4j.vo.AbstractValueObjectConverter");
     if (implementsSingleEntityIdFactory) {
       this.ctx.requiresImport("org.fuin.ddd4j.ddd.EntityId");
+      this.ctx.requiresImport("org.fuin.ddd4j.ddd.SingleEntityIdFactory");
     }
     String _uniqueName = AbstractElementExtensions.uniqueName(vo);
     this.ctx.requiresReference(_uniqueName);

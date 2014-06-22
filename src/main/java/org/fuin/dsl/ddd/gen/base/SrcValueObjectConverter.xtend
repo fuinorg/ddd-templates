@@ -46,7 +46,7 @@ class SrcValueObjectConverter implements CodeSnippet {
 		this.copyrightHeader = copyrightHeader
 		this.pkg = pkg
 		this.voTypeName = vo.name
-		this.targetTypeName = targetTypeName
+		this.targetTypeName = targetType.name
 		this.implementsSingleEntityIdFactory = implementsSingleEntityIdFactory
 		this.className = voTypeName + "Converter"
 
@@ -58,6 +58,7 @@ class SrcValueObjectConverter implements CodeSnippet {
 		ctx.requiresImport("org.fuin.objects4j.vo.AbstractValueObjectConverter")
 		if (implementsSingleEntityIdFactory) {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityId")
+			ctx.requiresImport("org.fuin.ddd4j.ddd.SingleEntityIdFactory")
 		}
 		ctx.requiresReference(vo.uniqueName)
 		ctx.requiresReference(targetType.uniqueName)

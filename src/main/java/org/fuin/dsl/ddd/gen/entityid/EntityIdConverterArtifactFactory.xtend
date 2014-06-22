@@ -24,7 +24,8 @@ class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
 		}
 		val className = entityId.getName() + "Converter"
 		val Namespace ns = entityId.eContainer() as Namespace;
-		val fqn = ns.asPackage + "." + className
+		val pkg = ns.asPackage
+		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 		
 		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
@@ -39,7 +40,7 @@ class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
 		return new GeneratedArtifact(
 			artifactName,
 			filename,
-			new SrcValueObjectConverter(refReg, copyrightHeader, ns.asPackage, entityId, entityId.base, true).
+			new SrcValueObjectConverter(refReg, copyrightHeader, pkg, entityId, entityId.base, true).
 				toString().getBytes("UTF-8")			
 		);
 	}

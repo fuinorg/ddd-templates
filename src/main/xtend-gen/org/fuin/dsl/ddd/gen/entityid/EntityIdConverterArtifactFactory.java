@@ -32,23 +32,21 @@ public class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
       final String className = (_name + "Converter");
       EObject _eContainer = entityId.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
-      String _asPackage = this.asPackage(ns);
-      String _plus = (_asPackage + ".");
-      final String fqn = (_plus + className);
+      final String pkg = this.asPackage(ns);
+      final String fqn = ((pkg + ".") + className);
       String _replace = fqn.replace(".", "/");
       final String filename = (_replace + ".java");
       final CodeReferenceRegistry refReg = Utils.getCodeReferenceRegistry(context);
       String _uniqueName = AbstractElementExtensions.uniqueName(entityId);
-      String _plus_1 = (_uniqueName + "Converter");
-      refReg.putReference(_plus_1, fqn);
+      String _plus = (_uniqueName + "Converter");
+      refReg.putReference(_plus, fqn);
       if (preparationRun) {
         return null;
       }
       String _artifactName = this.getArtifactName();
       String _copyrightHeader = this.getCopyrightHeader();
-      String _asPackage_1 = this.asPackage(ns);
       ExternalType _base_1 = entityId.getBase();
-      SrcValueObjectConverter _srcValueObjectConverter = new SrcValueObjectConverter(refReg, _copyrightHeader, _asPackage_1, entityId, _base_1, true);
+      SrcValueObjectConverter _srcValueObjectConverter = new SrcValueObjectConverter(refReg, _copyrightHeader, pkg, entityId, _base_1, true);
       String _string = _srcValueObjectConverter.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);

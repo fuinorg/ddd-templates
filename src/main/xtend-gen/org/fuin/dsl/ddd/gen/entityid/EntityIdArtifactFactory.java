@@ -64,7 +64,7 @@ public class EntityIdArtifactFactory extends AbstractSource<EntityId> {
   
   public void addImports(final CodeSnippetContext ctx) {
     ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter");
-    ctx.requiresImport("org.fuin.ddd4j.ddd.AggregateRootId");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EntityId");
     ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType");
     ctx.requiresImport("org.fuin.ddd4j.ddd.StringBasedEntityType");
     ctx.requiresImport("org.fuin.objects4j.common.Immutable");
