@@ -13,12 +13,16 @@ import org.junit.Test;
 public class SrcImportsTest {
   @Test
   public void test() {
-    final Set<String> imports = Collections.<String>unmodifiableSet(Sets.<String>newHashSet("a.b.C", "c.d.e.F", "java.lang.String", "java.lang.Integer"));
+    final Set<String> imports = Collections.<String>unmodifiableSet(Sets.<String>newHashSet("a.b.C", "c.d.e.F", "java.lang.String", "java.lang.Integer", "java.lang.annotation.Annotation", "java.lang.reflect.*"));
     final SrcImports testee = new SrcImports("a.b", imports);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("import c.d.e.F;");
+    _builder.newLine();
+    _builder.append("import java.lang.annotation.Annotation;");
+    _builder.newLine();
+    _builder.append("import java.lang.reflect.*;");
     _builder.newLine();
     _assertThat.isEqualTo(_builder.toString());
   }

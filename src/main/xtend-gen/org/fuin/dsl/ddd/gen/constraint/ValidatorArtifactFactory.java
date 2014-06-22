@@ -56,7 +56,7 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
         return null;
       }
       final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
-      this.addImports(ctx);
+      this.addImports(ctx, constraint);
       this.addReferences(ctx, constraint);
       String _artifactName = this.getArtifactName();
       String _create = this.create(ctx, constraint, pkg, className);
@@ -68,11 +68,14 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
     }
   }
   
-  public void addImports(final CodeSnippetContext ctx) {
-    ctx.requiresImport("javax.enterprise.context.ApplicationScoped");
-    ctx.requiresImport("javax.validation.Validator");
+  public void addImports(final CodeSnippetContext ctx, final Constraint constraint) {
     ctx.requiresImport("javax.validation.ConstraintValidator");
     ctx.requiresImport("javax.validation.ConstraintValidatorContext");
+    org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception = constraint.getException();
+    boolean _notEquals = (!Objects.equal(_exception, null));
+    if (_notEquals) {
+      ctx.requiresImport("javax.validation.Validator");
+    }
   }
   
   public void addReferences(final CodeSnippetContext ctx, final Constraint constraint) {

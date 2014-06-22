@@ -78,7 +78,6 @@ public class EventArtifactFactory extends AbstractSource<Event> {
   }
   
   public void addImports(final CodeSnippetContext ctx) {
-    ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter");
     ctx.requiresImport("org.fuin.objects4j.vo.KeyValue");
     ctx.requiresImport("org.fuin.ddd4j.ddd.EventType");
     ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractDomainEvent");

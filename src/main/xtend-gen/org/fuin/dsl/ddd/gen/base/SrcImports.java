@@ -23,8 +23,8 @@ public class SrcImports implements CodeSnippet {
     for (final String imp : importSet) {
       boolean _and = false;
       boolean _and_1 = false;
-      boolean _startsWith = imp.startsWith("java.lang.");
-      boolean _not = (!_startsWith);
+      boolean _javaLang = this.javaLang(imp);
+      boolean _not = (!_javaLang);
       if (!_not) {
         _and_1 = false;
       } else {
@@ -46,6 +46,19 @@ public class SrcImports implements CodeSnippet {
       }
     }
     Collections.<String>sort(this.imports);
+  }
+  
+  public boolean javaLang(final String imp) {
+    boolean _startsWith = imp.startsWith("java.lang.");
+    boolean _not = (!_startsWith);
+    if (_not) {
+      return false;
+    }
+    final int p = imp.indexOf(".", 10);
+    if ((p == (-1))) {
+      return true;
+    }
+    return false;
   }
   
   public String toString() {

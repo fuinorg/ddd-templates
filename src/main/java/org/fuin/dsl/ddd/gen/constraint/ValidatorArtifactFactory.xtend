@@ -46,18 +46,19 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 		}
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports
+		ctx.addImports(constraint)
 		ctx.addReferences(constraint)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, constraint, pkg, className).toString().getBytes("UTF-8"));
 	}
 
-	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("javax.enterprise.context.ApplicationScoped")
-		ctx.requiresImport("javax.validation.Validator")
+	def addImports(CodeSnippetContext ctx, Constraint constraint) {
 		ctx.requiresImport("javax.validation.ConstraintValidator")
 		ctx.requiresImport("javax.validation.ConstraintValidatorContext")
+		if (constraint.exception != null) {
+			ctx.requiresImport("javax.validation.Validator")
+		}
 	}
 
 	def addReferences(CodeSnippetContext ctx, Constraint constraint) {
