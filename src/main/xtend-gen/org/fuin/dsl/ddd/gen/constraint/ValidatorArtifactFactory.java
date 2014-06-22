@@ -11,7 +11,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintTarget;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
@@ -84,19 +83,12 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
     ConstraintTarget _target = constraint.getTarget();
     String _uniqueName_1 = this.uniqueName(_target);
     ctx.requiresReference(_uniqueName_1);
-    ConstraintTarget _target_1 = constraint.getTarget();
-    final List<Variable> variables = ConstraintTargetExtensions.getVariables(_target_1);
-    for (final Variable variable : variables) {
-      Type _type = variable.getType();
-      String _uniqueName_2 = AbstractElementExtensions.uniqueName(_type);
-      ctx.requiresReference(_uniqueName_2);
-    }
     org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception = constraint.getException();
     boolean _notEquals = (!Objects.equal(_exception, null));
     if (_notEquals) {
       org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception _exception_1 = constraint.getException();
-      String _uniqueName_3 = AbstractElementExtensions.uniqueName(_exception_1);
-      ctx.requiresReference(_uniqueName_3);
+      String _uniqueName_2 = AbstractElementExtensions.uniqueName(_exception_1);
+      ctx.requiresReference(_uniqueName_2);
     }
   }
   

@@ -62,12 +62,8 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 	}
 
 	def addReferences(CodeSnippetContext ctx, Constraint constraint) {
-		ctx.requiresReference(constraint.uniqueName) // Annotation
-		ctx.requiresReference(constraint.target.uniqueName) // Type
-		val variables = constraint.target.variables
-		for (variable : variables) {
-			ctx.requiresReference(variable.type.uniqueName)
-		}
+		ctx.requiresReference(constraint.uniqueName) 
+		ctx.requiresReference(constraint.target.uniqueName) 
 		if (constraint.exception != null) {
 			ctx.requiresReference(constraint.exception.uniqueName)
 		}
