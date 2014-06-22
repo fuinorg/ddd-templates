@@ -69,13 +69,12 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 		ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.StreamId")
 		ctx.requiresImport("java.util.Map")
 		ctx.requiresImport("java.util.HashMap")		
-		ctx.requiresImport("")
-		ctx.requiresImport("")
 	}
 
 	def addReferences(CodeSnippetContext ctx, List<AggregateId> aggregateIds) {
 		for (aggregateId : aggregateIds) {
 			ctx.requiresReference(aggregateId.uniqueName)
+			ctx.requiresReference(aggregateId.uniqueName + "StreamFactory")
 		}
 	}
 

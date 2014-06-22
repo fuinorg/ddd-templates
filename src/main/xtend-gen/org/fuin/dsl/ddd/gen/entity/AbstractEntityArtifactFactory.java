@@ -82,6 +82,13 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
     EntityId _idType = entity.getIdType();
     String _uniqueName = AbstractElementExtensions.uniqueName(_idType);
     ctx.requiresReference(_uniqueName);
+    Aggregate _root = entity.getRoot();
+    String _uniqueName_1 = AbstractElementExtensions.uniqueName(_root);
+    ctx.requiresReference(_uniqueName_1);
+    Aggregate _root_1 = entity.getRoot();
+    AggregateId _idType_1 = _root_1.getIdType();
+    String _uniqueName_2 = AbstractElementExtensions.uniqueName(_idType_1);
+    ctx.requiresReference(_uniqueName_2);
   }
   
   public String create(final SimpleCodeSnippetContext ctx, final Entity entity, final String pkg, final String className) {

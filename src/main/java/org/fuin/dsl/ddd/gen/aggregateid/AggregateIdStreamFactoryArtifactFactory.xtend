@@ -50,9 +50,14 @@ class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<AggregateId
 	}
 
 	def addImports(CodeSnippetContext ctx) {
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.IdStreamFactory")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.Stream")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.StreamId")
 	}
 
 	def addReferences(CodeSnippetContext ctx, AggregateId entityId) {
+		ctx.requiresReference(entityId.uniqueName)
+		ctx.requiresReference(entityId.entity.uniqueName + "Stream")
 	}
 
 	def create(SimpleCodeSnippetContext ctx, AggregateId id, String pkg, String className) {

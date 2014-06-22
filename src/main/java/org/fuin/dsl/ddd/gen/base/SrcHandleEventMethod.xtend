@@ -25,6 +25,7 @@ class SrcHandleEventMethod implements CodeSnippet {
 		this.name = event.name
 		ctx.requiresReference(event.uniqueName)
 		ctx.requiresImport("javax.validation.constraints.NotNull")
+		ctx.requiresImport("org.fuin.ddd4j.dddEventHandler")
 	}
 
 	override toString() {

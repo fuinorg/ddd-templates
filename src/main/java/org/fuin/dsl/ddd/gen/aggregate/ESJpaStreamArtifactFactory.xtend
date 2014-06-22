@@ -52,6 +52,12 @@ class ESJpaStreamArtifactFactory extends AbstractSource<Aggregate> implements Ar
 		ctx.requiresImport("javax.persistence.Entity")
 		ctx.requiresImport("javax.persistence.Id")
 		ctx.requiresImport("javax.persistence.Table")
+		ctx.requiresImport("javax.persistence.Column")
+		ctx.requiresImport("javax.validation.constraints.NotNull")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.Stream")
+		ctx.requiresImport("org.fuin.objects4j.common.Contract")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.StreamEvent")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.EventEntry")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {

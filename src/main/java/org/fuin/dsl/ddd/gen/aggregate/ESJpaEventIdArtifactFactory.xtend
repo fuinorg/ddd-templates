@@ -49,10 +49,14 @@ class ESJpaEventIdArtifactFactory extends AbstractSource<Aggregate> implements A
 
 	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("java.io.Serializable")
+		ctx.requiresImport("org.fuin.objects4j.common.Contract")
+		ctx.requiresImport("javax.validation.constraints.NotNull")
+		ctx.requiresImport("org.fuin.objects4j.common.NeverNull")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
-		ctx.requiresReference(aggregate.idType.uniqueAbstractName)
+		ctx.requiresReference(aggregate.idType.uniqueName)
+		
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {

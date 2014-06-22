@@ -49,11 +49,21 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 	}
 
 	def addImports(CodeSnippetContext ctx) {
+		ctx.requiresImport("javax.persistence.Column")
+		ctx.requiresImport("javax.persistence.Entity")
+		ctx.requiresImport("javax.persistence.Id")
+		ctx.requiresImport("javax.persistence.IdClass")
+		ctx.requiresImport("javax.persistence.Table")
+		ctx.requiresImport("javax.validation.constraints.NotNull")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.EventEntry")
 		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.StreamEvent")
+		ctx.requiresImport("org.fuin.objects4j.common.Contract")
+		
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
-		ctx.requiresReference(aggregate.idType.uniqueAbstractName)
+		ctx.requiresReference(aggregate.idType.uniqueName)
+		ctx.requiresReference(aggregate.uniqueName + "Id")
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {
@@ -68,15 +78,15 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 			
 			    @Id
 			    @NotNull
-			    @Column(name = "«aggregate.name.toSqlUpper»_ID")
-			    private String «aggregate.name.toFirstLower»Id;
+			    @Column(name = "«aggregate.idType.name.toSqlUpper»")
+			    private String «aggregate.idType.name.toFirstLower»;
 			
 			    @Id
 			    @NotNull
 			    @Column(name = "EVENT_NUMBER")
 			    private Integer eventNumber;
 			
-			    private transient «aggregate.name»Id id;
+			    private transient «aggregate.idType.name» id;
 			
 			    /**
 			     * Protected default constructor only required for JPA.
@@ -88,21 +98,21 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 			    /**
 			     * Constructor with all mandatory data.
 			     * 
-			     * @param «aggregate.name.toFirstLower»Id
+			     * @param «aggregate.idType.name.toFirstLower»
 			     *            Unique aggregate identifier.
 			     * @param version
 			     *            Version.
 			     * @param eventEntry
 			     *            Event entry to connect.
 			     */
-			    public «aggregate.name»Event(@NotNull final «aggregate.name»Id «aggregate.name.toFirstLower»Id,
+			    public «aggregate.name»Event(@NotNull final «aggregate.idType.name» «aggregate.idType.name.toFirstLower»,
 			     @NotNull final Integer version, final EventEntry eventEntry) {
 					super(eventEntry);
-					Contract.requireArgNotNull("«aggregate.name.toFirstLower»Id", «aggregate.name.toFirstLower»Id);
+					Contract.requireArgNotNull("«aggregate.idType.name.toFirstLower»", «aggregate.idType.name.toFirstLower»);
 					Contract.requireArgNotNull("version", version);
-					this.«aggregate.name.toFirstLower»Id = «aggregate.name.toFirstLower»Id.asString();
+					this.«aggregate.idType.name.toFirstLower» = «aggregate.idType.name.toFirstLower».asString();
 					this.eventNumber = version;
-					this.id = «aggregate.name.toFirstLower»Id;
+					this.id = «aggregate.idType.name.toFirstLower»;
 			  }
 			
 			    /**
@@ -110,8 +120,8 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 			     * 
 			     * @return Aggregate identifier.
 			     */
-			    public final String get«aggregate.name»Id() {
-					return «aggregate.name.toFirstLower»Id;
+			    public final String get«aggregate.idType.name»() {
+					return «aggregate.idType.name.toFirstLower»;
 			  }
 			
 			    /**
@@ -119,9 +129,9 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 			     * 
 			     * @return Name converted into a «aggregate.name.toFirstLower» ID.
 			     */
-			    public final «aggregate.name»Id getId() {
+			    public final «aggregate.idType.name» getId() {
 					if (id == null) {
-			  id = «aggregate.name»Id.valueOf(«aggregate.name.toFirstLower»Id);
+			  id = «aggregate.idType.name».valueOf(«aggregate.idType.name.toFirstLower»);
 					}
 					return id;
 			  }
@@ -140,7 +150,7 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 			    public final int hashCode() {
 					final int prime = 31;
 					int result = 1;
-					result = prime * result	+ ((«aggregate.name.toFirstLower»Id == null) ? 0 : «aggregate.name.toFirstLower»Id.hashCode());
+					result = prime * result	+ ((«aggregate.idType.name.toFirstLower» == null) ? 0 : «aggregate.idType.name.toFirstLower».hashCode());
 					result = prime * result	+ ((eventNumber == null) ? 0 : eventNumber.hashCode());
 					return result;
 			  }
@@ -154,10 +164,10 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 					if (getClass() != obj.getClass())
 			  return false;
 					«aggregate.name»Event other = («aggregate.name»Event) obj;
-					if («aggregate.name.toFirstLower»Id == null) {
-			  if (other.«aggregate.name.toFirstLower»Id != null)
+					if («aggregate.idType.name.toFirstLower» == null) {
+			  if (other.«aggregate.idType.name.toFirstLower» != null)
 				return false;
-					} else if (!«aggregate.name.toFirstLower»Id.equals(other.«aggregate.name.toFirstLower»Id))
+					} else if (!«aggregate.idType.name.toFirstLower».equals(other.«aggregate.idType.name.toFirstLower»))
 			  return false;
 					if (eventNumber == null) {
 			  if (other.eventNumber != null)
@@ -171,7 +181,7 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 			
 			    @Override
 			    public final String toString() {
-					return «aggregate.name.toFirstLower»Id + "-" + eventNumber;
+					return «aggregate.idType.name.toFirstLower» + "-" + eventNumber;
 			  }
 			
 			}

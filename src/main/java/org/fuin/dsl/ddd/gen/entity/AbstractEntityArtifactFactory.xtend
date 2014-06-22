@@ -68,6 +68,8 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
 	def addReferences(CodeSnippetContext ctx, Entity entity) {
 		ctx.requiresReference(entity.idType.uniqueName)
+		ctx.requiresReference(entity.root.uniqueName)
+		ctx.requiresReference(entity.root.idType.uniqueName)
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className) {

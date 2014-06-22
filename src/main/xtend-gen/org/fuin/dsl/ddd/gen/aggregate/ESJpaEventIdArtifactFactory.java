@@ -58,12 +58,15 @@ public class ESJpaEventIdArtifactFactory extends AbstractSource<Aggregate> imple
   
   public void addImports(final CodeSnippetContext ctx) {
     ctx.requiresImport("java.io.Serializable");
+    ctx.requiresImport("org.fuin.objects4j.common.Contract");
+    ctx.requiresImport("javax.validation.constraints.NotNull");
+    ctx.requiresImport("org.fuin.objects4j.common.NeverNull");
   }
   
   public void addReferences(final CodeSnippetContext ctx, final Aggregate aggregate) {
     AggregateId _idType = aggregate.getIdType();
-    String _uniqueAbstractName = AbstractElementExtensions.uniqueAbstractName(_idType);
-    ctx.requiresReference(_uniqueAbstractName);
+    String _uniqueName = AbstractElementExtensions.uniqueName(_idType);
+    ctx.requiresReference(_uniqueName);
   }
   
   public String create(final SimpleCodeSnippetContext ctx, final Aggregate aggregate, final String pkg, final String className) {

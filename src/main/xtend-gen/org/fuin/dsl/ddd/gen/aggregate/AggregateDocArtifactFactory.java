@@ -2,7 +2,6 @@ package org.fuin.dsl.ddd.gen.aggregate;
 
 import java.util.Map;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
@@ -10,6 +9,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractSource;
+import org.fuin.dsl.ddd.gen.extensions.EObjectExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
@@ -22,16 +22,14 @@ public class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
   
   public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
     try {
-      EObject _eContainer = aggregate.eContainer();
-      final Namespace ns = ((Namespace) _eContainer);
-      String _asPackage = this.asPackage(ns);
-      String _plus = (_asPackage + ".");
+      final Namespace ns = EObjectExtensions.getNamespace(aggregate);
+      final String pkg = this.asPackage(ns);
       String _name = aggregate.getName();
-      String _plus_1 = (_plus + _name);
-      String _replace = _plus_1.replace(".", "/");
+      String _plus = ((pkg + ".") + _name);
+      String _replace = _plus.replace(".", "/");
       final String filename = (_replace + ".html");
       String _artifactName = this.getArtifactName();
-      CharSequence _create = this.create(aggregate, ns);
+      CharSequence _create = this.create(aggregate, pkg);
       String _string = _create.toString();
       byte[] _bytes = _string.getBytes("UTF-8");
       return new GeneratedArtifact(_artifactName, filename, _bytes);
@@ -40,7 +38,7 @@ public class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
     }
   }
   
-  public CharSequence create(final Aggregate aggregate, final Namespace ns) {
+  public CharSequence create(final Aggregate aggregate, final String pkg) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
     _builder.newLine();
@@ -51,8 +49,7 @@ public class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("<title>");
-    String _asPackage = this.asPackage(ns);
-    _builder.append(_asPackage, "\t\t");
+    _builder.append(pkg, "\t\t");
     _builder.append(".");
     String _name = aggregate.getName();
     _builder.append(_name, "\t\t");
@@ -65,8 +62,7 @@ public class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
     _builder.append("<body>");
     _builder.newLine();
     _builder.append("\t\t");
-    String _asPackage_1 = this.asPackage(ns);
-    _builder.append(_asPackage_1, "\t\t");
+    _builder.append(pkg, "\t\t");
     _builder.append(".");
     String _name_1 = aggregate.getName();
     _builder.append(_name_1, "\t\t");

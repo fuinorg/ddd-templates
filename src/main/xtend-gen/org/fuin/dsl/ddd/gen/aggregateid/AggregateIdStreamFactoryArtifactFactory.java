@@ -60,12 +60,19 @@ public class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<Aggr
     }
   }
   
-  public Object addImports(final CodeSnippetContext ctx) {
-    return null;
+  public void addImports(final CodeSnippetContext ctx) {
+    ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.IdStreamFactory");
+    ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.Stream");
+    ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.StreamId");
   }
   
-  public Object addReferences(final CodeSnippetContext ctx, final AggregateId entityId) {
-    return null;
+  public void addReferences(final CodeSnippetContext ctx, final AggregateId entityId) {
+    String _uniqueName = AbstractElementExtensions.uniqueName(entityId);
+    ctx.requiresReference(_uniqueName);
+    Aggregate _entity = entityId.getEntity();
+    String _uniqueName_1 = AbstractElementExtensions.uniqueName(_entity);
+    String _plus = (_uniqueName_1 + "Stream");
+    ctx.requiresReference(_plus);
   }
   
   public String create(final SimpleCodeSnippetContext ctx, final AggregateId id, final String pkg, final String className) {

@@ -45,6 +45,7 @@ public class SrcChildEntityLocatorMethod implements CodeSnippet {
     String _firstLower = StringExtensions.toFirstLower(_name);
     Variable _createVariable = DomainDrivenDesignDslFactoryExtensions.createVariable(DomainDrivenDesignDslFactory.eINSTANCE, _idType, _firstLower, false);
     this.variables = Collections.<Variable>unmodifiableList(Lists.<Variable>newArrayList(_createVariable));
+    ctx.requiresImport("org.fuin.ddd4j.ddd.ChildEntityLocator");
     String _uniqueName = AbstractElementExtensions.uniqueName(entity);
     ctx.requiresReference(_uniqueName);
     AbstractEntityId _idType_2 = entity.getIdType();

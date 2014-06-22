@@ -48,6 +48,11 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 	}
 
 	def addImports(CodeSnippetContext ctx) {
+		ctx.requiresImport("org.fuin.ddd4j.ddd.DeserializerRegistry")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType")
+		ctx.requiresImport("org.fuin.ddd4j.ddd.SerializerRegistry")
+		ctx.requiresImport("org.fuin.ddd4j.esrepo.EventStoreRepository")
+		ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.EventStore")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {

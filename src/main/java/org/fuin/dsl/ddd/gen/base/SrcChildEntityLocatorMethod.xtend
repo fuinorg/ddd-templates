@@ -32,6 +32,7 @@ class SrcChildEntityLocatorMethod implements CodeSnippet {
 		this.variables = #[
 			DomainDrivenDesignDslFactory.eINSTANCE.createVariable(entity.idType, entity.idType.name.toFirstLower, false)]
 
+		ctx.requiresImport("org.fuin.ddd4j.ddd.ChildEntityLocator")
 		ctx.requiresReference(entity.uniqueName)
 		ctx.requiresReference(entity.idType.uniqueName)
 	}

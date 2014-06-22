@@ -82,14 +82,17 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.StreamId");
     ctx.requiresImport("java.util.Map");
     ctx.requiresImport("java.util.HashMap");
-    ctx.requiresImport("");
-    ctx.requiresImport("");
   }
   
   public void addReferences(final CodeSnippetContext ctx, final List<AggregateId> aggregateIds) {
     for (final AggregateId aggregateId : aggregateIds) {
-      String _uniqueName = AbstractElementExtensions.uniqueName(aggregateId);
-      ctx.requiresReference(_uniqueName);
+      {
+        String _uniqueName = AbstractElementExtensions.uniqueName(aggregateId);
+        ctx.requiresReference(_uniqueName);
+        String _uniqueName_1 = AbstractElementExtensions.uniqueName(aggregateId);
+        String _plus = (_uniqueName_1 + "StreamFactory");
+        ctx.requiresReference(_plus);
+      }
     }
   }
   

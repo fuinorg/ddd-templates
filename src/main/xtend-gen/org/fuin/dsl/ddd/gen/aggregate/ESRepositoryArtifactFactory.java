@@ -56,8 +56,12 @@ public class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> imple
     }
   }
   
-  public Object addImports(final CodeSnippetContext ctx) {
-    return null;
+  public void addImports(final CodeSnippetContext ctx) {
+    ctx.requiresImport("org.fuin.ddd4j.ddd.DeserializerRegistry");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType");
+    ctx.requiresImport("org.fuin.ddd4j.ddd.SerializerRegistry");
+    ctx.requiresImport("org.fuin.ddd4j.esrepo.EventStoreRepository");
+    ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.EventStore");
   }
   
   public void addReferences(final CodeSnippetContext ctx, final Aggregate aggregate) {
