@@ -32,7 +32,7 @@ public class ValidatorArtifactFactory extends AbstractSource<Constraint> {
     return Constraint.class;
   }
   
-  public GeneratedArtifact create(final Constraint constraint, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final Constraint constraint, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       ConstraintTarget _target = constraint.getTarget();
       boolean _equals = Objects.equal(_target, null);

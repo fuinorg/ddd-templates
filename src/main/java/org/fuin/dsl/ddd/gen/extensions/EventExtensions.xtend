@@ -1,6 +1,5 @@
 package org.fuin.dsl.ddd.gen.extensions
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 
 import static org.fuin.dsl.ddd.gen.base.Utils.*

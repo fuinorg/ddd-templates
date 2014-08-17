@@ -53,7 +53,7 @@ public class Utils {
    * 
    * @return Registry.
    */
-  public static CodeReferenceRegistry getCodeReferenceRegistry(final Map<String,Object> map) {
+  public static CodeReferenceRegistry getCodeReferenceRegistry(final Map<String, Object> map) {
     Object _get = map.get(Utils.CODE_REFERENCE_REGISTRY_KEY);
     CodeReferenceRegistry reg = ((CodeReferenceRegistry) _get);
     boolean _equals = Objects.equal(reg, null);

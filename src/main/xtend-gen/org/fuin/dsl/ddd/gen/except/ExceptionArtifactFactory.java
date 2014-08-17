@@ -31,7 +31,7 @@ public class ExceptionArtifactFactory extends AbstractSource<org.fuin.dsl.ddd.do
     return org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception.class;
   }
   
-  public GeneratedArtifact create(final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception ex, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = ex.getName();
       final Namespace ns = EObjectExtensions.getNamespace(ex);

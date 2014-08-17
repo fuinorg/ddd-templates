@@ -33,7 +33,7 @@ public class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
     return AggregateId.class;
   }
   
-  public GeneratedArtifact create(final AggregateId aggregateId, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final AggregateId aggregateId, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = aggregateId.getName();
       EObject _eContainer = aggregateId.eContainer();

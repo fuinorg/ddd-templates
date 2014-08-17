@@ -21,7 +21,7 @@ public class ValueObjectConverterArtifactFactory extends AbstractSource<ValueObj
     return ValueObject.class;
   }
   
-  public GeneratedArtifact create(final ValueObject valueObject, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final ValueObject valueObject, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       ExternalType _base = valueObject.getBase();
       boolean _equals = Objects.equal(_base, null);

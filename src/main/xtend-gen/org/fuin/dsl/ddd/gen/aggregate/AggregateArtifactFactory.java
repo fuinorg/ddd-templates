@@ -35,7 +35,7 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
     return Aggregate.class;
   }
   
-  public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final Aggregate aggregate, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = aggregate.getName();
       EObject _eContainer = aggregate.eContainer();

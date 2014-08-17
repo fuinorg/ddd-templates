@@ -34,7 +34,7 @@ public class EnumArtifactFactory extends AbstractSource<EnumObject> {
     return EnumObject.class;
   }
   
-  public GeneratedArtifact create(final EnumObject enu, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final EnumObject enu, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = enu.getName();
       final Namespace ns = EObjectExtensions.getNamespace(enu);

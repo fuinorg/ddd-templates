@@ -20,7 +20,7 @@ public class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
     return Aggregate.class;
   }
   
-  public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final Aggregate aggregate, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final Namespace ns = EObjectExtensions.getNamespace(aggregate);
       final String pkg = this.asPackage(ns);

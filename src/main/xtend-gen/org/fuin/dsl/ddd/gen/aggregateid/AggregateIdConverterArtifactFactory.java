@@ -21,7 +21,7 @@ public class AggregateIdConverterArtifactFactory extends AbstractSource<Aggregat
     return AggregateId.class;
   }
   
-  public GeneratedArtifact create(final AggregateId aggregateId, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final AggregateId aggregateId, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       ExternalType _base = aggregateId.getBase();
       boolean _equals = Objects.equal(_base, null);

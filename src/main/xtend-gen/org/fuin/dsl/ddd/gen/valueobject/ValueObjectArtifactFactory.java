@@ -34,7 +34,7 @@ public class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
     return ValueObject.class;
   }
   
-  public GeneratedArtifact create(final ValueObject valueObject, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final ValueObject valueObject, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = valueObject.getName();
       final Namespace ns = EObjectExtensions.getNamespace(valueObject);

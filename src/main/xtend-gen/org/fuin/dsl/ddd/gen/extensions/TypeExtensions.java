@@ -59,49 +59,49 @@ public class TypeExtensions {
     String name = type.getName();
     boolean _matched = false;
     if (!_matched) {
-      if (Objects.equal(name,"Byte")) {
+      if (Objects.equal(name, "Byte")) {
         _matched=true;
         name = "byte";
       }
     }
     if (!_matched) {
-      if (Objects.equal(name,"Short")) {
+      if (Objects.equal(name, "Short")) {
         _matched=true;
         name = "short";
       }
     }
     if (!_matched) {
-      if (Objects.equal(name,"Integer")) {
+      if (Objects.equal(name, "Integer")) {
         _matched=true;
         name = "int";
       }
     }
     if (!_matched) {
-      if (Objects.equal(name,"Long")) {
+      if (Objects.equal(name, "Long")) {
         _matched=true;
         name = "long";
       }
     }
     if (!_matched) {
-      if (Objects.equal(name,"Float")) {
+      if (Objects.equal(name, "Float")) {
         _matched=true;
         name = "float";
       }
     }
     if (!_matched) {
-      if (Objects.equal(name,"Double")) {
+      if (Objects.equal(name, "Double")) {
         _matched=true;
         name = "double";
       }
     }
     if (!_matched) {
-      if (Objects.equal(name,"Boolean")) {
+      if (Objects.equal(name, "Boolean")) {
         _matched=true;
         name = "boolean";
       }
     }
     if (!_matched) {
-      if (Objects.equal(name,"Character")) {
+      if (Objects.equal(name, "Character")) {
         _matched=true;
         name = "char";
       }

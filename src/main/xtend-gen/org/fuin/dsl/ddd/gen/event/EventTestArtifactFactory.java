@@ -38,7 +38,7 @@ public class EventTestArtifactFactory extends AbstractSource<Event> {
     return Event.class;
   }
   
-  public GeneratedArtifact create(final Event event, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final Event event, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final EObject method = event.eContainer();
       final EObject container = method.eContainer();

@@ -86,7 +86,7 @@ public class CollectionExtensions {
    * 
    * @return Original or empty map.
    */
-  public static <K extends Object, V extends Object> Map<K,V> nullSafe(final Map<K,V> map) {
+  public static <K extends Object, V extends Object> Map<K, V> nullSafe(final Map<K, V> map) {
     boolean _equals = Objects.equal(map, null);
     if (_equals) {
       return Collections.<K, V>emptyMap();

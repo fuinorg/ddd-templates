@@ -37,9 +37,9 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     return false;
   }
   
-  public GeneratedArtifact create(final ResourceSet resourceSet, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final ResourceSet resourceSet, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
-      final Map<String,List<Event>> contextEvents = this.contextEventMap(resourceSet);
+      final Map<String, List<Event>> contextEvents = this.contextEventMap(resourceSet);
       Set<String> _keySet = contextEvents.keySet();
       final Iterator<String> ctxIt = _keySet.iterator();
       boolean _hasNext = ctxIt.hasNext();
@@ -98,8 +98,8 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     }
   }
   
-  public Map<String,List<Event>> contextEventMap(final ResourceSet resourceSet) {
-    final Map<String,List<Event>> contextEvents = new HashMap<String, List<Event>>();
+  public Map<String, List<Event>> contextEventMap(final ResourceSet resourceSet) {
+    final Map<String, List<Event>> contextEvents = new HashMap<String, List<Event>>();
     TreeIterator<Notifier> _allContents = resourceSet.getAllContents();
     final Iterator<Event> iter = Iterators.<Event>filter(_allContents, Event.class);
     boolean _hasNext = iter.hasNext();

@@ -41,7 +41,7 @@ public class EntityArtifactFactory extends AbstractSource<Entity> {
     return Entity.class;
   }
   
-  public GeneratedArtifact create(final Entity entity, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final Entity entity, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = entity.getName();
       EObject _eContainer = entity.eContainer();

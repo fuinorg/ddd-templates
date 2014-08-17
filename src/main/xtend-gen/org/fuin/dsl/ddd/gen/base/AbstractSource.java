@@ -13,12 +13,12 @@ import org.fuin.srcgen4j.commons.ArtifactFactoryConfig;
 public abstract class AbstractSource<T extends Object> implements ArtifactFactory<T> {
   private String artifactName;
   
-  private Map<String,String> varMap;
+  private Map<String, String> varMap;
   
   public void init(final ArtifactFactoryConfig config) {
     String _artifact = config.getArtifact();
     this.artifactName = _artifact;
-    Map<String,String> _varMap = config.getVarMap();
+    Map<String, String> _varMap = config.getVarMap();
     this.varMap = _varMap;
   }
   
@@ -31,12 +31,12 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   }
   
   private String getBasePkg() {
-    Map<String,String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
+    Map<String, String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
     return _nullSafe.get("basepkg");
   }
   
   private String getPkg() {
-    Map<String,String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
+    Map<String, String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
     return _nullSafe.get("pkg");
   }
   
@@ -50,7 +50,7 @@ public abstract class AbstractSource<T extends Object> implements ArtifactFactor
   }
   
   public String getCopyrightHeader() {
-    Map<String,String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
+    Map<String, String> _nullSafe = CollectionExtensions.<String, String>nullSafe(this.varMap);
     final String header = _nullSafe.get("copyrightHeader");
     boolean _equals = Objects.equal(header, null);
     if (_equals) {

@@ -25,7 +25,7 @@ public class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<Aggr
     return AggregateId.class;
   }
   
-  public GeneratedArtifact create(final AggregateId aggregateId, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final AggregateId aggregateId, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       Aggregate _entity = aggregateId.getEntity();
       boolean _equals = Objects.equal(_entity, null);

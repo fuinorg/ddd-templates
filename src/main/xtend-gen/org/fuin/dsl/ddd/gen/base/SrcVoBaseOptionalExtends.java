@@ -32,25 +32,25 @@ public class SrcVoBaseOptionalExtends implements CodeSnippet {
       final String baseName = this.baseName;
       boolean _matched = false;
       if (!_matched) {
-        if (Objects.equal(baseName,"String")) {
+        if (Objects.equal(baseName, "String")) {
           _matched=true;
           ctx.requiresImport("org.fuin.objects4j.vo.AbstractStringValueObject");
         }
       }
       if (!_matched) {
-        if (Objects.equal(baseName,"UUID")) {
+        if (Objects.equal(baseName, "UUID")) {
           _matched=true;
           ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractUUIDVO");
         }
       }
       if (!_matched) {
-        if (Objects.equal(baseName,"Integer")) {
+        if (Objects.equal(baseName, "Integer")) {
           _matched=true;
           ctx.requiresImport("org.fuin.objects4j.vo.AbstractIntegerValueObject");
         }
       }
       if (!_matched) {
-        if (Objects.equal(baseName,"Long")) {
+        if (Objects.equal(baseName, "Long")) {
           _matched=true;
           ctx.requiresImport("org.fuin.objects4j.vo.AbstractLongValueObject");
         }
@@ -66,25 +66,25 @@ public class SrcVoBaseOptionalExtends implements CodeSnippet {
     final String baseName = this.baseName;
     boolean _matched = false;
     if (!_matched) {
-      if (Objects.equal(baseName,"String")) {
+      if (Objects.equal(baseName, "String")) {
         _matched=true;
         return "extends AbstractStringValueObject ";
       }
     }
     if (!_matched) {
-      if (Objects.equal(baseName,"UUID")) {
+      if (Objects.equal(baseName, "UUID")) {
         _matched=true;
         return "extends AbstractUUIDVO ";
       }
     }
     if (!_matched) {
-      if (Objects.equal(baseName,"Integer")) {
+      if (Objects.equal(baseName, "Integer")) {
         _matched=true;
         return "extends AbstractIntegerValueObject ";
       }
     }
     if (!_matched) {
-      if (Objects.equal(baseName,"Long")) {
+      if (Objects.equal(baseName, "Long")) {
         _matched=true;
         return "extends AbstractLongValueObject ";
       }

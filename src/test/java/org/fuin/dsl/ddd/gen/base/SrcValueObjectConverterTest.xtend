@@ -5,12 +5,7 @@ import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
-import org.fuin.srcgen4j.core.emf.CodeSnippetContext
-import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -25,6 +20,10 @@ class SrcValueObjectConverterTest {
 
 	@Test
 	def void testNullObjName() {
+		
+		// TODO Implement!
+		
+		
 	}	
 	
 }

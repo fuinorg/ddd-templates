@@ -33,7 +33,7 @@ public class EntityIdArtifactFactory extends AbstractSource<EntityId> {
     return EntityId.class;
   }
   
-  public GeneratedArtifact create(final EntityId entityId, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final EntityId entityId, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       final String className = entityId.getName();
       final Namespace ns = EObjectExtensions.getNamespace(entityId);

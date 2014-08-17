@@ -37,9 +37,9 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     return false;
   }
   
-  public GeneratedArtifact create(final ResourceSet resourceSet, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final ResourceSet resourceSet, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
-      final Map<String,List<AggregateId>> contextAggregateIds = this.contextAggregateIdMap(resourceSet);
+      final Map<String, List<AggregateId>> contextAggregateIds = this.contextAggregateIdMap(resourceSet);
       Set<String> _keySet = contextAggregateIds.keySet();
       final Iterator<String> ctxIt = _keySet.iterator();
       boolean _hasNext = ctxIt.hasNext();
@@ -96,8 +96,8 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     }
   }
   
-  public Map<String,List<AggregateId>> contextAggregateIdMap(final ResourceSet resourceSet) {
-    final Map<String,List<AggregateId>> contextEntityIds = new HashMap<String, List<AggregateId>>();
+  public Map<String, List<AggregateId>> contextAggregateIdMap(final ResourceSet resourceSet) {
+    final Map<String, List<AggregateId>> contextEntityIds = new HashMap<String, List<AggregateId>>();
     TreeIterator<Notifier> _allContents = resourceSet.getAllContents();
     final Iterator<AggregateId> iter = Iterators.<AggregateId>filter(_allContents, AggregateId.class);
     boolean _hasNext = iter.hasNext();

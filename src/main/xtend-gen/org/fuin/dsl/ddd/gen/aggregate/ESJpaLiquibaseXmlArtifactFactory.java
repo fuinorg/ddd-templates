@@ -18,7 +18,7 @@ public class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> 
     return Aggregate.class;
   }
   
-  public GeneratedArtifact create(final Aggregate aggregate, final Map<String,Object> context, final boolean preparationRun) throws GenerateException {
+  public GeneratedArtifact create(final Aggregate aggregate, final Map<String, Object> context, final boolean preparationRun) throws GenerateException {
     try {
       EObject _eContainer = aggregate.eContainer();
       final Namespace ns = ((Namespace) _eContainer);
