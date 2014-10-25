@@ -22,7 +22,18 @@ class SrcParamsAssignment implements CodeSnippet {
 	new(CodeSnippetContext ctx, List<Variable> vars) {
 		this.ctx = ctx
 		this.vars = vars
-		ctx.requiresImport("org.fuin.objects4j.common.Contract")
+		if ((vars != null) && vars.atLeastOneVarIsNotNullable) {
+			ctx.requiresImport("org.fuin.objects4j.common.Contract")		
+		}
+	}
+
+	private def static boolean atLeastOneVarIsNotNullable(List<Variable> vars) {
+		for (v : vars) {
+			if (v.nullable == null) {
+				return true
+			}
+		}
+		return false
 	}
 
 	override toString() {

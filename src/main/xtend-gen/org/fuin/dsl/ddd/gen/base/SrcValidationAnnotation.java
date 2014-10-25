@@ -78,7 +78,6 @@ public class SrcValidationAnnotation implements CodeSnippet {
         if (_greaterThan) {
           List<String> list = new ArrayList<String>();
           int i = 0;
-          boolean _dowhile = false;
           do {
             {
               Variable _get = this.vars.get(i);
@@ -88,10 +87,7 @@ public class SrcValidationAnnotation implements CodeSnippet {
               list.add(((name + " = ") + value));
               i = (i + 1);
             }
-            int _size_3 = this.vars.size();
-            boolean _lessThan = (i < _size_3);
-            _dowhile = _lessThan;
-          } while(_dowhile);
+          } while((i < this.vars.size()));
           StringConcatenation _builder_2 = new StringConcatenation();
           _builder_2.append("@");
           String _name_2 = this.constraint.getName();

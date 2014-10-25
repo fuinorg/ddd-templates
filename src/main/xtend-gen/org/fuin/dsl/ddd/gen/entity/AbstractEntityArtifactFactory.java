@@ -28,7 +28,6 @@ import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
-import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions;
 import org.fuin.dsl.ddd.gen.extensions.StringExtensions;
 import org.fuin.dsl.ddd.gen.extensions.VariableExtensions;
@@ -187,8 +186,8 @@ public class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
-      List<Event> _allEvents = AbstractEntityExtensions.allEvents(entity);
-      SrcAbstractHandleEventMethods _srcAbstractHandleEventMethods = new SrcAbstractHandleEventMethods(ctx, _allEvents);
+      EList<Event> _events = entity.getEvents();
+      SrcAbstractHandleEventMethods _srcAbstractHandleEventMethods = new SrcAbstractHandleEventMethods(ctx, _events);
       _builder.append(_srcAbstractHandleEventMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

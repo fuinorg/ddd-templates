@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.base;
 
-import com.google.common.collect.Sets;
 import java.util.Collections;
 import java.util.Set;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.fest.assertions.Assertions;
 import org.fest.assertions.StringAssert;
 import org.fuin.dsl.ddd.gen.base.SrcAll;
@@ -27,7 +27,7 @@ public class SrcAllTest {
     _builder.newLine();
     final String copyright = _builder.toString();
     final String pkg = "org.fuin.dsl.ddd.gen";
-    final Set<String> imports = Collections.<String>unmodifiableSet(Sets.<String>newHashSet("java.lang.Integer", "static org.fest.assertions.Assertions.assertThat"));
+    final Set<String> imports = Collections.<String>unmodifiableSet(CollectionLiterals.<String>newHashSet("java.lang.Integer", "static org.fest.assertions.Assertions.assertThat"));
     final String src = "public class Dummy {}";
     final SrcAll testee = new SrcAll(copyright, pkg, imports, src);
     final String result = testee.toString();

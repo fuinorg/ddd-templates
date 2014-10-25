@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.base;
 
-import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
@@ -38,13 +38,13 @@ public class SrcChildEntityLocatorMethod implements CodeSnippet {
     ReturnType _createReturnType = DomainDrivenDesignDslFactory.eINSTANCE.createReturnType();
     this.returnType = _createReturnType;
     this.returnType.setType(entity);
-    this.annotations = Collections.<String>unmodifiableList(Lists.<String>newArrayList("@Override", "@ChildEntityLocator"));
+    this.annotations = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("@Override", "@ChildEntityLocator"));
     AbstractEntityId _idType = entity.getIdType();
     AbstractEntityId _idType_1 = entity.getIdType();
     String _name = _idType_1.getName();
     String _firstLower = StringExtensions.toFirstLower(_name);
     Variable _createVariable = DomainDrivenDesignDslFactoryExtensions.createVariable(DomainDrivenDesignDslFactory.eINSTANCE, _idType, _firstLower, false);
-    this.variables = Collections.<Variable>unmodifiableList(Lists.<Variable>newArrayList(_createVariable));
+    this.variables = Collections.<Variable>unmodifiableList(CollectionLiterals.<Variable>newArrayList(_createVariable));
     ctx.requiresImport("org.fuin.ddd4j.ddd.ChildEntityLocator");
     String _uniqueName = AbstractElementExtensions.uniqueName(entity);
     ctx.requiresReference(_uniqueName);

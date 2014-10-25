@@ -1,6 +1,8 @@
 package org.fuin.dsl.ddd.gen.extensions;
 
 import com.google.common.base.Objects;
+import org.eclipse.emf.ecore.EObject;
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace;
@@ -40,5 +42,28 @@ public class EventExtensions {
     String _name_1 = _namespace_1.getName();
     String _name_2 = event.getName();
     return Utils.separated(".", _name, _name_1, _name_2);
+  }
+  
+  /**
+   * Returns the aggregate or entity for an event if it is a domain event.
+   * 
+   * @param event Event to return the parent entity for.
+   * 
+   * @return Aggregate or Entity or null if the event is not inside one.
+   */
+  public static AbstractEntity getEntity(final Event event) {
+    return EventExtensions.getAbstractEntity(event);
+  }
+  
+  private static AbstractEntity getAbstractEntity(final EObject obj) {
+    boolean _equals = Objects.equal(obj, null);
+    if (_equals) {
+      return null;
+    }
+    if ((obj instanceof AbstractEntity)) {
+      return ((AbstractEntity) obj);
+    }
+    EObject _eContainer = obj.eContainer();
+    return EventExtensions.getAbstractEntity(_eContainer);
   }
 }

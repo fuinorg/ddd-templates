@@ -29,7 +29,7 @@ context x {
 		aggregate MyAggregate identifier MyAggregateId {
 			
 			/** Does some cool things. */
-			method doSomething {
+			method doSomething fires DidSomethingEvent, SomethingHappenedEvent {
 				
 				MyAggregateId id
 				nullable MyValueObject vo
@@ -38,16 +38,16 @@ context x {
 				   AnyConstraint	
 				}
 				
-				/** MyAggregate did something event. */   
-				event DidSomethingEvent {
-					MyAggregateId id
-					nullable MyValueObject vo
-				}
-				
-				/** Something happened in MyAggregate. */
-				event SomethingHappenedEvent {
-				}
-				   
+			}
+
+			/** MyAggregate did something event. */   
+			event DidSomethingEvent {
+				MyAggregateId id
+				nullable MyValueObject vo
+			}
+			
+			/** Something happened in MyAggregate. */
+			event SomethingHappenedEvent {
 			}
 			
 		}

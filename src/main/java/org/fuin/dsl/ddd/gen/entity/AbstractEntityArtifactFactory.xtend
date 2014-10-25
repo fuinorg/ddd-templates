@@ -25,7 +25,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
@@ -98,7 +97,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 				«new SrcSetters(ctx, "protected final", entity.variables)»
 				«new SrcAbstractChildEntityLocatorMethods(ctx, entity)»
 				
-				«new SrcAbstractHandleEventMethods(ctx, entity.allEvents)»
+				«new SrcAbstractHandleEventMethods(ctx, entity.events)»
 			
 			}
 		'''

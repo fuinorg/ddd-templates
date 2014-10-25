@@ -23,9 +23,7 @@ public class StringExtensions {
     }
     StringBuilder sb = new StringBuilder();
     StringTokenizer tok = new StringTokenizer(str, "\r\n");
-    boolean _hasMoreTokens = tok.hasMoreTokens();
-    boolean _while = _hasMoreTokens;
-    while (_while) {
+    while (tok.hasMoreTokens()) {
       {
         String line = tok.nextToken();
         String _replace = line.replace("/**", "");
@@ -37,8 +35,6 @@ public class StringExtensions {
         sb.append(line);
         sb.append(" ");
       }
-      boolean _hasMoreTokens_1 = tok.hasMoreTokens();
-      _while = _hasMoreTokens_1;
     }
     String _string = sb.toString();
     String _replace = _string.replace("  ", " ");

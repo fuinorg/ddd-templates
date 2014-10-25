@@ -20,7 +20,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 
 /**
  * Generates an abstract aggregate Java class.
@@ -103,7 +102,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				«new SrcSetters(ctx, "protected final", aggregate.variables)»
 				«new SrcAbstractChildEntityLocatorMethods(ctx, aggregate)»
 			
-				«new SrcAbstractHandleEventMethods(ctx, aggregate.allEvents)»
+				«new SrcAbstractHandleEventMethods(ctx, aggregate.events)»
 			
 			}
 		'''

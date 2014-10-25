@@ -20,7 +20,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 
 class AggregateArtifactFactory extends AbstractSource<Aggregate> {
@@ -86,7 +85,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 				
 				«new SrcMethods(ctx, aggregate)»
 			
-				«new SrcHandleEventMethods(ctx, aggregate.allEvents)»
+				«new SrcHandleEventMethods(ctx, aggregate.events)»
 			
 			}
 		'''

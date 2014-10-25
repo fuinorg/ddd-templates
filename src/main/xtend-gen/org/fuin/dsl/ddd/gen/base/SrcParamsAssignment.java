@@ -26,7 +26,28 @@ public class SrcParamsAssignment implements CodeSnippet {
   public SrcParamsAssignment(final CodeSnippetContext ctx, final List<Variable> vars) {
     this.ctx = ctx;
     this.vars = vars;
-    ctx.requiresImport("org.fuin.objects4j.common.Contract");
+    boolean _and = false;
+    boolean _notEquals = (!Objects.equal(vars, null));
+    if (!_notEquals) {
+      _and = false;
+    } else {
+      boolean _atLeastOneVarIsNotNullable = SrcParamsAssignment.atLeastOneVarIsNotNullable(vars);
+      _and = _atLeastOneVarIsNotNullable;
+    }
+    if (_and) {
+      ctx.requiresImport("org.fuin.objects4j.common.Contract");
+    }
+  }
+  
+  private static boolean atLeastOneVarIsNotNullable(final List<Variable> vars) {
+    for (final Variable v : vars) {
+      String _nullable = v.getNullable();
+      boolean _equals = Objects.equal(_nullable, null);
+      if (_equals) {
+        return true;
+      }
+    }
+    return false;
   }
   
   public String toString() {

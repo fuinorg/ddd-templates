@@ -42,9 +42,7 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
       final Map<String, List<AggregateId>> contextAggregateIds = this.contextAggregateIdMap(resourceSet);
       Set<String> _keySet = contextAggregateIds.keySet();
       final Iterator<String> ctxIt = _keySet.iterator();
-      boolean _hasNext = ctxIt.hasNext();
-      boolean _while = _hasNext;
-      while (_while) {
+      while (ctxIt.hasNext()) {
         {
           final String ctx = ctxIt.next();
           final List<AggregateId> aggregateIds = contextAggregateIds.get(ctx);
@@ -100,9 +98,7 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
     final Map<String, List<AggregateId>> contextEntityIds = new HashMap<String, List<AggregateId>>();
     TreeIterator<Notifier> _allContents = resourceSet.getAllContents();
     final Iterator<AggregateId> iter = Iterators.<AggregateId>filter(_allContents, AggregateId.class);
-    boolean _hasNext = iter.hasNext();
-    boolean _while = _hasNext;
-    while (_while) {
+    while (iter.hasNext()) {
       {
         final AggregateId aggregateId = iter.next();
         Context _context = EObjectExtensions.getContext(aggregateId);
@@ -118,8 +114,6 @@ public class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSe
         }
         aggregateIds.add(aggregateId);
       }
-      boolean _hasNext_1 = iter.hasNext();
-      _while = _hasNext_1;
     }
     return contextEntityIds;
   }

@@ -1,6 +1,5 @@
 package org.fuin.dsl.ddd.gen.base;
 
-import com.google.common.collect.Lists;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -11,6 +10,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.junit4.InjectWith;
 import org.eclipse.xtext.junit4.XtextRunner;
 import org.eclipse.xtext.junit4.util.ParseHelper;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.fest.assertions.Assertions;
 import org.fest.assertions.CollectionAssert;
@@ -45,7 +45,7 @@ public class SrcMethodTest {
     final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
     EList<Method> _methods = aggregate.getMethods();
     final Method method = _methods.get(0);
-    final List<String> annotations = Collections.<String>unmodifiableList(Lists.<String>newArrayList("@One", "@Two(\"2\")"));
+    final List<String> annotations = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("@One", "@Two(\"2\")"));
     final SrcMethod testee = new SrcMethod(ctx, annotations, "public", false, method);
     final String result = testee.toString();
     StringAssert _assertThat = Assertions.assertThat(result);

@@ -21,7 +21,6 @@ import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc;
 import org.fuin.dsl.ddd.gen.base.SrcMethods;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
-import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
@@ -144,8 +143,8 @@ public class AggregateArtifactFactory extends AbstractSource<Aggregate> {
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      List<Event> _allEvents = AbstractEntityExtensions.allEvents(aggregate);
-      SrcHandleEventMethods _srcHandleEventMethods = new SrcHandleEventMethods(ctx, _allEvents);
+      EList<Event> _events = aggregate.getEvents();
+      SrcHandleEventMethods _srcHandleEventMethods = new SrcHandleEventMethods(ctx, _events);
       _builder.append(_srcHandleEventMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

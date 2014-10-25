@@ -42,9 +42,7 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
       final Map<String, List<Event>> contextEvents = this.contextEventMap(resourceSet);
       Set<String> _keySet = contextEvents.keySet();
       final Iterator<String> ctxIt = _keySet.iterator();
-      boolean _hasNext = ctxIt.hasNext();
-      boolean _while = _hasNext;
-      while (_while) {
+      while (ctxIt.hasNext()) {
         {
           final String ctx = ctxIt.next();
           final List<Event> events = contextEvents.get(ctx);
@@ -102,9 +100,7 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
     final Map<String, List<Event>> contextEvents = new HashMap<String, List<Event>>();
     TreeIterator<Notifier> _allContents = resourceSet.getAllContents();
     final Iterator<Event> iter = Iterators.<Event>filter(_allContents, Event.class);
-    boolean _hasNext = iter.hasNext();
-    boolean _while = _hasNext;
-    while (_while) {
+    while (iter.hasNext()) {
       {
         final Event event = iter.next();
         Context _context = EObjectExtensions.getContext(event);
@@ -120,8 +116,6 @@ public class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet>
         }
         events.add(event);
       }
-      boolean _hasNext_1 = iter.hasNext();
-      _while = _hasNext_1;
     }
     return contextEvents;
   }

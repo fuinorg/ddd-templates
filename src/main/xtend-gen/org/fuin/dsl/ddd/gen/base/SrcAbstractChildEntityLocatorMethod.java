@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.base;
 
-import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId;
@@ -45,7 +45,7 @@ public class SrcAbstractChildEntityLocatorMethod implements CodeSnippet {
     String _firstLower = StringExtensions.toFirstLower(_name);
     final Variable variable = DomainDrivenDesignDslFactoryExtensions.createVariable(DomainDrivenDesignDslFactory.eINSTANCE, 
       "Unique identifier of the child entity to find.", _idType, _firstLower, false);
-    this.variables = Collections.<Variable>unmodifiableList(Lists.<Variable>newArrayList(variable));
+    this.variables = Collections.<Variable>unmodifiableList(CollectionLiterals.<Variable>newArrayList(variable));
     String _uniqueName = AbstractElementExtensions.uniqueName(entity);
     ctx.requiresReference(_uniqueName);
     AbstractEntityId _idType_2 = entity.getIdType();

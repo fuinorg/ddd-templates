@@ -1,6 +1,5 @@
 package org.fuin.dsl.ddd.gen.aggregate;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
@@ -22,7 +21,6 @@ import org.fuin.dsl.ddd.gen.base.SrcSetters;
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions;
-import org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions;
 import org.fuin.srcgen4j.commons.GenerateException;
 import org.fuin.srcgen4j.commons.GeneratedArtifact;
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry;
@@ -199,8 +197,8 @@ public class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> 
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t");
-      List<Event> _allEvents = AbstractEntityExtensions.allEvents(aggregate);
-      SrcAbstractHandleEventMethods _srcAbstractHandleEventMethods = new SrcAbstractHandleEventMethods(ctx, _allEvents);
+      EList<Event> _events = aggregate.getEvents();
+      SrcAbstractHandleEventMethods _srcAbstractHandleEventMethods = new SrcAbstractHandleEventMethods(ctx, _events);
       _builder.append(_srcAbstractHandleEventMethods, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();

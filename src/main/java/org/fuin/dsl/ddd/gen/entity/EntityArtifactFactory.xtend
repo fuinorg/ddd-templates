@@ -23,7 +23,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
@@ -78,7 +77,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 				
 				«new SrcMethods(ctx, entity)»
 			
-				«new SrcHandleEventMethods(ctx, entity.allEvents)»
+				«new SrcHandleEventMethods(ctx, entity.events)»
 			
 			}
 		'''

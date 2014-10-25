@@ -9,11 +9,9 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
-import org.fuin.dsl.ddd.gen.extensions.CollectionExtensions;
 
 /**
  * Provides extension methods for AbstractEntity.
@@ -54,23 +52,5 @@ public class AbstractEntityExtensions {
       }
     }
     return childs;
-  }
-  
-  /**
-   * Returns a list of all events from all methods of the entity.
-   * 
-   * @param entity Entity to return all events for.
-   * 
-   * @return List of events from all methods.
-   */
-  public static List<Event> allEvents(final AbstractEntity entity) {
-    final ArrayList<Event> events = new ArrayList<Event>();
-    List<AbstractMethod> _constructorsAndMethods = AbstractEntityExtensions.constructorsAndMethods(entity);
-    for (final AbstractMethod method : _constructorsAndMethods) {
-      EList<Event> _events = method.getEvents();
-      List<Event> _nullSafe = CollectionExtensions.<Event>nullSafe(_events);
-      events.addAll(_nullSafe);
-    }
-    return events;
   }
 }

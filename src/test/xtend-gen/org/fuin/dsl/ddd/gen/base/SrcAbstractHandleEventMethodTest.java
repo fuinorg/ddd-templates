@@ -16,7 +16,6 @@ import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethod;
 import org.fuin.dsl.ddd.gen.base.Utils;
 import org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions;
@@ -39,9 +38,7 @@ public class SrcAbstractHandleEventMethodTest {
     final SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg);
     DomainModel _createModel = this.createModel();
     final Aggregate aggregate = DomainModelExtensions.<Aggregate>find(_createModel, Aggregate.class, "MyAggregate");
-    EList<Method> _methods = aggregate.getMethods();
-    Method _get = _methods.get(0);
-    EList<Event> _events = _get.getEvents();
+    EList<Event> _events = aggregate.getEvents();
     final Event event = _events.get(0);
     final SrcAbstractHandleEventMethod testee = new SrcAbstractHandleEventMethod(ctx, event);
     final String result = testee.toString();

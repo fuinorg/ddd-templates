@@ -7,9 +7,6 @@ import java.util.Set
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractMethod
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
-
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 
 /**
  * Provides extension methods for AbstractEntity.
@@ -45,21 +42,6 @@ class AbstractEntityExtensions {
 			}
 		}
 		return childs;
-	}
-
-	/**
-	 * Returns a list of all events from all methods of the entity.
-	 * 
-	 * @param entity Entity to return all events for.
-	 * 
-	 * @return List of events from all methods.
-	 */	
-	def static List<Event> allEvents(AbstractEntity entity) {
-		val events = new ArrayList<Event>()
-		for (method : entity.constructorsAndMethods) {
-			events.addAll(method.events.nullSafe)
-		}
-		return events
 	}
 
 }

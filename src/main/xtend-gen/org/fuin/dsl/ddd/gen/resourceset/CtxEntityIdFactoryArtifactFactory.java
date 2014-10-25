@@ -42,9 +42,7 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
       final Map<String, List<AbstractEntityId>> contextEntityIds = this.contextEntityIdMap(resourceSet);
       Set<String> _keySet = contextEntityIds.keySet();
       final Iterator<String> ctxIt = _keySet.iterator();
-      boolean _hasNext = ctxIt.hasNext();
-      boolean _while = _hasNext;
-      while (_while) {
+      while (ctxIt.hasNext()) {
         {
           final String ctx = ctxIt.next();
           final List<AbstractEntityId> entityIds = contextEntityIds.get(ctx);
@@ -100,9 +98,7 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
     final Map<String, List<AbstractEntityId>> contextEntityIds = new HashMap<String, List<AbstractEntityId>>();
     TreeIterator<Notifier> _allContents = resourceSet.getAllContents();
     final Iterator<AbstractEntityId> iter = Iterators.<AbstractEntityId>filter(_allContents, AbstractEntityId.class);
-    boolean _hasNext = iter.hasNext();
-    boolean _while = _hasNext;
-    while (_while) {
+    while (iter.hasNext()) {
       {
         final AbstractEntityId entityId = iter.next();
         Context _context = EObjectExtensions.getContext(entityId);
@@ -118,8 +114,6 @@ public class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSe
         }
         entityIds.add(entityId);
       }
-      boolean _hasNext_1 = iter.hasNext();
-      _while = _hasNext_1;
     }
     return contextEntityIds;
   }

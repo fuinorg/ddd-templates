@@ -32,8 +32,7 @@ class SrcAbstractHandleEventMethodsTest {
 		refReg.putReference("x.a.SomethingHappenedEvent", "a.b.c.SomethingHappenedEvent")
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
-		val events = aggregate.methods.get(0).events
-		val SrcAbstractHandleEventMethods testee = new SrcAbstractHandleEventMethods(ctx, events)
+		val SrcAbstractHandleEventMethods testee = new SrcAbstractHandleEventMethods(ctx, aggregate.events)
 
 		// TEST
 		val result = testee.toString
