@@ -21,9 +21,9 @@ class TypeExtensions {
 	 */
 	def static String doc(Type type) {
 		if (type instanceof AbstractEntity) {
-			return (type as AbstractEntity).doc
+			return type.doc
 		} else if (type instanceof AbstractVO) {
-			return (type as AbstractVO).doc
+			return type.doc
 		}
 		return type.name;
 	}

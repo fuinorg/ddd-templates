@@ -20,13 +20,13 @@ public class AbstractVOExtensions {
    */
   public static ExternalType baseType(final AbstractVO vo) {
     if ((vo instanceof AggregateId)) {
-      return ((AggregateId) vo).getBase();
+      return ((AggregateId)vo).getBase();
     }
     if ((vo instanceof EntityId)) {
-      return ((EntityId) vo).getBase();
+      return ((EntityId)vo).getBase();
     }
     if ((vo instanceof ValueObject)) {
-      return ((ValueObject) vo).getBase();
+      return ((ValueObject)vo).getBase();
     }
     return null;
   }

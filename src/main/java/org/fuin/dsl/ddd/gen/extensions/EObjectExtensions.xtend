@@ -72,10 +72,10 @@ class EObjectExtensions {
 			return null
 		}
 		if (obj instanceof Entity) {
-			return (obj as Entity).root
+			return obj.root
 		}
 		if (obj instanceof Aggregate) {
-			return obj as Aggregate
+			return obj
 		}
 		return getAggregate(obj.eContainer)
 	}

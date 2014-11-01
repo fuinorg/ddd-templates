@@ -48,7 +48,7 @@ public class DomainModelExtensions {
     try {
       final Object result = Utils4J.invoke(obj, "getName", null, null);
       if ((result instanceof String)) {
-        return ((String) result);
+        return ((String)result);
       }
       return null;
     } catch (final Throwable _t) {

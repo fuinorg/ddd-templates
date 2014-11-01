@@ -4,7 +4,6 @@ import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 
 import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
@@ -42,7 +41,7 @@ class MethodData extends AbstractMethodData {
 	 * @param variables Variables for the method.
 	 * @param exceptions Exceptions for the method.
 	 */
-	new(String doc, String modifiers, boolean makeAbstract, Type type, String methodName, List<Variable> variables, List<Exception> exceptions) {
+	new(String doc, String modifiers, boolean makeAbstract, ReturnType returnType, String methodName, List<Variable> variables, List<Exception> exceptions) {
 		super(doc, null, modifiers, methodName, variables, exceptions)
 		this.makeAbstract = makeAbstract
 		this.returnType = returnType

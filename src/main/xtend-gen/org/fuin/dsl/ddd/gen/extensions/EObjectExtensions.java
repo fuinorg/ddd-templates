@@ -81,10 +81,10 @@ public class EObjectExtensions {
       return null;
     }
     if ((obj instanceof Entity)) {
-      return ((Entity) obj).getRoot();
+      return ((Entity)obj).getRoot();
     }
     if ((obj instanceof Aggregate)) {
-      return ((Aggregate) obj);
+      return ((Aggregate)obj);
     }
     EObject _eContainer = obj.eContainer();
     return EObjectExtensions.getAggregate(_eContainer);

@@ -61,7 +61,7 @@ public class EventExtensions {
       return null;
     }
     if ((obj instanceof AbstractEntity)) {
-      return ((AbstractEntity) obj);
+      return ((AbstractEntity)obj);
     }
     EObject _eContainer = obj.eContainer();
     return EventExtensions.getAbstractEntity(_eContainer);

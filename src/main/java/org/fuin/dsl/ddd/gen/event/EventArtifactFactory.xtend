@@ -90,7 +90,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		if (event.entity == null) {
 			return null
 		}
-		return (event.entity as AbstractEntity).idType
+		return event.entity.idType
 	}
 
 	def createDomainEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {

@@ -34,7 +34,7 @@ class DomainModelExtensions {
 		try {
 			val result = Utils4J.invoke(obj, "getName", null, null)
 			if (result instanceof String) {
-				return result as String
+				return result
 			}
 			return null
 		} catch (InvokeMethodFailedException ex) {

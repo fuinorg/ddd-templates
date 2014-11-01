@@ -21,9 +21,9 @@ class ConstraintTargetExtensions {
 	 */
 	def static String getName(ConstraintTarget target) {
 		if (target instanceof ValueObject) {
-			return (target as ValueObject).name;
+			return target.name;
 		} else if (target instanceof ExternalType) {
-			return (target as ExternalType).name;
+			return target.name;
 		}
 		throw new IllegalStateException("Unknown constraint target type: " + target);
 	}
@@ -37,7 +37,7 @@ class ConstraintTargetExtensions {
 	 */
 	def static List<Variable> getVariables(ConstraintTarget target) {
 		if (target instanceof ValueObject) {
-			return (target as ValueObject).variables;
+			return target.variables;
 		} else if (target instanceof ExternalType) {
 			return new ArrayList<Variable>();
 		}

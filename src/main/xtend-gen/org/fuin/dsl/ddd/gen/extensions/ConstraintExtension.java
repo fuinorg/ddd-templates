@@ -26,11 +26,10 @@ public class ConstraintExtension {
     }
     ConstraintTarget target = constr.getTarget();
     if ((target instanceof ExternalType)) {
-      ExternalType et = ((ExternalType) target);
       Variable vv = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
       vv.setName("vv");
       vv.setDoc("/** The validated value. */");
-      vv.setType(et);
+      vv.setType(((Type)target));
       list.add(vv);
     } else {
       ValueObject vo = ((ValueObject) target);

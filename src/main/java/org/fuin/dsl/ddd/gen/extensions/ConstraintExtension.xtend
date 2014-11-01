@@ -17,12 +17,11 @@ class ConstraintExtension {
 			list.addAll(constr.variables);
 		}
 		var ConstraintTarget target = constr.target;
-		if (target instanceof ExternalType) {
-			var ExternalType et = (target as ExternalType)
+		if (target instanceof ExternalType) {			
 			var Variable vv = DomainDrivenDesignDslFactory.eINSTANCE.createVariable();
 			vv.setName("vv");
 			vv.setDoc("/** The validated value. */");
-			vv.setType(et);
+			vv.setType(target);
 			list.add(vv);
 		} else {
 			var ValueObject vo = (target as ValueObject);

@@ -50,7 +50,7 @@ class EventExtensions {
 			return null
 		}
 		if (obj instanceof AbstractEntity) {
-			return obj as AbstractEntity
+			return obj
 		}
 		return getAbstractEntity(obj.eContainer)
 	}

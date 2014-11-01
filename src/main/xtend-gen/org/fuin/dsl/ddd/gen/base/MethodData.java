@@ -3,7 +3,6 @@ package org.fuin.dsl.ddd.gen.base;
 import java.util.List;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType;
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type;
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable;
 import org.fuin.dsl.ddd.gen.base.AbstractMethodData;
 import org.fuin.dsl.ddd.gen.extensions.MethodExtensions;
@@ -42,10 +41,10 @@ public class MethodData extends AbstractMethodData {
    * @param variables Variables for the method.
    * @param exceptions Exceptions for the method.
    */
-  public MethodData(final String doc, final String modifiers, final boolean makeAbstract, final Type type, final String methodName, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
+  public MethodData(final String doc, final String modifiers, final boolean makeAbstract, final ReturnType returnType, final String methodName, final List<Variable> variables, final List<org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception> exceptions) {
     super(doc, null, modifiers, methodName, variables, exceptions);
     this.makeAbstract = makeAbstract;
-    this.returnType = this.returnType;
+    this.returnType = returnType;
   }
   
   /**

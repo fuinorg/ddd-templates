@@ -21,10 +21,10 @@ public class ConstraintTargetExtensions {
    */
   public static String getName(final ConstraintTarget target) {
     if ((target instanceof ValueObject)) {
-      return ((ValueObject) target).getName();
+      return ((ValueObject)target).getName();
     } else {
       if ((target instanceof ExternalType)) {
-        return ((ExternalType) target).getName();
+        return ((ExternalType)target).getName();
       }
     }
     throw new IllegalStateException(("Unknown constraint target type: " + target));
@@ -39,7 +39,7 @@ public class ConstraintTargetExtensions {
    */
   public static List<Variable> getVariables(final ConstraintTarget target) {
     if ((target instanceof ValueObject)) {
-      return ((ValueObject) target).getVariables();
+      return ((ValueObject)target).getVariables();
     } else {
       if ((target instanceof ExternalType)) {
         return new ArrayList<Variable>();

@@ -20,13 +20,13 @@ class AbstractVOExtensions {
 	 */	
 	def static ExternalType baseType(AbstractVO vo) {
 		if (vo instanceof AggregateId) {
-			return (vo as AggregateId).base
+			return vo.base
 		}
 		if (vo instanceof EntityId) {
-			return (vo as EntityId).base
+			return vo.base
 		}
 		if (vo instanceof ValueObject) {
-			return (vo as ValueObject).base
+			return vo.base
 		}
 		return null
 	}

@@ -112,7 +112,7 @@ public class EventArtifactFactory extends AbstractSource<Event> {
       return null;
     }
     AbstractEntity _entity_1 = EventExtensions.getEntity(event);
-    return ((AbstractEntity) _entity_1).getIdType();
+    return _entity_1.getIdType();
   }
   
   public String createDomainEvent(final SimpleCodeSnippetContext ctx, final Event event, final String pkg, final String className) {

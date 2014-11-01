@@ -21,10 +21,10 @@ public class TypeExtensions {
    */
   public static String doc(final Type type) {
     if ((type instanceof AbstractEntity)) {
-      return ((AbstractEntity) type).getDoc();
+      return ((AbstractEntity)type).getDoc();
     } else {
       if ((type instanceof AbstractVO)) {
-        return ((AbstractVO) type).getDoc();
+        return ((AbstractVO)type).getDoc();
       }
     }
     return type.getName();
