@@ -88,8 +88,8 @@
 
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
-			<artifactId>org.eclipse.xtend.standalone</artifactId>
-			<version>2.4.3</version>
+			<artifactId>org.eclipse.xtend.core</artifactId>
+			<version>2.7.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -129,17 +129,6 @@
 				</executions>
 			</plugin>
 
-			<!-- 
-			
-			Investigate why tests fail with:
-			
-			Error injecting constructor, org.eclipse.emf.common.util.WrappedException: java.lang.ArrayIndexOutOfBoundsException: 3
-  				at org.fuin.dsl.ddd.services.DomainDrivenDesignDslGrammarAccess.<init>(DomainDrivenDesignDslGrammarAccess.java:2275)
-  				:
-			Caused by: org.eclipse.emf.common.util.WrappedException: java.lang.ArrayIndexOutOfBoundsException: 3
-				at org.eclipse.xtext.parser.BaseEPackageAccess.loadResource(BaseEPackageAccess.java:57)
-			
-						
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
@@ -157,7 +146,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			 -->
 
 		</plugins>
 
