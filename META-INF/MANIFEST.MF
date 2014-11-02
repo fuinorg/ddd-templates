@@ -47,4 +47,3 @@ Import-Package: com.google.common.base;version="[14.0,15)",com.google.co
  .dsl.ddd.domainDrivenDesignDsl,org.fuin.srcgen4j.commons;version="[0.4,
  1)",org.fuin.srcgen4j.core.emf;version="[0.4,1)",org.fuin.utils4j;versi
  on="[0.8,1)"
-Include-Resource: example1.ddd=src/main/resources/example1.ddd
