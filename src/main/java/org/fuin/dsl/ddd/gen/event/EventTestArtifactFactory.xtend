@@ -20,6 +20,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class EventTestArtifactFactory extends AbstractSource<Event> {
 
@@ -40,7 +41,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 		refReg.putReference(event.uniqueName + "Test", fqn)
 
 		if (preparationRun) {

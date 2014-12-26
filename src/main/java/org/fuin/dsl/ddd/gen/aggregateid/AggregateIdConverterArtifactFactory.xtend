@@ -11,7 +11,7 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import static org.fuin.dsl.ddd.gen.base.Utils.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class AggregateIdConverterArtifactFactory extends AbstractSource<AggregateId> {
 
@@ -29,7 +29,7 @@ class AggregateIdConverterArtifactFactory extends AbstractSource<AggregateId> {
 		val String fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 		
-		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 		refReg.putReference(aggregateId.uniqueName + "Converter", fqn)
 
 		if (preparationRun) {

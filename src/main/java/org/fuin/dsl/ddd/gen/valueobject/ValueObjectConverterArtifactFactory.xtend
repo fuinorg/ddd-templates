@@ -11,7 +11,7 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import static org.fuin.dsl.ddd.gen.base.Utils.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class ValueObjectConverterArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -28,7 +28,7 @@ class ValueObjectConverterArtifactFactory extends AbstractSource<ValueObject> {
 		val fqn = ns.asPackage + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 		
-		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 		refReg.putReference(valueObject.uniqueName + "Converter", fqn)
 
 		if (preparationRun) {

@@ -15,12 +15,11 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static org.fuin.dsl.ddd.gen.base.Utils.*
-
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
@@ -36,7 +35,7 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 		refReg.putReference(ex.uniqueName, fqn)
 
 		if (preparationRun) {

@@ -27,6 +27,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class EntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -42,7 +43,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 		refReg.putReference(entity.uniqueName, fqn)
 
 		if (preparationRun) {

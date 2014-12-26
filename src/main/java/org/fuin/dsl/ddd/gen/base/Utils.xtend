@@ -4,17 +4,12 @@ import java.io.InputStream
 import java.net.URL
 import java.util.ArrayList
 import java.util.List
-import java.util.Map
 import org.apache.commons.io.IOUtils
-import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
-import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 
 /**
  * Provides utility methods for templates.
  */
 class Utils {
-
-	private static val String CODE_REFERENCE_REGISTRY_KEY = "CODE_REFERENCE_REGISTRY"
 
 	/**
 	 * Returns a string containing all tokens separated by a separator string.
@@ -39,22 +34,6 @@ class Utils {
 			count = count + 1
 		}
 		return sb.toString
-	}
-
-	/**
-	 * Returns the registry from the map. If it does not exist, it will be created.
-	 * 
-	 * @param map Map with registry.
-	 * 
-	 * @return Registry.
-	 */
-	def static CodeReferenceRegistry getCodeReferenceRegistry(Map<String, Object> map) {
-		var CodeReferenceRegistry reg = map.get(CODE_REFERENCE_REGISTRY_KEY) as CodeReferenceRegistry
-		if (reg == null) {
-			reg = new SimpleCodeReferenceRegistry()
-			map.put(CODE_REFERENCE_REGISTRY_KEY, reg)
-		}
-		return reg
 	}
 
 	/**

@@ -12,9 +12,8 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static org.fuin.dsl.ddd.gen.base.Utils.*
-
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements ArtifactFactory<Aggregate> {
 
@@ -30,7 +29,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 		refReg.putReference(aggregate.uniqueName + "Event", fqn)
 
 		if (preparationRun) {

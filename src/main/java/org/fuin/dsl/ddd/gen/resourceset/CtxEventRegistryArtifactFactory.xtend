@@ -15,10 +15,9 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static org.fuin.dsl.ddd.gen.base.Utils.*
-
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 
@@ -44,7 +43,7 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			val fqn = pkg + "." + className
 			val filename = fqn.replace('.', '/') + ".java";
 
-			val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+			val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 			refReg.putReference(className, fqn)
 
 			// TODO Support multiple generated artifacts for ArtifactFactory

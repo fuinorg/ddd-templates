@@ -22,12 +22,11 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static org.fuin.dsl.ddd.gen.base.Utils.*
-
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -43,7 +42,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = getCodeReferenceRegistry(context)
+		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 		refReg.putReference(entity.uniqueAbstractName, fqn)
 
 		if (preparationRun) {
