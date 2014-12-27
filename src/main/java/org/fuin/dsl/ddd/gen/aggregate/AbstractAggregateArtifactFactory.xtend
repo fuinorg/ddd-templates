@@ -18,6 +18,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 /**
@@ -101,7 +102,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				«new SrcSetters(ctx, "protected final", aggregate.variables)»
 				«new SrcAbstractChildEntityLocatorMethods(ctx, aggregate)»
 			
-				«new SrcAbstractHandleEventMethods(ctx, aggregate.events)»
+				«new SrcAbstractHandleEventMethods(ctx, aggregate.allEvents)»
 			
 			}
 		'''

@@ -5,8 +5,8 @@ import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
@@ -30,8 +30,7 @@ class SrcHandleEventMethodTest {
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("x.a.DidSomethingEvent", "a.b.c.DidSomethingEvent")
 		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
-		val event = aggregate.events.get(0)
+		val event = createModel().find(Event, "DidSomethingEvent")
 		val SrcHandleEventMethod testee = new SrcHandleEventMethod(ctx, event)
 
 		// TEST

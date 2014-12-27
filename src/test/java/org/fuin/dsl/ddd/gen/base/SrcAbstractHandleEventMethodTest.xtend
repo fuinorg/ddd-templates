@@ -15,6 +15,7 @@ import org.junit.runner.RunWith
 import static org.fest.assertions.Assertions.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions.*
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -30,8 +31,7 @@ class SrcAbstractHandleEventMethodTest {
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("x.a.DidSomethingEvent", "a.b.c.DidSomethingEvent")
 		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
-		val event = aggregate.events.get(0)
+		val event = createModel().find(Event, "DidSomethingEvent")
 		val SrcAbstractHandleEventMethod testee = new SrcAbstractHandleEventMethod(ctx, event)
 
 		// TEST

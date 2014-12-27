@@ -68,17 +68,13 @@ class SrcMethodJavaDocTest {
 							/**
 							 * This method does cool things.
 							 */
-							method whatever {
+							method whatever constraints WhateverConstraint {
 								
 								/** Abc. */
 								String a
 								
 								/** Def. */
 								Integer b
-								
-								constraints {
-									WhateverConstraint
-								}
 								
 							}
 				

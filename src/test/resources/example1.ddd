@@ -29,23 +29,19 @@ context x {
 		aggregate MyAggregate identifier MyAggregateId {
 			
 			/** Does some cool things. */
-			method doSomething fires DidSomethingEvent, SomethingHappenedEvent {
+			method doSomething constraints AnyConstraint fires DidSomethingEvent, SomethingHappenedEvent {
 				
 				MyAggregateId id
 				nullable MyValueObject vo
 				   
-				constraints {
-				   AnyConstraint	
+				/** MyAggregate did something event. */   
+				event DidSomethingEvent {
+					MyAggregateId id
+					nullable MyValueObject vo
 				}
 				
 			}
 
-			/** MyAggregate did something event. */   
-			event DidSomethingEvent {
-				MyAggregateId id
-				nullable MyValueObject vo
-			}
-			
 			/** Something happened in MyAggregate. */
 			event SomethingHappenedEvent {
 			}
@@ -59,17 +55,13 @@ context x {
 		entity MyEntity identifier MyEntityId root MyAggregate {
 			
 			/** Creates the entity. */
-			constructor create {
+			constructor create constraints AnyConstraint {
 				
 				MyEntityId id
 				
 				/** Example value object. */
 				nullable MyValueObject vo
 				   
-				constraints {
-				   	AnyConstraint
-				}
-
 			}
 			
 		}
