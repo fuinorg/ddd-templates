@@ -47,7 +47,7 @@ Import-Package: com.google.common.base;version="[14.0,15)",com.google.co
  sion="[1.4,2)",org.eclipse.emf.common.util,org.eclipse.emf.ecore,org.ec
  lipse.emf.ecore.resource,org.eclipse.xtend2.lib,org.eclipse.xtext.junit
  4,org.eclipse.xtext.junit4.util,org.eclipse.xtext.xbase.lib,org.fest.as
- sertions,org.fuin.dsl.ddd,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fu
- in.srcgen4j.commons;version="[0.4,1)",org.fuin.srcgen4j.core.emf;versio
- n="[0.4,1)",org.fuin.utils4j;version="[0.8,1)",org.junit,org.junit.runn
- er
+ sertions,org.fuin.ddd4j.ddd;version="[0.1,1)",org.fuin.dsl.ddd,org.fuin
+ .dsl.ddd.domainDrivenDesignDsl,org.fuin.srcgen4j.commons;version="[0.4,
+ 1)",org.fuin.srcgen4j.core.emf;version="[0.4,1)",org.fuin.utils4j;versi
+ on="[0.8,1)",org.joda.time;version="[2.3,3)",org.junit,org.junit.runner

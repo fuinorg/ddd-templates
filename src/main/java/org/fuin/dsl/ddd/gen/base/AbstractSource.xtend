@@ -35,6 +35,14 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		return varMap.nullSafe.get("pkg")
 	}
 
+	protected def String getVar(String key, String defaultVal) {
+		val str = this.varMap.nullSafe.get(key)
+		if (str == null) {
+			return defaultVal
+		}
+		return str
+	}
+
 	def String contextPkg(String ctxName) {
 		return getBasePkg() + "." + ctxName + "." + getPkg()
 	}
