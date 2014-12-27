@@ -8,7 +8,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 
-import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintsExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 
 /**
  * Provides extension methods for Method.
@@ -21,19 +21,8 @@ class MethodExtensions {
 		if ((method.refMethod != null) && (method != method.refMethod)) {
 			list.addAll(method.refMethod.allConstraints);
 		}
-		if (method.constraints != null) {
-			for (ConstraintCall cc : method.constraints.calls) {
-				list.add(cc.constraint);
-			}
-		}
-		return list;
-	}
-
-	def static List<Variable> allVariables(Method method) {
-		var List<Variable> list = new ArrayList<Variable>();
-		list.addAll(method.variables);
-		if ((method.refMethod != null) && (method != method.refMethod)) {
-			list.addAll(method.refMethod.allVariables);
+		for (ConstraintCall cc : method.constraintCalls.nullSafe) {
+			list.add(cc.constraint);
 		}
 		return list;
 	}
@@ -43,10 +32,19 @@ class MethodExtensions {
 		if ((method.refMethod != null) && (method != method.refMethod)) {
 			list.addAll(method.refMethod.allExceptions);
 		}
-		if (method.constraints != null) {
-			list.addAll(method.constraints.exceptionList);
+		for (ConstraintCall cc : method.constraintCalls.nullSafe) {
+			list.add(cc.constraint.exception);		
 		}
 		return list;
 	}
 	
+	def static List<Variable> allVariables(Method method) {
+		var List<Variable> list = new ArrayList<Variable>();
+		list.addAll(method.variables);
+		if ((method.refMethod != null) && (method != method.refMethod)) {
+			list.addAll(method.refMethod.allVariables);
+		}
+		return list;
+	}
+
 }

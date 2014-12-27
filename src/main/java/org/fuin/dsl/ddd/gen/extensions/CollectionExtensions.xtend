@@ -4,6 +4,7 @@ import java.util.ArrayList
 import java.util.Collections
 import java.util.List
 import java.util.Map
+
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 
