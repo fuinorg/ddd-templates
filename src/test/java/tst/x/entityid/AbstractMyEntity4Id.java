@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.a;
+package tst.x.entityid;
 
 import javax.validation.constraints.NotNull;
 import org.fuin.ddd4j.ddd.EntityId;
@@ -23,18 +23,20 @@ import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Entity ID single attribute and base.
+ * Entity ID multiple attribute and without base.
  */
-public abstract class AbstractMyEntityId extends AbstractStringValueObject implements EntityId, ValueObject {
+public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
 	@NotNull
-	private String value;
+	private String a;
+	
+	@NotNull
+	private String b;
 	
 	
 	/**
@@ -42,37 +44,50 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	 *
 	 *
 	 */
-	protected AbstractMyEntityId() {
+	protected AbstractMyEntity4Id() {
 		super();
 	}
 	
 	/**
 	 * Constructor with all data.
 	 *
-	 * @param value Persistent value.
+	 * @param a Persistent value A.
+	 * @param b Persistent value B.
 	 *
 	 */
-	public AbstractMyEntityId(@NotNull final String value) {
+	public AbstractMyEntity4Id(@NotNull final String a, @NotNull final String b) {
 		super();
-		Contract.requireArgNotNull("value", value);
+		Contract.requireArgNotNull("a", a);
+		Contract.requireArgNotNull("b", b);
 		
-		this.value = value;
+		this.a = a;
+		this.b = b;
 	}
 	
 
 	/**
-	 * Returns: Persistent value.
+	 * Returns: Persistent value A.
 	 *
 	 * @return Current value.
 	 */
 	 @NeverNull
-	public final String getValue() {
-		return value;
+	public final String getA() {
+		return a;
+	}
+	
+	/**
+	 * Returns: Persistent value B.
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	public final String getB() {
+		return b;
 	}
 	
 
 	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
+	public static final EntityType TYPE = new StringBasedEntityType("MyEntity4");
 	
 	@Override
 	public final EntityType getType() {

@@ -15,28 +15,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.a;
+package tst2.x.entityid;
 
 import javax.validation.constraints.NotNull;
 import org.fuin.ddd4j.ddd.EntityId;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.Immutable;
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Entity ID multiple attribute and without base.
+ * Entity ID single attribute and without base.
  */
-public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
+@Immutable
+public final class MyEntity2Id implements EntityId, ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
 	@NotNull
-	private String a;
-	
-	@NotNull
-	private String b;
+	private String id;
 	
 	
 	/**
@@ -44,50 +43,37 @@ public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 	 *
 	 *
 	 */
-	protected AbstractMyEntity4Id() {
+	protected MyEntity2Id() {
 		super();
 	}
 	
 	/**
 	 * Constructor with all data.
 	 *
-	 * @param a Persistent value A.
-	 * @param b Persistent value B.
+	 * @param id Persistent value.
 	 *
 	 */
-	public AbstractMyEntity4Id(@NotNull final String a, @NotNull final String b) {
+	public MyEntity2Id(@NotNull final String id) {
 		super();
-		Contract.requireArgNotNull("a", a);
-		Contract.requireArgNotNull("b", b);
+		Contract.requireArgNotNull("id", id);
 		
-		this.a = a;
-		this.b = b;
+		this.id = id;
 	}
 	
 
 	/**
-	 * Returns: Persistent value A.
+	 * Returns: Persistent value.
 	 *
 	 * @return Current value.
 	 */
 	 @NeverNull
-	public final String getA() {
-		return a;
-	}
-	
-	/**
-	 * Returns: Persistent value B.
-	 *
-	 * @return Current value.
-	 */
-	 @NeverNull
-	public final String getB() {
-		return b;
+	public final String getId() {
+		return id;
 	}
 	
 
 	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity4");
+	public static final EntityType TYPE = new StringBasedEntityType("MyEntity2");
 	
 	@Override
 	public final EntityType getType() {
@@ -98,5 +84,11 @@ public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 	public final String asTypedString() {
 		return TYPE + " " + asString();
 	}
+	
+	@Override
+	public final String asString() {
+		return "" + getId();
+	}
+	
 	
 }

@@ -15,13 +15,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.a;
+package tst2.x.entityid;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.fuin.ddd4j.ddd.EntityId;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.Immutable;
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
@@ -29,7 +31,9 @@ import org.fuin.objects4j.vo.ValueObject;
 /**
  * Entity ID multiple attributes and base.
  */
-public abstract class AbstractMyEntity3Id extends AbstractStringValueObject implements EntityId, ValueObject {
+@Immutable
+@XmlJavaTypeAdapter(MyEntity3IdConverter.class)
+public final class MyEntity3Id extends AbstractStringValueObject implements EntityId, ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
@@ -45,7 +49,7 @@ public abstract class AbstractMyEntity3Id extends AbstractStringValueObject impl
 	 *
 	 *
 	 */
-	protected AbstractMyEntity3Id() {
+	protected MyEntity3Id() {
 		super();
 	}
 	
@@ -56,7 +60,7 @@ public abstract class AbstractMyEntity3Id extends AbstractStringValueObject impl
 	 * @param b Persistent value B.
 	 *
 	 */
-	public AbstractMyEntity3Id(@NotNull final String a, @NotNull final String b) {
+	public MyEntity3Id(@NotNull final String a, @NotNull final String b) {
 		super();
 		Contract.requireArgNotNull("a", a);
 		Contract.requireArgNotNull("b", b);
@@ -98,6 +102,53 @@ public abstract class AbstractMyEntity3Id extends AbstractStringValueObject impl
 	@Override
 	public final String asTypedString() {
 		return TYPE + " " + asString();
+	}
+	
+	@Override
+	public final String asBaseType() {
+		// TODO Implement!
+		return null;
+	}
+	
+	@Override
+	public final String asString() {
+		// TODO Implement!
+		return null;
+	}
+	
+	/**
+	 * Returns the information if a given string can be converted into
+	 * an instance of MyEntity3Id. A <code>null</code> value returns <code>true</code>.
+	 * 
+	 * @param value
+	 *            Value to check.
+	 * 
+	 * @return TRUE if it's a valid string, else FALSE.
+	 */
+	public static boolean isValid(final String value) {
+		if (value == null) {
+			return true;
+		}
+		// TODO Verify the value is valid!
+		return true;
+	}
+	
+	/**
+	 * Parses a given string and returns a new instance of MyEntity3Id.
+	 * 
+	 * @param value
+	 *            Value to convert. A <code>null</code> value returns
+	 *            <code>null</code>.
+	 * 
+	 * @return Converted value.
+	 */
+	public static MyEntity3Id valueOf(final String value) {
+		if (value == null) {
+			return null;
+		}
+		// TODO Parse string value and return new instance! 
+		// return new MyEntity3Id(value);
+		return null;
 	}
 	
 }

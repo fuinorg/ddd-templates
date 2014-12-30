@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.a;
+package tst.x.entityid;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.fuin.objects4j.common.Immutable;
-import tst2.x.a.MyEntity3IdConverter;
+import tst2.x.entityid.MyEntity3IdConverter;
 
 /**
  * Entity ID multiple attributes and base.

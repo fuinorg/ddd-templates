@@ -36,7 +36,7 @@ class EntityIdConverterArtifactFactoryTest {
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.a.MyEntityId", EXAMPLES_CONCRETE + ".x.a.MyEntityId")
+		refReg.putReference("x.entityid.MyEntityId", EXAMPLES_CONCRETE + ".x.entityid.MyEntityId")
 
 		val EntityIdConverterArtifactFactory testee = createTestee()
 		val EntityId entityId = model.find(typeof(EntityId), "MyEntityId")
@@ -45,7 +45,7 @@ class EntityIdConverterArtifactFactoryTest {
 		val result = new String(testee.create(entityId, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/a/MyEntityIdConverter.java".loadConcreteExample)
+		assertThat(result).isEqualTo("x/entityid/MyEntityIdConverter.java".loadConcreteExample)
 
 	}
 
@@ -60,7 +60,7 @@ class EntityIdConverterArtifactFactoryTest {
 	}
 
 	private def model() {
-		return parser.parse(Utils.readAsString(class.getResource("/MyEntityId.ddd")))
+		return parser.parse(Utils.readAsString(class.getResource("/entityid.ddd")))
 	}
 
 }

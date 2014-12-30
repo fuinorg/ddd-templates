@@ -5,7 +5,7 @@ context x {
 		type Integer
 	}
 	
-	namespace a {
+	namespace entityid {
 		
 		import x.types.*
 

@@ -15,27 +15,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst2.x.a;
+package tst.x.entityid;
 
 import javax.validation.constraints.NotNull;
 import org.fuin.ddd4j.ddd.EntityId;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.Immutable;
 import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Entity ID single attribute and without base.
+ * Entity ID single attribute and base.
  */
-@Immutable
-public final class MyEntity2Id implements EntityId, ValueObject {
+public abstract class AbstractMyEntityId extends AbstractStringValueObject implements EntityId, ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
 	@NotNull
-	private String id;
+	private String value;
 	
 	
 	/**
@@ -43,21 +42,21 @@ public final class MyEntity2Id implements EntityId, ValueObject {
 	 *
 	 *
 	 */
-	protected MyEntity2Id() {
+	protected AbstractMyEntityId() {
 		super();
 	}
 	
 	/**
 	 * Constructor with all data.
 	 *
-	 * @param id Persistent value.
+	 * @param value Persistent value.
 	 *
 	 */
-	public MyEntity2Id(@NotNull final String id) {
+	public AbstractMyEntityId(@NotNull final String value) {
 		super();
-		Contract.requireArgNotNull("id", id);
+		Contract.requireArgNotNull("value", value);
 		
-		this.id = id;
+		this.value = value;
 	}
 	
 
@@ -67,13 +66,13 @@ public final class MyEntity2Id implements EntityId, ValueObject {
 	 * @return Current value.
 	 */
 	 @NeverNull
-	public final String getId() {
-		return id;
+	public final String getValue() {
+		return value;
 	}
 	
 
 	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity2");
+	public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
 	
 	@Override
 	public final EntityType getType() {
@@ -84,11 +83,5 @@ public final class MyEntity2Id implements EntityId, ValueObject {
 	public final String asTypedString() {
 		return TYPE + " " + asString();
 	}
-	
-	@Override
-	public final String asString() {
-		return "" + getId();
-	}
-	
 	
 }

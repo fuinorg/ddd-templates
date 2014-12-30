@@ -36,8 +36,8 @@ class FinalEntityIdArtifactFactoryTest {
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.a.MyEntityIdConverter", EXAMPLES_CONCRETE + ".x.a.MyEntityIdConverter")
-		refReg.putReference("x.a.AbstractMyEntityId", EXAMPLES_ABSTRACT + ".x.a.AbstractMyEntityId")
+		refReg.putReference("x.entityid.MyEntityIdConverter", EXAMPLES_CONCRETE + ".x.entityid.MyEntityIdConverter")
+		refReg.putReference("x.entityid.AbstractMyEntityId", EXAMPLES_ABSTRACT + ".x.entityid.AbstractMyEntityId")
 
 		val FinalEntityIdArtifactFactory testee = createTestee()
 		val EntityId entityId = model.find(typeof(EntityId), "MyEntityId")
@@ -46,7 +46,7 @@ class FinalEntityIdArtifactFactoryTest {
 		val result = new String(testee.create(entityId, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/a/MyEntityId.java".loadAbstractExample)
+		assertThat(result).isEqualTo("x/entityid/MyEntityId.java".loadAbstractExample)
 
 	}
 	@Test
@@ -56,7 +56,7 @@ class FinalEntityIdArtifactFactoryTest {
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.a.AbstractMyEntity2Id", EXAMPLES_ABSTRACT + ".x.a.AbstractMy2EntityId")
+		refReg.putReference("x.entityid.AbstractMyEntity2Id", EXAMPLES_ABSTRACT + ".x.entityid.AbstractMy2EntityId")
 
 		val FinalEntityIdArtifactFactory testee = createTestee()
 		val EntityId entityId = model.find(typeof(EntityId), "MyEntity2Id")
@@ -65,7 +65,7 @@ class FinalEntityIdArtifactFactoryTest {
 		val result = new String(testee.create(entityId, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/a/MyEntity2Id.java".loadAbstractExample)
+		assertThat(result).isEqualTo("x/entityid/MyEntity2Id.java".loadAbstractExample)
 		
 	}	
 
@@ -76,8 +76,8 @@ class FinalEntityIdArtifactFactoryTest {
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.a.MyEntity3IdConverter", EXAMPLES_CONCRETE + ".x.a.MyEntity3IdConverter")
-		refReg.putReference("x.a.AbstractMyEntity3Id", EXAMPLES_ABSTRACT + ".x.a.AbstractMyEntity3Id")
+		refReg.putReference("x.entityid.MyEntity3IdConverter", EXAMPLES_CONCRETE + ".x.entityid.MyEntity3IdConverter")
+		refReg.putReference("x.entityid.AbstractMyEntity3Id", EXAMPLES_ABSTRACT + ".x.entityid.AbstractMyEntity3Id")
 
 		val FinalEntityIdArtifactFactory testee = createTestee()
 		val EntityId entityId = model.find(typeof(EntityId), "MyEntity3Id")
@@ -86,7 +86,7 @@ class FinalEntityIdArtifactFactoryTest {
 		val result = new String(testee.create(entityId, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/a/MyEntity3Id.java".loadAbstractExample)
+		assertThat(result).isEqualTo("x/entityid/MyEntity3Id.java".loadAbstractExample)
 
 	}
 	@Test
@@ -96,7 +96,7 @@ class FinalEntityIdArtifactFactoryTest {
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.a.AbstractMyEntity4Id", EXAMPLES_ABSTRACT + ".x.a.AbstractMy4EntityId")
+		refReg.putReference("x.entityid.AbstractMyEntity4Id", EXAMPLES_ABSTRACT + ".x.entityid.AbstractMy4EntityId")
 
 		val FinalEntityIdArtifactFactory testee = createTestee()
 		val EntityId entityId = model.find(typeof(EntityId), "MyEntity4Id")
@@ -105,7 +105,7 @@ class FinalEntityIdArtifactFactoryTest {
 		val result = new String(testee.create(entityId, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/a/MyEntity4Id.java".loadAbstractExample)
+		assertThat(result).isEqualTo("x/entityid/MyEntity4Id.java".loadAbstractExample)
 		
 	}
 		
@@ -120,7 +120,7 @@ class FinalEntityIdArtifactFactoryTest {
 	}
 
 	private def model() {
-		return parser.parse(Utils.readAsString(class.getResource("/MyEntityId.ddd")))
+		return parser.parse(Utils.readAsString(class.getResource("/entityid.ddd")))
 	}
 
 }

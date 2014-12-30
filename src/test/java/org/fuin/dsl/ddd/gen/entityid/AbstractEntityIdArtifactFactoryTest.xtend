@@ -44,7 +44,7 @@ class AbstractEntityIdArtifactFactoryTest {
 		val result = new String(testee.create(entityId, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/a/AbstractMyEntityId.java".loadAbstractExample)
+		assertThat(result).isEqualTo("x/entityid/AbstractMyEntityId.java".loadAbstractExample)
 
 	}
 	
@@ -63,7 +63,7 @@ class AbstractEntityIdArtifactFactoryTest {
 		val result = new String(testee.create(entityId, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/a/AbstractMyEntity2Id.java".loadAbstractExample)
+		assertThat(result).isEqualTo("x/entityid/AbstractMyEntity2Id.java".loadAbstractExample)
 		
 	}	
 
@@ -82,7 +82,7 @@ class AbstractEntityIdArtifactFactoryTest {
 		val result = new String(testee.create(entityId, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/a/AbstractMyEntity3Id.java".loadAbstractExample)
+		assertThat(result).isEqualTo("x/entityid/AbstractMyEntity3Id.java".loadAbstractExample)
 
 	}
 
@@ -101,7 +101,7 @@ class AbstractEntityIdArtifactFactoryTest {
 		val result = new String(testee.create(entityId, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/a/AbstractMyEntity4Id.java".loadAbstractExample)
+		assertThat(result).isEqualTo("x/entityid/AbstractMyEntity4Id.java".loadAbstractExample)
 		
 	}	
 
@@ -117,7 +117,7 @@ class AbstractEntityIdArtifactFactoryTest {
 	}
 
 	private def model() {
-		return parser.parse(Utils.readAsString(class.getResource("/MyEntityId.ddd")))
+		return parser.parse(Utils.readAsString(class.getResource("/entityid.ddd")))
 	}
 
 }

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst2.x.a;
+package tst2.x.entityid;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -29,19 +29,16 @@ import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Entity ID multiple attributes and base.
+ * Entity ID single attribute and base.
  */
 @Immutable
-@XmlJavaTypeAdapter(MyEntity3IdConverter.class)
-public final class MyEntity3Id extends AbstractStringValueObject implements EntityId, ValueObject {
+@XmlJavaTypeAdapter(MyEntityIdConverter.class)
+public final class MyEntityId extends AbstractStringValueObject implements EntityId, ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
 	@NotNull
-	private String a;
-	
-	@NotNull
-	private String b;
+	private String value;
 	
 	
 	/**
@@ -49,50 +46,37 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 	 *
 	 *
 	 */
-	protected MyEntity3Id() {
+	protected MyEntityId() {
 		super();
 	}
 	
 	/**
 	 * Constructor with all data.
 	 *
-	 * @param a Persistent value A.
-	 * @param b Persistent value B.
+	 * @param value Persistent value.
 	 *
 	 */
-	public MyEntity3Id(@NotNull final String a, @NotNull final String b) {
+	public MyEntityId(@NotNull final String value) {
 		super();
-		Contract.requireArgNotNull("a", a);
-		Contract.requireArgNotNull("b", b);
+		Contract.requireArgNotNull("value", value);
 		
-		this.a = a;
-		this.b = b;
+		this.value = value;
 	}
 	
 
 	/**
-	 * Returns: Persistent value A.
+	 * Returns: Persistent value.
 	 *
 	 * @return Current value.
 	 */
 	 @NeverNull
-	public final String getA() {
-		return a;
-	}
-	
-	/**
-	 * Returns: Persistent value B.
-	 *
-	 * @return Current value.
-	 */
-	 @NeverNull
-	public final String getB() {
-		return b;
+	public final String getValue() {
+		return value;
 	}
 	
 
 	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity3");
+	public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
 	
 	@Override
 	public final EntityType getType() {
@@ -106,19 +90,17 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 	
 	@Override
 	public final String asBaseType() {
-		// TODO Implement!
-		return null;
+		return getValue();
 	}
 	
 	@Override
 	public final String asString() {
-		// TODO Implement!
-		return null;
+		return "" + getValue();
 	}
 	
 	/**
 	 * Returns the information if a given string can be converted into
-	 * an instance of MyEntity3Id. A <code>null</code> value returns <code>true</code>.
+	 * an instance of MyEntityId. A <code>null</code> value returns <code>true</code>.
 	 * 
 	 * @param value
 	 *            Value to check.
@@ -134,7 +116,7 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 	}
 	
 	/**
-	 * Parses a given string and returns a new instance of MyEntity3Id.
+	 * Parses a given string and returns a new instance of MyEntityId.
 	 * 
 	 * @param value
 	 *            Value to convert. A <code>null</code> value returns
@@ -142,12 +124,12 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 	 * 
 	 * @return Converted value.
 	 */
-	public static MyEntity3Id valueOf(final String value) {
+	public static MyEntityId valueOf(final String value) {
 		if (value == null) {
 			return null;
 		}
 		// TODO Parse string value and return new instance! 
-		// return new MyEntity3Id(value);
+		// return new MyEntityId(value);
 		return null;
 	}
 	
