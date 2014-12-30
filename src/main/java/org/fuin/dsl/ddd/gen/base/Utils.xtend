@@ -1,5 +1,6 @@
 package org.fuin.dsl.ddd.gen.base
 
+import java.io.File
 import java.io.InputStream
 import java.net.URL
 import java.util.ArrayList
@@ -71,4 +72,26 @@ class Utils {
 		}
 	}
 
+	/**
+	 * Reads the file and returns the bytes as String.
+	 * 
+	 * @param file File.
+	 * 
+	 * @return Content from the file converted into a String. 
+	 */
+	def static String readAsString(File file) {
+		readAsString(file.toURI .toURL)
+	}
+
+	/**
+	 * Reads the file and returns the bytes as String.
+	 * 
+	 * @param file File.
+	 * 
+	 * @return Content from the file converted into a String. 
+	 */
+	def static String readAsString(String filename) {
+		readAsString(new File(filename))
+	}
+	
 }

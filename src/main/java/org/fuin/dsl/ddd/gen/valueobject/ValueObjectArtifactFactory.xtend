@@ -68,7 +68,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 				
 				«new SrcVarsDecl(ctx, "private", (vo.base == null), vo)»
 			
-				«new SrcConstructorsWithParamsAssignment(ctx, vo)»
+				«new SrcConstructorsWithParamsAssignment(ctx, vo, false)»
 				
 				«new SrcGetters(ctx, "public final", vo.variables)»
 				

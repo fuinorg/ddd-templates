@@ -37,17 +37,24 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	 * 
 	 * @param ctx Context.
 	 * @param vo Value object.
+	 * @param abstr Generate abstract class?
 	 */
-	new(CodeSnippetContext ctx, AbstractVO vo) {
+	new(CodeSnippetContext ctx, AbstractVO vo, boolean abstr) {
 		this.ctx = ctx
 		this.constructors = new ArrayList<ConstructorData>()
-		constructors.add(new ConstructorData("/** Default constructor. */", "protected", vo.name, null, null))
+		var String name;
+		if (abstr) {
+			name = "Abstract" + vo.name
+		} else {
+			name = vo.name
+		}
+		constructors.add(new ConstructorData("/** Default constructor. */", "protected", name, null, null))
 		if ((vo.constructors == null) || (vo.constructors.size == 0)) {
 			constructors.add(
-				new ConstructorData("/** Constructor with all data. */", "public", vo.name, vo.variables, null))
+				new ConstructorData("/** Constructor with all data. */", "public", name, vo.variables, null))
 		} else {
 			for (con : vo.constructors.nullSafe) {
-				this.constructors.add(new ConstructorData("public", vo.name, con))
+				this.constructors.add(new ConstructorData("public", name, con))
 			}
 		}
 	}

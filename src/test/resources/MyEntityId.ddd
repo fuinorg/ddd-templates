@@ -1,0 +1,32 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+	}
+	
+	namespace a {
+		
+		import x.types.*
+
+		aggregate-id MyAggregateId identifies MyAggregate base String {}
+
+		aggregate MyAggregate identifier MyAggregateId {}
+
+		entity MyEntity identifier MyEntityId root MyAggregate {}
+
+		/** Uniquely identifies MyEntity. */
+		entity-id MyEntityId identifies MyEntity base String {
+			
+			slabel "EID"
+			label "Entity identifier"
+			tooltip "Identifies the entity within the aggregate"
+			
+			/** Persistent value. */
+			String value 
+			
+		}
+
+	}
+
+}

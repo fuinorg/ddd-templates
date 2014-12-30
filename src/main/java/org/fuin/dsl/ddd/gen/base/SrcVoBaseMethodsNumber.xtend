@@ -77,16 +77,6 @@ class SrcVoBaseMethodsNumber implements CodeSnippet {
 				return new «typeName»(value);
 			}
 			
-			@Override
-			public Integer asBaseType() {
-				return val;
-			}
-			
-			@Override
-			public String asString() {
-				return "" + val;
-			}
-			
 			/**
 			 * Parses a given String and returns a new instance of «typeName».
 			 * 

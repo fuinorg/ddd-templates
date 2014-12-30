@@ -10,6 +10,12 @@ import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
+	public val static KEY_COPYRIGHT_HEADER = "copyrightHeader"
+
+	public val static KEY_BASE_PKG = "basepkg"
+	
+	public val static KEY_PKG = "pkg"
+
 	String artifactName;
 
 	Map<String, String> varMap;
@@ -35,6 +41,14 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		return varMap.nullSafe.get("pkg")
 	}
 
+	def String getCopyrightHeader() {
+		val String header = varMap.nullSafe.get("copyrightHeader")
+		if (header == null) {
+			return ""
+		}
+		return header
+	}
+
 	protected def String getVar(String key, String defaultVal) {
 		val str = this.varMap.nullSafe.get(key)
 		if (str == null) {
@@ -45,14 +59,6 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	def String contextPkg(String ctxName) {
 		return getBasePkg() + "." + ctxName + "." + getPkg()
-	}
-
-	def String getCopyrightHeader() {
-		val String header = varMap.nullSafe.get("copyrightHeader")
-		if (header == null) {
-			return ""
-		}
-		return header
 	}
 
 	def String asPackage(Namespace ns) {

@@ -9,7 +9,6 @@ import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
-import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethods
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -18,11 +17,10 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
-class EntityIdArtifactFactory extends AbstractSource<EntityId> {
+class AbstractEntityIdArtifactFactory extends AbstractSource<EntityId> {
 
 	override getModelType() {
 		typeof(EntityId)
@@ -30,14 +28,14 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 
 	override create(EntityId entityId, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val className = entityId.name
+		val className = entityId.abstractName
 		val Namespace ns = entityId.namespace;
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(entityId.uniqueName, fqn)
+		refReg.putReference(entityId.uniqueAbstractName, fqn)
 
 		if (preparationRun) {
 
@@ -54,24 +52,20 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 	}
 
 	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityId")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.StringBasedEntityType")
-		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
 		ctx.requiresImport("org.fuin.objects4j.vo.ValueObject")
 	}
 
 	def addReferences(CodeSnippetContext ctx, EntityId entityId) {
-		ctx.requiresReference(entityId.uniqueName + "Converter")
+		// Not needed
 	}
 
 	def create(SimpleCodeSnippetContext ctx, EntityId id, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDoc(id)»
-			@Immutable
-			@XmlJavaTypeAdapter(«id.name»Converter.class)
-			public final class «className» «new SrcVoBaseOptionalExtends(ctx, id.base)»implements EntityId, ValueObject {
+			public abstract class «className» «new SrcVoBaseOptionalExtends(ctx, id.base)»implements EntityId, ValueObject {
 			
 				private static final long serialVersionUID = 1000L;
 				
@@ -80,7 +74,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 			
 				«new SrcVarsDecl(ctx, "private", false, id)»
 				
-				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
+				«new SrcConstructorsWithParamsAssignment(ctx, id, true)»
 			
 				«new SrcGetters(ctx, "public final", id.variables)»
 			
@@ -93,18 +87,6 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 				public final String asTypedString() {
 					return TYPE + " " + asString();
 				}
-				
-				@Override
-				public final «id.baseTypeName» asBaseType() {
-					return getValue();
-				}
-				
-				@Override
-				public final String asString() {
-					return "" + getValue();
-				}
-				
-				«new SrcVoBaseMethods(ctx, id)»
 				
 			}
 		'''

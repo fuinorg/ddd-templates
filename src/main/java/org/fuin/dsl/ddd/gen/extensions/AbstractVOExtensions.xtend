@@ -30,5 +30,21 @@ class AbstractVOExtensions {
 		}
 		return null
 	}
-
+	
+	
+	/**
+	 * Returns the base type name for a value object.
+	 * 
+	 * @param vo Value object.
+	 * 
+	 * @return Name or null.
+	 */	
+	def static String baseTypeName(AbstractVO vo) {
+		if (vo.baseType == null) {
+			return null
+		} else {
+			return vo.baseType.name
+		}
+	}
+	
 }

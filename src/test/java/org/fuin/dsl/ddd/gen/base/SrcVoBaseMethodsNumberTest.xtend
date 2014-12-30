@@ -77,16 +77,6 @@ class SrcVoBaseMethodsNumberTest {
 					return new MyEntityId(value);
 				}
 				
-				@Override
-				public Integer asBaseType() {
-					return val;
-				}
-				
-				@Override
-				public String asString() {
-					return "" + val;
-				}
-				
 				/**
 				 * Parses a given String and returns a new instance of MyEntityId.
 				 * 

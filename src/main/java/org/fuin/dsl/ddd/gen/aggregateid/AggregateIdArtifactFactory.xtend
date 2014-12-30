@@ -78,7 +78,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 				«new SrcVarsDecl(ctx, "private", false, id)»
 			
-				«new SrcConstructorsWithParamsAssignment(ctx, id)»
+				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
 			
 				«new SrcGetters(ctx, "public final", id.variables)»
 			

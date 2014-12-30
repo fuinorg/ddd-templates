@@ -29,11 +29,7 @@ class SrcVoBaseMethods implements CodeSnippet {
 			throw new IllegalArgumentException("vo cannot be null")
 		}
 		this.vo = vo
-		if (vo.baseType == null) {
-			this.baseName = null
-		} else {
-			this.baseName = vo.baseType.name
-		}
+		this.baseName = vo.baseTypeName
 	}
 
 	override toString() {
