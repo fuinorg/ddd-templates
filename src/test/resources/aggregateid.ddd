@@ -1,0 +1,61 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+	}
+	
+	namespace aggregateid {
+		
+		import x.types.*
+
+		aggregate MyAggregate identifier MyAggregateId {}
+
+		/** Aggregate ID single attribute and base. */
+		aggregate-id MyAggregateId identifies MyAggregate base String {
+			
+			/** Persistent value. */
+			String value 
+			
+		}
+
+		aggregate MyAggregate2 identifier MyAggregate2Id {}
+
+		/** Aggregate ID single attribute and without base. */
+		aggregate-id MyAggregate2Id identifies MyAggregate2 {
+			
+			/** Persistent value. */
+			String id 
+			
+		}
+
+		aggregate MyAggregate3 identifier MyAggregate3Id {}
+
+		/** Aggregate ID multiple attributes and base. */
+		aggregate-id MyAggregate3Id identifies MyAggregate3 base String {
+			
+			/** Persistent value A. */
+			String a 
+			
+			/** Persistent value B. */
+			String b
+			 
+		}
+
+		aggregate MyAggregate4 identifier MyAggregate4Id {}
+
+		/** Aggregate ID multiple attribute and without base. */
+		aggregate-id MyAggregate4Id identifies MyAggregate4 {
+			
+			/** Persistent value A. */
+			String a 
+			
+			/** Persistent value B. */
+			String b
+			
+		}
+
+
+	}
+
+}

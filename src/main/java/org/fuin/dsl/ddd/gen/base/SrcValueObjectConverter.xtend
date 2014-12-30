@@ -7,6 +7,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 
 /**
  * Creates the source code for a value object converter.
@@ -24,6 +25,8 @@ class SrcValueObjectConverter implements CodeSnippet {
 	private val String targetTypeName
 
 	private val boolean implementsSingleEntityIdFactory
+	
+	private val boolean aggregateId
 
 	private val String className
 
@@ -48,6 +51,11 @@ class SrcValueObjectConverter implements CodeSnippet {
 		this.voTypeName = vo.name
 		this.targetTypeName = targetType.name
 		this.implementsSingleEntityIdFactory = implementsSingleEntityIdFactory
+		if (vo instanceof AggregateId) {
+			aggregateId = true
+		} else {
+			aggregateId = false
+		}
 		this.className = voTypeName + "Converter"
 
 		ctx = new SimpleCodeSnippetContext(refReg)
@@ -57,7 +65,11 @@ class SrcValueObjectConverter implements CodeSnippet {
 		ctx.requiresImport("org.fuin.objects4j.common.ThreadSafe")
 		ctx.requiresImport("org.fuin.objects4j.vo.AbstractValueObjectConverter")
 		if (implementsSingleEntityIdFactory) {
-			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityId")
+			if (aggregateId) {
+				ctx.requiresImport("org.fuin.ddd4j.ddd.AggregateRootId")
+			} else {
+				ctx.requiresImport("org.fuin.ddd4j.ddd.EntityId")			
+			}
 			ctx.requiresImport("org.fuin.ddd4j.ddd.SingleEntityIdFactory")
 		}
 		ctx.requiresReference(vo.uniqueName)
@@ -105,9 +117,9 @@ class SrcValueObjectConverter implements CodeSnippet {
 					return value.asBaseType();
 				}
 			
-				«IF implementsSingleEntityIdFactory»
+				«IF implementsSingleEntityIdFactory»					
 					@Override
-					public final EntityId createEntityId(final String id) {
+					public final «IF aggregateId»AggregateRootId«ELSE»EntityId«ENDIF» createEntityId(final String id) {
 						return «voTypeName».valueOf(id);
 					}
 				«ENDIF»

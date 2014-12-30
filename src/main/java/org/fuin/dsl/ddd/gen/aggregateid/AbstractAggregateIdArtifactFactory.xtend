@@ -10,7 +10,6 @@ import org.fuin.dsl.ddd.gen.base.SrcEntityIdTypeMethods
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
-import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethods
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -19,9 +18,10 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
-class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
+class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
 	override getModelType() {
 		typeof(AggregateId)
@@ -29,13 +29,14 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
 	override create(AggregateId aggregateId, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val className = aggregateId.getName()
-		val Namespace ns = aggregateId.eContainer() as Namespace;
+		val className = aggregateId.abstractName
+		val Namespace ns = aggregateId.namespace;
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
+
 		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(aggregateId.uniqueName, fqn)
+		refReg.putReference(aggregateId.uniqueAbstractName, fqn)
 
 		if (preparationRun) {
 
@@ -44,56 +45,44 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 		}
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports(aggregateId)
+		ctx.addImports
 		ctx.addReferences(aggregateId)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, aggregateId, pkg, className).toString().getBytes("UTF-8"));
 	}
 
-	def addImports(CodeSnippetContext ctx, AggregateId aggregateId) {
-		if (aggregateId.base != null) {
-			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
-		}
+	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("org.fuin.ddd4j.ddd.AggregateRootId")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.StringBasedEntityType")
-		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
 		ctx.requiresImport("org.fuin.objects4j.vo.ValueObject")
 	}
 
-	def addReferences(CodeSnippetContext ctx, AggregateId entityId) {
-		if (entityId.base != null) {
-			ctx.requiresReference(entityId.uniqueName + "Converter")
-		}
+	def addReferences(CodeSnippetContext ctx, AggregateId aggregateId) {
+		// Not needed
 	}
 
 	def create(SimpleCodeSnippetContext ctx, AggregateId id, String pkg, String className) {
-		val src = ''' 
+		val String src = ''' 
 			«new SrcJavaDoc(id)»
-			@Immutable
-			«IF id.base != null»
-			@XmlJavaTypeAdapter(«id.name»Converter.class)
-			«ENDIF»
-			public final class «className» «new SrcVoBaseOptionalExtends(ctx, id.base)»implements AggregateRootId, ValueObject {
+			public abstract class «className» «new SrcVoBaseOptionalExtends(ctx, id.base)»implements AggregateRootId, ValueObject {
 			
 				private static final long serialVersionUID = 1000L;
-			
+				
 				«new SrcVarsDecl(ctx, "private", false, id)»
-			
-				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
+				
+				«new SrcConstructorsWithParamsAssignment(ctx, id, true)»
 			
 				«new SrcGetters(ctx, "public final", id.variables)»
 			
 				«new SrcEntityIdTypeMethods(ctx, id.entity.name)»
-			
-				«new SrcVoBaseMethods(ctx, id)»
-			
+				
 			}
 		'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
-		
+
 	}
 
 }
