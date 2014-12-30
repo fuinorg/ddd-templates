@@ -22,7 +22,7 @@ import org.fuin.objects4j.common.Immutable;
 import tst2.x.a.MyEntityIdConverter;
 
 /**
- * Uniquely identifies MyEntity.
+ * Entity ID single attribute and base.
  */
 @Immutable
 @XmlJavaTypeAdapter(MyEntityIdConverter.class)

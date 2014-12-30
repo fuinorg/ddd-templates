@@ -30,7 +30,7 @@ class FinalEntityIdArtifactFactoryTest {
 	private ParseHelper<DomainModel> parser
 
 	@Test
-	def void testCreateDomainEvent() {
+	def void testCreateSingleAttributeAndBaseType() {
 
 		// PREPARE
 		val context = new HashMap<String, Object>()
@@ -49,6 +49,25 @@ class FinalEntityIdArtifactFactoryTest {
 		assertThat(result).isEqualTo("x/a/MyEntityId.java".loadAbstractExample)
 
 	}
+	@Test
+	def void testCreateSingleAttributeNoBaseType() {
+		
+		// PREPARE
+		val context = new HashMap<String, Object>()
+		val refReg = context.codeReferenceRegistry
+		refReg.putReference("x.types.String", "java.lang.String")
+		refReg.putReference("x.a.AbstractMyEntity2Id", EXAMPLES_ABSTRACT + ".x.a.AbstractMy2EntityId")
+
+		val FinalEntityIdArtifactFactory testee = createTestee()
+		val EntityId entityId = model.find(typeof(EntityId), "MyEntity2Id")
+
+		// TEST
+		val result = new String(testee.create(entityId, context, false).data)
+
+		// VERIFY
+		assertThat(result).isEqualTo("x/a/MyEntity2Id.java".loadAbstractExample)
+		
+	}	
 
 	private def createTestee() {
 		val factory = new FinalEntityIdArtifactFactory()

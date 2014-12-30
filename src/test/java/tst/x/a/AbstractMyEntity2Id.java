@@ -23,21 +23,20 @@ import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Entity ID single attribute and base.
+ * Entity ID single attribute and without base.
  */
-public abstract class AbstractMyEntityId extends AbstractStringValueObject implements EntityId, ValueObject {
+public abstract class AbstractMyEntity2Id implements EntityId, ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
 	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
+	public static final EntityType TYPE = new StringBasedEntityType("MyEntity2");
 
 	@NotNull
-	private String value;
+	private String id;
 	
 	
 	/**
@@ -45,21 +44,21 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	 *
 	 *
 	 */
-	protected AbstractMyEntityId() {
+	protected AbstractMyEntity2Id() {
 		super();
 	}
 	
 	/**
 	 * Constructor with all data.
 	 *
-	 * @param value Persistent value.
+	 * @param id Persistent value.
 	 *
 	 */
-	public AbstractMyEntityId(@NotNull final String value) {
+	public AbstractMyEntity2Id(@NotNull final String id) {
 		super();
-		Contract.requireArgNotNull("value", value);
+		Contract.requireArgNotNull("id", id);
 		
-		this.value = value;
+		this.id = id;
 	}
 	
 
@@ -69,8 +68,8 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	 * @return Current value.
 	 */
 	 @NeverNull
-	public final String getValue() {
-		return value;
+	public final String getId() {
+		return id;
 	}
 	
 

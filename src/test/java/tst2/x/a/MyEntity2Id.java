@@ -15,29 +15,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.a;
+package tst2.x.a;
 
 import javax.validation.constraints.NotNull;
 import org.fuin.ddd4j.ddd.EntityId;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.Immutable;
 import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Entity ID single attribute and base.
+ * Entity ID single attribute and without base.
  */
-public abstract class AbstractMyEntityId extends AbstractStringValueObject implements EntityId, ValueObject {
+@Immutable
+public final class MyEntity2Id implements EntityId, ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
 	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
+	public static final EntityType TYPE = new StringBasedEntityType("MyEntity2");
 
 	@NotNull
-	private String value;
+	private String id;
 	
 	
 	/**
@@ -45,21 +46,21 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	 *
 	 *
 	 */
-	protected AbstractMyEntityId() {
+	protected MyEntity2Id() {
 		super();
 	}
 	
 	/**
 	 * Constructor with all data.
 	 *
-	 * @param value Persistent value.
+	 * @param id Persistent value.
 	 *
 	 */
-	public AbstractMyEntityId(@NotNull final String value) {
+	public MyEntity2Id(@NotNull final String id) {
 		super();
-		Contract.requireArgNotNull("value", value);
+		Contract.requireArgNotNull("id", id);
 		
-		this.value = value;
+		this.id = id;
 	}
 	
 
@@ -69,8 +70,8 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	 * @return Current value.
 	 */
 	 @NeverNull
-	public final String getValue() {
-		return value;
+	public final String getId() {
+		return id;
 	}
 	
 
@@ -83,5 +84,11 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	public final String asTypedString() {
 		return TYPE + " " + asString();
 	}
+	
+	@Override
+	public final String asString() {
+		return "" + getId();
+	}
+	
 	
 }

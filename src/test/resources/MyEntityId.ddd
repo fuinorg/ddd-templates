@@ -15,15 +15,21 @@ context x {
 
 		entity MyEntity identifier MyEntityId root MyAggregate {}
 
-		/** Uniquely identifies MyEntity. */
+		/** Entity ID single attribute and base. */
 		entity-id MyEntityId identifies MyEntity base String {
-			
-			slabel "EID"
-			label "Entity identifier"
-			tooltip "Identifies the entity within the aggregate"
 			
 			/** Persistent value. */
 			String value 
+			
+		}
+
+		entity MyEntity2 identifier MyEntity2Id root MyAggregate {}
+
+		/** Entity ID single attribute and without base. */
+		entity-id MyEntity2Id identifies MyEntity2 {
+			
+			/** Persistent value. */
+			String id 
 			
 		}
 

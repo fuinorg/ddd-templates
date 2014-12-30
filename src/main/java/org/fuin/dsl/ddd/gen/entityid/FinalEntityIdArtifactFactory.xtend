@@ -14,9 +14,10 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
 
 class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 
@@ -43,20 +44,24 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 		}
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports
+		ctx.addImports(entityId)
 		ctx.addReferences(entityId)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, entityId, pkg, className, abstractClassName).toString().getBytes("UTF-8"));
 	}
 
-	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
+	def addImports(CodeSnippetContext ctx, EntityId entityId) {
+		if (entityId.base != null) {
+			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")			
+		}
 		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
 	}
 
 	def addReferences(CodeSnippetContext ctx, EntityId entityId) {
-		ctx.requiresReference(entityId.uniqueName + "Converter")
+		if (entityId.base != null) {
+			ctx.requiresReference(entityId.uniqueName + "Converter")			
+		}
 		ctx.requiresReference(entityId.uniqueAbstractName)
 	}
 
@@ -64,21 +69,27 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 		val String src = ''' 
 			«new SrcJavaDoc(id)»
 			@Immutable
+			«IF id.base != null»
 			@XmlJavaTypeAdapter(«id.name»Converter.class)
+			«ENDIF»
 			public final class «className» extends «abstractClassName» {
 			
 				private static final long serialVersionUID = 1000L;
 				
+				«IF (id.base != null) && (id.variables.nullSafe.size == 1)»
 				@Override
-				public final «id.baseTypeName» asBaseType() {
-					return getValue();
+				public final «id.base.simpleName(ctx)» asBaseType() {
+					return get«id.variables.first.name.toFirstUpper»();
 				}
 				
+				«ENDIF»
+				«IF (id.variables.nullSafe.size == 1)»
 				@Override
 				public final String asString() {
-					return "" + getValue();
+					return "" + get«id.variables.first.name.toFirstUpper»();
 				}
 				
+				«ENDIF»
 				«new SrcVoBaseMethods(ctx, id)»
 				
 			}

@@ -29,7 +29,7 @@ import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Uniquely identifies MyEntity.
+ * Entity ID single attribute and base.
  */
 @Immutable
 @XmlJavaTypeAdapter(MyEntityIdConverter.class)
