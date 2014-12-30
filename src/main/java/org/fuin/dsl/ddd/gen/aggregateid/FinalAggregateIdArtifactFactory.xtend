@@ -14,6 +14,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
@@ -74,10 +75,20 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 				private static final long serialVersionUID = 1000L;
 				
+				@Override
+				public final String asString() {
+					«IF (id.variables.nullSafe.size == 1)»
+					return "" + get«id.variables.first.name.toFirstUpper»();
+					«ELSE»
+					// TODO Implement!
+					return null;
+					«ENDIF»
+				}
+			
 				«new SrcVoBaseMethods(ctx, id)»
 				
 			}
-		'''
+			'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 

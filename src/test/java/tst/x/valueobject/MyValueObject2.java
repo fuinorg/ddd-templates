@@ -15,23 +15,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.aggregateid;
+package tst.x.valueobject;
 
 import org.fuin.objects4j.common.Immutable;
 
 /**
- * Aggregate ID multiple attribute and without base.
+ * Value object single attribute and without base.
  */
 @Immutable
-public final class MyAggregate4Id extends AbstractMyAggregate4Id {
+public final class MyValueObject2 extends AbstractMyValueObject2 {
 
 	private static final long serialVersionUID = 1000L;
 	
-	@Override
-	public final String asString() {
-		// TODO Implement!
-		return null;
-	}
-
 	
 }

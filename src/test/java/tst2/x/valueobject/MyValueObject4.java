@@ -15,27 +15,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst2.x.aggregateid;
+package tst2.x.valueobject;
 
 import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.AggregateRootId;
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.ddd4j.ddd.StringBasedEntityType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.Immutable;
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Aggregate ID single attribute and without base.
+ * Value object multiple attribute and without base.
  */
-@Immutable
-public final class MyAggregate2Id implements AggregateRootId, ValueObject {
+@XmlRootElement(name = "my-value-object4")
+public final class MyValueObject4 implements ValueObject {
 
-private static final long serialVersionUID = 1000L;
-
+	private static final long serialVersionUID = 1000L;
+	
 	@NotNull
-	private String id;
+	@XmlElement(name = "a")
+	private String a;
+	
+	@NotNull
+	@XmlElement(name = "b")
+	private String b;
 	
 
 	/**
@@ -43,52 +46,47 @@ private static final long serialVersionUID = 1000L;
 	 *
 	 *
 	 */
-	protected MyAggregate2Id() {
+	protected MyValueObject4() {
 		super();
 	}
 	
 	/**
 	 * Constructor with all data.
 	 *
-	 * @param id Persistent value.
+	 * @param a Persistent value A.
+	 * @param b Persistent value B.
 	 *
 	 */
-	public MyAggregate2Id(@NotNull final String id) {
+	public MyValueObject4(@NotNull final String a, @NotNull final String b) {
 		super();
-		Contract.requireArgNotNull("id", id);
+		Contract.requireArgNotNull("a", a);
+		Contract.requireArgNotNull("b", b);
 		
-		this.id = id;
+		this.a = a;
+		this.b = b;
 	}
 	
-
+	
 	/**
-	 * Returns: Persistent value.
+	 * Returns: Persistent value A.
 	 *
 	 * @return Current value.
 	 */
 	 @NeverNull
-	public final String getId() {
-		return id;
+	public final String getA() {
+		return a;
 	}
 	
-
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyAggregate2");
-	
-	@Override
-	public final EntityType getType() {
-		return TYPE;
+	/**
+	 * Returns: Persistent value B.
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	public final String getB() {
+		return b;
 	}
 	
-	@Override
-	public final String asTypedString() {
-		return TYPE + " " + asString();
-	}
-
-	@Override
-	public final String asString() {
-		return "" + getId();
-	}
-
+	
 	
 }

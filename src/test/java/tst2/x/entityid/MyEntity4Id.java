@@ -106,6 +106,6 @@ public final class MyEntity4Id implements EntityId, ValueObject {
 		// TODO Implement!
 		return null;
 	}
-	
-	
+
+
 }

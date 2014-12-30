@@ -31,13 +31,13 @@ public final class MyEntity3Id extends AbstractMyEntity3Id {
 	private static final long serialVersionUID = 1000L;
 	
 	@Override
-	public final String asBaseType() {
+	public final String asString() {
 		// TODO Implement!
 		return null;
 	}
-	
+
 	@Override
-	public final String asString() {
+	public final String asBaseType() {
 		// TODO Implement!
 		return null;
 	}

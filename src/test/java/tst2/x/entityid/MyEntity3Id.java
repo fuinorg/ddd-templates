@@ -105,13 +105,13 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 	}
 	
 	@Override
-	public final String asBaseType() {
+	public final String asString() {
 		// TODO Implement!
 		return null;
 	}
-	
+
 	@Override
-	public final String asString() {
+	public final String asBaseType() {
 		// TODO Implement!
 		return null;
 	}
@@ -150,5 +150,5 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 		// return new MyEntity3Id(value);
 		return null;
 	}
-	
+
 }

@@ -1,0 +1,53 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+	}
+	
+	namespace valueobject {
+		
+		import x.types.*
+
+		/** Value object single attribute and base. */
+		value-object MyValueObject base String {
+			
+			/** Persistent value. */
+			String value 
+			
+		}
+
+		/** Value object single attribute and without base. */
+		value-object MyValueObject2 {
+			
+			/** Persistent value. */
+			String id 
+			
+		}
+
+		/** Value object multiple attributes and base. */
+		value-object MyValueObject3 base String {
+			
+			/** Persistent value A. */
+			String a 
+			
+			/** Persistent value B. */
+			String b
+			 
+		}
+
+		/** Value object multiple attribute and without base. */
+		value-object MyValueObject4  {
+			
+			/** Persistent value A. */
+			String a 
+			
+			/** Persistent value B. */
+			String b
+			
+		}
+
+
+	}
+
+}

@@ -48,16 +48,6 @@ class SrcVoBaseMethods implements CodeSnippet {
 		}
 		
 		«ENDIF»
-		@Override
-		public final String asString() {
-			«IF (vo.variables.nullSafe.size == 1)»
-			return "" + get«vo.variables.first.name.toFirstUpper»();
-			«ELSE»
-			// TODO Implement!
-			return null;
-			«ENDIF»
-		}
-		
 		«IF "String".equals(baseName)»
 			«new SrcVoBaseMethodsString(ctx, vo)»
 		«ELSEIF "UUID".equals(baseName)»

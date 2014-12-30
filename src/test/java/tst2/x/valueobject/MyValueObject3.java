@@ -15,34 +15,84 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.aggregateid;
+package tst2.x.valueobject;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import org.fuin.objects4j.common.Immutable;
-import tst2.x.aggregateid.MyAggregateIdConverter;
+import javax.validation.constraints.NotNull;
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.vo.AbstractStringValueObject;
+import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Aggregate ID single attribute and base.
+ * Value object multiple attributes and base.
  */
-@Immutable
-@XmlJavaTypeAdapter(MyAggregateIdConverter.class)
-public final class MyAggregateId extends AbstractMyAggregateId {
+public final class MyValueObject3 extends AbstractStringValueObject implements ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
-	@Override
-	public final String asString() {
-		return "" + getValue();
-	}
+	@NotNull
+	private String a;
+	
+	@NotNull
+	private String b;
+	
 
+	/**
+	 * Default constructor.
+	 *
+	 *
+	 */
+	protected MyValueObject3() {
+		super();
+	}
+	
+	/**
+	 * Constructor with all data.
+	 *
+	 * @param a Persistent value A.
+	 * @param b Persistent value B.
+	 *
+	 */
+	public MyValueObject3(@NotNull final String a, @NotNull final String b) {
+		super();
+		Contract.requireArgNotNull("a", a);
+		Contract.requireArgNotNull("b", b);
+		
+		this.a = a;
+		this.b = b;
+	}
+	
+	
+	/**
+	 * Returns: Persistent value A.
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	public final String getA() {
+		return a;
+	}
+	
+	/**
+	 * Returns: Persistent value B.
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	public final String getB() {
+		return b;
+	}
+	
+	
 	@Override
 	public final String asBaseType() {
-		return getValue();
+		// TODO Implement!
+		return null;
 	}
 	
 	/**
 	 * Returns the information if a given string can be converted into
-	 * an instance of MyAggregateId. A <code>null</code> value returns <code>true</code>.
+	 * an instance of MyValueObject3. A <code>null</code> value returns <code>true</code>.
 	 * 
 	 * @param value
 	 *            Value to check.
@@ -58,7 +108,7 @@ public final class MyAggregateId extends AbstractMyAggregateId {
 	}
 	
 	/**
-	 * Parses a given string and returns a new instance of MyAggregateId.
+	 * Parses a given string and returns a new instance of MyValueObject3.
 	 * 
 	 * @param value
 	 *            Value to convert. A <code>null</code> value returns
@@ -66,12 +116,12 @@ public final class MyAggregateId extends AbstractMyAggregateId {
 	 * 
 	 * @return Converted value.
 	 */
-	public static MyAggregateId valueOf(final String value) {
+	public static MyValueObject3 valueOf(final String value) {
 		if (value == null) {
 			return null;
 		}
 		// TODO Parse string value and return new instance! 
-		// return new MyAggregateId(value);
+		// return new MyValueObject3(value);
 		return null;
 	}
 	

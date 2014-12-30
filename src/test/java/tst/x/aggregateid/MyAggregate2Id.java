@@ -31,6 +31,6 @@ public final class MyAggregate2Id extends AbstractMyAggregate2Id {
 	public final String asString() {
 		return "" + getId();
 	}
-	
+
 	
 }

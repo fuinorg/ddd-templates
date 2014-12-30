@@ -89,6 +89,6 @@ public final class MyEntity2Id implements EntityId, ValueObject {
 	public final String asString() {
 		return "" + getId();
 	}
-	
-	
+
+
 }

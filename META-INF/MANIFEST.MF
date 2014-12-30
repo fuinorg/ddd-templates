@@ -25,25 +25,26 @@ Export-Package: org.fuin.dsl.ddd.gen.event;version="0.1.0.SNAPSHOT";uses
  rg.junit,org.junit.runner",org.fuin.dsl.ddd.gen.entity;version="0.1.0.S
  NAPSHOT";uses:="org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd
  .gen.base,org.fuin.srcgen4j.commons,org.fuin.srcgen4j.core.emf",org.fui
- n.dsl.ddd.gen.valueobject;version="0.1.0.SNAPSHOT";uses:="org.fuin.dsl.
- ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.c
- ommons,org.fuin.srcgen4j.core.emf",org.fuin.dsl.ddd.gen.entityid;versio
- n="0.1.0.SNAPSHOT";uses:="org.eclipse.xtext.junit4,org.fuin.dsl.ddd,org
- .fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.
- srcgen4j.commons,org.fuin.srcgen4j.core.emf,org.junit,org.junit.runner"
- ,org.fuin.dsl.ddd.gen.except;version="0.1.0.SNAPSHOT";uses:="org.fuin.d
- sl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4
- j.commons,org.fuin.srcgen4j.core.emf",org.fuin.dsl.ddd.gen.aggregate;ve
- rsion="0.1.0.SNAPSHOT";uses:="org.fuin.dsl.ddd.domainDrivenDesignDsl,or
- g.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons,org.fuin.srcgen4j.cor
- e.emf",org.fuin.dsl.ddd.gen.constraint;version="0.1.0.SNAPSHOT";uses:="
- org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fu
- in.srcgen4j.commons,org.fuin.srcgen4j.core.emf",org.fuin.dsl.ddd.gen.en
- umobject;version="0.1.0.SNAPSHOT";uses:="org.fuin.dsl.ddd.domainDrivenD
- esignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons,org.fuin.s
- rcgen4j.core.emf",org.fuin.dsl.ddd.gen.extensions;version="0.1.0.SNAPSH
- OT";uses:="org.eclipse.emf.ecore,org.fuin.dsl.ddd.domainDrivenDesignDsl
- ,org.fuin.srcgen4j.core.emf"
+ n.dsl.ddd.gen.valueobject;version="0.1.0.SNAPSHOT";uses:="org.eclipse.x
+ text.junit4,org.fuin.dsl.ddd,org.fuin.dsl.ddd.domainDrivenDesignDsl,org
+ .fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons,org.fuin.srcgen4j.core
+ .emf,org.junit,org.junit.runner",org.fuin.dsl.ddd.gen.entityid;version=
+ "0.1.0.SNAPSHOT";uses:="org.eclipse.xtext.junit4,org.fuin.dsl.ddd,org.f
+ uin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.sr
+ cgen4j.commons,org.fuin.srcgen4j.core.emf,org.junit,org.junit.runner",o
+ rg.fuin.dsl.ddd.gen.except;version="0.1.0.SNAPSHOT";uses:="org.fuin.dsl
+ .ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.
+ commons,org.fuin.srcgen4j.core.emf",org.fuin.dsl.ddd.gen.aggregate;vers
+ ion="0.1.0.SNAPSHOT";uses:="org.fuin.dsl.ddd.domainDrivenDesignDsl,org.
+ fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons,org.fuin.srcgen4j.core.
+ emf",org.fuin.dsl.ddd.gen.constraint;version="0.1.0.SNAPSHOT";uses:="or
+ g.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin
+ .srcgen4j.commons,org.fuin.srcgen4j.core.emf",org.fuin.dsl.ddd.gen.enum
+ object;version="0.1.0.SNAPSHOT";uses:="org.fuin.dsl.ddd.domainDrivenDes
+ ignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons,org.fuin.src
+ gen4j.core.emf",org.fuin.dsl.ddd.gen.extensions;version="0.1.0.SNAPSHOT
+ ";uses:="org.eclipse.emf.ecore,org.fuin.dsl.ddd.domainDrivenDesignDsl,o
+ rg.fuin.srcgen4j.core.emf"
 Import-Package: com.google.common.base;version="[14.0,15)",com.google.co
  mmon.collect;version="[14.0,15)",javax.inject,org.apache.commons.io;ver
  sion="[1.4,2)",org.eclipse.emf.common.util,org.eclipse.emf.ecore,org.ec

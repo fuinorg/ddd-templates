@@ -35,7 +35,7 @@ import org.fuin.objects4j.vo.ValueObject;
 @XmlJavaTypeAdapter(MyAggregate3IdConverter.class)
 public final class MyAggregate3Id extends AbstractStringValueObject implements AggregateRootId, ValueObject {
 
-	private static final long serialVersionUID = 1000L;
+private static final long serialVersionUID = 1000L;
 
 	@NotNull
 	private String a;
@@ -105,13 +105,13 @@ public final class MyAggregate3Id extends AbstractStringValueObject implements A
 	}
 
 	@Override
-	public final String asBaseType() {
+	public final String asString() {
 		// TODO Implement!
 		return null;
 	}
-	
+
 	@Override
-	public final String asString() {
+	public final String asBaseType() {
 		// TODO Implement!
 		return null;
 	}
@@ -150,5 +150,5 @@ public final class MyAggregate3Id extends AbstractStringValueObject implements A
 		// return new MyAggregate3Id(value);
 		return null;
 	}
-
+	
 }

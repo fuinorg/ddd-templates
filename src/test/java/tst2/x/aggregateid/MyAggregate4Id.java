@@ -32,7 +32,7 @@ import org.fuin.objects4j.vo.ValueObject;
 @Immutable
 public final class MyAggregate4Id implements AggregateRootId, ValueObject {
 
-	private static final long serialVersionUID = 1000L;
+private static final long serialVersionUID = 1000L;
 
 	@NotNull
 	private String a;
@@ -106,6 +106,6 @@ public final class MyAggregate4Id implements AggregateRootId, ValueObject {
 		// TODO Implement!
 		return null;
 	}
-	
 
+	
 }

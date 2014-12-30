@@ -19,6 +19,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
@@ -69,7 +70,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 	}
 
 	def create(SimpleCodeSnippetContext ctx, AggregateId id, String pkg, String className) {
-		val src = ''' 
+		val src = '''
 			«new SrcJavaDoc(id)»
 			@Immutable
 			«IF id.base != null»
@@ -77,7 +78,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			«ENDIF»
 			public final class «className» «new SrcVoBaseOptionalExtends(ctx, id.base)»implements AggregateRootId, ValueObject {
 			
-				private static final long serialVersionUID = 1000L;
+			private static final long serialVersionUID = 1000L;
 			
 				«new SrcVarsDecl(ctx, "private", false, id)»
 			
@@ -87,13 +88,23 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 				«new SrcEntityIdTypeMethods(ctx, id.entity.name)»
 			
-				«new SrcVoBaseMethods(ctx, id)»
+				@Override
+				public final String asString() {
+					«IF (id.variables.nullSafe.size == 1)»
+						return "" + get«id.variables.first.name.toFirstUpper»();
+					«ELSE»
+						// TODO Implement!
+						return null;
+					«ENDIF»
+				}
 			
+				«new SrcVoBaseMethods(ctx, id)»
+				
 			}
-		'''
+			'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
-		
+
 	}
 
 }

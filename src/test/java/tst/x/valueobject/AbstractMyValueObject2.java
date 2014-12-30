@@ -15,23 +15,56 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.aggregateid;
+package tst.x.valueobject;
 
-import org.fuin.objects4j.common.Immutable;
+import javax.validation.constraints.NotNull;
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Aggregate ID multiple attribute and without base.
+ * Value object single attribute and without base.
  */
-@Immutable
-public final class MyAggregate4Id extends AbstractMyAggregate4Id {
+public abstract class AbstractMyValueObject2 implements ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
-	@Override
-	public final String asString() {
-		// TODO Implement!
-		return null;
-	}
-
+	@NotNull
+	private String id;
 	
+	
+	/**
+	 * Default constructor.
+	 *
+	 *
+	 */
+	protected AbstractMyValueObject2() {
+		super();
+	}
+	
+	/**
+	 * Constructor with all data.
+	 *
+	 * @param id Persistent value.
+	 *
+	 */
+	public AbstractMyValueObject2(@NotNull final String id) {
+		super();
+		Contract.requireArgNotNull("id", id);
+		
+		this.id = id;
+	}
+	
+
+	/**
+	 * Returns: Persistent value.
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	public final String getId() {
+		return id;
+	}
+	
+
 }

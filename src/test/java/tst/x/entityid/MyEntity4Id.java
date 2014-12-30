@@ -32,6 +32,6 @@ public final class MyEntity4Id extends AbstractMyEntity4Id {
 		// TODO Implement!
 		return null;
 	}
-	
+
 	
 }

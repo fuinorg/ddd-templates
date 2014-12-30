@@ -15,49 +15,45 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst2.x.aggregateid;
+package tst.x.valueobject;
 
 import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.AggregateRootId;
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.Immutable;
 import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Aggregate ID single attribute and without base.
+ * Value object single attribute and base.
  */
-@Immutable
-public final class MyAggregate2Id implements AggregateRootId, ValueObject {
+public abstract class AbstractMyValueObject extends AbstractStringValueObject implements ValueObject {
 
-private static final long serialVersionUID = 1000L;
-
-	@NotNull
-	private String id;
+	private static final long serialVersionUID = 1000L;
 	
-
+	@NotNull
+	private String value;
+	
+	
 	/**
 	 * Default constructor.
 	 *
 	 *
 	 */
-	protected MyAggregate2Id() {
+	protected AbstractMyValueObject() {
 		super();
 	}
 	
 	/**
 	 * Constructor with all data.
 	 *
-	 * @param id Persistent value.
+	 * @param value Persistent value.
 	 *
 	 */
-	public MyAggregate2Id(@NotNull final String id) {
+	public AbstractMyValueObject(@NotNull final String value) {
 		super();
-		Contract.requireArgNotNull("id", id);
+		Contract.requireArgNotNull("value", value);
 		
-		this.id = id;
+		this.value = value;
 	}
 	
 
@@ -67,28 +63,9 @@ private static final long serialVersionUID = 1000L;
 	 * @return Current value.
 	 */
 	 @NeverNull
-	public final String getId() {
-		return id;
+	public final String getValue() {
+		return value;
 	}
 	
 
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyAggregate2");
-	
-	@Override
-	public final EntityType getType() {
-		return TYPE;
-	}
-	
-	@Override
-	public final String asTypedString() {
-		return TYPE + " " + asString();
-	}
-
-	@Override
-	public final String asString() {
-		return "" + getId();
-	}
-
-	
 }

@@ -15,26 +15,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.aggregateid;
+package tst.x.valueobject;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.fuin.objects4j.common.Immutable;
-import tst2.x.aggregateid.MyAggregateIdConverter;
+import tst2.x.valueobject.MyValueObjectConverter;
 
 /**
- * Aggregate ID single attribute and base.
+ * Value object single attribute and base.
  */
 @Immutable
-@XmlJavaTypeAdapter(MyAggregateIdConverter.class)
-public final class MyAggregateId extends AbstractMyAggregateId {
+@XmlJavaTypeAdapter(MyValueObjectConverter.class)
+public final class MyValueObject extends AbstractMyValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
-	@Override
-	public final String asString() {
-		return "" + getValue();
-	}
-
 	@Override
 	public final String asBaseType() {
 		return getValue();
@@ -42,7 +37,7 @@ public final class MyAggregateId extends AbstractMyAggregateId {
 	
 	/**
 	 * Returns the information if a given string can be converted into
-	 * an instance of MyAggregateId. A <code>null</code> value returns <code>true</code>.
+	 * an instance of MyValueObject. A <code>null</code> value returns <code>true</code>.
 	 * 
 	 * @param value
 	 *            Value to check.
@@ -58,7 +53,7 @@ public final class MyAggregateId extends AbstractMyAggregateId {
 	}
 	
 	/**
-	 * Parses a given string and returns a new instance of MyAggregateId.
+	 * Parses a given string and returns a new instance of MyValueObject.
 	 * 
 	 * @param value
 	 *            Value to convert. A <code>null</code> value returns
@@ -66,12 +61,12 @@ public final class MyAggregateId extends AbstractMyAggregateId {
 	 * 
 	 * @return Converted value.
 	 */
-	public static MyAggregateId valueOf(final String value) {
+	public static MyValueObject valueOf(final String value) {
 		if (value == null) {
 			return null;
 		}
 		// TODO Parse string value and return new instance! 
-		// return new MyAggregateId(value);
+		// return new MyValueObject(value);
 		return null;
 	}
 	

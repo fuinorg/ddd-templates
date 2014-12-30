@@ -31,6 +31,6 @@ public final class MyEntity2Id extends AbstractMyEntity2Id {
 	public final String asString() {
 		return "" + getId();
 	}
-	
+
 	
 }
