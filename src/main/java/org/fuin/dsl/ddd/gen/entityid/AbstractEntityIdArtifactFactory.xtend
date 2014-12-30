@@ -6,6 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
+import org.fuin.dsl.ddd.gen.base.SrcEntityIdTypeMethods
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
@@ -69,24 +70,13 @@ class AbstractEntityIdArtifactFactory extends AbstractSource<EntityId> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				/** Name that identifies the entity uniquely within the context. */	
-				public static final EntityType TYPE = new StringBasedEntityType("«id.entity.name»");
-			
 				«new SrcVarsDecl(ctx, "private", false, id)»
 				
 				«new SrcConstructorsWithParamsAssignment(ctx, id, true)»
 			
 				«new SrcGetters(ctx, "public final", id.variables)»
 			
-				@Override
-				public final EntityType getType() {
-					return TYPE;
-				}
-				
-				@Override
-				public final String asTypedString() {
-					return TYPE + " " + asString();
-				}
+				«new SrcEntityIdTypeMethods(ctx, id.entity.name)»
 				
 			}
 		'''

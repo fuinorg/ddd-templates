@@ -14,10 +14,8 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
 
 class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 
@@ -75,28 +73,6 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 			public final class «className» extends «abstractClassName» {
 			
 				private static final long serialVersionUID = 1000L;
-				
-				«IF id.base != null»
-				@Override
-				public final «id.base.simpleName(ctx)» asBaseType() {
-					«IF id.variables.nullSafe.size == 1»
-					return get«id.variables.first.name.toFirstUpper»();
-					«ELSE»
-					// TODO Implement!
-					return null;
-					«ENDIF»
-				}
-				
-				«ENDIF»
-				@Override
-				public final String asString() {
-					«IF (id.variables.nullSafe.size == 1)»
-					return "" + get«id.variables.first.name.toFirstUpper»();
-					«ELSE»
-					// TODO Implement!
-					return null;
-					«ENDIF»
-				}
 				
 				«new SrcVoBaseMethods(ctx, id)»
 				

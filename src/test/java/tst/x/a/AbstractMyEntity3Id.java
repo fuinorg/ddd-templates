@@ -33,9 +33,6 @@ public abstract class AbstractMyEntity3Id extends AbstractStringValueObject impl
 
 	private static final long serialVersionUID = 1000L;
 	
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity3");
-
 	@NotNull
 	private String a;
 	
@@ -90,6 +87,9 @@ public abstract class AbstractMyEntity3Id extends AbstractStringValueObject impl
 	}
 	
 
+	/** Name that identifies the entity uniquely within the context. */	
+	public static final EntityType TYPE = new StringBasedEntityType("MyEntity3");
+	
 	@Override
 	public final EntityType getType() {
 		return TYPE;

@@ -37,9 +37,6 @@ public final class MyEntityId extends AbstractStringValueObject implements Entit
 
 	private static final long serialVersionUID = 1000L;
 	
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
-
 	@NotNull
 	private String value;
 	
@@ -78,6 +75,9 @@ public final class MyEntityId extends AbstractStringValueObject implements Entit
 	}
 	
 
+	/** Name that identifies the entity uniquely within the context. */	
+	public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
+	
 	@Override
 	public final EntityType getType() {
 		return TYPE;

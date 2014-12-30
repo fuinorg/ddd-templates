@@ -32,9 +32,6 @@ public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 
 	private static final long serialVersionUID = 1000L;
 	
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity4");
-
 	@NotNull
 	private String a;
 	
@@ -89,6 +86,9 @@ public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 	}
 	
 
+	/** Name that identifies the entity uniquely within the context. */	
+	public static final EntityType TYPE = new StringBasedEntityType("MyEntity4");
+	
 	@Override
 	public final EntityType getType() {
 		return TYPE;
