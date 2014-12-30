@@ -33,6 +33,33 @@ context x {
 			
 		}
 
+		entity MyEntity3 identifier MyEntity3Id root MyAggregate {}
+
+		/** Entity ID multiple attributes and base. */
+		entity-id MyEntity3Id identifies MyEntity3 base String {
+			
+			/** Persistent value A. */
+			String a 
+			
+			/** Persistent value B. */
+			String b
+			 
+		}
+
+		entity MyEntity4 identifier MyEntity4Id root MyAggregate {}
+
+		/** Entity ID multiple attribute and without base. */
+		entity-id MyEntity4Id identifies MyEntity4 {
+			
+			/** Persistent value A. */
+			String a 
+			
+			/** Persistent value B. */
+			String b
+			
+		}
+
+
 	}
 
 }

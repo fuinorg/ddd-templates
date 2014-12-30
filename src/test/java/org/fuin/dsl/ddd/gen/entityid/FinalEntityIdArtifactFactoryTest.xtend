@@ -30,7 +30,7 @@ class FinalEntityIdArtifactFactoryTest {
 	private ParseHelper<DomainModel> parser
 
 	@Test
-	def void testCreateSingleAttributeAndBaseType() {
+	def void testCreateMyEntityId() {
 
 		// PREPARE
 		val context = new HashMap<String, Object>()
@@ -50,7 +50,7 @@ class FinalEntityIdArtifactFactoryTest {
 
 	}
 	@Test
-	def void testCreateSingleAttributeNoBaseType() {
+	def void testCreateMyEntity2Id() {
 		
 		// PREPARE
 		val context = new HashMap<String, Object>()
@@ -69,6 +69,46 @@ class FinalEntityIdArtifactFactoryTest {
 		
 	}	
 
+	@Test
+	def void testCreateMyEntity3Id() {
+
+		// PREPARE
+		val context = new HashMap<String, Object>()
+		val refReg = context.codeReferenceRegistry
+		refReg.putReference("x.types.String", "java.lang.String")
+		refReg.putReference("x.a.MyEntity3IdConverter", EXAMPLES_CONCRETE + ".x.a.MyEntity3IdConverter")
+		refReg.putReference("x.a.AbstractMyEntity3Id", EXAMPLES_ABSTRACT + ".x.a.AbstractMyEntity3Id")
+
+		val FinalEntityIdArtifactFactory testee = createTestee()
+		val EntityId entityId = model.find(typeof(EntityId), "MyEntity3Id")
+
+		// TEST
+		val result = new String(testee.create(entityId, context, false).data)
+
+		// VERIFY
+		assertThat(result).isEqualTo("x/a/MyEntity3Id.java".loadAbstractExample)
+
+	}
+	@Test
+	def void testCreateMyEntity4Id() {
+		
+		// PREPARE
+		val context = new HashMap<String, Object>()
+		val refReg = context.codeReferenceRegistry
+		refReg.putReference("x.types.String", "java.lang.String")
+		refReg.putReference("x.a.AbstractMyEntity4Id", EXAMPLES_ABSTRACT + ".x.a.AbstractMy4EntityId")
+
+		val FinalEntityIdArtifactFactory testee = createTestee()
+		val EntityId entityId = model.find(typeof(EntityId), "MyEntity4Id")
+
+		// TEST
+		val result = new String(testee.create(entityId, context, false).data)
+
+		// VERIFY
+		assertThat(result).isEqualTo("x/a/MyEntity4Id.java".loadAbstractExample)
+		
+	}
+		
 	private def createTestee() {
 		val factory = new FinalEntityIdArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("entityId", FinalEntityIdArtifactFactory.name)

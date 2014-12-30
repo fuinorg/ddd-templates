@@ -30,7 +30,7 @@ class AbstractEntityIdArtifactFactoryTest {
 	private ParseHelper<DomainModel> parser
 
 	@Test
-	def void testCreateSingleAttributeAndBaseType() {
+	def void testCreateMyEntityId() {
 
 		// PREPARE
 		val context = new HashMap<String, Object>()
@@ -49,7 +49,7 @@ class AbstractEntityIdArtifactFactoryTest {
 	}
 	
 	@Test
-	def void testCreateSingleAttributeNoBaseType() {
+	def void testCreateMyEntity2Id() {
 		
 		// PREPARE
 		val context = new HashMap<String, Object>()
@@ -64,6 +64,44 @@ class AbstractEntityIdArtifactFactoryTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("x/a/AbstractMyEntity2Id.java".loadAbstractExample)
+		
+	}	
+
+	@Test
+	def void testCreateMyEntity3Id() {
+
+		// PREPARE
+		val context = new HashMap<String, Object>()
+		val refReg = context.codeReferenceRegistry
+		refReg.putReference("x.types.String", "java.lang.String")
+
+		val AbstractEntityIdArtifactFactory testee = createTestee()
+		val EntityId entityId = model.find(typeof(EntityId), "MyEntity3Id")
+
+		// TEST
+		val result = new String(testee.create(entityId, context, false).data)
+
+		// VERIFY
+		assertThat(result).isEqualTo("x/a/AbstractMyEntity3Id.java".loadAbstractExample)
+
+	}
+
+	@Test
+	def void testCreateMyEntity4Id() {
+		
+		// PREPARE
+		val context = new HashMap<String, Object>()
+		val refReg = context.codeReferenceRegistry
+		refReg.putReference("x.types.String", "java.lang.String")
+
+		val AbstractEntityIdArtifactFactory testee = createTestee()
+		val EntityId entityId = model.find(typeof(EntityId), "MyEntity4Id")
+
+		// TEST
+		val result = new String(testee.create(entityId, context, false).data)
+
+		// VERIFY
+		assertThat(result).isEqualTo("x/a/AbstractMyEntity4Id.java".loadAbstractExample)
 		
 	}	
 

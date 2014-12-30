@@ -76,20 +76,28 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«IF (id.base != null) && (id.variables.nullSafe.size == 1)»
+				«IF id.base != null»
 				@Override
 				public final «id.base.simpleName(ctx)» asBaseType() {
+					«IF id.variables.nullSafe.size == 1»
 					return get«id.variables.first.name.toFirstUpper»();
+					«ELSE»
+					// TODO Implement!
+					return null;
+					«ENDIF»
 				}
 				
 				«ENDIF»
-				«IF (id.variables.nullSafe.size == 1)»
 				@Override
 				public final String asString() {
+					«IF (id.variables.nullSafe.size == 1)»
 					return "" + get«id.variables.first.name.toFirstUpper»();
+					«ELSE»
+					// TODO Implement!
+					return null;
+					«ENDIF»
 				}
 				
-				«ENDIF»
 				«new SrcVoBaseMethods(ctx, id)»
 				
 			}
