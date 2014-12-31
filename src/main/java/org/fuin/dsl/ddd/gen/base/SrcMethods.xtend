@@ -2,11 +2,12 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 
 /**
  * Creates source code for a number of methods.
@@ -17,15 +18,29 @@ class SrcMethods implements CodeSnippet {
 	val List<MethodData> methods
 
 	/**
-	 * Constructor with internal type.
+	 * Constructor with entity.
 	 * 
 	 * @param ctx Context.
-	 * @param type Type.
+	 * @param entity Entity.
 	 */
-	new(CodeSnippetContext ctx, InternalType type) {
+	new(CodeSnippetContext ctx, AbstractEntity entity) {
 		this.ctx = ctx
 		this.methods = new ArrayList<MethodData>()
-		for (method : type.methods.nullSafe) {
+		for (method : entity.methods.nullSafe) {
+			this.methods.add(new MethodData("public final", false, method))
+		}
+	}
+
+	/**
+	 * Constructor with value object.
+	 * 
+	 * @param ctx Context.
+	 * @param type Value object.
+	 */
+	new(CodeSnippetContext ctx, AbstractVO vo) {
+		this.ctx = ctx
+		this.methods = new ArrayList<MethodData>()
+		for (method : vo.methods.nullSafe) {
 			this.methods.add(new MethodData("public final", false, method))
 		}
 	}
