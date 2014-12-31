@@ -5,7 +5,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
-import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
@@ -19,6 +18,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtension
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.LiteralExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class EnumArtifactFactory extends AbstractSource<EnumObject> {
@@ -58,24 +58,40 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 	def addReferences(CodeSnippetContext ctx, EnumObject enu) {
 	}
 
-	def create(SimpleCodeSnippetContext ctx, EnumObject vo, String pkg, String className) {
-		val String src = ''' 
-			/** «vo.doc.text» */
-			public enum «vo.name» {
-			
-			«FOR in : vo.instances SEPARATOR ','»
-				«in.doc»
-				«new SrcInvokeMethod(ctx, in.name, in.params.litNames)»
-			«ENDFOR»;
-			
-				«new SrcVarsDecl(ctx, "private", false, vo)»
-			
-				private «vo.name»(«new SrcParamsDecl(ctx, vo.variables)») {
-					«new SrcParamsAssignment(ctx, vo.variables)»
+	def create(SimpleCodeSnippetContext ctx, EnumObject eo, String pkg, String className) {
+		var String src
+		if (eo.variables.nullSafe.size == 0) {
+			src = ''' 
+				/** «eo.doc.text» */
+				public enum «className» {
+					
+					«FOR in : eo.instances SEPARATOR ','»
+					«in.doc»
+					«in.name»
+					
+					«ENDFOR»
 				}
-			
-			}
-		'''
+				'''
+		} else {
+			src = ''' 
+				/** «eo.doc.text» */
+				public enum «className» {
+				
+					«FOR in : eo.instances SEPARATOR ','»
+					«in.doc»
+					«in.name»(«FOR lit : in.params SEPARATOR ', '»«lit.str»«ENDFOR»)
+					
+					«ENDFOR»;
+					
+					«new SrcVarsDecl(ctx, "private", false, eo)»
+					
+					private «className»(«new SrcParamsDecl(ctx, eo.variables)») {
+						«new SrcParamsAssignment(ctx, eo.variables)»
+					}
+				
+				}
+				'''
+		}
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
