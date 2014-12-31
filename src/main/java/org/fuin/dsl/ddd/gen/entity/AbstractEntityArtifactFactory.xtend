@@ -37,7 +37,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
 	override create(Entity entity, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val className = "Abstract" + entity.getName()
+		val className = entity.abstractName
 		val Namespace ns = entity.eContainer() as Namespace;
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + className

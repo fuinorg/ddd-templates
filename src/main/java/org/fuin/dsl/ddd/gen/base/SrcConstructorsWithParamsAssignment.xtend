@@ -8,6 +8,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 
 /**
  * Creates source code for a number of constructors with 
@@ -40,23 +41,41 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	 * @param abstr Generate abstract class?
 	 */
 	new(CodeSnippetContext ctx, AbstractVO vo, boolean abstr) {
+		this(ctx, vo, "public", abstr)
+	}
+	
+	/**
+	 * Constructor with value object.
+	 * 
+	 * @param ctx Context.
+	 * @param vo Value object.
+	 * @param modifiers Modifiers for the constructor
+	 * @param abstr Generate abstract class?
+	 */
+	new(CodeSnippetContext ctx, AbstractVO vo, String modifiers, boolean abstr) {
 		this.ctx = ctx
 		this.constructors = new ArrayList<ConstructorData>()
-		var String name;
-		if (abstr) {
-			name = "Abstract" + vo.name
-		} else {
-			name = vo.name
-		}
-		constructors.add(new ConstructorData("/** Default constructor. */", "protected", name, null, null))
-		if ((vo.constructors == null) || (vo.constructors.size == 0)) {
-			constructors.add(
-				new ConstructorData("/** Constructor with all data. */", "public", name, vo.variables, null))
-		} else {
-			for (con : vo.constructors.nullSafe) {
-				this.constructors.add(new ConstructorData("public", name, con))
+
+		if (vo.variables.nullSafe.size > 0) {
+
+			var String name;
+			if (abstr) {
+				name = vo.abstractName
+			} else {
+				name = vo.name
 			}
+			constructors.add(new ConstructorData("/** Default constructor. */", "protected", name, null, null))
+			if ((vo.constructors == null) || (vo.constructors.size == 0)) {
+				constructors.add(
+					new ConstructorData("/** Constructor with all data. */", modifiers, name, vo.variables, null))
+			} else {
+				for (con : vo.constructors.nullSafe) {
+					this.constructors.add(new ConstructorData("public", name, con))
+				}
+			}
+			
 		}
+		
 	}
 
 	/**

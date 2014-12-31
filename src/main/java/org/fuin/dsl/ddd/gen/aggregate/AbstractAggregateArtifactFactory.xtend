@@ -32,7 +32,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 
 	override create(Aggregate aggregate, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val className = "Abstract" + aggregate.getName()
+		val className = aggregate.abstractName
 		val Namespace ns = aggregate.eContainer() as Namespace;
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + className

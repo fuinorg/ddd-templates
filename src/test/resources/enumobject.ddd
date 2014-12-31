@@ -1,0 +1,57 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+		type Boolean
+	}
+	
+	namespace enumobject {
+		
+		import x.types.*
+	
+		/** Enumeration type A - No variables. */
+		enum EnumA {
+			
+			instances {
+				
+				/** First. */
+				A
+				 
+				/** Second. */
+				B
+				
+				/** Third. */
+				C
+				
+			}
+			
+		}
+
+		/** Enumeration type B - With variables. */
+		enum EnumB {
+			
+			Integer id
+			
+			String shortName
+
+			String longName
+			
+			instances {
+				
+				/** First. */
+				A(1, "a", "First")
+				 
+				/** Second. */
+				B(2, "b", "Second")
+				
+				/** Third. */
+				C(3, "c", "Third")
+				
+			}
+			
+		}
+		
+	}
+
+}
