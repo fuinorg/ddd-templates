@@ -87,13 +87,13 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 			public @interface «c.name» {
 			
 				/** Used to create an error message. */
-				   String message() default "«c.message.replaceValidatedValue»";
+				String message() default "«c.message.replaceValidatedValue»";
 			
 				/** Processing groups with which the constraint declaration is associated. */		
-				  Class<?>[] groups() default {};
+				Class<?>[] groups() default {};
 			
 				/** Payload with which the the constraint declaration is associated. */
-				   Class<? extends Payload>[] payload() default {};
+				Class<? extends Payload>[] payload() default {};
 			
 				«IF c.variables.size == 1»
 					«c.variables.last.doc»

@@ -19,6 +19,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintTargetExtensio
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 
 class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 
@@ -57,7 +58,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 	def addImports(CodeSnippetContext ctx, Constraint constraint) {
 		ctx.requiresImport("javax.validation.ConstraintValidator")
 		ctx.requiresImport("javax.validation.ConstraintValidatorContext")
-		if (constraint.exception != null) {
+		if ((constraint.exception != null) && (constraint.target instanceof AbstractVO)) {
 			ctx.requiresImport("javax.validation.Validator")
 		}
 	}
@@ -81,20 +82,21 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 			public final class «className» implements ConstraintValidator<«c.name», «targetName»> {
 				// CHECKSTYLE:ON:LineLength
 			
-			    @Override
-			    public final void initialize(final «c.name» annotation) {
-			        // TODO Implement!
-			    }
+				@Override
+				public final void initialize(final «c.name» annotation) {
+					// TODO Implement!
+				}
 			
-			    @Override
-			    public final boolean isValid(final «targetName» object, final ConstraintValidatorContext ctx) {
-			        // TODO Implement!
+				@Override
+				public final boolean isValid(final «targetName» object, final ConstraintValidatorContext ctx) {
+					// TODO Implement!
 					return true;
 				}
 			
 				«IF c.exception != null»
+					«IF c.target instanceof AbstractVO»
 					/**
-					 * Verifies if the argument is valid an throws an exception otherwise.
+					 * Verifies that the argument is valid an throws an exception otherwise.
 					 * 
 					 * @param validator Validator to use.
 					 * @param obj Object to validate.
@@ -102,14 +104,28 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 					 * @throws «c.exception.name» The constraint was violated.
 					 */
 					public static void requireValid(final Validator validator, final «targetName» obj) throws «c.exception.name» {
-						if (validator .validate(obj).size() > 0) {
+						if (validator.validate(obj).size() > 0) {
 							throw new «c.exception.name»(«FOR v : variables SEPARATOR ', '»«new SrcInvokeGetter(ctx, "obj", v).toString»«ENDFOR»);
 						}
 					}
-					
+					«ELSE»
+					/**
+					 * Verifies that the argument is valid an throws an exception otherwise.
+					 * 
+					 * @param obj Object to validate.
+					 * 
+					 * @throws «c.exception.name» The constraint was violated.
+					 */
+					public static void requireValid(final «targetName» obj) throws «c.exception.name» {
+						// TODO Implement!
+						// if ( ... ) {
+						//		throw new «c.exception.name»();
+						// }
+					}
+					«ENDIF»
+
 				«ENDIF»
 			}
-			
 		'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString

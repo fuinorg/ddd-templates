@@ -1,0 +1,107 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+		type Boolean
+	}
+	
+	namespace constr {
+		
+		import x.types.*
+		
+		value-object ValueObjectA {
+			String a
+		}
+
+		value-object ValueObjectB {
+			String a
+			Integer b
+		}
+		
+		value-object ValueObjectC {
+			String a
+			Integer b
+			String c
+		}
+		
+		value-object ValueObjectD {
+			String a
+			Integer b
+			String c
+			Boolean d
+		}
+		
+		exception CException {
+			String a
+			Integer b
+			String c
+			message "C failed"
+		}
+		
+		exception DException {
+			String a
+			Integer b
+			String c
+			Boolean d
+			message "D failed"
+		}
+
+		exception GException {
+			message "G failed"
+		}
+		exception HException {
+			message "H failed"
+		}
+		
+		
+		/** Constraint A - Value object target - No exception - No variables */
+		constraint ConstraintA on ValueObjectA {
+			message "A is not allowed: ${vv_a}"
+		}
+
+		/** Constraint B - Value object target - No exception - With variables */
+		constraint ConstraintB  on ValueObjectB {
+			Integer a
+			message "B is not allowed: ${a}: ${vv_a} - ${vv_b}"
+		}
+		
+		/** Constraint C - Value object target - With exception - No variables */
+		constraint ConstraintC   on ValueObjectC exception CException {
+			message "C is not allowed: ${vv_a} - ${vv_b} - ${vv_c}"
+		}
+
+		/** Constraint D - Value object target - With exception - With variables */
+		constraint ConstraintD   on ValueObjectD exception DException {
+			Integer a
+			String b
+			message "D is not allowed ${a} '${b}': ${vv_a} - ${vv_b} - ${vv_c} - ${vv_d}"
+		}
+		
+		/** Constraint E - External type target - No exception - No variables */
+		constraint ConstraintE on String {
+			message "E is not allowed"
+		}
+
+		/** Constraint F - External type target - No exception - With variables */
+		constraint ConstraintF on String {
+			Integer a
+			String b
+			message "F is not allowed: ${a} '${b}': ${vv}"
+		}
+		
+		/** Constraint G - External type target - With exception - No variables */
+		constraint ConstraintG on String exception GException {
+			message "G is not allowed: ${vv}"
+		}
+
+		/** Constraint H - External type target - With exception - With variables */
+		constraint ConstraintH on String exception HException {
+			Integer a
+			String b
+			message "H is not allowed: ${vv}"
+		}
+		
+	}
+
+}
