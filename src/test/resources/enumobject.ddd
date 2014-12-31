@@ -51,6 +51,24 @@ context x {
 			}
 			
 		}
+
+		/** Enumeration type C - With deprecated instance. */
+		enum EnumC {
+			
+			instances {
+				
+				/** First. */
+				A
+				 
+				/** Second - Only kept for backward compatibility. */
+				deprecated B
+				
+				/** Third. */
+				C
+				
+			}
+			
+		}
 		
 	}
 
