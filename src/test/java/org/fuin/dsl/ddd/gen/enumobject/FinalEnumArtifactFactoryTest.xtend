@@ -39,6 +39,16 @@ class FinalEnumArtifactFactoryTest {
 		testEnum("EnumB")
 	}
 
+	@Test
+	def void testFinalEnumC() {
+		testEnum("EnumC")
+	}
+
+	@Test
+	def void testFinalEnumD() {
+		testEnum("EnumD")
+	}
+	
 	private def testEnum(String enumName) {
 
 		val context = new HashMap<String, Object>()

@@ -69,7 +69,9 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 					«in.doc»
 					«in.name»
 					
-					«ENDFOR»
+					«ENDFOR»;
+					
+					«new SrcStaticEnumCode(ctx, eo)»
 				}
 				'''
 		} else {
@@ -84,6 +86,8 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 					«ENDFOR»;
 					
 					«new SrcVarsDecl(ctx, "private", false, eo)»
+					
+					«new SrcStaticEnumCode(ctx, eo)»
 					
 					private «className»(«new SrcParamsDecl(ctx, eo.variables)») {
 						«new SrcParamsAssignment(ctx, eo.variables)»

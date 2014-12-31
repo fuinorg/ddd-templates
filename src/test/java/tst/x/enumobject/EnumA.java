@@ -30,8 +30,18 @@ public final class EnumA {
 	/** Third. */
 	public static final EnumA C = new EnumA();
 	
-	/** All valid instances. */
-	public static final EnumA[] VALUES = new EnumA[] {
-	    A, B, C
+	/** All instances. */
+	public static final EnumA[] ALL = new EnumA[] {
+		A, B, C
 	};
+	
+	/** Valid instances. */
+	public static final EnumA[] VALID = new EnumA[] {
+		A, B, C
+	};
+	
+	/** Deprecated instances. */
+	public static final EnumA[] DEPRECTAED = new EnumA[] {
+	};
+	
 }

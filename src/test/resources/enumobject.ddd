@@ -70,6 +70,26 @@ context x {
 			
 		}
 		
+		/** Enumeration type D - With integer base type. */
+		enum EnumD base Integer {
+			
+			Integer id
+			
+			instances {
+				
+				/** First. */
+				A(1)
+				 
+				/** Second. */
+				B(2)
+				
+				/** Third. */
+				C(3)
+				
+			}
+			
+		}
+
 	}
 
 }

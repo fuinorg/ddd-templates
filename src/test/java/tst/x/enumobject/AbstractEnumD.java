@@ -15,58 +15,39 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst2.x.enumobject;
+package tst.x.enumobject;
 
 import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverNull;
 
-/** Enumeration type B - With variables. */
-public enum EnumB {
-
-	/** First. */
-	A(1, "a", "First"),
-	
-		/** Second. */
-	B(2, "b", "Second"),
-	
-		/** Third. */
-	C(3, "c", "Third")
-	
-	;
+/** Enumeration type D - With integer base type. */
+public abstract class AbstractEnumD {
 	
 	@NotNull
 	private Integer id;
 	
-	@NotNull
-	private String shortName;
 	
-	@NotNull
-	private String longName;
-	
-	
-	/** All instances. */
-	public static final EnumB[] ALL = new EnumB[] {
-		A, B, C
-	};
-	
-	/** Valid instances. */
-	public static final EnumB[] VALID = new EnumB[] {
-		A, B, C
-	};
-	
-	/** Deprecated instances. */
-	public static final EnumB[] DEPRECTAED = new EnumB[] {
-	};
-	
-	
-	private EnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
+	/**
+	 * Enumeration type D - With integer base type.
+	 *
+	 * @param id Integer
+	 *
+	 */
+	protected AbstractEnumD(@NotNull final Integer id) {
 		Contract.requireArgNotNull("id", id);
-		Contract.requireArgNotNull("shortName", shortName);
-		Contract.requireArgNotNull("longName", longName);
 		
 		this.id = id;
-		this.shortName = shortName;
-		this.longName = longName;
 	}
 
+	/**
+	 * Returns: Integer
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	public final Integer getId() {
+		return id;
+	}
+	
 }

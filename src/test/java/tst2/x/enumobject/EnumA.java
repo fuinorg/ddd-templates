@@ -24,10 +24,26 @@ public enum EnumA {
 	/** First. */
 	A,
 	
-	/** Second. */
+		/** Second. */
 	B,
 	
-	/** Third. */
+		/** Third. */
 	C
+	
+	;
+	
+	/** All instances. */
+	public static final EnumA[] ALL = new EnumA[] {
+		A, B, C
+	};
+	
+	/** Valid instances. */
+	public static final EnumA[] VALID = new EnumA[] {
+		A, B, C
+	};
+	
+	/** Deprecated instances. */
+	public static final EnumA[] DEPRECTAED = new EnumA[] {
+	};
 	
 }

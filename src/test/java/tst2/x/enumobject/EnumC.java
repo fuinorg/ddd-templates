@@ -17,56 +17,34 @@
  */
 package tst2.x.enumobject;
 
-import javax.validation.constraints.NotNull;
-import org.fuin.objects4j.common.Contract;
 
-/** Enumeration type B - With variables. */
-public enum EnumB {
-
-	/** First. */
-	A(1, "a", "First"),
+/** Enumeration type C - With deprecated instance. */
+public enum EnumC {
 	
-		/** Second. */
-	B(2, "b", "Second"),
+	/** First. */
+	A,
+	
+		/** Second - Only kept for backward compatibility. */
+	B,
 	
 		/** Third. */
-	C(3, "c", "Third")
+	C
 	
 	;
 	
-	@NotNull
-	private Integer id;
-	
-	@NotNull
-	private String shortName;
-	
-	@NotNull
-	private String longName;
-	
-	
 	/** All instances. */
-	public static final EnumB[] ALL = new EnumB[] {
+	public static final EnumC[] ALL = new EnumC[] {
 		A, B, C
 	};
 	
 	/** Valid instances. */
-	public static final EnumB[] VALID = new EnumB[] {
-		A, B, C
+	public static final EnumC[] VALID = new EnumC[] {
+		A, C
 	};
 	
 	/** Deprecated instances. */
-	public static final EnumB[] DEPRECTAED = new EnumB[] {
+	public static final EnumC[] DEPRECTAED = new EnumC[] {
+		B
 	};
 	
-	
-	private EnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
-		Contract.requireArgNotNull("id", id);
-		Contract.requireArgNotNull("shortName", shortName);
-		Contract.requireArgNotNull("longName", longName);
-		
-		this.id = id;
-		this.shortName = shortName;
-		this.longName = longName;
-	}
-
 }

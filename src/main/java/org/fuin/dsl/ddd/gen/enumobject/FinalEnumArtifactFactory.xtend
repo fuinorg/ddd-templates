@@ -6,7 +6,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
-import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -72,13 +71,8 @@ class FinalEnumArtifactFactory extends AbstractSource<EnumObject> {
 					public static final «className» «in.name» = new «className»(«FOR lit : in.params SEPARATOR ', '»«lit.str»«ENDFOR»);
 					
 				«ENDFOR»
-				/** All valid instances. */
-				public static final «className»[] VALUES = new «className»[] {
-				    «FOR in : eo.instances SEPARATOR ", "»«in.name»«ENDFOR»
-				};
+				«new SrcStaticEnumCode(ctx, eo)»
 				«IF eo.variables.nullSafe.size > 0»
-					
-					«new SrcMethodJavaDoc(ctx, eo.doc, null, eo.variables, null)»
 					private «className»(«new SrcParamsDecl(ctx, eo.variables)») {
 						«new SrcInvokeMethod(ctx, "super", eo.variables.varNames)»
 					}

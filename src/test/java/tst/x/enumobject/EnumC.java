@@ -17,36 +17,32 @@
  */
 package tst.x.enumobject;
 
-import javax.validation.constraints.NotNull;
 
-/** Enumeration type B - With variables. */
-public final class EnumB extends AbstractEnumB {
+/** Enumeration type C - With deprecated instance. */
+public final class EnumC {
 	
 	/** First. */
-	public static final EnumB A = new EnumB(1, "a", "First");
+	public static final EnumC A = new EnumC();
 	
-	/** Second. */
-	public static final EnumB B = new EnumB(2, "b", "Second");
+	/** Second - Only kept for backward compatibility. */
+	public static final EnumC B = new EnumC();
 	
 	/** Third. */
-	public static final EnumB C = new EnumB(3, "c", "Third");
+	public static final EnumC C = new EnumC();
 	
 	/** All instances. */
-	public static final EnumB[] ALL = new EnumB[] {
+	public static final EnumC[] ALL = new EnumC[] {
 		A, B, C
 	};
 	
 	/** Valid instances. */
-	public static final EnumB[] VALID = new EnumB[] {
-		A, B, C
+	public static final EnumC[] VALID = new EnumC[] {
+		A, C
 	};
 	
 	/** Deprecated instances. */
-	public static final EnumB[] DEPRECTAED = new EnumB[] {
+	public static final EnumC[] DEPRECTAED = new EnumC[] {
+		B
 	};
-	
-	private EnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
-		super(id, shortName, longName);
-	}
 	
 }
