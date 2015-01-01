@@ -16,6 +16,9 @@ class LiteralExtensions {
 	 * @return Original value or string with double quotes. 
 	 */
 	def static String str(Literal literal) {
+		if (literal == null) {
+			return null
+		}
 		if (literal instanceof StringLiteral) {
 			return "\"" + literal.value + "\"";
 		}

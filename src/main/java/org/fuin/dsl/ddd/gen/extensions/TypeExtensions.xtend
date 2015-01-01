@@ -4,10 +4,14 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.TypeMetaInfo
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 
 /**
  * Provides extension methods for Type.
@@ -64,6 +68,35 @@ class TypeExtensions {
 			return type
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns the meta info if available. 
+	 * 
+	 * @param type Type with meta info to return.
+	 * 
+	 * @return Meta info or null.
+	 */
+	def static TypeMetaInfo meta(Type type) {
+		if (type instanceof InternalType) {
+			return type.metaInfo
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the first example from the meta info for the variable if available.
+	 * 
+	 * @param variable Variable.
+	 * 
+	 * @return Example literal or null.
+	 */
+	def static Literal firstExample(Type type) {
+		val TypeMetaInfo metaInfo = type.meta
+		if (metaInfo == null) {
+			return null
+		}
+		return metaInfo.examples.first
 	}
 
 	/**

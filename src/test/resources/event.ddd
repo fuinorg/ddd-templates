@@ -10,7 +10,9 @@ context x {
 		
 		import x.types.*
 	
-		aggregate-id CustomerId identifies Customer base UUID {	}
+		aggregate-id CustomerId identifies Customer base UUID {
+			examples "42705de0-91a1-11e4-b4a9-0800200c9a6"
+		}
 		
 		aggregate Customer identifier CustomerId {
 			
@@ -26,14 +28,20 @@ context x {
 			
 			/** Aggregate event B. */
 			event EventB {
-				String a
+				String a {
+					examples "Abc"
+				}
 				message "Event B: ${a} [${#entityIdPath}]"					
 			}
 
 			/** Aggregate event C. */
 			event EventC {
-				String a
-				Integer b
+				String a {
+					examples "Abc"
+				}
+				Integer b {
+					examples 123
+				}
 				message "Event C: ${a} / ${b} [${#entityIdPath}]"
 			}
 			

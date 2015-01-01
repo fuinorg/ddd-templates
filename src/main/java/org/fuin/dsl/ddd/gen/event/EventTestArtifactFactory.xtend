@@ -19,8 +19,10 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtension
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.LiteralExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 class EventTestArtifactFactory extends AbstractSource<Event> {
 
@@ -35,7 +37,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 		if (entity == null) {
 			ns = event.namespace;
 		} else {
-			ns = entity.namespace;		
+			ns = entity.namespace;
 		}
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + className
@@ -51,44 +53,45 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 		}
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports
-		ctx.addReferences(event)
+		ctx.addImports(entity)
+		ctx.addReferences(entity, event)
 
 		var String src;
 		if (entity == null) {
 			src = createStandardEventTest(ctx, event, pkg, className).toString();
 		} else {
-			src = createDomainEventTest(ctx, event, pkg, className).toString();		
+			src = createDomainEventTest(ctx, event, pkg, className).toString();
 		}
 
 		return new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8"));
 	}
 
-	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
+	def addImports(CodeSnippetContext ctx, AbstractEntity entity) {
 		ctx.requiresImport("static org.fest.assertions.Assertions.*")
 		ctx.requiresImport("org.junit.Test")
 		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
+		if (entity != null) {
+			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
+			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
+		}
 		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.serialize")
 		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.deserialize")
 		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.marshal")
 		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.unmarshal")
 	}
 
-	def addReferences(CodeSnippetContext ctx, Event event) {
+	def addReferences(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
 		ctx.requiresReference(event.uniqueName)
-		if (event.entity != null) {
-			ctx.requiresReference(event.aggregate.idType.uniqueName)		
-	    	ctx.requiresReference(event.context.name.toFirstUpper + "EntityIdFactory")
+		if (entity != null) {
+			ctx.requiresReference(event.aggregate.idType.uniqueName)
+			ctx.requiresReference(event.context.name.toFirstUpper + "EntityIdFactory")
 		}
-	    for (v : event.variables.nullSafe) {
+		for (v : event.variables.nullSafe) {
 			ctx.requiresReference(v.type.uniqueName)
 			if (v.multiplicity != null) {
 				ctx.requiresImport("java.util.List")
 			}
-	    }
+		}
 	}
 
 	def createDomainEventTest(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
@@ -127,17 +130,17 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 				private «event.name» createTestee() {
 					// TODO Set test values
-				    final «event.aggregate.idType.name» entityId = null;
+					final «event.aggregate.idType.name» entityId = new «event.aggregate.idType.name»(«event.aggregate.idType.firstExample.str»);
 					«FOR v : event.variables.nullSafe»
-					final «v.type(ctx)» «v.name» = null;
+						final «v.type(ctx)» «v.name» = «v.firstExample.str»;
 					«ENDFOR»
 					return new «new SrcInvokeMethod(ctx, event.name, union("new EntityIdPath(entityId)", event.variables.varNames))»
 				}
 			
-			    protected final XmlAdapter<?, ?>[] createAdapter() {
-			        final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new «event.context.name.toFirstUpper»EntityIdFactory());
-			        return new XmlAdapter[] { entityIdPathConverter };
-			    }
+				protected final XmlAdapter<?, ?>[] createAdapter() {
+					final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new «event.context.name.toFirstUpper»EntityIdFactory());
+					return new XmlAdapter[] { entityIdPathConverter };
+				}
 			
 			}
 			// CHECKSTYLE:ON
@@ -182,16 +185,18 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 				}
 			
 				private «event.name» createTestee() {
-					// TODO Set test values
-					«FOR v : event.variables.nullSafe»
-					final «v.type(ctx)» «v.name» = null;
-					«ENDFOR»
+					«IF event.variables.nullSafe.size > 0»
+						// TODO Set test values
+						«FOR v : event.variables.nullSafe»
+							final «v.type(ctx)» «v.name» = «v.firstExample.str»;
+						«ENDFOR»
+					«ENDIF»
 					return new «new SrcInvokeMethod(ctx, event.name, event.variables.varNames)»
 				}
 			
-			    protected final XmlAdapter<?, ?>[] createAdapter() {
-			        return new XmlAdapter[] { };
-			    }
+				protected final XmlAdapter<?, ?>[] createAdapter() {
+					return new XmlAdapter[] { };
+				}
 			
 			}
 			// CHECKSTYLE:ON

@@ -51,6 +51,16 @@ public final class CustomerId extends AbstractUUIDVO implements AggregateRootId 
         super(value);
     }
 
+    /**
+     * Constructor with all data.
+     * 
+     * @param value
+     *            Persistent value.
+     */
+    public CustomerId(@NotNull final String value) {
+        super(UUID.fromString(value));
+    }
+    
     @Override
     public final EntityType getType() {
         return TYPE;
