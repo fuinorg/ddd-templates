@@ -15,60 +15,61 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst2.x.valueobject;
+package tst2.x.ev;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.fuin.ddd4j.ddd.AbstractDomainEvent;
+import org.fuin.ddd4j.ddd.EntityIdPath;
+import org.fuin.ddd4j.ddd.EventType;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.vo.ValueObject;
+import org.fuin.objects4j.vo.KeyValue;
 
 /**
- * Value object multiple attribute and without base.
+ * Aggregate event B.
  */
-@XmlRootElement(name = "my-value-object4")
-public final class MyValueObject4 implements ValueObject {
+@XmlRootElement(name = "event-b")
+public final class EventB extends AbstractDomainEvent<CustomerId> {
 
 	private static final long serialVersionUID = 1000L;
+
+	/** Unique name used to store the event. */
+	public static final EventType EVENT_TYPE = new EventType("EventB");
 	
 	@NotNull
 	@XmlAttribute(name = "a")
 	private String a;
 	
-	@NotNull
-	@XmlAttribute(name = "b")
-	private String b;
-	
 
 	/**
-	 * Default constructor.
-	 *
-	 *
+	 * Protected default constructor for deserialization.
 	 */
-	protected MyValueObject4() {
+	protected EventB() {
 		super();
 	}
 	
 	/**
-	 * Constructor with all data.
+	 * Aggregate event B.
 	 *
-	 * @param a Persistent value A.
-	 * @param b Persistent value B.
-	 *
-	 */
-	public MyValueObject4(@NotNull final String a, @NotNull final String b) {
-		super();
+	 * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
+	* @param a String 
+	*/
+	public EventB(@NotNull final EntityIdPath entityIdPath, @NotNull final String a) {
+		super(entityIdPath);
 		Contract.requireArgNotNull("a", a);
-		Contract.requireArgNotNull("b", b);
 		
 		this.a = a;
-		this.b = b;
 	}
-	
-	
+
+	@Override
+	public final EventType getEventType() {
+		return EVENT_TYPE;
+	}
+
 	/**
-	 * Returns: Persistent value A.
+	 * Returns: String
 	 *
 	 * @return Current value.
 	 */
@@ -77,16 +78,13 @@ public final class MyValueObject4 implements ValueObject {
 		return a;
 	}
 	
-	/**
-	 * Returns: Persistent value B.
-	 *
-	 * @return Current value.
-	 */
-	 @NeverNull
-	public final String getB() {
-		return b;
+
+	@Override
+	public final String toString() {
+		return KeyValue.replace("Event B: ${a} [${#entityIdPath}]",
+			new KeyValue("#entityIdPath", getEntityIdPath())
+			, new KeyValue("a", a)
+		);
 	}
-	
-	
 	
 }

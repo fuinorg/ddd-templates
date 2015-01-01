@@ -8,6 +8,8 @@ import org.eclipse.xtext.junit4.util.ParseHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
+import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.Utils
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 import org.fuin.srcgen4j.commons.DefaultContext
 import org.fuin.srcgen4j.commons.Variable
@@ -18,6 +20,8 @@ import static org.fest.assertions.Assertions.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import static extension org.fuin.dsl.ddd.gen.base.TestExtensions.*
+import java.util.Map
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -27,180 +31,84 @@ class EventArtifactFactoryTest {
 	private ParseHelper<DomainModel> parser
 
 	@Test
-	def void testCreateDomainEvent() {
+	def void testCreateEventA() {
 
 		// PREPARE
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
-		refReg.putReference("ctx.types.String", "java.lang.String")
-		refReg.putReference("ctx.a.b.CustomerId", "tst.ctx.a.b.CustomerId")
+		refReg.putReference("x.types.String", "java.lang.String")
+		refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
 
-		val EventArtifactFactory testee = createTestee()
-		val Event event = model.find(typeof(Event), "CustomerCreatedEvent")
-
-		// TEST
-		val result = new String(testee.create(event, context, false).data)
-
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''
-				package tst.ctx.a.b;
-				
-				import javax.validation.constraints.NotNull;
-				import javax.xml.bind.annotation.XmlRootElement;
-				import org.fuin.ddd4j.ddd.AbstractDomainEvent;
-				import org.fuin.ddd4j.ddd.EntityIdPath;
-				import org.fuin.ddd4j.ddd.EventType;
-				import org.fuin.objects4j.vo.KeyValue;
-				
-				/**
-				 * A new customer was created.
-				 */
-				@XmlRootElement(name = "customer-created-event")
-				public final class CustomerCreatedEvent extends AbstractDomainEvent<CustomerId> {
-				
-					private static final long serialVersionUID = 1000L;
-				
-					/** Unique name used to store the event. */
-					public static final EventType EVENT_TYPE = new EventType("CustomerCreatedEvent");
-					
-				
-					/**
-					 * Protected default constructor for deserialization.
-					 */
-					protected CustomerCreatedEvent() {
-						super();
-					}
-					
-					/**
-					 * A new customer was created.
-					 *
-					 * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
-					*/
-					public CustomerCreatedEvent(@NotNull final EntityIdPath entityIdPath) {
-						super(entityIdPath);
-					}
-				
-					@Override
-					public final EventType getEventType() {
-						return EVENT_TYPE;
-					}
-				
-				
-					@Override
-					public final String toString() {
-						return KeyValue.replace("Customer created",
-							new KeyValue("#entityIdPath", getEntityIdPath())
-						);
-					}
-					
-				}
-			''')
+		testCreate(context, "EventA")
 
 	}
 
+	
 	@Test
-	def void testCreateStandardEvent() {
+	def void testCreateEventB() {
 
 		// PREPARE
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
-		refReg.putReference("ctx.types.String", "java.lang.String")
+		refReg.putReference("x.types.String", "java.lang.String")
+		refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
 
+		testCreate(context, "EventB")
+
+	}
+	
+	
+	@Test
+	def void testCreateEventC() {
+
+		// PREPARE
+		val context = new HashMap<String, Object>()
+		val refReg = context.codeReferenceRegistry
+		refReg.putReference("x.types.String", "java.lang.String")
+		refReg.putReference("x.types.Integer", "java.lang.Integer")
+		refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
+
+		testCreate(context, "EventC")
+
+	}
+	
+	@Test
+	def void testCreateEventD() {
+
+		val context = new HashMap<String, Object>()
+		val refReg = context.codeReferenceRegistry
+		refReg.putReference("x.types.String", "java.lang.String")
+
+		testCreate(context, "EventD")
+		
+	}
+
+	private def testCreate(Map<String, Object> context, String eventName) {
+		
+		// PREPARE
 		val EventArtifactFactory testee = createTestee()
-		val Event event = model.find(typeof(Event), "SomethingInterestingHappenedEvent")
+		val Event event = model.find(typeof(Event), eventName)
 
 		// TEST
 		val result = new String(testee.create(event, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo(
-			'''
-				package tst.ctx.a.b;
-				
-				import javax.xml.bind.annotation.XmlRootElement;
-				import org.fuin.ddd4j.ddd.AbstractDomainEvent;
-				import org.fuin.ddd4j.ddd.EntityIdPath;
-				import org.fuin.ddd4j.ddd.EventType;
-				import org.fuin.objects4j.vo.KeyValue;
-				
-				/**
-				 * Tells the world, that something interesting happened.
-				 */
-				@XmlRootElement(name = "something-interesting-happened-event")
-				public final class SomethingInterestingHappenedEvent extends AbstractEvent {
-				
-					private static final long serialVersionUID = 1000L;
-				
-					/** Unique name used to store the event. */
-					public static final EventType EVENT_TYPE = new EventType("SomethingInterestingHappenedEvent");
-					
-				
-					/**
-					 * Tells the world, that something interesting happened.
-					 *
-					 */
-					public SomethingInterestingHappenedEvent() {
-						super();
-					}
-				
-					@Override
-					public final EventType getEventType() {
-						return EVENT_TYPE;
-					}
-				
-				
-					@Override
-					public final String toString() {
-						return "Something interesting happened!";
-					}
-					
-				}
-			''')
-
+		assertThat(result).isEqualTo(("x/ev/" + eventName + ".java").loadConcreteExample)
+		
 	}
 
 	private def createTestee() {
 		val factory = new EventArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("event", EventArtifactFactory.name)
-		config.addVariable(new Variable("basepkg", "tst"))
+		config.addVariable(new Variable(AbstractSource.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+		config.addVariable(new Variable(AbstractSource.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
 		config.init(new DefaultContext(), null)
 		factory.init(config)
 		return factory
 	}
 
 	private def model() {
-		parser.parse(
-			'''
-				context ctx {
-				
-					namespace a.b {
-						
-						type UUID
-						type String
-						
-						aggregate-id CustomerId identifies Customer base UUID {	}
-						
-						aggregate Customer identifier CustomerId {
-							constructor create fires CustomerCreatedEvent, SomethingInterestingHappenedEvent {			
-							}
-							/** A new customer was created. */
-							event CustomerCreatedEvent {
-								// No fields
-								message "Customer created"					
-							}
-						}
-						
-						/** Tells the world, that something interesting happened. */
-						event SomethingInterestingHappenedEvent {
-							message "Something interesting happened!"
-						}
-						
-					}
-				
-				}
-			'''
-		)
+		return parser.parse(Utils.readAsString(class.getResource("/event.ddd")))
 	}
 
 }

@@ -2,6 +2,8 @@ package org.fuin.dsl.ddd.gen.extensions
 
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
@@ -15,7 +17,7 @@ class TypeExtensions {
 	/**
 	 * Returns the doc text from the type.
 	 * 
-	 * @param variable Type with doc text to read.
+	 * @param type Type with doc text to read.
 	 * 
 	 * @return Type doc text.
 	 */
@@ -43,6 +45,25 @@ class TypeExtensions {
 			return name
 		}
 		return name.substring(p + 1)
+	}
+
+	/**
+	 * Returns the base type if available. External types as argument 
+	 * will return the external type itself.
+	 * 
+	 * @param variable Type with base to return.
+	 * 
+	 * @return Base type or null.
+	 */
+	def static ExternalType base(Type type) {
+		if (type instanceof AbstractVO) {
+			return type.base
+		} else if (type instanceof EnumObject) {
+			return type.base
+		} else if (type instanceof ExternalType) {
+			return type
+		}
+		return null;
 	}
 
 	/**

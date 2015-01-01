@@ -15,61 +15,54 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst2.x.valueobject;
+package tst2.x.ev;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.vo.ValueObject;
+import org.fuin.ddd4j.ddd.AbstractDomainEvent;
+import org.fuin.ddd4j.ddd.EntityIdPath;
+import org.fuin.ddd4j.ddd.EventType;
+import org.fuin.objects4j.vo.KeyValue;
 
 /**
- * Value object single attribute and without base.
+ * Aggregate event A.
  */
-@XmlRootElement(name = "my-value-object2")
-public final class MyValueObject2 implements ValueObject {
+@XmlRootElement(name = "event-a")
+public final class EventA extends AbstractDomainEvent<CustomerId> {
 
 	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	@XmlAttribute(name = "id")
-	private String id;
+
+	/** Unique name used to store the event. */
+	public static final EventType EVENT_TYPE = new EventType("EventA");
 	
 
 	/**
-	 * Default constructor.
-	 *
-	 *
+	 * Protected default constructor for deserialization.
 	 */
-	protected MyValueObject2() {
+	protected EventA() {
 		super();
 	}
 	
 	/**
-	 * Constructor with all data.
+	 * Aggregate event A.
 	 *
-	 * @param id Persistent value.
-	 *
-	 */
-	public MyValueObject2(@NotNull final String id) {
-		super();
-		Contract.requireArgNotNull("id", id);
-		
-		this.id = id;
+	 * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
+	*/
+	public EventA(@NotNull final EntityIdPath entityIdPath) {
+		super(entityIdPath);
 	}
-	
-	
-	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
-	 */
-	 @NeverNull
-	public final String getId() {
-		return id;
+
+	@Override
+	public final EventType getEventType() {
+		return EVENT_TYPE;
 	}
-	
-	
+
+
+	@Override
+	public final String toString() {
+		return KeyValue.replace("Event A [${#entityIdPath}]",
+			new KeyValue("#entityIdPath", getEntityIdPath())
+		);
+	}
 	
 }

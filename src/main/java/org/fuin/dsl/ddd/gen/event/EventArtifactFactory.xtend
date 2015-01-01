@@ -36,12 +36,12 @@ class EventArtifactFactory extends AbstractSource<Event> {
 	override create(Event event, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
 		val AbstractEntity entity = event.entity;
-		val className = event.getName()		
+		val className = event.getName()
 		var Namespace ns;
 		if (entity == null) {
 			ns = event.namespace;
 		} else {
-			ns = entity.namespace;		
+			ns = entity.namespace;
 		}
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + className
@@ -51,6 +51,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		refReg.putReference(event.uniqueName, fqn)
 
 		if (preparationRun) {
+
 			// No code generation during preparation phase
 			return null
 		}
@@ -63,25 +64,27 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		if (entity == null) {
 			src = createStandardEvent(ctx, event, pkg, className).toString();
 		} else {
-			src = createDomainEvent(ctx, event, pkg, className).toString();		
+			src = createDomainEvent(ctx, event, pkg, className).toString();
 		}
 
 		return new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx, AbstractEntity entity) {
-		ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EventType")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractDomainEvent")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
-		if (entity != null) {
-			ctx.requiresImport("javax.validation.constraints.NotNull")		
+		if (entity == null) {
+			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractEvent")
+		} else {
+			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractDomainEvent")
+			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
+			ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
+			ctx.requiresImport("javax.validation.constraints.NotNull")
 		}
 	}
 
 	def addReferences(CodeSnippetContext ctx, Event event) {
 		if (event.entity != null) {
-			ctx.requiresReference(event.entityIdType.uniqueName)		
+			ctx.requiresReference(event.entityIdType.uniqueName)
 		}
 	}
 
@@ -120,7 +123,8 @@ class EventArtifactFactory extends AbstractSource<Event> {
 					* @param «v.name» «v.superDoc» 
 				«ENDFOR»
 				*/
-				public «event.name»(@NotNull final EntityIdPath entityIdPath«IF event.variables.nullSafe.size > 0», «new SrcParamsDecl(ctx, event.variables)»«ENDIF») {
+				public «event.name»(@NotNull final EntityIdPath entityIdPath«IF event.variables.nullSafe.size > 0», «new SrcParamsDecl(
+				ctx, event.variables)»«ENDIF») {
 					super(entityIdPath);
 					«new SrcParamsAssignment(ctx, event.variables)»
 				}
@@ -163,21 +167,21 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				«new SrcVarsDecl(ctx, "private", true, event)»
 			
 				«IF event.variables.nullSafe.size > 0»
-				/**
-				 * Protected default constructor for deserialization.
-				 */
-				protected «event.name»() {
-					super();
-				}
-				
+					/**
+					 * Protected default constructor for deserialization.
+					 */
+					protected «event.name»() {
+						super();
+					}
+					
 				«ENDIF»
 				/**
 				 * «event.doc.text»
 				 *
 				«FOR v : event.variables»
-				 * @param «v.name» «v.superDoc» 
+					* @param «v.name» «v.superDoc» 
 				«ENDFOR»
-				 */
+				*/
 				public «event.name»(«new SrcParamsDecl(ctx, event.variables)») {
 					super();
 					«new SrcParamsAssignment(ctx, event.variables)»
@@ -193,13 +197,13 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				@Override
 				public final String toString() {
 					«IF event.variables.nullSafe.size == 0»
-					return "«event.message»";
+						return "«event.message»";
 					«ELSE»
-					return KeyValue.replace("«event.message»"
-					«FOR v : event.variables SEPARATOR ','»
-						new KeyValue("«v.name»", «v.name»)
-					«ENDFOR»
-					);
+						return KeyValue.replace("«event.message»"
+						«FOR v : event.variables SEPARATOR ','»
+							new KeyValue("«v.name»", «v.name»)
+						«ENDFOR»
+						);
 					«ENDIF»
 				}
 				

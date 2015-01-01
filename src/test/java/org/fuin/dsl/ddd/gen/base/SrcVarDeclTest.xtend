@@ -121,11 +121,11 @@ class SrcVarDeclTest {
 		assertThat(result).isEqualTo(
 			'''
 				@NotNull
-				@XmlElement(name = "abc-def-ghi")
+				@XmlAttribute(name = "abc-def-ghi")
 				private String abcDefGhi;
 			''')
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull",
-			"javax.xml.bind.annotation.XmlElement", "java.lang.String")
+			"javax.xml.bind.annotation.XmlAttribute", "java.lang.String")
 
 	}
 
