@@ -1,11 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
 import org.junit.Test
 
 import static org.fest.assertions.Assertions.*
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
 
-class SrcJavaDocTest {
+class SrcJavaDocTypeTest {
 
 	@Test
 	def void test() {
@@ -19,7 +19,7 @@ class SrcJavaDocTest {
 				 */
 			'''
 		)
-		val testee = new SrcJavaDoc(vo)
+		val testee = new SrcJavaDocType(vo)
 
 		// TEST
 		val result = testee.toString

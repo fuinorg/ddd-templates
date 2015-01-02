@@ -18,7 +18,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
-class SrcMethodJavaDocTest {
+class SrcJavaDocMethodTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
@@ -32,7 +32,7 @@ class SrcMethodJavaDocTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val method = valueObject.methods.get(0)
-		val SrcMethodJavaDoc testee = new SrcMethodJavaDoc(ctx, method)
+		val SrcJavaDocMethod testee = new SrcJavaDocMethod(ctx, method)
 
 		// TEST
 		val result = testee.toString

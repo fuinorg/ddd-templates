@@ -40,8 +40,6 @@ public final class MyValueObject3 extends AbstractStringValueObject implements V
 
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyValueObject3() {
 		super();
@@ -52,7 +50,6 @@ public final class MyValueObject3 extends AbstractStringValueObject implements V
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public MyValueObject3(@NotNull final String a, @NotNull final String b) {
 		super();

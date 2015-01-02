@@ -38,8 +38,6 @@ public abstract class AbstractMyAggregate2Id implements AggregateRootId, ValueOb
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyAggregate2Id() {
 		super();
@@ -49,7 +47,6 @@ public abstract class AbstractMyAggregate2Id implements AggregateRootId, ValueOb
 	 * Constructor with all data.
 	 *
 	 * @param id Persistent value.
-	 *
 	 */
 	public AbstractMyAggregate2Id(@NotNull final String id) {
 		super();

@@ -8,7 +8,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcEntityIdTypeMethods
 import org.fuin.dsl.ddd.gen.base.SrcGetters
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
 import org.fuin.srcgen4j.commons.GenerateException
@@ -65,7 +65,7 @@ class AbstractEntityIdArtifactFactory extends AbstractSource<EntityId> {
 
 	def create(SimpleCodeSnippetContext ctx, EntityId id, String pkg, String className) {
 		val String src = ''' 
-			«new SrcJavaDoc(id)»
+			«new SrcJavaDocType(id)»
 			public abstract class «className» «new SrcVoBaseOptionalExtends(ctx, id.base)»implements EntityId, ValueObject {
 			
 				private static final long serialVersionUID = 1000L;

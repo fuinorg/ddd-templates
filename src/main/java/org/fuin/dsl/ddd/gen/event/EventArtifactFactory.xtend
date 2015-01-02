@@ -8,7 +8,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
@@ -19,13 +19,13 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class EventArtifactFactory extends AbstractSource<Event> {
 
@@ -97,7 +97,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 
 	def createDomainEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
 		val String src = ''' 
-			«new SrcJavaDoc(event)»
+			«new SrcJavaDocType(event)»
 			«new SrcXmlRootElement(ctx, event.name)»
 			public final class «className» extends AbstractDomainEvent<«event.entityIdType.name»> {
 			
@@ -155,7 +155,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 
 	def createStandardEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
 		val String src = ''' 
-			«new SrcJavaDoc(event)»
+			«new SrcJavaDocType(event)»
 			«new SrcXmlRootElement(ctx, event.name)»
 			public final class «className» extends AbstractEvent {
 			

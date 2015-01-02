@@ -39,8 +39,6 @@ public abstract class AbstractMyAggregateId extends AbstractStringValueObject im
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyAggregateId() {
 		super();
@@ -50,7 +48,6 @@ public abstract class AbstractMyAggregateId extends AbstractStringValueObject im
 	 * Constructor with all data.
 	 *
 	 * @param value Persistent value.
-	 *
 	 */
 	public AbstractMyAggregateId(@NotNull final String value) {
 		super();

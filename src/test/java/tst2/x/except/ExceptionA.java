@@ -15,54 +15,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-package tst.x.valueobject;
+package tst2.x.except;
 
-import java.io.Serializable;
-import javax.validation.constraints.NotNull;
-import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.vo.ValueObject;
 
 /**
- * Value object single attribute and without base.
+ * Exception A - No CID - No variables
  */
-public abstract class AbstractMyValueObject2 implements ValueObject, Serializable {
+public final class ExceptionA extends Exception {
 
 	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	private String id;
-	
-	
-	/**
-	 * Default constructor.
-	 */
-	protected AbstractMyValueObject2() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param id Persistent value.
-	 */
-	public AbstractMyValueObject2(@NotNull final String id) {
-		super();
-		Contract.requireArgNotNull("id", id);
-		
-		this.id = id;
-	}
-	
+
 
 	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
+	 * Constructs a new instance of the exception.
 	 */
-	 @NeverNull
-	public final String getId() {
-		return id;
+	public ExceptionA() {
+		super("Exception A");
 	}
-	
+
 
 }

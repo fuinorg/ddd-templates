@@ -10,7 +10,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcSetters
@@ -25,9 +25,9 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -73,7 +73,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
 	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className) {
 		val String src = ''' 
-			«new SrcJavaDoc(entity)»
+			«new SrcJavaDocType(entity)»
 			public abstract class «className» extends AbstractEntity<«entity.root.idType.name», «entity.root.name», «entity.
 				idType.name»> {
 			

@@ -6,7 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
-import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocMethod
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
@@ -70,7 +70,7 @@ class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 				
 				«new SrcVarsDecl(ctx, "private", false, eo)»
 				
-				«new SrcMethodJavaDoc(ctx, eo.doc, null, eo.variables, null)»
+				«new SrcJavaDocMethod(ctx, eo.doc, null, eo.variables, null)»
 				protected «className»(«new SrcParamsDecl(ctx, eo.variables)») {
 					«new SrcParamsAssignment(ctx, eo.variables)»
 				}

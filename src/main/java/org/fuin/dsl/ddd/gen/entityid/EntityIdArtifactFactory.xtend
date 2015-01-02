@@ -8,7 +8,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcEntityIdTypeMethods
 import org.fuin.dsl.ddd.gen.base.SrcGetters
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethods
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
@@ -73,7 +73,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 
 	def create(SimpleCodeSnippetContext ctx, EntityId id, String pkg, String className) {
 		val String src = ''' 
-			«new SrcJavaDoc(id)»
+			«new SrcJavaDocType(id)»
 			@Immutable
 			«IF id.base != null»
 			@XmlJavaTypeAdapter(«id.name»Converter.class)

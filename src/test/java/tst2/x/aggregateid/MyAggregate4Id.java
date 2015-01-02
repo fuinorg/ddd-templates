@@ -43,8 +43,6 @@ private static final long serialVersionUID = 1000L;
 
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyAggregate4Id() {
 		super();
@@ -55,7 +53,6 @@ private static final long serialVersionUID = 1000L;
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public MyAggregate4Id(@NotNull final String a, @NotNull final String b) {
 		super();

@@ -43,8 +43,6 @@ private static final long serialVersionUID = 1000L;
 
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyAggregateId() {
 		super();
@@ -54,7 +52,6 @@ private static final long serialVersionUID = 1000L;
 	 * Constructor with all data.
 	 *
 	 * @param value Persistent value.
-	 *
 	 */
 	public MyAggregateId(@NotNull final String value) {
 		super();

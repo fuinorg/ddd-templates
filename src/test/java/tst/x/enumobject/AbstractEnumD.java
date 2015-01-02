@@ -32,7 +32,6 @@ public abstract class AbstractEnumD {
 	 * Enumeration type D - With integer base type.
 	 *
 	 * @param id Integer
-	 *
 	 */
 	protected AbstractEnumD(@NotNull final Integer id) {
 		Contract.requireArgNotNull("id", id);

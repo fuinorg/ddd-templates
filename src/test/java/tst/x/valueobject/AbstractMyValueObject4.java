@@ -39,8 +39,6 @@ public abstract class AbstractMyValueObject4 implements ValueObject, Serializabl
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyValueObject4() {
 		super();
@@ -51,7 +49,6 @@ public abstract class AbstractMyValueObject4 implements ValueObject, Serializabl
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public AbstractMyValueObject4(@NotNull final String a, @NotNull final String b) {
 		super();

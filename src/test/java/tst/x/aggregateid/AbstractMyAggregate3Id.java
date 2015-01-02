@@ -42,8 +42,6 @@ public abstract class AbstractMyAggregate3Id extends AbstractStringValueObject i
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyAggregate3Id() {
 		super();
@@ -54,7 +52,6 @@ public abstract class AbstractMyAggregate3Id extends AbstractStringValueObject i
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public AbstractMyAggregate3Id(@NotNull final String a, @NotNull final String b) {
 		super();

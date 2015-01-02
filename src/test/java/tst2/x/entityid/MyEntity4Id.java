@@ -43,8 +43,6 @@ public final class MyEntity4Id implements EntityId, ValueObject {
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyEntity4Id() {
 		super();
@@ -55,7 +53,6 @@ public final class MyEntity4Id implements EntityId, ValueObject {
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public MyEntity4Id(@NotNull final String a, @NotNull final String b) {
 		super();

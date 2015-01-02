@@ -40,8 +40,6 @@ public final class MyEntity2Id implements EntityId, ValueObject {
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyEntity2Id() {
 		super();
@@ -51,7 +49,6 @@ public final class MyEntity2Id implements EntityId, ValueObject {
 	 * Constructor with all data.
 	 *
 	 * @param id Persistent value.
-	 *
 	 */
 	public MyEntity2Id(@NotNull final String id) {
 		super();

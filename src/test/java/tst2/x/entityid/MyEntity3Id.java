@@ -46,8 +46,6 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyEntity3Id() {
 		super();
@@ -58,7 +56,6 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public MyEntity3Id(@NotNull final String a, @NotNull final String b) {
 		super();

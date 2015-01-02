@@ -42,7 +42,7 @@ class SrcConstructorWithParamsAssignment implements CodeSnippet {
 
 	override toString() {
 		'''	
-			«new SrcMethodJavaDoc(ctx, constructorData.doc, null, constructorData.variables, constructorData.exceptions)»
+			«new SrcJavaDocMethod(ctx, constructorData.doc, null, constructorData.variables, constructorData.exceptions)»
 			«new SrcConstructorSignature(ctx, constructorData)» {
 				super();
 				«new SrcParamsAssignment(ctx, constructorData.variables)»

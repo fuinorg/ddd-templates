@@ -51,8 +51,6 @@ public abstract class AbstractFullName implements ValueObject, Serializable {
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractFullName() {
 		super();
@@ -63,7 +61,6 @@ public abstract class AbstractFullName implements ValueObject, Serializable {
 	 *
 	 * @param firstName First name.
 	 * @param lastName Last name.
-	 *
 	 */
 	public AbstractFullName(@NotNull final String firstName, @NotNull final String lastName) {
 		super();

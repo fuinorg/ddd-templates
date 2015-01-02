@@ -41,8 +41,6 @@ public abstract class AbstractMyAggregate4Id implements AggregateRootId, ValueOb
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyAggregate4Id() {
 		super();
@@ -53,7 +51,6 @@ public abstract class AbstractMyAggregate4Id implements AggregateRootId, ValueOb
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public AbstractMyAggregate4Id(@NotNull final String a, @NotNull final String b) {
 		super();

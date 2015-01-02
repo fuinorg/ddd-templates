@@ -41,8 +41,6 @@ public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyEntity4Id() {
 		super();
@@ -53,7 +51,6 @@ public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public AbstractMyEntity4Id(@NotNull final String a, @NotNull final String b) {
 		super();

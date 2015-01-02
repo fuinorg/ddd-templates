@@ -1,0 +1,19 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+	}
+	
+	namespace except {
+		
+		import x.types.*
+	
+		/** Exception A - No CID - No variables */
+		exception ExceptionA {
+			message "Exception A"
+		}
+	
+	}
+
+}

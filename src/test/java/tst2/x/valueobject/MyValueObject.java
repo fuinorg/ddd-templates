@@ -37,8 +37,6 @@ public final class MyValueObject extends AbstractStringValueObject implements Va
 
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyValueObject() {
 		super();
@@ -48,7 +46,6 @@ public final class MyValueObject extends AbstractStringValueObject implements Va
 	 * Constructor with all data.
 	 *
 	 * @param value Persistent value.
-	 *
 	 */
 	public MyValueObject(@NotNull final String value) {
 		super();

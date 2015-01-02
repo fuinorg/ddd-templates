@@ -9,16 +9,14 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 /**
  * Creates source code for the JavaDoc of a constructor or method.
  */
-class SrcMethodJavaDoc implements CodeSnippet {
+class SrcJavaDocMethod implements CodeSnippet {
 
 	val CodeSnippetContext ctx
 	val String doc
@@ -94,17 +92,9 @@ class SrcMethodJavaDoc implements CodeSnippet {
 		'''
 			/**
 			 * «doc.text»
-			 *
-			«FOR v : variables.nullSafe»
-				«sp»* @param «v.name» «v.superDoc»
-			«ENDFOR»
-			 *
-			«FOR exception : exceptions.nullSafe»
-				«sp»* @throws «exception.name» «exception.doc.text»
-			«ENDFOR»
-			«IF returnType != null»
-				«sp»* @return «returnType.doc.text»
-			«ENDIF»
+			«new SrcJavaDocParams(variables)»
+			«new SrcJavaDocExceptions(exceptions)»
+			«new SrcJavaDocReturn(returnType)»
 			 */
 		'''
 	}

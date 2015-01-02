@@ -39,8 +39,6 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyEntityId() {
 		super();
@@ -50,7 +48,6 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	 * Constructor with all data.
 	 *
 	 * @param value Persistent value.
-	 *
 	 */
 	public AbstractMyEntityId(@NotNull final String value) {
 		super();

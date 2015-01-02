@@ -44,8 +44,6 @@ public final class MyValueObject4 implements ValueObject, Serializable {
 
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyValueObject4() {
 		super();
@@ -56,7 +54,6 @@ public final class MyValueObject4 implements ValueObject, Serializable {
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public MyValueObject4(@NotNull final String a, @NotNull final String b) {
 		super();

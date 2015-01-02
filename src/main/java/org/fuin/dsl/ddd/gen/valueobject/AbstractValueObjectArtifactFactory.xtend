@@ -1,5 +1,6 @@
 package org.fuin.dsl.ddd.gen.valueobject
 
+import java.io.Serializable
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
@@ -7,7 +8,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseOptionalExtends
 import org.fuin.srcgen4j.commons.GenerateException
@@ -19,7 +20,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
-import java.io.Serializable
 
 class AbstractValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -63,7 +63,7 @@ class AbstractValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
 	def create(SimpleCodeSnippetContext ctx, ValueObject vo, String pkg, String className) {
 		val String src = ''' 
-			«new SrcJavaDoc(vo)»
+			«new SrcJavaDocType(vo)»
 			public abstract class «className» «new SrcVoBaseOptionalExtends(ctx, vo.base)»implements ValueObject, Serializable {
 			
 				private static final long serialVersionUID = 1000L;

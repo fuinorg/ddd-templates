@@ -40,8 +40,6 @@ public abstract class AbstractMyValueObject3 extends AbstractStringValueObject i
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyValueObject3() {
 		super();
@@ -52,7 +50,6 @@ public abstract class AbstractMyValueObject3 extends AbstractStringValueObject i
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public AbstractMyValueObject3(@NotNull final String a, @NotNull final String b) {
 		super();

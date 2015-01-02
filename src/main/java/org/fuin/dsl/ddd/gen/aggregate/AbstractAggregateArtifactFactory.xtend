@@ -8,7 +8,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcSetters
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
@@ -42,6 +42,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 		refReg.putReference(aggregate.uniqueAbstractName, fqn)
 
 		if (preparationRun) {
+
 			// No code generation during preparation phase
 			return null
 		}
@@ -70,7 +71,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 	 */
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {
 		val String src = ''' 
-			«new SrcJavaDoc(aggregate)»
+			«new SrcJavaDocType(aggregate)»
 			public abstract class «className» extends AbstractAggregateRoot<«aggregate.idType.name»> {
 			
 				@NotNull
@@ -108,7 +109,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 		'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
-		 
+
 	}
 
 }

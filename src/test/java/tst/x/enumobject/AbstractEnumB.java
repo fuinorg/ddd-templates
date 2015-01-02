@@ -40,7 +40,6 @@ public abstract class AbstractEnumB {
 	 * @param id Integer
 	 * @param shortName String
 	 * @param longName String
-	 *
 	 */
 	protected AbstractEnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
 		Contract.requireArgNotNull("id", id);

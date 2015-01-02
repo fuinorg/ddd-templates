@@ -8,8 +8,8 @@ import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcConstructorSignature
 import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethods
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
-import org.fuin.dsl.ddd.gen.base.SrcMethodJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocMethod
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcMethods
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -62,7 +62,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {
 		val String src = ''' 
-			«new SrcJavaDoc(aggregate)»
+			«new SrcJavaDocType(aggregate)»
 			public final class «className» extends Abstract«aggregate.name» {
 			
 				/**
@@ -73,7 +73,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 				}
 			
 			«FOR constructor : aggregate.constructors.nullSafe»
-				«new SrcMethodJavaDoc(ctx, constructor)»
+				«new SrcJavaDocMethod(ctx, constructor)»
 				«new SrcConstructorSignature(ctx, "public", className, constructor)» {
 					super();
 					// TODO Implement!
@@ -96,7 +96,7 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 	def _constructors(CodeSnippetContext ctx, Aggregate aggregate, String className) {
 		'''
 			«FOR constructor : aggregate.constructors.nullSafe»
-				«new SrcMethodJavaDoc(ctx, constructor)»
+				«new SrcJavaDocMethod(ctx, constructor)»
 				«new SrcConstructorSignature(ctx, "public", className, constructor)» {
 					super();
 					// TODO Implement!

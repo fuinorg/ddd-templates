@@ -42,8 +42,6 @@ public abstract class AbstractMyEntity3Id extends AbstractStringValueObject impl
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyEntity3Id() {
 		super();
@@ -54,7 +52,6 @@ public abstract class AbstractMyEntity3Id extends AbstractStringValueObject impl
 	 *
 	 * @param a Persistent value A.
 	 * @param b Persistent value B.
-	 *
 	 */
 	public AbstractMyEntity3Id(@NotNull final String a, @NotNull final String b) {
 		super();

@@ -9,9 +9,9 @@ import org.fuin.srcgen4j.core.emf.CodeSnippet
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 
 /**
- * Creates the JavaDoc source code.
+ * Creates the source code for a type (class, interface) JavaDoc.
  */
-class SrcJavaDoc implements CodeSnippet {
+class SrcJavaDocType implements CodeSnippet {
 
 	val String text
 

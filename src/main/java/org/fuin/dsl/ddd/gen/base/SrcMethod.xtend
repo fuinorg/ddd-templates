@@ -45,12 +45,12 @@ class SrcMethod implements CodeSnippet {
 	override toString() {
 		if (method.makeAbstract) {
 			'''	
-				«new SrcMethodJavaDoc(ctx, method)»
+				«new SrcJavaDocMethod(ctx, method)»
 				«new SrcMethodSignature(ctx, method)»;
 			'''
 		} else {
 			'''	
-				«new SrcMethodJavaDoc(ctx, method)»
+				«new SrcJavaDocMethod(ctx, method)»
 				«new SrcMethodSignature(ctx, method)» {
 					// TODO Implement!
 					«IF method.returnType != null»return null;«ENDIF»

@@ -10,7 +10,7 @@ import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcMethods
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
@@ -26,9 +26,9 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtension
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class EntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -70,7 +70,7 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 
 	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className) {
 		val String src = ''' 
-			«new SrcJavaDoc(entity)»
+			«new SrcJavaDocType(entity)»
 			public final class «entity.name» extends Abstract«entity.name» {
 			
 				«_constructorsDecl(ctx, entity, entity.constructors)»

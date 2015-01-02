@@ -59,8 +59,6 @@ public final class FullName implements ValueObject, Serializable {
 
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected FullName() {
 		super();
@@ -71,7 +69,6 @@ public final class FullName implements ValueObject, Serializable {
 	 *
 	 * @param firstName First name.
 	 * @param lastName Last name.
-	 *
 	 */
 	public FullName(@NotNull final String firstName, @NotNull final String lastName) {
 		super();

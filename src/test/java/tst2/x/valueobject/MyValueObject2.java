@@ -40,8 +40,6 @@ public final class MyValueObject2 implements ValueObject, Serializable {
 
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyValueObject2() {
 		super();
@@ -51,7 +49,6 @@ public final class MyValueObject2 implements ValueObject, Serializable {
 	 * Constructor with all data.
 	 *
 	 * @param id Persistent value.
-	 *
 	 */
 	public MyValueObject2(@NotNull final String id) {
 		super();

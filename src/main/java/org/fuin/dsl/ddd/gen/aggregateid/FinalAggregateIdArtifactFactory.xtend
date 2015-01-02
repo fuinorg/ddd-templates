@@ -5,7 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
-import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethods
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -52,24 +52,24 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
 	def addImports(CodeSnippetContext ctx, AggregateId aggregateId) {
 		if (aggregateId.base != null) {
-			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")			
+			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
 		}
 		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
 	}
 
 	def addReferences(CodeSnippetContext ctx, AggregateId aggregateId) {
 		if (aggregateId.base != null) {
-			ctx.requiresReference(aggregateId.uniqueName + "Converter")			
+			ctx.requiresReference(aggregateId.uniqueName + "Converter")
 		}
 		ctx.requiresReference(aggregateId.uniqueAbstractName)
 	}
 
 	def create(SimpleCodeSnippetContext ctx, AggregateId id, String pkg, String className, String abstractClassName) {
 		val String src = ''' 
-			«new SrcJavaDoc(id)»
+			«new SrcJavaDocType(id)»
 			@Immutable
 			«IF id.base != null»
-			@XmlJavaTypeAdapter(«id.name»Converter.class)
+				@XmlJavaTypeAdapter(«id.name»Converter.class)
 			«ENDIF»
 			public final class «className» extends «abstractClassName» {
 			
@@ -78,17 +78,17 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 				@Override
 				public final String asString() {
 					«IF (id.variables.nullSafe.size == 1)»
-					return "" + get«id.variables.first.name.toFirstUpper»();
+						return "" + get«id.variables.first.name.toFirstUpper»();
 					«ELSE»
-					// TODO Implement!
-					return null;
+						// TODO Implement!
+						return null;
 					«ENDIF»
 				}
 			
 				«new SrcVoBaseMethods(ctx, id)»
 				
 			}
-			'''
+		'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 

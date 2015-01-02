@@ -23,7 +23,7 @@ context x {
 					// No fields
 					message "Event A [${#entityIdPath}]"					
 				}
-							
+						
 			}
 			
 			/** Aggregate event B. */

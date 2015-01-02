@@ -43,8 +43,6 @@ public final class MyEntityId extends AbstractStringValueObject implements Entit
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected MyEntityId() {
 		super();
@@ -54,7 +52,6 @@ public final class MyEntityId extends AbstractStringValueObject implements Entit
 	 * Constructor with all data.
 	 *
 	 * @param value Persistent value.
-	 *
 	 */
 	public MyEntityId(@NotNull final String value) {
 		super();

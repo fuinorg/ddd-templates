@@ -6,6 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcKeyValueReplace
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
@@ -16,10 +17,12 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocMethod
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
@@ -53,11 +56,8 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 	}
 
 	def addImports(CodeSnippetContext ctx, Exception ex) {
-		ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
-		ctx.requiresImport("org.fuin.objects4j.common.NeverNull")
-		ctx.requiresImport("org.fuin.objects4j.common.Contract")
 		if (ex.cid > 0) {
-			ctx.requiresImport("org.fuin.objects4j.common.UniquelyNumberedException")		
+			ctx.requiresImport("org.fuin.objects4j.common.UniquelyNumberedException")
 		}
 	}
 
@@ -78,20 +78,9 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 			
 				«new SrcVarsDecl(ctx, "private", false, ex)»
 			
-				/**
-				 * Constructs a new instance of the exception.
-				 *
-				«FOR v : ex.variables»
-					* @param «v.name» «v.superDoc» 
-				«ENDFOR»
-				*/
+				«new SrcJavaDocMethod(ctx, "Constructs a new instance of the exception.", null, ex.variables, null)»
 				public «ex.name»(«new SrcParamsDecl(ctx, ex.variables)») {
-					super(«IF ex.cid > 0»«ex.cid», «ENDIF»
-					    KeyValue.replace("«ex.message»",
-					«FOR v : ex.variables SEPARATOR ','»
-						new KeyValue("«v.name»", «v.name»)
-					«ENDFOR» 
-					));
+					super(«IF ex.cid > 0»«ex.cid», «ENDIF»«new SrcKeyValueReplace(ctx, ex.message, ex.variables.varNames)»);
 					«new SrcParamsAssignment(ctx, ex.variables)»
 				}
 			
@@ -104,14 +93,12 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
 	}
 
-
 	def _uniquelyNumberedException(Exception ex) {
 		if (ex.cid > 0) {
 			'''UniquelyNumberedException'''
 		} else {
 			'''Exception'''
 		}
-
 	}
 
 }

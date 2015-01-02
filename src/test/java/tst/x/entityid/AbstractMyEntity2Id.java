@@ -38,8 +38,6 @@ public abstract class AbstractMyEntity2Id implements EntityId, ValueObject {
 	
 	/**
 	 * Default constructor.
-	 *
-	 *
 	 */
 	protected AbstractMyEntity2Id() {
 		super();
@@ -49,7 +47,6 @@ public abstract class AbstractMyEntity2Id implements EntityId, ValueObject {
 	 * Constructor with all data.
 	 *
 	 * @param id Persistent value.
-	 *
 	 */
 	public AbstractMyEntity2Id(@NotNull final String id) {
 		super();
