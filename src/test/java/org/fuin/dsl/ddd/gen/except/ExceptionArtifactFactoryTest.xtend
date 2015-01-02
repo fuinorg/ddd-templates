@@ -34,12 +34,38 @@ class ExceptionArtifactFactoryTest {
 		testCreate("ExceptionA")
 	}
 
+	@Test
+	def void testCreateEventB() {
+		testCreate("ExceptionB")
+	}
+
+	@Test
+	def void testCreateEventC() {
+		testCreate("ExceptionC")
+	}
+
+	@Test
+	def void testCreateEventD() {
+		testCreate("ExceptionD")
+	}
+
+	@Test
+	def void testCreateEventE() {
+		testCreate("ExceptionE")
+	}
+
+	@Test
+	def void testCreateEventF() {
+		testCreate("ExceptionF")
+	}
+
 	private def testCreate(String name) {
 
 		// PREPARE
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
+		refReg.putReference("x.types.Integer", "java.lang.Integer")
 
 		val ExceptionArtifactFactory testee = createTestee()
 		val Exception ex = model.find(typeof(Exception), name)

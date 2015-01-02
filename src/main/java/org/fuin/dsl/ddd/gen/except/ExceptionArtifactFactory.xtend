@@ -6,6 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
+import org.fuin.dsl.ddd.gen.base.SrcJavaDocMethod
 import org.fuin.dsl.ddd.gen.base.SrcKeyValueReplace
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
@@ -21,8 +22,6 @@ import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import org.fuin.dsl.ddd.gen.base.SrcJavaDocMethod
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 

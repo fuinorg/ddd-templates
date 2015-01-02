@@ -14,6 +14,37 @@ context x {
 			message "Exception A"
 		}
 	
+		/** Exception B - With CID - No variables */
+		exception ExceptionB cid 123 {
+			message "Exception B"
+		}
+		
+		/** Exception C - No CID - Single variable */
+		exception ExceptionC {
+			String a
+			message "Exception C: ${a}"
+		}
+	
+		/** Exception D - No CID - Multiple variables */
+		exception ExceptionD {
+			String a
+			Integer b
+			message "Exception D: ${a} / ${b}"
+		}
+		
+		/** Exception E - With CID - Single variable */
+		exception ExceptionE cid 124 {
+			String a
+			message "Exception C: ${a}"
+		}
+	
+		/** Exception F - With CID - Multiple variables */
+		exception ExceptionF cid 125{
+			String a
+			Integer b
+			message "Exception F: ${a} / ${b}"
+		}
+		
 	}
 
 }

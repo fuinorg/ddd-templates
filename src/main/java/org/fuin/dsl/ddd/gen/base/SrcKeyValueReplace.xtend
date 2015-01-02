@@ -33,7 +33,7 @@ class SrcKeyValueReplace implements CodeSnippet {
 		if (variables.nullSafe.size == 0) {
 			'''"«message»"'''
 		} else {
-			'''KeyValue.replace("«message»", «FOR name : variables SEPARATOR ','» new KeyValue("«name»", «name»)«ENDFOR»);'''
+			'''KeyValue.replace("«message»", «FOR name : variables SEPARATOR ','» new KeyValue("«name»", «name»)«ENDFOR»)'''
 		}
 	}
 
