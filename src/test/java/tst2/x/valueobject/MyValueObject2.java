@@ -17,6 +17,7 @@
  */
 package tst2.x.valueobject;
 
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,7 +29,7 @@ import org.fuin.objects4j.vo.ValueObject;
  * Value object single attribute and without base.
  */
 @XmlRootElement(name = "my-value-object2")
-public final class MyValueObject2 implements ValueObject {
+public final class MyValueObject2 implements ValueObject, Serializable {
 
 	private static final long serialVersionUID = 1000L;
 	

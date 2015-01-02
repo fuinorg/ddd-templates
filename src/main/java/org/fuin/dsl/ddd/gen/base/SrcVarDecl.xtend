@@ -1,10 +1,13 @@
 package org.fuin.dsl.ddd.gen.base
 
+import java.util.List
+import javax.validation.constraints.NotNull
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.InvariantsExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 /**
@@ -32,39 +35,40 @@ class SrcVarDecl implements CodeSnippet {
 		this.variable = variable
 
 		if (variable.nullable == null) {
-			ctx.requiresImport("javax.validation.constraints.NotNull")
+			ctx.requiresImport(NotNull.name)
 		}
 		if (variable.multiplicity != null) {
-			ctx.requiresImport("java.util.List")
+			ctx.requiresImport(List.name)
 		}
 		ctx.requiresReference(variable.type.uniqueName)
 	}
 
 	override toString() {
-		if (variable.invariants != null) {
-			'''
-				«FOR cc : variable.invariants.calls SEPARATOR ' '»
-					«new SrcValidationAnnotation(ctx, cc)»
-				«ENDFOR»
-				«IF variable.nullable == null»
-					@NotNull
-				«ENDIF»
-				«IF xml»
-					«new SrcXmlAttributeOrElement(ctx, variable)»
-				«ENDIF»
-				«visibility» «variable.type(ctx)» «variable.name»;
-			'''
-		} else {
-			'''
-				«IF variable.nullable == null»
-					@NotNull
-				«ENDIF»
-				«IF xml»
-					«new SrcXmlAttributeOrElement(ctx, variable)»
-				«ENDIF»
-				«visibility» «variable.type(ctx)» «variable.name»;
-			'''
-		}
+		'''
+			«validationAnnotations»
+			«xmlAnnotations»
+			«new SrcMetaAnnotations(ctx, variable.overriddenMeta, null, variable.name)»
+			«visibility» «variable.type(ctx)» «variable.name»;
+		'''
+	}
+
+	private def validationAnnotations() {
+		'''
+			«FOR cc : variable.invariants.nullSafeCalls SEPARATOR ' '»
+				«new SrcValidationAnnotation(ctx, cc)»
+			«ENDFOR»
+			«IF variable.nullable == null»
+				@NotNull
+			«ENDIF»
+		'''
+	}
+
+	private def xmlAnnotations() {
+		'''
+			«IF xml»
+				«new SrcXmlAttributeOrElement(ctx, variable)»
+			«ENDIF»
+		'''
 	}
 
 }

@@ -17,55 +17,21 @@
  */
 package tst.x.valueobject;
 
-import java.io.Serializable;
-import javax.validation.constraints.NotNull;
-import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.vo.ValueObject;
+import org.fuin.objects4j.common.Immutable;
+import org.fuin.objects4j.ui.Label;
+import org.fuin.objects4j.ui.ShortLabel;
+import org.fuin.objects4j.ui.Tooltip;
 
 /**
- * Value object single attribute and without base.
+ * A person's full nomenclature, also known as a personal name.
  */
-public abstract class AbstractMyValueObject2 implements ValueObject, Serializable {
+@Immutable
+@ShortLabel(bundle = "x", key = "valueobject.FullName.slabel", value = "Name")
+@Label(bundle = "x", key = "valueobject.FullName.label", value = "Full name")
+@Tooltip(bundle = "x", key = "valueobject.FullName.tooltip", value = "A person's full nomenclature, also known as a personal name")
+public final class FullName extends AbstractFullName {
 
 	private static final long serialVersionUID = 1000L;
 	
-	@NotNull
-	private String id;
 	
-	
-	/**
-	 * Default constructor.
-	 *
-	 *
-	 */
-	protected AbstractMyValueObject2() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param id Persistent value.
-	 *
-	 */
-	public AbstractMyValueObject2(@NotNull final String id) {
-		super();
-		Contract.requireArgNotNull("id", id);
-		
-		this.id = id;
-	}
-	
-
-	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
-	 */
-	 @NeverNull
-	public final String getId() {
-		return id;
-	}
-	
-
 }

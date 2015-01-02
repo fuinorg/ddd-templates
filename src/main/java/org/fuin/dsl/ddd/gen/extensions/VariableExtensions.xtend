@@ -62,6 +62,21 @@ class VariableExtensions {
 	}
 
 	/**
+	 * Returns the overridden meta info for the variable.
+	 * This is a null safe shortcut for <code>variable.overridden.metaInfo</code>. 
+	 * 
+	 * @param variable Variable.
+	 * 
+	 * @return Meta info or null.
+	 */
+	def static TypeMetaInfo overriddenMeta(Variable variable) {
+		if (variable.overridden == null) {
+			return null
+		}
+		return variable.overridden.metaInfo
+	}
+	
+	/**
 	 * Returns the meta info for the variable if available.
 	 * 
 	 * @param variable Variable.

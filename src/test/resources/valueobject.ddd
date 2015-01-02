@@ -47,6 +47,34 @@ context x {
 			
 		}
 
+		/** A person's full nomenclature, also known as a personal name. */
+		value-object FullName  {
+			
+			slabel "Name"
+			label "Full name"
+			tooltip "A person's full nomenclature, also known as a personal name"
+			examples "Peter Parker" "Mary Jane Watson" "Harry Osborn"
+			
+			/** First name. */
+			String firstName {
+				slabel "First"
+				label "First name"
+				tooltip "A given name, also known as a personal name or forename"
+				prompt "Enter your first name"
+				examples "Peter" "Mary Jane" "Harry"
+			} 
+			
+			/** Last name. */
+			String lastName {
+				slabel "Last"
+				label "Last name"
+				tooltip "A family name, also known as a surname"
+				prompt "Enter your last name"
+				examples "Parker" "Watson" "Osborn"
+			}
+			
+		}
+
 
 	}
 

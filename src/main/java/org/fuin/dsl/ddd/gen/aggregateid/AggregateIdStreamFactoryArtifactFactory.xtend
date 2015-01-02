@@ -74,7 +74,7 @@ class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<AggregateId
 			
 			    @Override
 				public boolean containsType(final StreamId streamId) {
-				return streamId.getName().equals(«id.name».TYPE.asString());
+					return streamId.getName().equals(«id.name».TYPE.asString());
 			  }
 			
 			}

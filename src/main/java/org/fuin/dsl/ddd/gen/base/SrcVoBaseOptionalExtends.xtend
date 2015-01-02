@@ -3,6 +3,10 @@ package org.fuin.dsl.ddd.gen.base
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+import org.fuin.objects4j.vo.AbstractStringValueObject
+import org.fuin.ddd4j.ddd.AbstractUUIDVO
+import org.fuin.objects4j.vo.AbstractIntegerValueObject
+import org.fuin.objects4j.vo.AbstractLongValueObject
 
 /**
  * Creates source code 'extends X' where X is the 
@@ -27,10 +31,10 @@ class SrcVoBaseOptionalExtends implements CodeSnippet {
 		} else {
 			this.baseName = base.name
 			switch baseName {
-				case "String": ctx.requiresImport("org.fuin.objects4j.vo.AbstractStringValueObject")
-				case "UUID": ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractUUIDVO")
-				case "Integer": ctx.requiresImport("org.fuin.objects4j.vo.AbstractIntegerValueObject")
-				case "Long": ctx.requiresImport("org.fuin.objects4j.vo.AbstractLongValueObject")
+				case "String": ctx.requiresImport(AbstractStringValueObject.name)
+				case "UUID": ctx.requiresImport(AbstractUUIDVO.name)
+				case "Integer": ctx.requiresImport(AbstractIntegerValueObject.name)
+				case "Long": ctx.requiresImport(AbstractLongValueObject.name)
 			}
 		}
 	}

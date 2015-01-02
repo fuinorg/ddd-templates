@@ -17,6 +17,7 @@
  */
 package tst2.x.valueobject;
 
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.NeverNull;
@@ -26,7 +27,7 @@ import org.fuin.objects4j.vo.ValueObject;
 /**
  * Value object multiple attributes and base.
  */
-public final class MyValueObject3 extends AbstractStringValueObject implements ValueObject {
+public final class MyValueObject3 extends AbstractStringValueObject implements ValueObject, Serializable {
 
 	private static final long serialVersionUID = 1000L;
 	

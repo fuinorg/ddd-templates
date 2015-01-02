@@ -19,6 +19,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import java.io.Serializable
 
 class AbstractValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -52,7 +53,8 @@ class AbstractValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 	}
 
 	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("org.fuin.objects4j.vo.ValueObject")
+		ctx.requiresImport(org.fuin.objects4j.vo.ValueObject.name)
+		ctx.requiresImport(Serializable.name)
 	}
 
 	def addReferences(CodeSnippetContext ctx, ValueObject valueObject) {
@@ -62,7 +64,7 @@ class AbstractValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 	def create(SimpleCodeSnippetContext ctx, ValueObject vo, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDoc(vo)»
-			public abstract class «className» «new SrcVoBaseOptionalExtends(ctx, vo.base)»implements ValueObject {
+			public abstract class «className» «new SrcVoBaseOptionalExtends(ctx, vo.base)»implements ValueObject, Serializable {
 			
 				private static final long serialVersionUID = 1000L;
 				

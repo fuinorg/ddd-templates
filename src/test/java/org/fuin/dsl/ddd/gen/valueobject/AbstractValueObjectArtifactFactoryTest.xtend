@@ -30,64 +30,31 @@ class AbstractValueObjectArtifactFactoryTest {
 	private ParseHelper<DomainModel> parser
 
 	@Test
-	def void testCreateMyValueObject() {
-
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-
-		val AbstractValueObjectArtifactFactory testee = createTestee()
-		val ValueObject vo = model.find(typeof(ValueObject), "MyValueObject")
-
-		// TEST
-		val result = new String(testee.create(vo, context, false).data)
-
-		// VERIFY
-		assertThat(result).isEqualTo("x/valueobject/AbstractMyValueObject.java".loadAbstractExample)
-
+	def void testCreateAbstractMyValueObject() {
+		testCreate("MyValueObject")
 	}
 	
 	@Test
-	def void testCreateMyValueObject2() {
-		
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-
-		val AbstractValueObjectArtifactFactory testee = createTestee()
-		val ValueObject vo = model.find(typeof(ValueObject), "MyValueObject2")
-
-		// TEST
-		val result = new String(testee.create(vo, context, false).data)
-
-		// VERIFY
-		assertThat(result).isEqualTo("x/valueobject/AbstractMyValueObject2.java".loadAbstractExample)
-		
+	def void testCreateAbstractMyValueObject2() {
+		testCreate("MyValueObject2")
 	}	
 
 	@Test
-	def void testCreateMyValueObject3() {
-
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-
-		val AbstractValueObjectArtifactFactory testee = createTestee()
-		val ValueObject vo = model.find(typeof(ValueObject), "MyValueObject3")
-
-		// TEST
-		val result = new String(testee.create(vo, context, false).data)
-
-		// VERIFY
-		assertThat(result).isEqualTo("x/valueobject/AbstractMyValueObject3.java".loadAbstractExample)
-
+	def void testCreateAbstractMyValueObject3() {
+		testCreate("MyValueObject3")
 	}
 
 	@Test
-	def void testCreateMyValueObject4() {
+	def void testCreateAbstractMyValueObject4() {
+		testCreate("MyValueObject4")
+	}	
+
+	@Test
+	def void testCreateAbstractFullName() {
+		testCreate("FullName")
+	}	
+
+	def void testCreate(String name) {
 		
 		// PREPARE
 		val context = new HashMap<String, Object>()
@@ -95,16 +62,16 @@ class AbstractValueObjectArtifactFactoryTest {
 		refReg.putReference("x.types.String", "java.lang.String")
 
 		val AbstractValueObjectArtifactFactory testee = createTestee()
-		val ValueObject vo = model.find(typeof(ValueObject), "MyValueObject4")
+		val ValueObject vo = model.find(typeof(ValueObject), name)
 
 		// TEST
 		val result = new String(testee.create(vo, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo("x/valueobject/AbstractMyValueObject4.java".loadAbstractExample)
+		assertThat(result).isEqualTo(("x/valueobject/Abstract" + name + ".java").loadAbstractExample)
 		
-	}	
-
+	}
+		
 	private def createTestee() {
 		val factory = new AbstractValueObjectArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractValueObject",

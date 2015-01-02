@@ -1,11 +1,12 @@
 package org.fuin.dsl.ddd.gen.valueobject
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcJavaDoc
+import org.fuin.dsl.ddd.gen.base.SrcMetaAnnotations
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethods
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -46,7 +47,7 @@ class FinalValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 		ctx.addReferences(vo)
 
 		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, vo, pkg, className, abstractClassName).toString().getBytes("UTF-8"));
+			create(ctx, ns, vo, pkg, className, abstractClassName).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx, ValueObject vo) {
@@ -63,18 +64,19 @@ class FinalValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 		ctx.requiresReference(vo.uniqueAbstractName)
 	}
 
-	def create(SimpleCodeSnippetContext ctx, ValueObject id, String pkg, String className, String abstractClassName) {
+	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className, String abstractClassName) {
 		val String src = ''' 
-			«new SrcJavaDoc(id)»
+			«new SrcJavaDoc(vo)»
 			@Immutable
-			«IF id.base != null»
-			@XmlJavaTypeAdapter(«id.name»Converter.class)
+			«new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
+			«IF vo.base != null»
+			@XmlJavaTypeAdapter(«vo.name»Converter.class)
 			«ENDIF»
 			public final class «className» extends «abstractClassName» {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«new SrcVoBaseMethods(ctx, id)»
+				«new SrcVoBaseMethods(ctx, vo)»
 				
 			}
 		'''
