@@ -93,7 +93,7 @@ class FinalEntityArtifactFactory extends AbstractSource<Entity> {
 			constructors.add(cd)
 		} else {
 			for (constructor : entity.constructors) {
-				val ConstructorData cd = new ConstructorData("public", className, constructor)
+				val ConstructorData cd = new ConstructorData("public", className, constructor, true)
 				cd.prepend(idParam)
 				cd.prepend(rootParam)
 				constructors.add(cd)
