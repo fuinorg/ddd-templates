@@ -17,37 +17,17 @@
  */
 package tst.x.aggregates;
 
-import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.AbstractAggregateRoot;
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.objects4j.common.Contract;
 
 /**
- * Aggregate A.
+ * Aggregate B - With variables.
  */
-public abstract class AbstractAggregateA extends AbstractAggregateRoot<AggregateAId> {
-
-	@NotNull
-	private AggregateAId id;
-
-	@Override
-	public final EntityType getType() {
-		return AggregateAId.TYPE;
-	}
-
-	@Override
-	public final AggregateAId getId() {
-		return id;
-	}
+public final class AggregateB extends AbstractAggregateB {
 
 	/**
-	 * Sets the aggregate identifier.
-	 * 
-	 * @param id Unique aggregate identifier.
+	 * Default constructor for loading the aggregate root from history. 
 	 */
-	protected final void setId(@NotNull final AggregateAId id) {
-		Contract.requireArgNotNull("id", id);
-		this.id = id;
+	public AggregateB() {
+		super();
 	}
-	
+
 }

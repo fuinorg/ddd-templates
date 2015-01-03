@@ -9,10 +9,70 @@ context x {
 		
 		import x.types.*
 		
+		/** Checks something. */
+		constraint AnyConstraint exception AnyConstraintViolatedException {
+			message "Any constraint"
+		}
+		
+		/** The constraint was violated. */
+		exception AnyConstraintViolatedException {
+			message "Any constraint violated"
+		}
+		
 		aggregate-id AggregateAId identifies AggregateA {}
 
 		/** Aggregate A. */
 		aggregate AggregateA identifier AggregateAId {}
+
+		aggregate-id AggregateBId identifies AggregateB {}
+
+		/** Aggregate B - With variables. */
+		aggregate AggregateB identifier AggregateBId {
+			
+			/** Variable A. */
+			String a
+			
+			/** Variable B. */
+			Integer b
+
+		}
+
+		aggregate-id AggregateCId identifies AggregateC {}
+
+		/** Aggregate C - With constructor, constraint and event. */
+		aggregate AggregateC identifier AggregateCId {
+			
+			/** Variable A. */
+			String a
+			
+			/** Variable B. */
+			Integer b
+
+			/** Creates the entity. */			
+			constructor create constraints AnyConstraint fires AggregateCCreatedEvent {
+
+				/** Variable A. */
+				String a
+				
+				/** Variable B. */
+				Integer b
+				
+				/** The aggregate C was created. */
+				event AggregateCCreatedEvent {
+					
+					/** Variable A. */
+					String a
+					
+					/** Variable B. */
+					Integer b
+					
+					message "Aggregate C was created: ${a} / ${b} [${#entityIdPath}]"
+					
+				}
+				
+			}
+			
+		}
 		
 	}
 

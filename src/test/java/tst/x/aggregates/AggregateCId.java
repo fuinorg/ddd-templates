@@ -9,21 +9,21 @@ import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
-public final class AggregateAId extends AbstractStringValueObject implements
+public final class AggregateCId extends AbstractStringValueObject implements
         AggregateRootId, ValueObject {
 
     private static final long serialVersionUID = 1000L;
 
     public static final EntityType TYPE = new StringBasedEntityType(
-            "AggregateA");
+            "AggregateC");
 
     private String value;
 
-    protected AggregateAId() {
+    protected AggregateCId() {
         super();
     }
 
-    public AggregateAId(@NotNull final String value) {
+    public AggregateCId(@NotNull final String value) {
         super();
         Contract.requireArgNotNull("value", value);
 

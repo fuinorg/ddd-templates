@@ -30,8 +30,18 @@ class FinalAggregateArtifactFactoryTest {
 	private ParseHelper<DomainModel> parser
 
 	@Test
-	def void testAbstractAggregateA() {
+	def void testAggregateA() {
 		testAggregate("AggregateA")
+	}
+
+	@Test
+	def void testAggregateB() {
+		testAggregate("AggregateB")
+	}
+	
+	@Test
+	def void testAggregateC() {
+		testAggregate("AggregateC")
 	}
 
 	private def testAggregate(String aggregateName) {
@@ -41,8 +51,11 @@ class FinalAggregateArtifactFactoryTest {
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.aggregates.AggregateAId", "tst.x.aggregates.AggregateAId")
+		refReg.putReference("x.types.Integer", "java.lang.Integer")
 		refReg.putReference("x.aggregates." + abstractName, "tst.x.aggregates." + abstractName)
+		refReg.putReference("x.aggregates." + aggregateName + "Id", "tst.x.aggregates." + aggregateName + "Id")
+		refReg.putReference("x.aggregates." + aggregateName + "CreatedEvent", "tst.x.aggregates." + aggregateName + "CreatedEvent")
+		refReg.putReference("x.aggregates.AnyConstraintViolatedException", "tst.x.aggregates.AnyConstraintViolatedException")
 
 		val FinalAggregateArtifactFactory testee = createTestee()
 		val Aggregate aggregate = model.find(typeof(Aggregate), aggregateName)

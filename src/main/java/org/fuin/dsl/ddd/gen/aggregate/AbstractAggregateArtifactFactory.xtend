@@ -79,7 +79,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 			
 				«new SrcVarsDecl(ctx, "private", false, aggregate)»
 				@Override
-				public final EntityType getType() {				
+				public final EntityType getType() {
 					return «aggregate.idType.name».TYPE;
 				}
 			
@@ -98,7 +98,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 					this.id = id;
 				}
 				
-				«new SrcGetters(ctx, "protected final", aggregate.variables)»				
+				«new SrcGetters(ctx, "protected final", aggregate.variables)»
 				«new SrcSetters(ctx, "protected final", aggregate.variables)»
 				«new SrcAbstractChildEntityLocatorMethods(ctx, aggregate)»
 				«new SrcAbstractHandleEventMethods(ctx, aggregate.allEvents)»

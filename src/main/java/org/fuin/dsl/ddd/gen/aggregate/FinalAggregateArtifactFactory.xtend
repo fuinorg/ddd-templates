@@ -72,14 +72,14 @@ class FinalAggregateArtifactFactory extends AbstractSource<Aggregate> {
 					super();
 				}
 			
-			«FOR constructor : aggregate.constructors.nullSafe»
-				«new SrcJavaDocMethod(ctx, constructor)»
-				«new SrcConstructorSignature(ctx, "public", className, constructor)» {
-					super();
-					// TODO Implement!
-				}
-				
-			«ENDFOR»
+				«FOR constructor : aggregate.constructors.nullSafe»
+					«new SrcJavaDocMethod(ctx, constructor)»
+					«new SrcConstructorSignature(ctx, "public", className, constructor)» {
+						super();
+						// TODO Implement!
+					}
+					
+				«ENDFOR»
 				«new SrcChildEntityLocatorMethods(ctx, aggregate)»
 				«new SrcMethods(ctx, aggregate)»
 				«new SrcHandleEventMethods(ctx, aggregate.allEvents)»

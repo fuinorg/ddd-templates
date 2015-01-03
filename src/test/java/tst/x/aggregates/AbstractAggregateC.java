@@ -21,22 +21,29 @@ import javax.validation.constraints.NotNull;
 import org.fuin.ddd4j.ddd.AbstractAggregateRoot;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverNull;
 
 /**
- * Aggregate A.
+ * Aggregate C - With constructor, constraint and event.
  */
-public abstract class AbstractAggregateA extends AbstractAggregateRoot<AggregateAId> {
+public abstract class AbstractAggregateC extends AbstractAggregateRoot<AggregateCId> {
 
 	@NotNull
-	private AggregateAId id;
+	private AggregateCId id;
 
+	@NotNull
+	private String a;
+	
+	@NotNull
+	private Integer b;
+	
 	@Override
 	public final EntityType getType() {
-		return AggregateAId.TYPE;
+		return AggregateCId.TYPE;
 	}
 
 	@Override
-	public final AggregateAId getId() {
+	public final AggregateCId getId() {
 		return id;
 	}
 
@@ -45,9 +52,56 @@ public abstract class AbstractAggregateA extends AbstractAggregateRoot<Aggregate
 	 * 
 	 * @param id Unique aggregate identifier.
 	 */
-	protected final void setId(@NotNull final AggregateAId id) {
+	protected final void setId(@NotNull final AggregateCId id) {
 		Contract.requireArgNotNull("id", id);
 		this.id = id;
 	}
+	
+	/**
+	 * Returns: Variable A.
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	protected final String getA() {
+		return a;
+	}
+	
+	/**
+	 * Returns: Variable B.
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	protected final Integer getB() {
+		return b;
+	}
+	
+	/**
+	 * Sets: Variable A.
+	 *
+	 * @param a Value to set.
+	 */
+	protected final void setA(@NotNull final String a) {
+		Contract.requireArgNotNull("a", a);
+		this.a = a;
+	}
+	
+	/**
+	 * Sets: Variable B.
+	 *
+	 * @param b Value to set.
+	 */
+	protected final void setB(@NotNull final Integer b) {
+		Contract.requireArgNotNull("b", b);
+		this.b = b;
+	}
+	
+	/**
+	 * Handles: AggregateCCreatedEvent.
+	 *
+	 * @param event Event to handle.
+	 */
+	protected abstract void handle(@NotNull final AggregateCCreatedEvent event);
 	
 }

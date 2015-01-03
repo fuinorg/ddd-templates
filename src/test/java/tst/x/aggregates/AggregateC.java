@@ -18,36 +18,42 @@
 package tst.x.aggregates;
 
 import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.AbstractAggregateRoot;
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.objects4j.common.Contract;
+import org.fuin.ddd4j.ddd.EventHandler;
 
 /**
- * Aggregate A.
+ * Aggregate C - With constructor, constraint and event.
  */
-public abstract class AbstractAggregateA extends AbstractAggregateRoot<AggregateAId> {
+public final class AggregateC extends AbstractAggregateC {
 
-	@NotNull
-	private AggregateAId id;
-
-	@Override
-	public final EntityType getType() {
-		return AggregateAId.TYPE;
-	}
-
-	@Override
-	public final AggregateAId getId() {
-		return id;
+	/**
+	 * Default constructor for loading the aggregate root from history. 
+	 */
+	public AggregateC() {
+		super();
 	}
 
 	/**
-	 * Sets the aggregate identifier.
-	 * 
-	 * @param id Unique aggregate identifier.
+	 * Creates the entity.
+	 *
+	 * @param a Variable A.
+	 * @param b Variable B.
+	 *
+	 * @throws AnyConstraintViolatedException The constraint was violated.
 	 */
-	protected final void setId(@NotNull final AggregateAId id) {
-		Contract.requireArgNotNull("id", id);
-		this.id = id;
+	public AggregateC(@NotNull final String a, @NotNull final Integer b) throws AnyConstraintViolatedException {
+		super();
+		// TODO Implement!
+	}
+	
+	/**
+	 * Handles: AggregateCCreatedEvent.
+	 *
+	 * @param event Event to handle.
+	 */
+	@Override
+	@EventHandler
+	protected final void handle(@NotNull final AggregateCCreatedEvent event) {
+		// TODO Handle event!
 	}
 	
 }

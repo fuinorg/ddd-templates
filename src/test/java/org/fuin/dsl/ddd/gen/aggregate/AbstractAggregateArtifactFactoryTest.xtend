@@ -34,6 +34,16 @@ class AbstractAggregateArtifactFactoryTest {
 		testAggregate("AggregateA")
 	}
 
+	@Test
+	def void testAbstractAggregateB() {
+		testAggregate("AggregateB")
+	}
+	
+	@Test
+	def void testAbstractAggregateC() {
+		testAggregate("AggregateC")
+	}
+
 	private def testAggregate(String aggregateName) {
 
 		// PREPARE
@@ -41,7 +51,9 @@ class AbstractAggregateArtifactFactoryTest {
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.aggregates.AggregateAId", "tst.x.aggregates.AggregateAId")
+		refReg.putReference("x.types.Integer", "java.lang.Integer")
+		refReg.putReference("x.aggregates." + aggregateName + "Id", "tst.x.aggregates." + aggregateName + "Id")
+		refReg.putReference("x.aggregates." + aggregateName + "CreatedEvent", "tst.x.aggregates." + aggregateName + "CreatedEvent")
 
 		val AbstractAggregateArtifactFactory testee = createTestee()
 		val Aggregate aggregate = model.find(typeof(Aggregate), aggregateName)
