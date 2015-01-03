@@ -80,13 +80,9 @@ class AggregateArtifactFactory extends AbstractSource<Aggregate> {
 				}
 				
 			«ENDFOR»
-			
 				«new SrcChildEntityLocatorMethods(ctx, aggregate)»
-				
 				«new SrcMethods(ctx, aggregate)»
-			
 				«new SrcHandleEventMethods(ctx, aggregate.allEvents)»
-			
 			}
 		'''
 
