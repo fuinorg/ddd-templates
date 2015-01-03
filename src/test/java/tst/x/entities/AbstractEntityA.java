@@ -31,7 +31,7 @@ public abstract class AbstractEntityA extends AbstractEntity<AggregateXId, Aggre
 	private EntityAId id;
 
 	/**
-	 * Constructor with aggregate root identifier. /
+	 * Constructor with mandatory data.
 	 *
 	 * @param rootAggregate The root aggregate of this entity.
 	 * @param id Unique entity identifier.

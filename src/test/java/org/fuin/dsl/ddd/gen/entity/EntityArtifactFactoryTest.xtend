@@ -24,41 +24,41 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
-class AbstractEntityArtifactFactoryTest {
+class EntityArtifactFactoryTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
 
 	@Test
-	def void testAbstractEntityA() {
+	def void testEntityA() {
 		testEntity("EntityA")
 	}
 	
 	private def testEntity(String entityName) {
 		
 		// PREPARE
-		val abstractName = "Abstract" + entityName
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
 		refReg.putReference("x.entities.AggregateX", "tst.x.entities.AggregateX")
 		refReg.putReference("x.entities.AggregateXId", "tst.x.entities.AggregateXId")
-		refReg.putReference("x.entities.EntityAId", "tst.x.entities.EntityAId")
+		refReg.putReference("x.entities." + entityName + "Id", "tst.x.entities." + entityName + "Id")
+		refReg.putReference("x.entities.Abstract" + entityName, "tst.x.entities.Abstract" + entityName)
 
-		val AbstractEntityArtifactFactory testee = createTestee()
+		val EntityArtifactFactory testee = createTestee()
 		val Entity entity = model.find(typeof(Entity), entityName)
 
 		// TEST
 		val result = new String(testee.create(entity, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo(("x/entities/" + abstractName + ".java").loadAbstractExample)
+		assertThat(result).isEqualTo(("x/entities/" + entityName + ".java").loadAbstractExample)
 
 	}
 
 	private def createTestee() {
-		val factory = new AbstractEntityArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractEntity", AbstractEntityArtifactFactory.name)
+		val factory = new EntityArtifactFactory()
+		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("entity", EntityArtifactFactory.name)
 		config.addVariable(new Variable(AbstractSource.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
 		config.addVariable(new Variable(AbstractSource.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
 		config.init(new DefaultContext(), null)

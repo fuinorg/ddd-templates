@@ -1,13 +1,17 @@
 package org.fuin.dsl.ddd.gen.entity
 
+import java.util.ArrayList
 import java.util.List
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.ConstructorData
+import org.fuin.dsl.ddd.gen.base.ConstructorParam
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethods
+import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
@@ -20,12 +24,14 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
+import static org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory.eINSTANCE
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.DomainDrivenDesignDslFactoryExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
@@ -73,28 +79,15 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 			«new SrcJavaDocType(entity)»
 			public final class «entity.name» extends Abstract«entity.name» {
 			
-				«_constructorsDecl(ctx, entity, entity.constructors)»
-			
+				«new SrcConstructorsWithParamsAssignment(ctx, constructorData(entity, className))»
 				«new SrcChildEntityLocatorMethods(ctx, entity)»
-				
 				«new SrcMethods(ctx, entity)»
-			
 				«new SrcHandleEventMethods(ctx, entity.allEvents)»
-			
 			}
 		'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
-
-	def _constructorsDecl(CodeSnippetContext ctx, Entity entity, List<Constructor> constructors) {
-		'''
-			«FOR constructor : constructors»
-				«_constructorDecl(ctx, entity, constructor)»
-				
-			«ENDFOR»
-		'''
 	}
 
 	def _constructorDecl(CodeSnippetContext ctx, Entity entity, Constructor constructor) {
@@ -112,6 +105,27 @@ class EntityArtifactFactory extends AbstractSource<Entity> {
 				«new SrcInvokeMethod(ctx, "super", union("rootAggregate", constructor.variables.varNames))»	
 			}
 		'''
+	}
+	
+	def constructorData(Entity entity, String className) {
+		val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
+		val rootParam = new ConstructorParam(eINSTANCE.createVariable("The root aggregate of this entity.", entity.root, "rootAggregate", false), true)
+		val idParam = new ConstructorParam(eINSTANCE.createVariable("Unique entity identifier.", entity.idType, "id", false), true)
+		if (entity.constructors == null || entity.constructors.size == 0) {
+			val List<ConstructorParam> parameters = new ArrayList<ConstructorParam>()
+			parameters.add(rootParam)
+			parameters.add(idParam)
+			val ConstructorData cd = new ConstructorData("/** Constructor with mandatory data. */", null, "public", className, parameters, null)
+			constructors.add(cd)
+		} else {
+			for (constructor : entity.constructors) {
+				val ConstructorData cd = new ConstructorData("public", className, constructor)
+				cd.prepend(idParam)
+				cd.prepend(rootParam)
+				constructors.add(cd)
+			}			
+		}
+		return constructors
 	}
 
 }

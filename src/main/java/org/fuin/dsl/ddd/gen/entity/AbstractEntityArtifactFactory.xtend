@@ -114,7 +114,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 			val List<ConstructorParam> parameters = new ArrayList<ConstructorParam>()
 			parameters.add(rootParam)
 			parameters.add(idParam)
-			val ConstructorData cd = new ConstructorData("/** Constructor with aggregate root identifier. /", null, "protected", className, parameters, null)
+			val ConstructorData cd = new ConstructorData("/** Constructor with mandatory data. */", null, "protected", className, parameters, null)
 			constructors.add(cd)
 		} else {
 			for (constructor : entity.constructors) {
