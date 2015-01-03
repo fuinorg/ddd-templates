@@ -22,7 +22,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
-class AggregateArtifactFactory extends AbstractSource<Aggregate> {
+class FinalAggregateArtifactFactory extends AbstractSource<Aggregate> {
 
 	override getModelType() {
 		return typeof(Aggregate)

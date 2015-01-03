@@ -27,7 +27,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions
 import static extension org.fuin.dsl.ddd.gen.extensions.DomainDrivenDesignDslFactoryExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
-class EntityArtifactFactory extends AbstractSource<Entity> {
+class FinalEntityArtifactFactory extends AbstractSource<Entity> {
 
 	override getModelType() {
 		typeof(Entity)

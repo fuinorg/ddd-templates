@@ -1,4 +1,4 @@
-package org.fuin.dsl.ddd.gen.aggregate
+package org.fuin.dsl.ddd.gen.entity
 
 import java.util.HashMap
 import javax.inject.Inject
@@ -6,8 +6,8 @@ import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.Utils
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
@@ -24,41 +24,41 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
-class AggregateArtifactFactoryTest {
+class FinalFinalEntityArtifactFactoryTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
 
 	@Test
-	def void testAbstractAggregateA() {
-		testAggregate("AggregateA")
+	def void testEntityA() {
+		testEntity("EntityA")
 	}
-
-	private def testAggregate(String aggregateName) {
-
+	
+	private def testEntity(String entityName) {
+		
 		// PREPARE
-		val abstractName = "Abstract" + aggregateName
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.aggregates.AggregateAId", "tst.x.aggregates.AggregateAId")
-		refReg.putReference("x.aggregates." + abstractName, "tst.x.aggregates." + abstractName)
+		refReg.putReference("x.entities.AggregateX", "tst.x.entities.AggregateX")
+		refReg.putReference("x.entities.AggregateXId", "tst.x.entities.AggregateXId")
+		refReg.putReference("x.entities." + entityName + "Id", "tst.x.entities." + entityName + "Id")
+		refReg.putReference("x.entities.Abstract" + entityName, "tst.x.entities.Abstract" + entityName)
 
-		val AggregateArtifactFactory testee = createTestee()
-		val Aggregate aggregate = model.find(typeof(Aggregate), aggregateName)
+		val FinalEntityArtifactFactory testee = createTestee()
+		val Entity entity = model.find(typeof(Entity), entityName)
 
 		// TEST
-		val result = new String(testee.create(aggregate, context, false).data)
+		val result = new String(testee.create(entity, context, false).data)
 
 		// VERIFY
-		assertThat(result).isEqualTo(("x/aggregates/" + aggregateName + ".java").loadAbstractExample)
+		assertThat(result).isEqualTo(("x/entities/" + entityName + ".java").loadAbstractExample)
 
 	}
 
 	private def createTestee() {
-		val factory = new AggregateArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("aggregate",
-			AggregateArtifactFactory.name)
+		val factory = new FinalEntityArtifactFactory()
+		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("entity", FinalEntityArtifactFactory.name)
 		config.addVariable(new Variable(AbstractSource.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
 		config.addVariable(new Variable(AbstractSource.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
 		config.init(new DefaultContext(), null)
@@ -67,7 +67,7 @@ class AggregateArtifactFactoryTest {
 	}
 
 	private def model() {
-		return parser.parse(Utils.readAsString(class.getResource("/aggregate.ddd")))
+		return parser.parse(Utils.readAsString(class.getResource("/entity.ddd")))
 	}
 
 }
