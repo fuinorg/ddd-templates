@@ -17,6 +17,7 @@
  */
 package tst.x.valueobject;
 
+import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Immutable;
 
 /**
@@ -26,5 +27,21 @@ import org.fuin.objects4j.common.Immutable;
 public final class MyValueObject2 extends AbstractMyValueObject2 {
 
 	private static final long serialVersionUID = 1000L;
+	
+	/**
+	 * Default constructor.
+	 */
+	protected MyValueObject2() {
+		super();
+	}
+	
+	/**
+	 * Constructor with all data.
+	 *
+	 * @param id Persistent value.
+	 */
+	public MyValueObject2(@NotNull final String id) {
+		super(id);
+	}
 	
 }

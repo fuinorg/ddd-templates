@@ -17,6 +17,7 @@
  */
 package tst.x.valueobject;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.fuin.objects4j.common.Immutable;
 import tst2.x.valueobject.MyValueObjectConverter;
@@ -29,6 +30,22 @@ import tst2.x.valueobject.MyValueObjectConverter;
 public final class MyValueObject extends AbstractMyValueObject {
 
 	private static final long serialVersionUID = 1000L;
+	
+	/**
+	 * Default constructor.
+	 */
+	protected MyValueObject() {
+		super();
+	}
+	
+	/**
+	 * Constructor with all data.
+	 *
+	 * @param value Persistent value.
+	 */
+	public MyValueObject(@NotNull final String value) {
+		super(value);
+	}
 	
 	@Override
 	public final String asBaseType() {

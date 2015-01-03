@@ -17,6 +17,7 @@
  */
 package tst.x.valueobject;
 
+import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Immutable;
 import org.fuin.objects4j.ui.Label;
 import org.fuin.objects4j.ui.ShortLabel;
@@ -32,5 +33,22 @@ import org.fuin.objects4j.ui.Tooltip;
 public final class FullName extends AbstractFullName {
 
 	private static final long serialVersionUID = 1000L;
+	
+	/**
+	 * Default constructor.
+	 */
+	protected FullName() {
+		super();
+	}
+	
+	/**
+	 * Constructor with all data.
+	 *
+	 * @param firstName First name.
+	 * @param lastName Last name.
+	 */
+	public FullName(@NotNull final String firstName, @NotNull final String lastName) {
+		super(firstName, lastName);
+	}
 	
 }
