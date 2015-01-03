@@ -14,12 +14,12 @@ import org.fuin.srcgen4j.core.emf.CodeSnippet
 class SrcGetter implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String visibility
+	val String modifiers
 	val Variable variable
 
-	new(CodeSnippetContext ctx, String visibility, Variable variable) {
+	new(CodeSnippetContext ctx, String modifiers, Variable variable) {
 		this.ctx = ctx
-		this.visibility = visibility
+		this.modifiers = modifiers
 		this.variable = variable
 		
 		if (variable.nullable == null) {
@@ -40,7 +40,7 @@ class SrcGetter implements CodeSnippet {
 			 * @return Current value.
 			 */
 			 «IF variable.nullable == null»@NeverNull«ENDIF»
-			«visibility» «variable.type(ctx)» get«variable.name.toFirstUpper»() {
+			«modifiers» «variable.type(ctx)» get«variable.name.toFirstUpper»() {
 				return «variable.name»;
 			}
 		'''

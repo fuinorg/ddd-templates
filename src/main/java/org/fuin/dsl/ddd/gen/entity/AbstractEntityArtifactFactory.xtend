@@ -1,20 +1,22 @@
 package org.fuin.dsl.ddd.gen.entity
 
+import java.util.ArrayList
 import java.util.List
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.ConstructorData
+import org.fuin.dsl.ddd.gen.base.ConstructorParam
 import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
-import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
-import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
 import org.fuin.dsl.ddd.gen.base.SrcSetters
-import org.fuin.dsl.ddd.gen.base.SrcThrowsExceptions
+import org.fuin.dsl.ddd.gen.base.SrcVarDecl
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
@@ -22,12 +24,12 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
+import static org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory.eINSTANCE
+
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.DomainDrivenDesignDslFactoryExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -56,8 +58,10 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 		ctx.addImports
 		ctx.addReferences(entity)
 
+		val idVar = eINSTANCE.createVariable(null, entity.idType, "id", false)
+
 		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, entity, pkg, className).toString().getBytes("UTF-8"));
+			create(ctx, entity, pkg, className, idVar).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
@@ -71,20 +75,18 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 		ctx.requiresReference(entity.root.idType.uniqueName)
 	}
 
-	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className) {
+	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className, Variable idVar) {
 		val String src = ''' 
 			«new SrcJavaDocType(entity)»
 			public abstract class «className» extends AbstractEntity<«entity.root.idType.name», «entity.root.name», «entity.
 				idType.name»> {
 			
-				private «entity.idType.name» id;
+				«new SrcVarDecl(ctx, "private", false, idVar)»
 			
 				«new SrcVarsDecl(ctx, "private", false, entity)»
-			
-				«_constructorsDecl(ctx, entity, entity.constructors)»
-			
+				«new SrcConstructorsWithParamsAssignment(ctx, constructorData(entity, className))»
 				@Override
-				public final EntityType getType() {				
+				public final EntityType getType() {
 					return «entity.idType.name».TYPE;
 				}
 			
@@ -93,44 +95,36 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 					return id;
 				}
 			
-				«new SrcGetters(ctx, "protected final", entity.variables)»				
+				«new SrcGetters(ctx, "protected final", entity.variables)»
 				«new SrcSetters(ctx, "protected final", entity.variables)»
 				«new SrcAbstractChildEntityLocatorMethods(ctx, entity)»
-				
 				«new SrcAbstractHandleEventMethods(ctx, entity.allEvents)»
-			
 			}
 		'''
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
-		
+
 	}
 
-	def _constructorsDecl(CodeSnippetContext ctx, Entity entity, List<Constructor> constructors) {
-		'''
-			«FOR constructor : constructors»
-				«_constructorDecl(ctx, entity, constructor)»
-				
-			«ENDFOR»
-		'''
-	}
-
-	def _constructorDecl(CodeSnippetContext ctx, Entity entity, Constructor constructor) {
-		'''
-			/**
-			 * «constructor.doc.text»
-			 *
-			 * @param rootAggregate The root aggregate of this entity.
-			«FOR v : constructor.variables»
-				* @param «v.name» «v.superDoc» 
-			«ENDFOR»
-			 */
-			public Abstract«entity.name»(@NotNull final «entity.root.name» rootAggregate, «new SrcParamsDecl(ctx, constructor.variables)») «new SrcThrowsExceptions(
-				ctx, constructor.allExceptions)»{
-				super(rootAggregate);
-				«new SrcParamsAssignment(ctx, constructor.variables)»	
-			}
-		'''
+	def constructorData(Entity entity, String className) {
+		val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
+		val rootParam = new ConstructorParam(eINSTANCE.createVariable("The root aggregate of this entity.", entity.root, "rootAggregate",	false), true)
+		val idParam = new ConstructorParam(eINSTANCE.createVariable("Unique entity identifier.", entity.idType, "id", false), false)
+		if (entity.constructors == null || entity.constructors.size == 0) {
+			val List<ConstructorParam> parameters = new ArrayList<ConstructorParam>()
+			parameters.add(rootParam)
+			parameters.add(idParam)
+			val ConstructorData cd = new ConstructorData("/** Constructor with aggregate root identifier. /", null, "protected", className, parameters, null)
+			constructors.add(cd)
+		} else {
+			for (constructor : entity.constructors) {
+				val ConstructorData cd = new ConstructorData("public", className, constructor)
+				cd.prepend(idParam)
+				cd.prepend(rootParam)
+				constructors.add(cd)
+			}			
+		}
+		return constructors
 	}
 
 }

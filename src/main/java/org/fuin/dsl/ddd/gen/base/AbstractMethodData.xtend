@@ -3,9 +3,11 @@ package org.fuin.dsl.ddd.gen.base
 import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import java.util.Collections
+import java.util.ArrayList
 
 /**
- * Data required to create a constructor or method. 
+ * Data required to create a method or method. 
  */
 abstract class AbstractMethodData {
 
@@ -19,11 +21,11 @@ abstract class AbstractMethodData {
 	/**
 	 * Constructor without annotations.
 	 * 
-	 * @param ctx Documentation for the constructor.
+	 * @param ctx Documentation for the method.
 	 * @param modifiers Modifiers (Don't include "abstract" - Use next argument instead).
 	 * @param name Name of the method.
-	 * @param variables Variables for the constructor.
-	 * @param exceptions Exceptions for the constructor.
+	 * @param variables Variables for the method.
+	 * @param exceptions Exceptions for the method.
 	 */
 	new(String doc, String modifiers, String name, List<Variable> variables, List<Exception> exceptions) {
 		this.doc = doc
@@ -37,11 +39,11 @@ abstract class AbstractMethodData {
 	/**
 	 * Constructor with all data.
 	 * 
-	 * @param ctx Documentation for the constructor.
+	 * @param ctx Documentation for the method.
 	 * @param modifiers Modifiers (Don't include "abstract" - Use next argument instead).
 	 * @param name Name of the method.
-	 * @param variables Variables for the constructor.
-	 * @param exceptions Exceptions for the constructor.
+	 * @param variables Variables for the method.
+	 * @param exceptions Exceptions for the method.
 	 */
 	new(String doc, List<String> annotations, String modifiers, String name, List<Variable> variables, List<Exception> exceptions) {
 		this.doc = doc
@@ -64,10 +66,13 @@ abstract class AbstractMethodData {
 	/**
 	 * Returns a list of method annotations
 	 * 
-	 * @return Annotations.
+	 * @return Immutable list of annotations.
 	 */
 	def getAnnotations() {
-		annotations
+		if (annotations == null) {
+			return null
+		}
+		Collections.unmodifiableList(annotations)
 	}
 
 	/**
@@ -91,19 +96,49 @@ abstract class AbstractMethodData {
 	/**
 	 * Returns the variables.
 	 * 
-	 * @return Variables.
+	 * @return Immutable list of variables.
 	 */
 	def getVariables() {
-		variables
+		if (variables == null) {
+			return null
+		}
+		Collections.unmodifiableList(variables)
 	}
 
 	/**
 	 * Returns the exceptions.
 	 * 
-	 * @return Exceptions.
+	 * @return Immutable list of exceptions.
 	 */
 	def getExceptions() {
-		exceptions
+		if (exceptions == null) {
+			return null
+		}
+		Collections.unmodifiableList(exceptions)
 	}
 
+	/**
+	 * Inserts a new variable at the first position.
+	 * 
+	 * @param variable Variable to add.
+	 */
+	protected def prependVariable(Variable variable) {
+		if (variables == null) {
+			variables = new ArrayList<Variable>()
+		}
+		variables.add(0, variable)
+	}
+
+	/**
+	 * Appends a new variable at the last position.
+	 * 
+	 * @param variable Variable to add.
+	 */
+	protected def appendVariable(Variable variable) {
+		if (variables == null) {
+			variables = new ArrayList<Variable>()
+		}
+		variables.add(variable)
+	}
+	
 }

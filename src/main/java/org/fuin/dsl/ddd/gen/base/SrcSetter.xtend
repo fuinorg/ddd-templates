@@ -14,12 +14,12 @@ import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 class SrcSetter implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String visibility
+	val String modifiers
 	val Variable variable
 
-	new(CodeSnippetContext ctx, String visibility, Variable variable) {
+	new(CodeSnippetContext ctx, String modifiers, Variable variable) {
 		this.ctx = ctx
-		this.visibility = visibility
+		this.modifiers = modifiers
 		this.variable = variable
 		if (variable.nullable == null) {
 			ctx.requiresImport("javax.validation.constraints.NotNull")
@@ -38,7 +38,7 @@ class SrcSetter implements CodeSnippet {
 			 *
 			 * @param «variable.name» Value to set.
 			 */
-			«visibility» void set«variable.name.toFirstUpper»(«IF variable.nullable == null»@NotNull «ENDIF»final «variable.
+			«modifiers» void set«variable.name.toFirstUpper»(«IF variable.nullable == null»@NotNull «ENDIF»final «variable.
 				type(ctx)» «variable.name») {
 				«IF variable.nullable == null»
 					Contract.requireArgNotNull("«variable.name»", «variable.name»);

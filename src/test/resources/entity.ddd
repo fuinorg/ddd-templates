@@ -1,0 +1,24 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+	}
+	
+	namespace entities {
+		
+		import x.types.*
+		
+		aggregate-id AggregateXId identifies AggregateX {}
+
+		aggregate AggregateX identifier AggregateXId {}
+		
+		entity-id EntityAId identifies EntityA {}
+		
+		/** Entity A. */
+		entity EntityA identifier EntityAId root AggregateX {
+		}
+		
+	}
+
+}

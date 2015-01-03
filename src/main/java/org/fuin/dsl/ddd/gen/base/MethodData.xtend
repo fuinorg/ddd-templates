@@ -83,4 +83,22 @@ class MethodData extends AbstractMethodData {
 		returnType
 	}
 
+	/**
+	 * Inserts a new variable at the first position.
+	 * 
+	 * @param variable Variable to add.
+	 */
+	def prepend(Variable variable) {
+		prependVariable(variable)
+	}
+	
+	/**
+	 * Appends a new variable at the last position.
+	 * 
+	 * @param variable Variable to add.
+	 */
+	def append(Variable variable) {
+		appendVariable(variable)
+	}
+
 }

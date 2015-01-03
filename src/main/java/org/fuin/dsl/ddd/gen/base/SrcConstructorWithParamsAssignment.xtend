@@ -44,8 +44,8 @@ class SrcConstructorWithParamsAssignment implements CodeSnippet {
 		'''	
 			«new SrcJavaDocMethod(ctx, constructorData.doc, null, constructorData.variables, constructorData.exceptions)»
 			«new SrcConstructorSignature(ctx, constructorData)» {
-				super();
-				«new SrcParamsAssignment(ctx, constructorData.variables)»
+				«new SrcParamsSuperCall(ctx, constructorData.superCallVariables)»
+				«new SrcParamsAssignment(ctx, constructorData.assignmentVariables)»
 			}
 		'''
 	}

@@ -1,10 +1,14 @@
 package org.fuin.dsl.ddd.gen.extensions
 
+import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import org.fuin.dsl.ddd.gen.base.ConstructorParam
+
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 
 /**
  * Provides extension methods for AbstractVO.
@@ -45,6 +49,17 @@ class AbstractVOExtensions {
 		} else {
 			return vo.baseType.name
 		}
+	}
+
+	/**
+	 * Creates a new constructor parameter list from the variables.
+	 * 
+	 * @param constructor Constructor with list of variables.
+	 * 
+	 * @return Constructor parameter list
+	 */
+	def static List<ConstructorParam> parameters(AbstractVO constructor) {
+		return constructor.variables.parameters
 	}
 	
 }

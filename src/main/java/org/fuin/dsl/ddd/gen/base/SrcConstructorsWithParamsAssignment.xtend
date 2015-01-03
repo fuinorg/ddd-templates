@@ -7,8 +7,9 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 
 /**
  * Creates source code for a number of constructors with 
@@ -43,7 +44,7 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	new(CodeSnippetContext ctx, AbstractVO vo, boolean abstr) {
 		this(ctx, vo, "public", abstr)
 	}
-	
+
 	/**
 	 * Constructor with value object.
 	 * 
@@ -67,25 +68,24 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 			constructors.add(new ConstructorData("/** Default constructor. */", "protected", name, null, null))
 			if ((vo.constructors == null) || (vo.constructors.size == 0)) {
 				constructors.add(
-					new ConstructorData("/** Constructor with all data. */", modifiers, name, vo.variables, null))
+					new ConstructorData("/** Constructor with all data. */", modifiers, name, vo.parameters, null))
 			} else {
 				for (con : vo.constructors.nullSafe) {
 					this.constructors.add(new ConstructorData("public", name, con))
 				}
 			}
-			
+
 		}
-		
+
 	}
 
 	/**
 	 * Constructor with all mandatory data.
 	 * 
 	 * @param ctx Context.
-	 * @param typeName Name of the type the constructors creates.
 	 * @param constructors Constructors.
 	 */
-	new(CodeSnippetContext ctx, String typeName, List<ConstructorData> constructorData) {
+	new(CodeSnippetContext ctx, List<ConstructorData> constructorData) {
 		this.ctx = ctx
 		this.constructors = constructorData
 	}

@@ -17,7 +17,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
 class SrcVarsDecl implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String visibility
+	val String modifiers
 	val boolean xml
 	val List<Variable> variables
 
@@ -25,13 +25,13 @@ class SrcVarsDecl implements CodeSnippet {
 	 * Constructor with list of variables.
 	 * 
 	 * @param ctx Context.
-	 * @param visibility Visibility for the variable.
+	 * @param modifiers Modifiers for the variable.
 	 * @param xml Create XML annotation.
 	 * @param variables List.
 	 */
-	new(CodeSnippetContext ctx, String visibility, boolean xml, List<Variable> variables) {
+	new(CodeSnippetContext ctx, String modifiers, boolean xml, List<Variable> variables) {
 		this.ctx = ctx
-		this.visibility = visibility
+		this.modifiers = modifiers
 		this.xml = xml
 		this.variables = new ArrayList<Variable>(variables)
 	}

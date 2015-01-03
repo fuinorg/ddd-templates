@@ -4,9 +4,9 @@ import java.util.ArrayList
 import java.util.Collections
 import java.util.List
 import java.util.Map
-
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.ddd.gen.base.ConstructorParam
 
 /**
  * Provides extension methods for collections.
@@ -47,6 +47,9 @@ class CollectionExtensions {
 	 * @return Elements without the first one.
 	 */
 	def static <T> List<T> rest(List<T> list) {
+		if (list == null) {
+			return null
+		}
 		var List<T> rest = new ArrayList<T>();
 		if ((list != null) && (list.size() > 0)) {
 			var count = 0;
@@ -80,6 +83,9 @@ class CollectionExtensions {
 	 * @return List with names in the same order as the variables.
 	 */
 	def static List<String> varNames(List<Variable> vars) {
+		if (vars == null) {
+			return null
+		}
 		val List<String> result = new ArrayList<String>()
 		if (vars != null) {
 			for (v : vars) {
@@ -97,6 +103,9 @@ class CollectionExtensions {
 	 * @return List with names in the same order as the variables.
 	 */
 	def static List<String> litNames(List<Literal> literals) {
+		if (literals == null) {
+			return null
+		}
 		val List<String> result = new ArrayList<String>()
 		if (literals != null) {
 			for (literal : literals) {
@@ -104,6 +113,24 @@ class CollectionExtensions {
 			}
 		}
 		return result
+	}
+
+	/**
+	 * Creates a new constructor parameter list from the variables.
+	 * 
+	 * @param variables List of variables.
+	 * 
+	 * @return Constructor parameter list
+	 */
+	def static List<ConstructorParam> parameters(List<Variable> variables) {
+		if (variables == null) {
+			return null
+		}
+		val List<ConstructorParam> list = new ArrayList<ConstructorParam>()
+		for (v : variables) {
+			list.add(new ConstructorParam(v))
+		}
+		return list
 	}
 
 }

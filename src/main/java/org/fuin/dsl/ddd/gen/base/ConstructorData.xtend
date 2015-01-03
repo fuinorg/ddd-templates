@@ -6,6 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
+import java.util.ArrayList
 
 /**
  * Data required to create a constructor. 
@@ -20,7 +21,7 @@ class ConstructorData extends AbstractMethodData {
 	 * @param constructor Constructor.
 	 */
 	new(String modifiers, String typeName, Constructor constructor) {
-		super(constructor.doc, modifiers, typeName, constructor.variables, constructor.allExceptions)
+		super(constructor.doc, modifiers, typeName, constructor.parameters.asVariables, constructor.allExceptions)
 	}
 
 	/**
@@ -30,14 +31,13 @@ class ConstructorData extends AbstractMethodData {
 	 * @param annotations Annotations.
 	 * @param modifiers Modifiers.
 	 * @param typeName Name of the type the constructor belongs to.
-	 * @param variables Variables for the constructor.
+	 * @param parameters Parameters for the constructor.
 	 * @param exceptions Exceptions for the constructor.
 	 */
-	new(String doc, String modifiers, String typeName, List<Variable> variables,
-		List<Exception> exceptions) {
-		super(doc, modifiers, typeName, variables, exceptions)
+	new(String doc, String modifiers, String typeName, List<ConstructorParam> parameters, List<Exception> exceptions) {
+		super(doc, modifiers, typeName, parameters.asVariables, exceptions)
 	}
-	
+
 	/**
 	 * Constructor with all data.
 	 * 
@@ -45,12 +45,81 @@ class ConstructorData extends AbstractMethodData {
 	 * @param annotations Annotations.
 	 * @param modifiers Modifiers.
 	 * @param typeName Name of the type the constructor belongs to.
-	 * @param variables Variables for the constructor.
+	 * @param parameters Parameters for the constructor.
 	 * @param exceptions Exceptions for the constructor.
 	 */
-	new(String doc, List<String> annotations, String modifiers, String typeName, List<Variable> variables,
+	new(String doc, List<String> annotations, String modifiers, String typeName, List<ConstructorParam> parameters,
 		List<Exception> exceptions) {
-		super(doc, annotations, modifiers, typeName, variables, exceptions)
+		super(doc, annotations, modifiers, typeName, parameters.asVariables, exceptions)
+	}
+
+	private static def List<Variable> asVariables(List<ConstructorParam> params) {
+
+		// Dirty cast...
+		((params as List<?>) as List<Variable>)
+	}
+
+	/**
+	 * Returns the parameter list.
+	 * 
+	 * @return List of parameters. 
+	 */
+	def List<ConstructorParam> getParameters() {
+		return (variables as List<?>) as List<ConstructorParam>
+	}
+	
+	/**
+	 * Returns all variables to pass into the super call.
+	 * 
+	 * @return List of variables.
+	 */
+	def List<Variable> getSuperCallVariables() {
+		if (parameters == null) {
+			return null;
+		}
+		val List<Variable> list = new ArrayList<Variable>()
+		for (param : parameters) {
+			if (param.isPassToSuper) {
+				list.add(param)
+			}
+		}
+		return list
+	}
+	
+	/**
+	 * Returns all variables to assign to an instance variable.
+	 * 
+	 * @return List of variables.
+	 */
+	def List<Variable> getAssignmentVariables() {
+		if (parameters == null) {
+			return null;
+		}
+		val List<Variable> list = new ArrayList<Variable>()
+		for (param : parameters) {
+			if (!param.isPassToSuper) {
+				list.add(param)
+			}
+		}
+		return list
+	}
+	
+	/**
+	 * Inserts a new parameter at the first position.
+	 * 
+	 * @param param Parameter to add.
+	 */
+	def prepend(ConstructorParam param) {
+		prependVariable(param)
+	}
+
+	/**
+	 * Appends a new parameter at the last position.
+	 * 
+	 * @param param Parameter to add.
+	 */
+	def append(ConstructorParam param) {
+		appendVariable(param)
 	}
 
 }

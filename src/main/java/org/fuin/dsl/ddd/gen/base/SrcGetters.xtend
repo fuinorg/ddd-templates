@@ -13,12 +13,12 @@ import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtension
 class SrcGetters implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String visibility
+	val String modifiers
 	val List<Variable> variables
 
-	new(CodeSnippetContext ctx, String visibility, List<Variable> variables) {
+	new(CodeSnippetContext ctx, String modifiers, List<Variable> variables) {
 		this.ctx = ctx
-		this.visibility = visibility
+		this.modifiers = modifiers
 		this.variables = variables
 		for (Variable variable : variables) {
 			ctx.requiresReference(variable.type.uniqueName)
@@ -28,7 +28,7 @@ class SrcGetters implements CodeSnippet {
 	override toString() {
 		'''	
 			«FOR v : variables»
-				«new SrcGetter(ctx, visibility, v).toString»
+				«new SrcGetter(ctx, modifiers, v).toString»
 				
 			«ENDFOR»			
 		'''

@@ -16,7 +16,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 class SrcVarDecl implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String visibility
+	val String modifiers
 	val boolean xml
 	val Variable variable
 
@@ -24,13 +24,13 @@ class SrcVarDecl implements CodeSnippet {
 	 * Constructor with all mandatory data.
 	 * 
 	 * @param ctx Context.
-	 * @param visibility Visibility for the variable.
+	 * @param modifiers Modifiers for the variable.
 	 * @param xml Create XML annotation.
 	 * @param variable Variable.
 	 */
-	new(CodeSnippetContext ctx, String visibility, boolean xml, Variable variable) {
+	new(CodeSnippetContext ctx, String modifiers, boolean xml, Variable variable) {
 		this.ctx = ctx
-		this.visibility = visibility
+		this.modifiers = modifiers
 		this.xml = xml
 		this.variable = variable
 
@@ -48,7 +48,7 @@ class SrcVarDecl implements CodeSnippet {
 			«validationAnnotations»
 			«xmlAnnotations»
 			«new SrcMetaAnnotations(ctx, variable.overriddenMeta, null, variable.name)»
-			«visibility» «variable.type(ctx)» «variable.name»;
+			«modifiers» «variable.type(ctx)» «variable.name»;
 		'''
 	}
 

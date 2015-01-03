@@ -11,19 +11,19 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 class SrcSetters implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String visibility
+	val String modifiers
 	val List<Variable> variables
 
-	new(CodeSnippetContext ctx, String visibility, List<Variable> variables) {
+	new(CodeSnippetContext ctx, String modifiers, List<Variable> variables) {
 		this.ctx = ctx
-		this.visibility = visibility
+		this.modifiers = modifiers
 		this.variables = variables
 	}
 
 	override toString() {
 		'''	
 			«FOR variable : variables»
-				«new SrcSetter(ctx, visibility, variable)»
+				«new SrcSetter(ctx, modifiers, variable)»
 				
 			«ENDFOR»
 		'''
