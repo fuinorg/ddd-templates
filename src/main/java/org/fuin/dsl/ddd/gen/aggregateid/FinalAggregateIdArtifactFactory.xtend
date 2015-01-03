@@ -5,6 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
+import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcVoBaseMethods
 import org.fuin.srcgen4j.commons.GenerateException
@@ -75,6 +76,7 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 				private static final long serialVersionUID = 1000L;
 				
+				«new SrcConstructorsWithParamsAssignment(ctx, id, false, true)»
 				@Override
 				public final String asString() {
 					«IF (id.variables.nullSafe.size == 1)»
@@ -84,9 +86,8 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 						return null;
 					«ENDIF»
 				}
-			
+
 				«new SrcVoBaseMethods(ctx, id)»
-				
 			}
 		'''
 

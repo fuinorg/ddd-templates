@@ -25,13 +25,11 @@ public final class ExceptionA extends Exception {
 
 	private static final long serialVersionUID = 1000L;
 
-
 	/**
 	 * Constructs a new instance of the exception.
 	 */
 	public ExceptionA() {
 		super("Exception A");
 	}
-
 
 }

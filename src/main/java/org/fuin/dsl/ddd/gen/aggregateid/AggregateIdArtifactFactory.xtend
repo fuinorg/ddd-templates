@@ -81,13 +81,9 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			private static final long serialVersionUID = 1000L;
 			
 				«new SrcVarsDecl(ctx, "private", false, id)»
-			
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
-			
 				«new SrcGetters(ctx, "public final", id.variables)»
-			
 				«new SrcEntityIdTypeMethods(ctx, id.entity.name)»
-			
 				@Override
 				public final String asString() {
 					«IF (id.variables.nullSafe.size == 1)»
@@ -99,7 +95,6 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 				}
 			
 				«new SrcVoBaseMethods(ctx, id)»
-				
 			}
 		'''
 

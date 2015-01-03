@@ -38,6 +38,18 @@ class ConstructorExtensions {
 	 * @return Constructor parameter list
 	 */
 	def static List<ConstructorParam> parameters(Constructor constructor) {
+		return parameters(constructor, false)
+	}
+
+	/**
+	 * Creates a new constructor parameter list from the variables.
+	 * 
+	 * @param constructor Constructor with list of variables.
+	 * @param passToSuper Defines if all variables should be passed to the super call
+	 * 
+	 * @return Constructor parameter list
+	 */
+	def static List<ConstructorParam> parameters(Constructor constructor, boolean passToSuper) {
 		return constructor.variables.parameters
 	}
 

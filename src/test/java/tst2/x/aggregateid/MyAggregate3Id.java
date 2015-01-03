@@ -43,7 +43,6 @@ private static final long serialVersionUID = 1000L;
 	@NotNull
 	private String b;
 	
-
 	/**
 	 * Default constructor.
 	 */
@@ -66,7 +65,6 @@ private static final long serialVersionUID = 1000L;
 		this.b = b;
 	}
 	
-
 	/**
 	 * Returns: Persistent value A.
 	 *
@@ -87,7 +85,6 @@ private static final long serialVersionUID = 1000L;
 		return b;
 	}
 	
-
 	/** Name that identifies the entity uniquely within the context. */	
 	public static final EntityType TYPE = new StringBasedEntityType("MyAggregate3");
 	
@@ -100,7 +97,7 @@ private static final long serialVersionUID = 1000L;
 	public final String asTypedString() {
 		return TYPE + " " + asString();
 	}
-
+	
 	@Override
 	public final String asString() {
 		// TODO Implement!

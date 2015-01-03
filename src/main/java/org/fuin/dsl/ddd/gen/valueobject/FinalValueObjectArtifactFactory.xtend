@@ -77,7 +77,6 @@ class FinalValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 				private static final long serialVersionUID = 1000L;
 				
 				«new SrcVoBaseMethods(ctx, vo)»
-				
 			}
 		'''
 

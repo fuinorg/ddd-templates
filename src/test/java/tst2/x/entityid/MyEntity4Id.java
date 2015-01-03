@@ -40,7 +40,6 @@ public final class MyEntity4Id implements EntityId, ValueObject {
 	@NotNull
 	private String b;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -63,7 +62,6 @@ public final class MyEntity4Id implements EntityId, ValueObject {
 		this.b = b;
 	}
 	
-
 	/**
 	 * Returns: Persistent value A.
 	 *
@@ -84,7 +82,6 @@ public final class MyEntity4Id implements EntityId, ValueObject {
 		return b;
 	}
 	
-
 	/** Name that identifies the entity uniquely within the context. */	
 	public static final EntityType TYPE = new StringBasedEntityType("MyEntity4");
 	
@@ -103,6 +100,5 @@ public final class MyEntity4Id implements EntityId, ValueObject {
 		// TODO Implement!
 		return null;
 	}
-
 
 }

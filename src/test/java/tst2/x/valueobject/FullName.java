@@ -56,7 +56,6 @@ public final class FullName implements ValueObject, Serializable {
 	@Prompt(key = "lastName.prompt", value = "Enter your last name")
 	private String lastName;
 	
-
 	/**
 	 * Default constructor.
 	 */
@@ -79,7 +78,6 @@ public final class FullName implements ValueObject, Serializable {
 		this.lastName = lastName;
 	}
 	
-	
 	/**
 	 * Returns: First name.
 	 *
@@ -99,7 +97,5 @@ public final class FullName implements ValueObject, Serializable {
 	public final String getLastName() {
 		return lastName;
 	}
-	
-	
 	
 }

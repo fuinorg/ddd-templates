@@ -43,7 +43,6 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 	@NotNull
 	private String b;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -66,7 +65,6 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 		this.b = b;
 	}
 	
-
 	/**
 	 * Returns: Persistent value A.
 	 *
@@ -87,7 +85,6 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 		return b;
 	}
 	
-
 	/** Name that identifies the entity uniquely within the context. */	
 	public static final EntityType TYPE = new StringBasedEntityType("MyEntity3");
 	
@@ -147,5 +144,5 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 		// return new MyEntity3Id(value);
 		return null;
 	}
-
+	
 }

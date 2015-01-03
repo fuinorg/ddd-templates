@@ -17,6 +17,7 @@
  */
 package tst.x.aggregateid;
 
+import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Immutable;
 
 /**
@@ -27,10 +28,25 @@ public final class MyAggregate2Id extends AbstractMyAggregate2Id {
 
 	private static final long serialVersionUID = 1000L;
 	
+	/**
+	 * Default constructor.
+	 */
+	protected MyAggregate2Id() {
+		super();
+	}
+	
+	/**
+	 * Constructor with all data.
+	 *
+	 * @param id Persistent value.
+	 */
+	public MyAggregate2Id(@NotNull final String id) {
+		super(id);
+	}
+	
 	@Override
 	public final String asString() {
 		return "" + getId();
 	}
 
-	
 }

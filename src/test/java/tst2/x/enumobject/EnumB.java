@@ -43,7 +43,6 @@ public enum EnumB {
 	@NotNull
 	private String longName;
 	
-	
 	/** All instances. */
 	public static final EnumB[] ALL = new EnumB[] {
 		A, B, C
@@ -57,7 +56,6 @@ public enum EnumB {
 	/** Deprecated instances. */
 	public static final EnumB[] DEPRECTAED = new EnumB[] {
 	};
-	
 	
 	private EnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
 		Contract.requireArgNotNull("id", id);

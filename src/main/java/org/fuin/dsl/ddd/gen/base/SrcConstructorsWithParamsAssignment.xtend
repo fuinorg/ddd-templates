@@ -27,6 +27,17 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	 * @param entity Entity.
 	 */
 	new(CodeSnippetContext ctx, AbstractEntity entity) {
+		this(ctx, entity, false)
+	}
+	
+	/**
+	 * Constructor with entity.
+	 * 
+	 * @param ctx Context.
+	 * @param entity Entity.
+	 * @param passToSuper Defines if all variables should be passed to the super call
+	 */
+	new(CodeSnippetContext ctx, AbstractEntity entity, boolean passToSuper) {
 		this.ctx = ctx
 		this.constructors = new ArrayList<ConstructorData>()
 		for (con : entity.constructors.nullSafe) {
@@ -42,7 +53,19 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	 * @param abstr Generate abstract class?
 	 */
 	new(CodeSnippetContext ctx, AbstractVO vo, boolean abstr) {
-		this(ctx, vo, "public", abstr)
+		this(ctx, vo, "public", abstr, false)
+	}
+	
+	/**
+	 * Constructor with value object.
+	 * 
+	 * @param ctx Context.
+	 * @param vo Value object.
+	 * @param abstr Generate abstract class?
+	 * @param passToSuper Defines if all variables should be passed to the super call
+	 */
+	new(CodeSnippetContext ctx, AbstractVO vo, boolean abstr, boolean passToSuper) {
+		this(ctx, vo, "public", abstr, passToSuper)
 	}
 
 	/**
@@ -54,6 +77,19 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	 * @param abstr Generate abstract class?
 	 */
 	new(CodeSnippetContext ctx, AbstractVO vo, String modifiers, boolean abstr) {
+		this(ctx, vo, modifiers, abstr, false)
+	}
+	
+	/**
+	 * Constructor with value object.
+	 * 
+	 * @param ctx Context.
+	 * @param vo Value object.
+	 * @param modifiers Modifiers for the constructor
+	 * @param abstr Generate abstract class?
+	 * @param passToSuper Defines if all variables should be passed to the super call
+	 */
+	new(CodeSnippetContext ctx, AbstractVO vo, String modifiers, boolean abstr, boolean passToSuper) {
 		this.ctx = ctx
 		this.constructors = new ArrayList<ConstructorData>()
 
@@ -68,10 +104,10 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 			constructors.add(new ConstructorData("/** Default constructor. */", "protected", name, null, null))
 			if ((vo.constructors == null) || (vo.constructors.size == 0)) {
 				constructors.add(
-					new ConstructorData("/** Constructor with all data. */", modifiers, name, vo.parameters, null))
+					new ConstructorData("/** Constructor with all data. */", modifiers, name, vo.parameters(passToSuper), null))
 			} else {
 				for (con : vo.constructors.nullSafe) {
-					this.constructors.add(new ConstructorData("public", name, con))
+					this.constructors.add(new ConstructorData("public", name, con, passToSuper))
 				}
 			}
 

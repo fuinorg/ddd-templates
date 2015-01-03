@@ -33,5 +33,4 @@ public final class MyEntity4Id extends AbstractMyEntity4Id {
 		return null;
 	}
 
-	
 }

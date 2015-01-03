@@ -38,7 +38,6 @@ public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 	@NotNull
 	private String b;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -61,7 +60,6 @@ public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 		this.b = b;
 	}
 	
-
 	/**
 	 * Returns: Persistent value A.
 	 *
@@ -82,7 +80,6 @@ public abstract class AbstractMyEntity4Id implements EntityId, ValueObject {
 		return b;
 	}
 	
-
 	/** Name that identifies the entity uniquely within the context. */	
 	public static final EntityType TYPE = new StringBasedEntityType("MyEntity4");
 	

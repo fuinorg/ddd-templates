@@ -17,6 +17,7 @@
  */
 package tst.x.aggregateid;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.fuin.objects4j.common.Immutable;
 import tst2.x.aggregateid.MyAggregate3IdConverter;
@@ -29,6 +30,23 @@ import tst2.x.aggregateid.MyAggregate3IdConverter;
 public final class MyAggregate3Id extends AbstractMyAggregate3Id {
 
 	private static final long serialVersionUID = 1000L;
+	
+	/**
+	 * Default constructor.
+	 */
+	protected MyAggregate3Id() {
+		super();
+	}
+	
+	/**
+	 * Constructor with all data.
+	 *
+	 * @param a Persistent value A.
+	 * @param b Persistent value B.
+	 */
+	public MyAggregate3Id(@NotNull final String a, @NotNull final String b) {
+		super(a, b);
+	}
 	
 	@Override
 	public final String asString() {

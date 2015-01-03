@@ -71,6 +71,7 @@ class SrcVoBaseMethodsString implements CodeSnippet {
 				// return new «typeName»(value);
 				return null;
 			}
+			
 		'''
 	}
 

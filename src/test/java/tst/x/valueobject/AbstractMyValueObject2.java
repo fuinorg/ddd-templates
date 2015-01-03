@@ -33,7 +33,6 @@ public abstract class AbstractMyValueObject2 implements ValueObject, Serializabl
 	@NotNull
 	private String id;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -53,7 +52,6 @@ public abstract class AbstractMyValueObject2 implements ValueObject, Serializabl
 		this.id = id;
 	}
 	
-
 	/**
 	 * Returns: Persistent value.
 	 *
@@ -64,5 +62,4 @@ public abstract class AbstractMyValueObject2 implements ValueObject, Serializabl
 		return id;
 	}
 	
-
 }

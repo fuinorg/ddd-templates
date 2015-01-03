@@ -36,7 +36,6 @@ public final class ExceptionF extends UniquelyNumberedException {
 	@NotNull
 	private Integer b;
 	
-
 	/**
 	 * Constructs a new instance of the exception.
 	 *
@@ -72,5 +71,4 @@ public final class ExceptionF extends UniquelyNumberedException {
 		return b;
 	}
 	
-
 }

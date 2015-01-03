@@ -26,13 +26,11 @@ public final class ExceptionB extends UniquelyNumberedException {
 
 	private static final long serialVersionUID = 1000L;
 
-
 	/**
 	 * Constructs a new instance of the exception.
 	 */
 	public ExceptionB() {
 		super(123, "Exception B");
 	}
-
 
 }

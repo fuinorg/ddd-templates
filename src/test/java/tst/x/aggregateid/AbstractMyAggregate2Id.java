@@ -35,7 +35,6 @@ public abstract class AbstractMyAggregate2Id implements AggregateRootId, ValueOb
 	@NotNull
 	private String id;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -55,7 +54,6 @@ public abstract class AbstractMyAggregate2Id implements AggregateRootId, ValueOb
 		this.id = id;
 	}
 	
-
 	/**
 	 * Returns: Persistent value.
 	 *
@@ -66,7 +64,6 @@ public abstract class AbstractMyAggregate2Id implements AggregateRootId, ValueOb
 		return id;
 	}
 	
-
 	/** Name that identifies the entity uniquely within the context. */	
 	public static final EntityType TYPE = new StringBasedEntityType("MyAggregate2");
 	

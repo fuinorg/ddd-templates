@@ -34,7 +34,6 @@ public final class MyValueObject extends AbstractStringValueObject implements Va
 	@NotNull
 	private String value;
 	
-
 	/**
 	 * Default constructor.
 	 */
@@ -54,7 +53,6 @@ public final class MyValueObject extends AbstractStringValueObject implements Va
 		this.value = value;
 	}
 	
-	
 	/**
 	 * Returns: Persistent value.
 	 *
@@ -64,7 +62,6 @@ public final class MyValueObject extends AbstractStringValueObject implements Va
 	public final String getValue() {
 		return value;
 	}
-	
 	
 	@Override
 	public final String asBaseType() {

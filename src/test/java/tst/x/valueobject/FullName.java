@@ -33,5 +33,4 @@ public final class FullName extends AbstractFullName {
 
 	private static final long serialVersionUID = 1000L;
 	
-	
 }

@@ -36,7 +36,6 @@ public abstract class AbstractMyValueObject4 implements ValueObject, Serializabl
 	@NotNull
 	private String b;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -59,7 +58,6 @@ public abstract class AbstractMyValueObject4 implements ValueObject, Serializabl
 		this.b = b;
 	}
 	
-
 	/**
 	 * Returns: Persistent value A.
 	 *
@@ -80,5 +78,4 @@ public abstract class AbstractMyValueObject4 implements ValueObject, Serializabl
 		return b;
 	}
 	
-
 }

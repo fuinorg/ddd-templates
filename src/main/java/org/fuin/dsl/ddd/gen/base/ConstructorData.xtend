@@ -21,9 +21,21 @@ class ConstructorData extends AbstractMethodData {
 	 * @param constructor Constructor.
 	 */
 	new(String modifiers, String typeName, Constructor constructor) {
-		super(constructor.doc, modifiers, typeName, constructor.parameters.asVariables, constructor.allExceptions)
+		this(modifiers , typeName, constructor, false)
 	}
 
+	/**
+	 * Constructor with constructor.
+	 * 
+	 * @param modifiers Modifiers.
+	 * @param typeName Name of the type the constructor belongs to.
+	 * @param constructor Constructor.
+	 * @param passToSuper Defines if all variables should be passed to the super call
+	 */
+	new(String modifiers, String typeName, Constructor constructor, boolean passToSuper) {
+		super(constructor.doc, modifiers, typeName, constructor.parameters(passToSuper).asVariables, constructor.allExceptions)
+	}
+	
 	/**
 	 * Constructor without annotations.
 	 * 

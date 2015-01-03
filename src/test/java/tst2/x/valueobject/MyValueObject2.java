@@ -37,7 +37,6 @@ public final class MyValueObject2 implements ValueObject, Serializable {
 	@XmlAttribute(name = "id")
 	private String id;
 	
-
 	/**
 	 * Default constructor.
 	 */
@@ -57,7 +56,6 @@ public final class MyValueObject2 implements ValueObject, Serializable {
 		this.id = id;
 	}
 	
-	
 	/**
 	 * Returns: Persistent value.
 	 *
@@ -67,7 +65,5 @@ public final class MyValueObject2 implements ValueObject, Serializable {
 	public final String getId() {
 		return id;
 	}
-	
-	
 	
 }

@@ -39,7 +39,6 @@ public abstract class AbstractMyAggregate3Id extends AbstractStringValueObject i
 	@NotNull
 	private String b;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -62,7 +61,6 @@ public abstract class AbstractMyAggregate3Id extends AbstractStringValueObject i
 		this.b = b;
 	}
 	
-
 	/**
 	 * Returns: Persistent value A.
 	 *
@@ -83,7 +81,6 @@ public abstract class AbstractMyAggregate3Id extends AbstractStringValueObject i
 		return b;
 	}
 	
-
 	/** Name that identifies the entity uniquely within the context. */	
 	public static final EntityType TYPE = new StringBasedEntityType("MyAggregate3");
 	

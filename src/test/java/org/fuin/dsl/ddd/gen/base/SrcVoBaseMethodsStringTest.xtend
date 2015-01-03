@@ -75,6 +75,7 @@ class SrcVoBaseMethodsStringTest {
 				// return new MyAggregateId(value);
 				return null;
 			}
+			
 		'''
 		)
 		assertThat(ctx.imports).containsOnly("a.b.c.MyAggregateId", "java.lang.String")

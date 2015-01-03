@@ -33,7 +33,6 @@ public abstract class AbstractEnumB {
 	@NotNull
 	private String longName;
 	
-	
 	/**
 	 * Enumeration type B - With variables.
 	 *

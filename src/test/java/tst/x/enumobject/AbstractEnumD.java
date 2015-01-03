@@ -27,7 +27,6 @@ public abstract class AbstractEnumD {
 	@NotNull
 	private Integer id;
 	
-	
 	/**
 	 * Enumeration type D - With integer base type.
 	 *

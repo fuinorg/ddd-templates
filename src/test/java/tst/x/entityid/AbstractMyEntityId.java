@@ -36,7 +36,6 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	@NotNull
 	private String value;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -56,7 +55,6 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 		this.value = value;
 	}
 	
-
 	/**
 	 * Returns: Persistent value.
 	 *
@@ -67,7 +65,6 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 		return value;
 	}
 	
-
 	/** Name that identifies the entity uniquely within the context. */	
 	public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
 	

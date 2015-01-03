@@ -34,7 +34,6 @@ public abstract class AbstractMyValueObject extends AbstractStringValueObject im
 	@NotNull
 	private String value;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -54,7 +53,6 @@ public abstract class AbstractMyValueObject extends AbstractStringValueObject im
 		this.value = value;
 	}
 	
-
 	/**
 	 * Returns: Persistent value.
 	 *
@@ -65,5 +63,4 @@ public abstract class AbstractMyValueObject extends AbstractStringValueObject im
 		return value;
 	}
 	
-
 }

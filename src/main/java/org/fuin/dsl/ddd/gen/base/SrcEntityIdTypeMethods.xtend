@@ -32,6 +32,7 @@ class SrcEntityIdTypeMethods implements CodeSnippet {
 		public final String asTypedString() {
 			return TYPE + " " + asString();
 		}
+		
 		'''
 	}
 

@@ -41,7 +41,6 @@ public final class MyValueObject4 implements ValueObject, Serializable {
 	@XmlAttribute(name = "b")
 	private String b;
 	
-
 	/**
 	 * Default constructor.
 	 */
@@ -64,7 +63,6 @@ public final class MyValueObject4 implements ValueObject, Serializable {
 		this.b = b;
 	}
 	
-	
 	/**
 	 * Returns: Persistent value A.
 	 *
@@ -84,7 +82,5 @@ public final class MyValueObject4 implements ValueObject, Serializable {
 	public final String getB() {
 		return b;
 	}
-	
-	
 	
 }

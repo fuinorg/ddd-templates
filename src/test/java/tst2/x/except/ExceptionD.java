@@ -35,7 +35,6 @@ public final class ExceptionD extends Exception {
 	@NotNull
 	private Integer b;
 	
-
 	/**
 	 * Constructs a new instance of the exception.
 	 *
@@ -71,5 +70,4 @@ public final class ExceptionD extends Exception {
 		return b;
 	}
 	
-
 }

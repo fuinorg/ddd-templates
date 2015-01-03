@@ -99,6 +99,7 @@ class SrcStaticEnumCode implements CodeSnippet {
 			}
 			throw new IllegalArgumentException("Unknown value: " + value);
 		}
+		
 		«ENDIF»
 		'''
 	}

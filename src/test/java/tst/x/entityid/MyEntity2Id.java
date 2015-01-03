@@ -32,5 +32,4 @@ public final class MyEntity2Id extends AbstractMyEntity2Id {
 		return "" + getId();
 	}
 
-	
 }

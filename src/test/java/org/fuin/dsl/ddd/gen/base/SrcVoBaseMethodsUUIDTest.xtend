@@ -69,6 +69,7 @@ class SrcVoBaseMethodsUUIDTest {
 				}
 				return new MyAggregateId(UUID.fromString(value));
 			}
+			
 		'''
 		)
 		assertThat(ctx.imports).containsOnly("a.b.c.MyAggregateId", "java.util.UUID")

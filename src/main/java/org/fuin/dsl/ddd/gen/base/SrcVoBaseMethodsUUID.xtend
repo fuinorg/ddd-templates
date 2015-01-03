@@ -65,6 +65,7 @@ class SrcVoBaseMethodsUUID implements CodeSnippet {
 				}
 				return new «typeName»(UUID.fromString(value));
 			}
+			
 		'''
 	}
 

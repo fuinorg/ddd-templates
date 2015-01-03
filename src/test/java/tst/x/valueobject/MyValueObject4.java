@@ -27,5 +27,4 @@ public final class MyValueObject4 extends AbstractMyValueObject4 {
 
 	private static final long serialVersionUID = 1000L;
 	
-	
 }

@@ -90,6 +90,7 @@ public final class EnumD extends AbstractEnumD {
 		}
 		throw new IllegalArgumentException("Unknown value: " + value);
 	}
+	
 	private EnumD(@NotNull final Integer id) {
 		super(id);
 	}

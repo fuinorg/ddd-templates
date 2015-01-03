@@ -37,7 +37,6 @@ public final class MyValueObject3 extends AbstractStringValueObject implements V
 	@NotNull
 	private String b;
 	
-
 	/**
 	 * Default constructor.
 	 */
@@ -60,7 +59,6 @@ public final class MyValueObject3 extends AbstractStringValueObject implements V
 		this.b = b;
 	}
 	
-	
 	/**
 	 * Returns: Persistent value A.
 	 *
@@ -80,7 +78,6 @@ public final class MyValueObject3 extends AbstractStringValueObject implements V
 	public final String getB() {
 		return b;
 	}
-	
 	
 	@Override
 	public final String asBaseType() {

@@ -86,7 +86,6 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 				}
 			
 				«new SrcVoBaseMethods(ctx, id)»
-				
 			}
 			'''
 

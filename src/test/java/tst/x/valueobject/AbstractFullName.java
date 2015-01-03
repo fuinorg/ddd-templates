@@ -48,7 +48,6 @@ public abstract class AbstractFullName implements ValueObject, Serializable {
 	@Prompt(key = "lastName.prompt", value = "Enter your last name")
 	private String lastName;
 	
-	
 	/**
 	 * Default constructor.
 	 */
@@ -71,7 +70,6 @@ public abstract class AbstractFullName implements ValueObject, Serializable {
 		this.lastName = lastName;
 	}
 	
-
 	/**
 	 * Returns: First name.
 	 *
@@ -92,5 +90,4 @@ public abstract class AbstractFullName implements ValueObject, Serializable {
 		return lastName;
 	}
 	
-
 }

@@ -33,7 +33,6 @@ public final class ExceptionE extends UniquelyNumberedException {
 	@NotNull
 	private String a;
 	
-
 	/**
 	 * Constructs a new instance of the exception.
 	 *
@@ -56,5 +55,4 @@ public final class ExceptionE extends UniquelyNumberedException {
 		return a;
 	}
 	
-
 }
