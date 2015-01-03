@@ -17,6 +17,7 @@
  */
 package tst.x.entityid;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.fuin.objects4j.common.Immutable;
 import tst2.x.entityid.MyEntity3IdConverter;
@@ -29,6 +30,23 @@ import tst2.x.entityid.MyEntity3IdConverter;
 public final class MyEntity3Id extends AbstractMyEntity3Id {
 
 	private static final long serialVersionUID = 1000L;
+	
+	/**
+	 * Default constructor.
+	 */
+	protected MyEntity3Id() {
+		super();
+	}
+	
+	/**
+	 * Constructor with all data.
+	 *
+	 * @param a Persistent value A.
+	 * @param b Persistent value B.
+	 */
+	public MyEntity3Id(@NotNull final String a, @NotNull final String b) {
+		super(a, b);
+	}
 	
 	@Override
 	public final String asString() {
