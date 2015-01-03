@@ -50,7 +50,7 @@ class ConstructorExtensions {
 	 * @return Constructor parameter list
 	 */
 	def static List<ConstructorParam> parameters(Constructor constructor, boolean passToSuper) {
-		return constructor.variables.parameters
+		return constructor.variables.parameters(passToSuper)
 	}
 
 }
