@@ -21,22 +21,29 @@ import javax.validation.constraints.NotNull;
 import org.fuin.ddd4j.ddd.AbstractEntity;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverNull;
 
 /**
- * Entity A - No variables.
+ * Entity B - With variables.
  */
-public abstract class AbstractEntityA extends AbstractEntity<AggregateXId, AggregateX, EntityAId> {
+public abstract class AbstractEntityB extends AbstractEntity<AggregateXId, AggregateX, EntityBId> {
 
 	@NotNull
-	private EntityAId id;
+	private EntityBId id;
 
+	@NotNull
+	private String a;
+	
+	@NotNull
+	private Integer b;
+	
 	/**
 	 * Constructor with mandatory data.
 	 *
 	 * @param rootAggregate The root aggregate of this entity.
 	 * @param id Unique entity identifier.
 	 */
-	protected AbstractEntityA(@NotNull final AggregateX rootAggregate, @NotNull final EntityAId id) {
+	protected AbstractEntityB(@NotNull final AggregateX rootAggregate, @NotNull final EntityBId id) {
 		super(rootAggregate);
 		Contract.requireArgNotNull("id", id);
 		
@@ -45,12 +52,52 @@ public abstract class AbstractEntityA extends AbstractEntity<AggregateXId, Aggre
 	
 	@Override
 	public final EntityType getType() {
-		return EntityAId.TYPE;
+		return EntityBId.TYPE;
 	}
 
 	@Override
-	public final EntityAId getId() {
+	public final EntityBId getId() {
 		return id;
 	}
 
+	/**
+	 * Returns: Variable A.
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	protected final String getA() {
+		return a;
+	}
+	
+	/**
+	 * Returns: Variable B.
+	 *
+	 * @return Current value.
+	 */
+	 @NeverNull
+	protected final Integer getB() {
+		return b;
+	}
+	
+	/**
+	 * Sets: Variable A.
+	 *
+	 * @param a Value to set.
+	 */
+	protected final void setA(@NotNull final String a) {
+		Contract.requireArgNotNull("a", a);
+		this.a = a;
+	}
+	
+	/**
+	 * Sets: Variable B.
+	 *
+	 * @param b Value to set.
+	 */
+	protected final void setB(@NotNull final Integer b) {
+		Contract.requireArgNotNull("b", b);
+		this.b = b;
+	}
+	
 }

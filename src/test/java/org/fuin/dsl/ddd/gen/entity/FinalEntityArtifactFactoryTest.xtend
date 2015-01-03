@@ -34,16 +34,29 @@ class FinalFinalEntityArtifactFactoryTest {
 		testEntity("EntityA")
 	}
 	
+	@Test
+	def void testEntityB() {
+		testEntity("EntityB")
+	}
+	
+	@Test
+	def void testEntityC() {
+		testEntity("EntityC")
+	}
+	
 	private def testEntity(String entityName) {
 		
 		// PREPARE
 		val context = new HashMap<String, Object>()
 		val refReg = context.codeReferenceRegistry
 		refReg.putReference("x.types.String", "java.lang.String")
+		refReg.putReference("x.types.Integer", "java.lang.Integer")
 		refReg.putReference("x.entities.AggregateX", "tst.x.entities.AggregateX")
 		refReg.putReference("x.entities.AggregateXId", "tst.x.entities.AggregateXId")
 		refReg.putReference("x.entities." + entityName + "Id", "tst.x.entities." + entityName + "Id")
 		refReg.putReference("x.entities.Abstract" + entityName, "tst.x.entities.Abstract" + entityName)
+		refReg.putReference("x.entities.AnyConstraintViolatedException", "tst.x.entities.AnyConstraintViolatedException")
+		refReg.putReference("x.entities." + entityName + "CreatedEvent", "tst.x.entities." + entityName + "Id")
 
 		val FinalEntityArtifactFactory testee = createTestee()
 		val Entity entity = model.find(typeof(Entity), entityName)

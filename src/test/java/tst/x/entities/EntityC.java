@@ -18,20 +18,36 @@
 package tst.x.entities;
 
 import javax.validation.constraints.NotNull;
+import org.fuin.ddd4j.ddd.EventHandler;
 
 /**
- * Entity A - No variables.
+ * Entity C - With constructor, constraint and event.
  */
-public final class EntityA extends AbstractEntityA {
+public final class EntityC extends AbstractEntityC {
 
 	/**
-	 * Constructor with mandatory data.
+	 * Creates the entity.
 	 *
 	 * @param rootAggregate The root aggregate of this entity.
 	 * @param id Unique entity identifier.
+	 * @param a Variable A.
+	 * @param b Variable B.
+	 *
+	 * @throws AnyConstraintViolatedException The constraint was violated.
 	 */
-	public EntityA(@NotNull final AggregateX rootAggregate, @NotNull final EntityAId id) {
-		super(rootAggregate, id);
+	public EntityC(@NotNull final AggregateX rootAggregate, @NotNull final EntityCId id, @NotNull final String a, @NotNull final Integer b) throws AnyConstraintViolatedException {
+		super(rootAggregate, id, a, b);
+	}
+	
+	/**
+	 * Handles: EntityCCreatedEvent.
+	 *
+	 * @param event Event to handle.
+	 */
+	@Override
+	@EventHandler
+	protected final void handle(@NotNull final EntityCCreatedEvent event) {
+		// TODO Handle event!
 	}
 	
 }

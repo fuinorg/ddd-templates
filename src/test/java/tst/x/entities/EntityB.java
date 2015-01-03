@@ -20,9 +20,9 @@ package tst.x.entities;
 import javax.validation.constraints.NotNull;
 
 /**
- * Entity A - No variables.
+ * Entity B - With variables.
  */
-public final class EntityA extends AbstractEntityA {
+public final class EntityB extends AbstractEntityB {
 
 	/**
 	 * Constructor with mandatory data.
@@ -30,7 +30,7 @@ public final class EntityA extends AbstractEntityA {
 	 * @param rootAggregate The root aggregate of this entity.
 	 * @param id Unique entity identifier.
 	 */
-	public EntityA(@NotNull final AggregateX rootAggregate, @NotNull final EntityAId id) {
+	public EntityB(@NotNull final AggregateX rootAggregate, @NotNull final EntityBId id) {
 		super(rootAggregate, id);
 	}
 	
