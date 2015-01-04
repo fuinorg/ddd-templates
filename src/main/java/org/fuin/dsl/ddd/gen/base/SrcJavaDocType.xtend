@@ -4,6 +4,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Service
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 
 import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
@@ -51,6 +52,15 @@ class SrcJavaDocType implements CodeSnippet {
 		this(internalType.doc)
 	}
 
+	/**
+	 * Constructor with service.
+	 * 
+	 * @param service Service with doc.
+	 */
+	new(Service service) {
+		this(service.doc)
+	}
+	
 	/**
 	 * Constructor with event.
 	 * 

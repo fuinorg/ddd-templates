@@ -1,0 +1,46 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+	}
+	
+	namespace services {
+		
+		import x.types.*
+	
+			/** Checks something. */
+		constraint AnyConstraint exception AnyConstraintViolatedException {
+			message "Any constraint"
+		}
+		
+		/** The constraint was violated. */
+		exception AnyConstraintViolatedException {
+			message "Any constraint violated"
+		}
+		
+	
+		/** Service A - No methods. */
+		service ServiceA {
+			
+		}
+	
+		/** Service B - Single method. */
+		service ServiceB {
+			
+			/** Finds something. */
+			method find constraints AnyConstraint {
+				
+				/** Key. */
+				Integer a
+				
+				/** Value. */
+				returns String
+				 
+			}
+			
+		}
+		
+	}
+
+}

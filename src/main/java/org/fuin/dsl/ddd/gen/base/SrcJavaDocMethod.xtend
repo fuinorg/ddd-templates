@@ -41,7 +41,7 @@ class SrcJavaDocMethod implements CodeSnippet {
 	 * @param method method.
 	 */
 	new(CodeSnippetContext ctx, Method method) {
-		this(ctx, method.doc, null/* TODO ReturnType */, method.allVariables, method.allExceptions)
+		this(ctx, method.doc, method.returnType, method.allVariables, method.allExceptions)
 	}
 
 	/**
@@ -93,8 +93,8 @@ class SrcJavaDocMethod implements CodeSnippet {
 			/**
 			 * «doc.text»
 			«new SrcJavaDocParams(variables)»
-			«new SrcJavaDocExceptions(exceptions)»
 			«new SrcJavaDocReturn(returnType)»
+			«new SrcJavaDocExceptions(exceptions)»
 			 */
 		'''
 	}
