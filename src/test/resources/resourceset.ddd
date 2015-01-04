@@ -29,6 +29,7 @@ context x {
 		entity EntityB identifier EntityBId root AggregateB {}
 		entity-id EntityBId identifies EntityB {
 			Integer id 
+			
 		}
 		
 	}

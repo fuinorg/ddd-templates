@@ -106,10 +106,10 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 			@ApplicationScoped
 			public class «className» implements SerializerDeserializerRegistry {
 			
-			    private SimpleSerializerDeserializerRegistry registry;
-			
-			    @Inject
-			    private EntityIdFactory entityIdFactory;
+				private SimpleSerializerDeserializerRegistry registry;
+				
+				@Inject
+				private EntityIdFactory entityIdFactory;
 			
 				@PostConstruct
 				protected void init() {
@@ -120,18 +120,17 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
 					registry = new SimpleSerializerDeserializerRegistry();
 					registry.add(new XmlDeSerializer("BasicEventMetaData", BasicEventMetaData.class));
 					«FOR event : events»
-						registry.add(new XmlDeSerializer(«event.name».EVENT_TYPE.asBaseType(), adapters, «event.name».class));
+					registry.add(new XmlDeSerializer(«event.name».EVENT_TYPE.asBaseType(), adapters, «event.name».class));
 					«ENDFOR»
-			
 				}
 			
-			  	@Override
-			  	 public Serializer getSerializer(final String type) {
+				@Override
+				public Serializer getSerializer(final String type) {
 					return registry.getSerializer(type);
 				}
 			
-			    @Override
-			    public Deserializer getDeserializer(final String type, final int version, final String mimeType, final Charset encoding) {
+				@Override
+				public Deserializer getDeserializer(final String type, final int version, final String mimeType, final Charset encoding) {
 					return registry.getDeserializer(type, version, mimeType, encoding);
 				}
 			
