@@ -20,7 +20,8 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 /**
  * Registers a set of external types. It does NOT create any source code.
- * The package for the types is expected to be "&lt;context&gt;.types".
+ * The default namespace for the types is expected to be "&lt;context&gt;.types".
+ * It's possible to change the namespace using the variable <code>namespace</code>
  * The "ddd" file that contains the types should look like this:<br>
  * <code>
  * context myctx {
@@ -64,10 +65,11 @@ class CtxExternalTypes extends AbstractSource<ResourceSet> {
 
 	override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val dateType = getVar("types.Date", LocalDate.name)
-		val timeType = getVar("types.Time", LocalTime.name)
-		val dateTimeType = getVar("types.Timestamp", LocalDateTime.name)
-		val uuidType = getVar("types.UUID", UUID.name)
+		val pkg = getVar("namespace", "types")
+		val dateType = getVar(pkg + ".Date", LocalDate.name)
+		val timeType = getVar(pkg + ".Time", LocalTime.name)
+		val dateTimeType = getVar(pkg + ".Timestamp", LocalDateTime.name)
+		val uuidType = getVar(pkg + ".UUID", UUID.name)
 
 		// Just registers the external types
 		val Iterator<Context> iter = resourceSet.getAllContents().filter(typeof(Context))
@@ -75,24 +77,24 @@ class CtxExternalTypes extends AbstractSource<ResourceSet> {
 			val Context ctx = iter.next
 			val name = ctx.name
 			val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-			refReg.putReference(name + ".types.Byte", Byte.name)
-			refReg.putReference(name + ".types.Short", Short.name)
-			refReg.putReference(name + ".types.Integer", Integer.name)
-			refReg.putReference(name + ".types.Long", Long.name)
-			refReg.putReference(name + ".types.Float", Float.name)
-			refReg.putReference(name + ".types.Double", Double.name)
-			refReg.putReference(name + ".types.Boolean", Boolean.name)
-			refReg.putReference(name + ".types.Character", Character.name)
-			refReg.putReference(name + ".types.String", String.name)
-			refReg.putReference(name + ".types.Date", dateType)
-			refReg.putReference(name + ".types.Time", timeType)
-			refReg.putReference(name + ".types.Timestamp", dateTimeType)
-			refReg.putReference(name + ".types.UUID", uuidType)
-			refReg.putReference(name + ".types.Currency", Currency.name)
-			refReg.putReference(name + ".types.BigDecimal", BigDecimal.name)
-			refReg.putReference(name + ".types.Locale", Locale.name)
-			refReg.putReference(name + ".types.Object", Object.name)
-			refReg.putReference(name + ".types.EntityIdPath", EntityIdPath.name)
+			refReg.putReference(name + pkg + ".Byte", Byte.name)
+			refReg.putReference(name + pkg + ".Short", Short.name)
+			refReg.putReference(name + pkg + ".Integer", Integer.name)
+			refReg.putReference(name + pkg + ".Long", Long.name)
+			refReg.putReference(name + pkg + ".Float", Float.name)
+			refReg.putReference(name + pkg + ".Double", Double.name)
+			refReg.putReference(name + pkg + ".Boolean", Boolean.name)
+			refReg.putReference(name + pkg + ".Character", Character.name)
+			refReg.putReference(name + pkg + ".String", String.name)
+			refReg.putReference(name + pkg + ".Date", dateType)
+			refReg.putReference(name + pkg + ".Time", timeType)
+			refReg.putReference(name + pkg + ".Timestamp", dateTimeType)
+			refReg.putReference(name + pkg + ".UUID", uuidType)
+			refReg.putReference(name + pkg + ".Currency", Currency.name)
+			refReg.putReference(name + pkg + ".BigDecimal", BigDecimal.name)
+			refReg.putReference(name + pkg + ".Locale", Locale.name)
+			refReg.putReference(name + pkg + ".Object", Object.name)
+			refReg.putReference(name + pkg + ".EntityIdPath", EntityIdPath.name)
 		}
 
 		// Will never produce anything
