@@ -58,6 +58,9 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	}
 
 	def String contextPkg(String ctxName) {
+		if (getPkg() == null) {
+			return getBasePkg() + "." + ctxName
+		}
 		return getBasePkg() + "." + ctxName + "." + getPkg()
 	}
 

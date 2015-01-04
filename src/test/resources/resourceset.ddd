@@ -1,0 +1,36 @@
+context x {
+
+	namespace types {
+		type String
+		type Integer
+		type UUID
+	}
+	
+	namespace resourceset {
+		
+		import x.types.*
+		
+		aggregate AggregateA identifier AggregateAId {}
+		aggregate-id AggregateAId identifies AggregateA base String {
+			String value 
+		}
+
+		aggregate AggregateB identifier AggregateBId {}
+		aggregate-id AggregateBId identifies AggregateB base UUID {
+			UUID id 
+		}
+
+		
+		entity EntityA identifier EntityAId root AggregateA {}
+		entity-id EntityAId identifies EntityA base String {
+			String value 
+		}
+		
+		entity EntityB identifier EntityBId root AggregateB {}
+		entity-id EntityBId identifies EntityB {
+			Integer id 
+		}
+		
+	}
+	
+}

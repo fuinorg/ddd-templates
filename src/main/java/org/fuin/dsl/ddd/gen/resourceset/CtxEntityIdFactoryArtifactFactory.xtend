@@ -96,40 +96,40 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 	def create(SimpleCodeSnippetContext sctx, String ctx, String pkg, String className, List<AbstractEntityId> entityIds,
 		ResourceSet resourceSet) {
 		val String src = ''' 
+		/**
+		 * Creates entity identifier instanced based on the type.
+		 */
+		@ApplicationScoped
+		public final class «className» implements EntityIdFactory {
+		
+			private Map<String, SingleEntityIdFactory> map;
+			
 			/**
-			 * Creates entity identifier instanced based on the type.
+			 * Default constructor.
 			 */
-			@ApplicationScoped
-			public final class «className» implements EntityIdFactory {
-			
-			    private Map<String, SingleEntityIdFactory> map;
-			
-			    /**
-			     * Default constructor.
-			     */
-			    public «className»() {
-					super();
-					map = new HashMap<String, SingleEntityIdFactory>();
-					«FOR entityId : entityIds»
-					map.put(«entityId.name».TYPE.asString(), new «entityId.name»Converter());
-					«ENDFOR»
-			    }
-			
-			    @Override
-			    public EntityId createEntityId(final String type, final String id) {
-					final SingleEntityIdFactory factory = map.get(type);
-					if (factory == null) {
-			  			throw new IllegalArgumentException("Unknown type: " + type);
-					}
-					return factory.createEntityId(id);
-			  }
-			
-			    @Override
-			    public boolean containsType(final String type) {
-					return map.containsKey(type);
-			  }
-			
+			public «className»() {
+				super();
+				map = new HashMap<String, SingleEntityIdFactory>();
+				«FOR entityId : entityIds»
+				map.put(«entityId.name».TYPE.asString(), new «entityId.name»Converter());
+				«ENDFOR»
 			}
+			
+			@Override
+			public EntityId createEntityId(final String type, final String id) {
+				final SingleEntityIdFactory factory = map.get(type);
+				if (factory == null) {
+					throw new IllegalArgumentException("Unknown type: " + type);
+				}
+				return factory.createEntityId(id);
+			}
+			
+			@Override
+			public boolean containsType(final String type) {
+				return map.containsKey(type);
+			}
+		
+		}
 		'''
 
 		new SrcAll(copyrightHeader, pkg, sctx.imports, src).toString 
