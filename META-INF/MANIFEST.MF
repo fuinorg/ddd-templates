@@ -49,9 +49,9 @@ Export-Package: org.fuin.dsl.ddd.gen.event;version="0.1.0.SNAPSHOT";uses
  dsl.ddd.gen.service;version="0.1.0.SNAPSHOT";uses:="org.eclipse.xtext.j
  unit4,org.fuin.dsl.ddd,org.fuin.dsl.ddd.domainDrivenDesignDsl,org.fuin.
  dsl.ddd.gen.base,org.fuin.srcgen4j.commons,org.fuin.srcgen4j.core.emf,o
- rg.junit,org.junit.runner",org.fuin.dsl.ddd.gen.constr;version="0.1.0.S
- NAPSHOT";uses:="org.eclipse.xtext.junit4,org.fuin.dsl.ddd,org.junit,org
- .junit.runner",org.fuin.dsl.ddd.gen.enumobject;version="0.1.0.SNAPSHOT"
+ rg.junit,org.junit.runner",org.fuin.dsl.ddd.gen.constr;uses:="org.eclip
+ se.xtext.junit4,org.fuin.dsl.ddd,org.junit,org.junit.runner";version="0
+ .1.0.SNAPSHOT",org.fuin.dsl.ddd.gen.enumobject;version="0.1.0.SNAPSHOT"
  ;uses:="org.eclipse.xtext.junit4,org.fuin.dsl.ddd,org.fuin.dsl.ddd.doma
  inDrivenDesignDsl,org.fuin.dsl.ddd.gen.base,org.fuin.srcgen4j.commons,o
  rg.fuin.srcgen4j.core.emf,org.junit,org.junit.runner",org.fuin.dsl.ddd.
