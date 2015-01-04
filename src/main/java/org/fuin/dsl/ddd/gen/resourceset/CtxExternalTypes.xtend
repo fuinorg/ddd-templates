@@ -17,6 +17,8 @@ import org.joda.time.LocalDateTime
 import org.joda.time.LocalTime
 
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import java.util.Collection
+import java.util.List
 
 /**
  * Registers a set of external types. It does NOT create any source code.
@@ -44,6 +46,8 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
  *         type Locale
  *         type Object
  *         type EntityIdPath
+ *         type Collection
+ *         type List
  *     }
  * }
  * <code>
@@ -77,24 +81,27 @@ class CtxExternalTypes extends AbstractSource<ResourceSet> {
 			val Context ctx = iter.next
 			val name = ctx.name
 			val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-			refReg.putReference(name + pkg + ".Byte", Byte.name)
-			refReg.putReference(name + pkg + ".Short", Short.name)
-			refReg.putReference(name + pkg + ".Integer", Integer.name)
-			refReg.putReference(name + pkg + ".Long", Long.name)
-			refReg.putReference(name + pkg + ".Float", Float.name)
-			refReg.putReference(name + pkg + ".Double", Double.name)
-			refReg.putReference(name + pkg + ".Boolean", Boolean.name)
-			refReg.putReference(name + pkg + ".Character", Character.name)
-			refReg.putReference(name + pkg + ".String", String.name)
-			refReg.putReference(name + pkg + ".Date", dateType)
-			refReg.putReference(name + pkg + ".Time", timeType)
-			refReg.putReference(name + pkg + ".Timestamp", dateTimeType)
-			refReg.putReference(name + pkg + ".UUID", uuidType)
-			refReg.putReference(name + pkg + ".Currency", Currency.name)
-			refReg.putReference(name + pkg + ".BigDecimal", BigDecimal.name)
-			refReg.putReference(name + pkg + ".Locale", Locale.name)
-			refReg.putReference(name + pkg + ".Object", Object.name)
-			refReg.putReference(name + pkg + ".EntityIdPath", EntityIdPath.name)
+			refReg.putReference(name + "." + pkg + ".Byte", Byte.name)
+			refReg.putReference(name + "." + pkg + ".Short", Short.name)
+			refReg.putReference(name + "." + pkg + ".Integer", Integer.name)
+			refReg.putReference(name + "." + pkg + ".Long", Long.name)
+			refReg.putReference(name + "." + pkg + ".Float", Float.name)
+			refReg.putReference(name + "." + pkg + ".Double", Double.name)
+			refReg.putReference(name + "." + pkg + ".Boolean", Boolean.name)
+			refReg.putReference(name + "." + pkg + ".Character", Character.name)
+			refReg.putReference(name + "." + pkg + ".String", String.name)
+			refReg.putReference(name + "." + pkg + ".Date", dateType)
+			refReg.putReference(name + "." + pkg + ".Time", timeType)
+			refReg.putReference(name + "." + pkg + ".Timestamp", dateTimeType)
+			refReg.putReference(name + "." + pkg + ".UUID", uuidType)
+			refReg.putReference(name + "." + pkg + ".Currency", Currency.name)
+			refReg.putReference(name + "." + pkg + ".BigDecimal", BigDecimal.name)
+			refReg.putReference(name + "." + pkg + ".Locale", Locale.name)
+			refReg.putReference(name + "." + pkg + ".Object", Object.name)
+			refReg.putReference(name + "." + pkg + ".EntityIdPath", EntityIdPath.name)
+			refReg.putReference(name + "." + pkg + ".Collection", Collection.name)
+			refReg.putReference(name + "." + pkg + ".List", List.name)
+			
 		}
 
 		// Will never produce anything
