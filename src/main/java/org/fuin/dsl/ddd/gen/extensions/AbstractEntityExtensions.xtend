@@ -10,6 +10,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 
 import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Service
 
 /**
  * Provides extension methods for AbstractEntity.
@@ -30,6 +31,22 @@ class AbstractEntityExtensions {
 		return methods
 	}
 
+	/**
+	 * Returns a list of all constructors and methods.
+	 * 
+	 * @param entity Entity to return all constructors and methods for.
+	 * 
+	 * @return List of all constructors and methods.
+	 */
+	def static List<Service> services(AbstractEntity entity) {
+		val List<Service> services = new ArrayList<Service>()
+		val methods = entity.constructorsAndMethods
+		for (method : methods) {
+			services.addAll(method.services.nullSafe)
+		}
+		return services
+	}
+	
 	/**
 	 * Returns a list of all direct child entities for an entity.
 	 * 

@@ -23,6 +23,12 @@ class ServiceArtifactFactory extends AbstractSource<Service> {
 
 	override create(Service service, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
+		if (!(service.eContainer instanceof Namespace)) {
+			// Do not create separate interface file 
+			// for services in constructors or methods
+			return null
+		}
+
 		val className = service.name
 		val Namespace ns = service.namespace;
 		val pkg = ns.asPackage

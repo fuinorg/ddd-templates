@@ -11,6 +11,7 @@ import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcSetters
 import org.fuin.dsl.ddd.gen.base.SrcVarsDecl
+import org.fuin.dsl.ddd.gen.service.SrcServices
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -102,6 +103,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				«new SrcSetters(ctx, "protected final", aggregate.variables)»
 				«new SrcAbstractChildEntityLocatorMethods(ctx, aggregate)»
 				«new SrcAbstractHandleEventMethods(ctx, aggregate.allEvents)»
+				«new SrcServices(ctx, aggregate.services)»
 			}
 		'''
 

@@ -69,6 +69,14 @@ class ESRepositoryFactoryArtifactFactory extends AbstractSource<Aggregate> imple
 			@Dependent
 			public class «className» {
 			
+				/**
+				 * Produces a «repositoryName».
+				 * 
+				 * @param eventStore The event store to use for construction.
+				 * @param eventRegistry Registry with all events to use for construction.
+				 *
+				 * @return The new repository instance.
+				 */
 				@Produces
 				public «repositoryName» create(final EventStore eventStore, final «eventRegistryName» eventRegistry) {
 					return new «repositoryName»(eventStore, eventRegistry, eventRegistry);

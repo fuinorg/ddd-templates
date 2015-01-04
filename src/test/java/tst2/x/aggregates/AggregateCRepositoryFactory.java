@@ -28,6 +28,14 @@ import tst2.x.resourceset.XEventRegistry;
 @Dependent
 public class AggregateCRepositoryFactory {
 
+	/**
+	 * Produces a AggregateCRepository.
+	 * 
+	 * @param eventStore The event store to use for construction.
+	 * @param eventRegistry Registry with all events to use for construction.
+	 *
+	 * @return The new repository instance.
+	 */
 	@Produces
 	public AggregateCRepository create(final EventStore eventStore, final XEventRegistry eventRegistry) {
 		return new AggregateCRepository(eventStore, eventRegistry, eventRegistry);

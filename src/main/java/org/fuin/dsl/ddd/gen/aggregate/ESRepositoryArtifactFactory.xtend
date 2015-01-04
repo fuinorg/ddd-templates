@@ -30,7 +30,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 		val filename = fqn.replace('.', '/') + ".java";
 
 		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(aggregate.uniqueName + "Event", fqn)
+		refReg.putReference(aggregate.uniqueName + "Repository", fqn)
 
 		if (preparationRun) {
 

@@ -34,7 +34,7 @@ class SrcSetter implements CodeSnippet {
 	override toString() {
 		'''	
 			/**
-			 * Sets: «variable.doc.text»
+			 * Sets: «variable.superDoc.text»
 			 *
 			 * @param «variable.name» Value to set.
 			 */
