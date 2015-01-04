@@ -75,7 +75,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 				 */
 				public «className»(final EventStore eventStore,
 						final SerializerRegistry serRegistry, final DeserializerRegistry desRegistry) {
-				super(eventStore, serRegistry, desRegistry);
+					super(eventStore, serRegistry, desRegistry);
 				}
 			
 				@Override
