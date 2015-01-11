@@ -4,7 +4,7 @@ import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.objects4j.common.Nullable
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 
 /**
  * Creates the source code for a JavaDoc <code>@throws</code> lines.

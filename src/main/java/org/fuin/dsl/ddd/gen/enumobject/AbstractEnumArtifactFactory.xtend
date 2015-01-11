@@ -16,11 +16,11 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 
 class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 

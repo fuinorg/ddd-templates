@@ -5,8 +5,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.srcgen4j.commons.ArtifactFactory
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 
 abstract class AbstractSource<T> implements ArtifactFactory<T> {
 

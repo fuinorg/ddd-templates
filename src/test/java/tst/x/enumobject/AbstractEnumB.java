@@ -36,9 +36,9 @@ public abstract class AbstractEnumB {
 	/**
 	 * Enumeration type B - With variables.
 	 *
-	 * @param id Integer
-	 * @param shortName String
-	 * @param longName String
+	 * @param id Identifier.
+	 * @param shortName Short name.
+	 * @param longName Long name.
 	 */
 	protected AbstractEnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
 		Contract.requireArgNotNull("id", id);
@@ -51,7 +51,7 @@ public abstract class AbstractEnumB {
 	}
 
 	/**
-	 * Returns: Integer
+	 * Returns: Identifier.
 	 *
 	 * @return Current value.
 	 */
@@ -61,7 +61,7 @@ public abstract class AbstractEnumB {
 	}
 	
 	/**
-	 * Returns: String
+	 * Returns: Short name.
 	 *
 	 * @return Current value.
 	 */
@@ -71,7 +71,7 @@ public abstract class AbstractEnumB {
 	}
 	
 	/**
-	 * Returns: String
+	 * Returns: Long name.
 	 *
 	 * @return Current value.
 	 */

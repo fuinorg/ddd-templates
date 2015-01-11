@@ -4,8 +4,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractVOExtensions.*
 
 /**
  * Creates source code for value objects that have an external 'base' of type 'UUID'.

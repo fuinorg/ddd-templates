@@ -1,11 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
+import java.util.ArrayList
 import java.util.List
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
-import java.util.ArrayList
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 
 /**
  * Creates source code for invoking a constructor or a method.

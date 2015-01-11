@@ -6,7 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 
-import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddMethodExtensions.*
 
 /**
  * Data required to create a method. 

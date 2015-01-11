@@ -22,9 +22,9 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory.eINSTANCE
 
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.DomainDrivenDesignDslFactoryExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddDslFactoryExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class FinalEntityArtifactFactory extends AbstractSource<Entity> {

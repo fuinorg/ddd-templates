@@ -5,7 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 
 /**
  * Creates source code for "throws" clause.

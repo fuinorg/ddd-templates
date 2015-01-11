@@ -4,7 +4,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEventExtensions.*
 
 /**
  * Creates an abstract event handler method.

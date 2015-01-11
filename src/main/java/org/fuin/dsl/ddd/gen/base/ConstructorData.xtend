@@ -1,12 +1,13 @@
 package org.fuin.dsl.ddd.gen.base
 
+import java.util.ArrayList
 import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 
+import static extension org.fuin.dsl.ddd.extensions.DddConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
-import java.util.ArrayList
 
 /**
  * Data required to create a constructor. 

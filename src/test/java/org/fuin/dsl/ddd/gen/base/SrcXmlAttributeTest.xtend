@@ -6,7 +6,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 
 import static org.fest.assertions.Assertions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.DomainDrivenDesignDslFactoryExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddDslFactoryExtensions.*
 
 class SrcXmlAttributeTest {
 

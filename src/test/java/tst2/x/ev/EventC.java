@@ -58,8 +58,8 @@ public final class EventC extends AbstractDomainEvent<CustomerId> {
 	 * Aggregate event C.
 	 *
 	 * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
-	* @param a String 
-	* @param b Integer 
+	* @param a A. 
+	* @param b B. 
 	*/
 	public EventC(@NotNull final EntityIdPath entityIdPath, @NotNull final String a, @NotNull final Integer b) {
 		super(entityIdPath);
@@ -76,7 +76,7 @@ public final class EventC extends AbstractDomainEvent<CustomerId> {
 	}
 
 	/**
-	 * Returns: String
+	 * Returns: A.
 	 *
 	 * @return Current value.
 	 */
@@ -86,7 +86,7 @@ public final class EventC extends AbstractDomainEvent<CustomerId> {
 	}
 	
 	/**
-	 * Returns: Integer
+	 * Returns: B.
 	 *
 	 * @return Current value.
 	 */

@@ -15,13 +15,14 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.LiteralExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEventExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddLiteralExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddTypeExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 class EventTestArtifactFactory extends AbstractSource<Event> {

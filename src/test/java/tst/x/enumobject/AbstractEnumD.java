@@ -30,7 +30,7 @@ public abstract class AbstractEnumD {
 	/**
 	 * Enumeration type D - With integer base type.
 	 *
-	 * @param id Integer
+	 * @param id Identifier.
 	 */
 	protected AbstractEnumD(@NotNull final Integer id) {
 		Contract.requireArgNotNull("id", id);
@@ -39,7 +39,7 @@ public abstract class AbstractEnumD {
 	}
 
 	/**
-	 * Returns: Integer
+	 * Returns: Identifier.
 	 *
 	 * @return Current value.
 	 */

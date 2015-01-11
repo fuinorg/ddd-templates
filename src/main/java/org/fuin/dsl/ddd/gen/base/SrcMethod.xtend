@@ -5,7 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddMethodExtensions.*
 
 /**
  * Creates source code for a single method.

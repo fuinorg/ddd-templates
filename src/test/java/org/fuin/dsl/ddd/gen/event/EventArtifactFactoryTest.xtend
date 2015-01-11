@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 
 import static org.fest.assertions.Assertions.*
 
-import static extension org.fuin.dsl.ddd.gen.extensions.DomainModelExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.base.TestExtensions.*
 import java.util.Map

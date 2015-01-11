@@ -28,6 +28,7 @@ context x {
 			
 			/** Aggregate event B. */
 			event EventB {
+				/** A. */
 				String a {
 					examples "Abc"
 				}
@@ -36,9 +37,11 @@ context x {
 
 			/** Aggregate event C. */
 			event EventC {
+				/** A. */
 				String a {
 					examples "Abc"
 				}
+				/** B. */
 				Integer b {
 					examples 123
 				}

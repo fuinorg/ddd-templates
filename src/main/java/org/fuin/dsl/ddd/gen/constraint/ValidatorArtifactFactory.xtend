@@ -14,10 +14,10 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.gen.base.Utils.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.ConstraintTargetExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddConstraintTargetExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 

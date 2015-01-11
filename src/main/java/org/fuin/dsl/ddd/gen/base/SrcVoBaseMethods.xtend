@@ -4,8 +4,8 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractVOExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
 
 /**

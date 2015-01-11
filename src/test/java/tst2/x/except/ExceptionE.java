@@ -36,7 +36,7 @@ public final class ExceptionE extends UniquelyNumberedException {
 	/**
 	 * Constructs a new instance of the exception.
 	 *
-	 * @param a String
+	 * @param a A.
 	 */
 	public ExceptionE(@NotNull final String a) {
 		super(124, KeyValue.replace("Exception C: ${a}",  new KeyValue("a", a)));
@@ -46,7 +46,7 @@ public final class ExceptionE extends UniquelyNumberedException {
 	}
 
 	/**
-	 * Returns: String
+	 * Returns: A.
 	 *
 	 * @return Current value.
 	 */

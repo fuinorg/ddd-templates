@@ -2,12 +2,12 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
 import java.util.List
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 
 /**
  * Creates source code for a number of methods.

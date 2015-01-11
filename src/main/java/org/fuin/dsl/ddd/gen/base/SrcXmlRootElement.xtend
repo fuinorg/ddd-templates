@@ -6,7 +6,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 
 /**
  * Creates source code for a JAXB root element annotation.

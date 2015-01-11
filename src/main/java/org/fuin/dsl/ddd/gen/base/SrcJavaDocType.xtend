@@ -7,7 +7,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Service
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 
 /**
  * Creates the source code for a type (class, interface) JavaDoc.

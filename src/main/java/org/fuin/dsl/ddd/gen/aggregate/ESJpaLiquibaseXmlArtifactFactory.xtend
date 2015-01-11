@@ -8,7 +8,7 @@ import org.fuin.srcgen4j.commons.ArtifactFactory
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 
 class ESJpaLiquibaseXmlArtifactFactory extends AbstractSource<Aggregate> implements ArtifactFactory<Aggregate> {
 

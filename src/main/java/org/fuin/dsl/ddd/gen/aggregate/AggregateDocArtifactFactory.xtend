@@ -7,8 +7,8 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 
 class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
 

@@ -4,7 +4,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddTypeExtensions.*
 
 /**
  * Creates source code for a JAXB attribute annotation.

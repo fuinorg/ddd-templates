@@ -38,8 +38,8 @@ public final class ExceptionD extends Exception {
 	/**
 	 * Constructs a new instance of the exception.
 	 *
-	 * @param a String
-	 * @param b Integer
+	 * @param a A.
+	 * @param b B.
 	 */
 	public ExceptionD(@NotNull final String a, @NotNull final Integer b) {
 		super(KeyValue.replace("Exception D: ${a} / ${b}",  new KeyValue("a", a), new KeyValue("b", b)));
@@ -51,7 +51,7 @@ public final class ExceptionD extends Exception {
 	}
 
 	/**
-	 * Returns: String
+	 * Returns: A.
 	 *
 	 * @return Current value.
 	 */
@@ -61,7 +61,7 @@ public final class ExceptionD extends Exception {
 	}
 	
 	/**
-	 * Returns: Integer
+	 * Returns: B.
 	 *
 	 * @return Current value.
 	 */

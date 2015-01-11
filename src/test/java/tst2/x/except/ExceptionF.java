@@ -39,8 +39,8 @@ public final class ExceptionF extends UniquelyNumberedException {
 	/**
 	 * Constructs a new instance of the exception.
 	 *
-	 * @param a String
-	 * @param b Integer
+	 * @param a A.
+	 * @param b B.
 	 */
 	public ExceptionF(@NotNull final String a, @NotNull final Integer b) {
 		super(125, KeyValue.replace("Exception F: ${a} / ${b}",  new KeyValue("a", a), new KeyValue("b", b)));
@@ -52,7 +52,7 @@ public final class ExceptionF extends UniquelyNumberedException {
 	}
 
 	/**
-	 * Returns: String
+	 * Returns: A.
 	 *
 	 * @return Current value.
 	 */
@@ -62,7 +62,7 @@ public final class ExceptionF extends UniquelyNumberedException {
 	}
 	
 	/**
-	 * Returns: Integer
+	 * Returns: B.
 	 *
 	 * @return Current value.
 	 */

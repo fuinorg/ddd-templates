@@ -9,9 +9,9 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.MethodExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddConstructorExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddMethodExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 
 /**
  * Creates source code for the JavaDoc of a constructor or method.

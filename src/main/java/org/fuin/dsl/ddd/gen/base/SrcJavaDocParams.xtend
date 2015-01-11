@@ -4,8 +4,8 @@ import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.objects4j.common.Nullable
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
 
 /**
  * Creates the source code for a JavaDoc <code>@param</code> lines.

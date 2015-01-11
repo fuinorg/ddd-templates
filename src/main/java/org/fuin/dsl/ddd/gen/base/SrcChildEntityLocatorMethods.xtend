@@ -4,7 +4,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractEntityExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
 
 /**
  * Creates source code for a multiple child entity locator methods.

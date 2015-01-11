@@ -35,7 +35,7 @@ public final class ExceptionC extends Exception {
 	/**
 	 * Constructs a new instance of the exception.
 	 *
-	 * @param a String
+	 * @param a A.
 	 */
 	public ExceptionC(@NotNull final String a) {
 		super(KeyValue.replace("Exception C: ${a}",  new KeyValue("a", a)));
@@ -45,7 +45,7 @@ public final class ExceptionC extends Exception {
 	}
 
 	/**
-	 * Returns: String
+	 * Returns: A.
 	 *
 	 * @return Current value.
 	 */

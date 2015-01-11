@@ -15,8 +15,8 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.EObjectExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.EventExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEventExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {

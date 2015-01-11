@@ -31,10 +31,13 @@ context x {
 		/** Enumeration type B - With variables. */
 		enum EnumB {
 			
+			/** Identifier. */
 			Integer id
 			
+			/** Short name. */
 			String shortName
 
+			/** Long name. */
 			String longName
 			
 			instances {
@@ -73,6 +76,7 @@ context x {
 		/** Enumeration type D - With integer base type. */
 		enum EnumD base Integer {
 			
+			/** Identifier. */
 			Integer id
 			
 			instances {

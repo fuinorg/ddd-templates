@@ -7,7 +7,7 @@ import org.fuin.objects4j.vo.KeyValue
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 
 /**
  * Creates source code for a {@link KeyValue#replace(String, KeyValue...)}.

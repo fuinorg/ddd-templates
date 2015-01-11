@@ -3,7 +3,7 @@ package org.fuin.dsl.ddd.gen.base
 import javax.validation.constraints.NotNull
 import org.fuin.objects4j.common.Nullable
 
-import static extension org.fuin.dsl.ddd.gen.extensions.StringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 
 /**
  * Creates the source code for a JavaDoc <code>@throws</code> line.
