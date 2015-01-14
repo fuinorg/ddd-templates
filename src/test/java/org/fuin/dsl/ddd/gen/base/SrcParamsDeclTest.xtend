@@ -55,7 +55,7 @@ class SrcParamsDeclTest {
 						
 						import y.types.*
 				
-						constraint NoArgConstraint on String {
+						constraint NoArgConstraint input String {
 							message "NoArgConstraint message"
 						}
 				

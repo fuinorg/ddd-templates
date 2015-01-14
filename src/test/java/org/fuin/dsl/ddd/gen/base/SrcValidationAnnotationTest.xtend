@@ -105,16 +105,16 @@ class SrcValidationAnnotationTest {
 					
 					import y.types.*
 			
-					constraint NoArgConstraint on String {
+					constraint NoArgConstraint input String {
 						message "NoArgConstraint message"
 					}
 					
-					constraint OneArgConstraint on String {
+					constraint OneArgConstraint input String {
 						Integer expected
 						message "OneArgConstraint message"
 					}
 			
-					constraint TwoArgsConstraint on String {
+					constraint TwoArgsConstraint input String {
 						Integer min
 						Integer max
 				        message "TwoArgsConstraint message"

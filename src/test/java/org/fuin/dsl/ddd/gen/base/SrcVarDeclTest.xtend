@@ -138,7 +138,7 @@ class SrcVarDeclTest {
 						
 						import a.types.*
 				
-						constraint AnyConstraint on String {
+						constraint AnyConstraint input String {
 							message "message"
 						}
 				
