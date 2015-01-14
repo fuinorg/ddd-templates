@@ -55,7 +55,7 @@ class SrcVarDecl implements CodeSnippet {
 
 	private def validationAnnotations() {
 		'''
-			«FOR cc : variable.invariants.nullSafeCalls SEPARATOR ' '»
+			«FOR cc : variable.invariants.nullSafeInstances SEPARATOR ' '»
 				«new SrcValidationAnnotation(ctx, cc)»
 			«ENDFOR»
 			«IF variable.nullable == null»

@@ -36,7 +36,7 @@ class SrcValidationAnnotationTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(0)
-		val constraintCall = variable.invariants.calls.get(0)
+		val constraintCall = variable.invariants.instances.get(0)
 		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall)
 
 		// TEST
@@ -60,7 +60,7 @@ class SrcValidationAnnotationTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(1)
-		val constraintCall = variable.invariants.calls.get(0)
+		val constraintCall = variable.invariants.instances.get(0)
 		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall)
 
 		// TEST
@@ -84,7 +84,7 @@ class SrcValidationAnnotationTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Variable variable = valueObject.variables.get(2)
-		val constraintCall = variable.invariants.calls.get(0)
+		val constraintCall = variable.invariants.instances.get(0)
 		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall)
 
 		// TEST

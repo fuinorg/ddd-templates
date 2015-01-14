@@ -3,7 +3,7 @@ package org.fuin.dsl.ddd.gen.base
 import java.util.ArrayList
 import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintCall
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintInstance
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
@@ -22,11 +22,11 @@ class SrcValidationAnnotation implements CodeSnippet {
 	var List<Variable> vars
 	var List<Literal> params
 
-	new(CodeSnippetContext ctx, ConstraintCall cc) {
+	new(CodeSnippetContext ctx, ConstraintInstance ci) {
 		this.ctx = ctx
-		constraint = cc.constraint;
+		constraint = ci.constraint;
 		vars = constraint.variables;
-		params = cc.params;
+		params = ci.params;
 		
 		ctx.requiresReference(constraint.uniqueName)
 		if (vars != null) {

@@ -35,8 +35,8 @@ class SrcParamDecl implements CodeSnippet {
 	}
 
 	override toString() {
-		if ((variable.invariants != null) && (variable.invariants.calls.nullSafe.size > 0)) {
-			'''«FOR cc : variable.invariants.calls SEPARATOR ' '»«new SrcValidationAnnotation(ctx, cc)»«ENDFOR» «IF variable.nullable == null»@NotNull «ENDIF»final «variable.type(ctx)» «variable.name»'''
+		if ((variable.invariants != null) && (variable.invariants.instances.nullSafe.size > 0)) {
+			'''«FOR cc : variable.invariants.instances SEPARATOR ' '»«new SrcValidationAnnotation(ctx, cc)»«ENDFOR» «IF variable.nullable == null»@NotNull «ENDIF»final «variable.type(ctx)» «variable.name»'''
 		} else {
 			'''«IF variable.nullable == null»@NotNull «ENDIF»final «variable.type(ctx)» «variable.name»'''
 		}
