@@ -14,11 +14,13 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddLiteralExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddParameterExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class FinalEnumArtifactFactory extends AbstractSource<EnumObject> {
 
@@ -56,7 +58,7 @@ class FinalEnumArtifactFactory extends AbstractSource<EnumObject> {
 	}
 
 	def addReferences(CodeSnippetContext ctx, EnumObject enu) {
-		if (enu.variables.nullSafe.size > 0) {
+		if (enu.attributes.nullSafe.size > 0) {
 			ctx.requiresReference(enu.uniqueAbstractName)
 		}
 	}
@@ -64,7 +66,7 @@ class FinalEnumArtifactFactory extends AbstractSource<EnumObject> {
 	def create(SimpleCodeSnippetContext ctx, EnumObject eo, String pkg, String className, String abstractClassName) {
 		val String src = ''' 
 			/** «eo.doc.text» */
-			public final class «className» «IF eo.variables.nullSafe.size > 0»extends «abstractClassName» «ENDIF»{
+			public final class «className» «IF eo.attributes.nullSafe.size > 0»extends «abstractClassName» «ENDIF»{
 				
 				«FOR in : eo.instances»
 					«in.doc»
@@ -72,9 +74,9 @@ class FinalEnumArtifactFactory extends AbstractSource<EnumObject> {
 					
 				«ENDFOR»
 				«new SrcStaticEnumCode(ctx, eo)»
-				«IF eo.variables.nullSafe.size > 0»
-					private «className»(«new SrcParamsDecl(ctx, eo.variables)») {
-						«new SrcInvokeMethod(ctx, "super", eo.variables.varNames)»
+				«IF eo.attributes.nullSafe.size > 0»
+					private «className»(«new SrcParamsDecl(ctx, eo.attributes.asParameters)») {
+						«new SrcInvokeMethod(ctx, "super", eo.attributes.asParameters.asNames)»
 					}
 					
 				«ENDIF»

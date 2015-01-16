@@ -1,28 +1,28 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 /**
- * Creates source code for assigning a parameter to an instance variable.
+ * Creates source code for assigning a parameter to an instance parameter.
  */
 class SrcParamAssignment implements CodeSnippet {
 
-	val Variable variable
+	val Parameter parameter
 
 	/**
 	 * Constructor with all mandatory data.
 	 * 
 	 * @param ctx Context.
-	 * @param variable Variable.
+	 * @param parameter Parameter.
 	 */
-	new(CodeSnippetContext ctx, Variable variable) {
-		this.variable = variable
+	new(CodeSnippetContext ctx, Parameter parameter) {
+		this.parameter = parameter
 	}
 
 	override toString() {
-		'''this.«variable.name» = «variable.name»;'''
+		'''this.«parameter.name» = «parameter.name»;'''
 	}
 
 }

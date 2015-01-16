@@ -4,10 +4,11 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
@@ -15,6 +16,8 @@ import org.junit.runner.RunWith
 
 import static org.fest.assertions.Assertions.*
 
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
@@ -23,6 +26,9 @@ class SrcParamDeclTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testCreateNotNullWithConstraint() {
@@ -34,8 +40,8 @@ class SrcParamDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(0)
-		val SrcParamDecl testee = new SrcParamDecl(ctx, variable)
+		val Parameter param = valueObject.attributes.first.asParameter
+		val SrcParamDecl testee = new SrcParamDecl(ctx, param)
 
 		// TEST
 		val result = testee.toString
@@ -56,8 +62,8 @@ class SrcParamDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(1)
-		val SrcParamDecl testee = new SrcParamDecl(ctx, variable)
+		val Parameter param = valueObject.attributes.get(1).asParameter
+		val SrcParamDecl testee = new SrcParamDecl(ctx, param)
 
 		// TEST
 		val result = testee.toString
@@ -77,8 +83,8 @@ class SrcParamDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(2)
-		val SrcParamDecl testee = new SrcParamDecl(ctx, variable)
+		val Parameter param = valueObject.attributes.get(2).asParameter
+		val SrcParamDecl testee = new SrcParamDecl(ctx, param)
 
 		// TEST
 		val result = testee.toString
@@ -98,8 +104,8 @@ class SrcParamDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(3)
-		val SrcParamDecl testee = new SrcParamDecl(ctx, variable)
+		val Parameter param = valueObject.attributes.get(3).asParameter
+		val SrcParamDecl testee = new SrcParamDecl(ctx, param)
 
 		// TEST
 		val result = testee.toString
@@ -111,7 +117,7 @@ class SrcParamDeclTest {
 	}
 
 	private def DomainModel createModel() {
-		parser.parse(
+		val DomainModel model = parser.parse(
 			'''
 			context y {
 				
@@ -139,6 +145,8 @@ class SrcParamDeclTest {
 			}
 			'''
 		)
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

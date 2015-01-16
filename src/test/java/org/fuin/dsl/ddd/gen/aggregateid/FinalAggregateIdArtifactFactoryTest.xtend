@@ -5,9 +5,10 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.Utils
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
@@ -18,8 +19,8 @@ import org.junit.runner.RunWith
 
 import static org.fest.assertions.Assertions.*
 
-import static extension org.fuin.dsl.ddd.gen.base.TestExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
+import static extension org.fuin.dsl.ddd.gen.base.TestExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
@@ -28,6 +29,9 @@ class FinalAggregateIdArtifactFactoryTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testCreateMyAggregateId() {
@@ -120,7 +124,9 @@ class FinalAggregateIdArtifactFactoryTest {
 	}
 
 	private def model() {
-		return parser.parse(Utils.readAsString(class.getResource("/aggregateid.ddd")))
+		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregateid.ddd")))
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

@@ -4,6 +4,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
@@ -23,6 +24,9 @@ class SrcMethodSignatureSignatureTest {
 	@Inject
 	private ParseHelper<DomainModel> parser
 
+	@Inject 
+	private ValidationTestHelper validationTester
+
 	@Test
 	def void testCreate() {
 
@@ -32,7 +36,7 @@ class SrcMethodSignatureSignatureTest {
 		refReg.putReference("x.a.MyValueObject", "a.b.c.MyValueObject")
 		refReg.putReference("x.a.ConstraintViolatedException", "a.b.c.ConstraintViolatedException")
 		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
+		val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
 		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", false, method)
 
@@ -56,7 +60,7 @@ class SrcMethodSignatureSignatureTest {
 		refReg.putReference("x.a.MyValueObject", "a.b.c.MyValueObject")
 		refReg.putReference("x.a.ConstraintViolatedException", "a.b.c.ConstraintViolatedException")
 		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
+		val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
 		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", true, method)
 
@@ -71,8 +75,11 @@ class SrcMethodSignatureSignatureTest {
 
 	}
 
-	private def DomainModel createModel() {
-		return parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+	private def model() {
+		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+		validationTester.assertNoIssues(model)
+		return model
 	}
+
 
 }

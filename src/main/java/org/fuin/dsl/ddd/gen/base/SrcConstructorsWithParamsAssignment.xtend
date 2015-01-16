@@ -93,7 +93,7 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 		this.ctx = ctx
 		this.constructors = new ArrayList<ConstructorData>()
 
-		if (vo.variables.nullSafe.size > 0) {
+		if (vo.attributes.nullSafe.size > 0) {
 
 			var String name;
 			if (abstr) {
@@ -104,7 +104,7 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 			constructors.add(new ConstructorData("/** Default constructor. */", "protected", name, null, null))
 			if ((vo.constructors == null) || (vo.constructors.size == 0)) {
 				constructors.add(
-					new ConstructorData("/** Constructor with all data. */", modifiers, name, vo.parameters(passToSuper), null))
+					new ConstructorData("/** Constructor with all data. */", modifiers, name, vo.asWrappedParameters(passToSuper), null))
 			} else {
 				for (con : vo.constructors.nullSafe) {
 					this.constructors.add(new ConstructorData("public", name, con, passToSuper))

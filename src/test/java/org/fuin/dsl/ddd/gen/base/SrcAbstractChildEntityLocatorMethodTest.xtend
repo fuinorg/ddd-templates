@@ -4,6 +4,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
@@ -23,6 +24,9 @@ class SrcAbstractChildEntityLocatorMethodTest {
 	@Inject
 	private ParseHelper<DomainModel> parser
 
+	@Inject 
+	private ValidationTestHelper validationTester
+	
 	@Test
 	def void testCreate() {
 
@@ -31,7 +35,7 @@ class SrcAbstractChildEntityLocatorMethodTest {
 		refReg.putReference("x.a.MyEntity", "a.b.c.MyEntity")
 		refReg.putReference("x.a.MyEntityId", "a.b.c.MyEntityId")
 		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Entity entity = createModel().find(Entity, "MyEntity")
+		val Entity entity = model().find(Entity, "MyEntity")
 		val SrcAbstractChildEntityLocatorMethod testee = new SrcAbstractChildEntityLocatorMethod(ctx, entity)
 
 		// TEST
@@ -54,8 +58,10 @@ class SrcAbstractChildEntityLocatorMethodTest {
 
 	}
 
-	private def DomainModel createModel() {
-		return parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+	private def model() {
+		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

@@ -20,6 +20,7 @@ import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddLiteralExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 
 class EnumArtifactFactory extends AbstractSource<EnumObject> {
 
@@ -60,7 +61,7 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 
 	def create(SimpleCodeSnippetContext ctx, EnumObject eo, String pkg, String className) {
 		var String src
-		if (eo.variables.nullSafe.size == 0) {
+		if (eo.attributes.nullSafe.size == 0) {
 			src = ''' 
 				/** «eo.doc.text» */
 				public enum «className» {
@@ -87,8 +88,8 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 					
 					«new SrcVarsDecl(ctx, "private", false, eo)»
 					«new SrcStaticEnumCode(ctx, eo)»
-					private «className»(«new SrcParamsDecl(ctx, eo.variables)») {
-						«new SrcParamsAssignment(ctx, eo.variables)»
+					private «className»(«new SrcParamsDecl(ctx, eo.attributes.asParameters)») {
+						«new SrcParamsAssignment(ctx, eo.attributes.asParameters)»
 					}
 				
 				}

@@ -4,10 +4,10 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
@@ -24,6 +24,9 @@ class SrcVarDeclTest {
 	@Inject
 	private ParseHelper<DomainModel> parser
 
+	@Inject 
+	private ValidationTestHelper validationTester
+
 	@Test
 	def void testCreateWithConstraint() {
 
@@ -34,8 +37,8 @@ class SrcVarDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(0)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, variable)
+		val attr = valueObject.attributes.get(0)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, attr)
 
 		// TEST
 		val result = testee.toString
@@ -62,8 +65,8 @@ class SrcVarDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(1)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, variable)
+		val attr = valueObject.attributes.get(1)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, attr)
 
 		// TEST
 		val result = testee.toString
@@ -87,8 +90,8 @@ class SrcVarDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(2)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, variable)
+		val attr = valueObject.attributes.get(2)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, attr)
 
 		// TEST
 		val result = testee.toString
@@ -111,8 +114,8 @@ class SrcVarDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(3)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", true, variable)
+		val attr = valueObject.attributes.get(3)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", true, attr)
 
 		// TEST
 		val result = testee.toString
@@ -130,7 +133,7 @@ class SrcVarDeclTest {
 	}
 
 	private def DomainModel createModel() {
-		parser.parse(
+		val DomainModel model = parser.parse(
 			'''
 				context a {
 					
@@ -158,6 +161,8 @@ class SrcVarDeclTest {
 				}
 			'''
 		)
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

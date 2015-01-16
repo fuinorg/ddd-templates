@@ -84,12 +84,12 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 				
 				«new SrcVarsDecl(ctx, "private", false, id)»
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
-				«new SrcGetters(ctx, "public final", id.variables)»
+				«new SrcGetters(ctx, "public final", id.attributes)»
 				«new SrcEntityIdTypeMethods(ctx, id.entity.name)»
 				@Override
 				public final String asString() {
-					«IF (id.variables.nullSafe.size == 1)»
-					return "" + get«id.variables.first.name.toFirstUpper»();
+					«IF (id.attributes.nullSafe.size == 1)»
+					return "" + get«id.attributes.first.name.toFirstUpper»();
 					«ELSE»
 					// TODO Implement!
 					return null;

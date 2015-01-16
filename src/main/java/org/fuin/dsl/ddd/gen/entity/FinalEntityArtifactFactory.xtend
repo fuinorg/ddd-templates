@@ -7,7 +7,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.ConstructorData
-import org.fuin.dsl.ddd.gen.base.ConstructorParam
+import org.fuin.dsl.ddd.gen.base.ConstructorParameter
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
@@ -83,10 +83,10 @@ class FinalEntityArtifactFactory extends AbstractSource<Entity> {
 
 	def constructorData(Entity entity, String className) {
 		val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
-		val rootParam = new ConstructorParam(eINSTANCE.createVariable("The root aggregate of this entity.", entity.root, "rootAggregate", false), true)
-		val idParam = new ConstructorParam(eINSTANCE.createVariable("Unique entity identifier.", entity.idType, "id", false), true)
+		val rootParam = new ConstructorParameter(eINSTANCE.createParameter("The root aggregate of this entity.", entity.root, "rootAggregate", false), true)
+		val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idType, "id", false), true)
 		if (entity.constructors == null || entity.constructors.size == 0) {
-			val List<ConstructorParam> parameters = new ArrayList<ConstructorParam>()
+			val List<ConstructorParameter> parameters = new ArrayList<ConstructorParameter>()
 			parameters.add(rootParam)
 			parameters.add(idParam)
 			val ConstructorData cd = new ConstructorData("/** Constructor with mandatory data. */", null, "public", className, parameters, null)

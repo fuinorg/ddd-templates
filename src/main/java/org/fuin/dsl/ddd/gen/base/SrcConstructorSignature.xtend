@@ -42,7 +42,7 @@ class SrcConstructorSignature implements CodeSnippet {
 		«FOR annotation : constructorData.annotations.nullSafe»
 		«annotation»
 		«ENDFOR»
-		«constructorData.modifiers» «constructorData.name»(«new SrcParamsDecl(ctx, constructorData.variables)»)«new SrcThrowsExceptions(
+		«constructorData.modifiers» «constructorData.name»(«new SrcParamsDecl(ctx, constructorData.parameters)»)«new SrcThrowsExceptions(
 			ctx, constructorData.exceptions)»'''
 	}
 

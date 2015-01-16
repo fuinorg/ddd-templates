@@ -4,6 +4,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Service
@@ -23,6 +24,9 @@ class SrcServiceTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testServiceA() {
@@ -90,9 +94,10 @@ class SrcServiceTest {
 
 	}
 	
-
 	private def model() {
-		return parser.parse(Utils.readAsString(class.getResource("/service.ddd")))
+		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/service.ddd")))
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

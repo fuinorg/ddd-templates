@@ -5,6 +5,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
@@ -19,8 +20,8 @@ import org.junit.runner.RunWith
 
 import static org.fest.assertions.Assertions.*
 
-import static extension org.fuin.dsl.ddd.gen.base.TestExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
+import static extension org.fuin.dsl.ddd.gen.base.TestExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
@@ -29,6 +30,9 @@ class ValidatorAnnotationArtifactFactoryTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testConstraintA() {
@@ -101,7 +105,9 @@ class ValidatorAnnotationArtifactFactoryTest {
 	}
 
 	private def model() {
-		return parser.parse(Utils.readAsString(class.getResource("/constraint.ddd")))
+		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/constraint.ddd")))
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

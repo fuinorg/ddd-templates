@@ -4,6 +4,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
@@ -14,6 +15,7 @@ import org.junit.runner.RunWith
 
 import static org.fest.assertions.Assertions.*
 
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
@@ -22,6 +24,9 @@ class SrcParamsDeclTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testCreate() {
@@ -33,7 +38,7 @@ class SrcParamsDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val SrcParamsDecl testee = new SrcParamsDecl(ctx, valueObject.variables)
+		val SrcParamsDecl testee = new SrcParamsDecl(ctx, valueObject.attributes.asParameters)
 
 		// TEST
 		val result = testee.toString
@@ -47,7 +52,7 @@ class SrcParamsDeclTest {
 	}
 
 	private def DomainModel createModel() {
-		parser.parse(
+		val DomainModel model = parser.parse(
 			'''
 				context y {
 					
@@ -75,6 +80,9 @@ class SrcParamsDeclTest {
 				}
 			'''
 		)
+		validationTester.assertNoIssues(model)
+		return model
 	}
+
 
 }

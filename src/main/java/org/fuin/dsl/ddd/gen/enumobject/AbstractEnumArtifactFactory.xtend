@@ -21,6 +21,7 @@ import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 
 class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 
@@ -29,7 +30,7 @@ class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 	}
 
 	override create(EnumObject enu, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (enu.variables.nullSafe.size == 0) {
+		if (enu.attributes.nullSafe.size == 0) {
 			// No abstract class necessary without variables
 			return null
 		}
@@ -69,12 +70,12 @@ class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 			public abstract class «className» {
 				
 				«new SrcVarsDecl(ctx, "private", false, eo)»
-				«new SrcJavaDocMethod(ctx, eo.doc, null, eo.variables, null)»
-				protected «className»(«new SrcParamsDecl(ctx, eo.variables)») {
-					«new SrcParamsAssignment(ctx, eo.variables)»
+				«new SrcJavaDocMethod(ctx, eo.doc, null, eo.attributes.asParameters, null)»
+				protected «className»(«new SrcParamsDecl(ctx, eo.attributes.asParameters)») {
+					«new SrcParamsAssignment(ctx, eo.attributes.asParameters)»
 				}
 			
-				«new SrcGetters(ctx, "public final", eo.variables)»
+				«new SrcGetters(ctx, "public final", eo.attributes)»
 			}
 			'''
 		

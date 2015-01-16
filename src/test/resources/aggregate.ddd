@@ -49,7 +49,7 @@ context x {
 			Integer b
 
 			/** Creates the entity. */			
-			constructor create constraints AnyConstraint fires AggregateCCreatedEvent {
+			constructor create business-rules AnyConstraint fires AggregateCCreatedEvent {
 
 				/** Variable A. */
 				String a

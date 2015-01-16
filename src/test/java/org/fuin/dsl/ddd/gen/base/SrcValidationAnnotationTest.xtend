@@ -4,10 +4,10 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
@@ -15,7 +15,9 @@ import org.junit.runner.RunWith
 
 import static org.fest.assertions.Assertions.*
 
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddInvariantsExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -23,6 +25,9 @@ class SrcValidationAnnotationTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testCreateNoArgConstraint() {
@@ -35,9 +40,9 @@ class SrcValidationAnnotationTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(0)
-		val constraintCall = variable.invariants.instances.get(0)
-		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall)
+		val attr = valueObject.attributes.first
+		val constraintInstance = attr.invariants.nullSafe.first
+		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintInstance)
 
 		// TEST
 		val result = testee.toString
@@ -59,9 +64,9 @@ class SrcValidationAnnotationTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(1)
-		val constraintCall = variable.invariants.instances.get(0)
-		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall)
+		val attr = valueObject.attributes.get(1)
+		val constraintInstance = attr.invariants.nullSafe.get(0)
+		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintInstance)
 
 		// TEST
 		val result = testee.toString
@@ -83,9 +88,9 @@ class SrcValidationAnnotationTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val Variable variable = valueObject.variables.get(2)
-		val constraintCall = variable.invariants.instances.get(0)
-		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintCall)
+		val attr = valueObject.attributes.get(2)
+		val constraintInstance = attr.invariants.nullSafe.get(0)
+		val SrcValidationAnnotation testee = new SrcValidationAnnotation(ctx, constraintInstance)
 
 		// TEST
 		val result = testee.toString
@@ -97,7 +102,7 @@ class SrcValidationAnnotationTest {
 	}
 
 	private def DomainModel createModel() {
-		parser.parse(
+		val DomainModel model = parser.parse(
 			'''
 			context y {
 				
@@ -136,6 +141,8 @@ class SrcValidationAnnotationTest {
 			}
 			'''
 		)
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

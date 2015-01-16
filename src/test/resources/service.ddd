@@ -29,7 +29,7 @@ context x {
 		service ServiceB {
 			
 			/** Finds something. */
-			method find constraints AnyConstraint {
+			method find business-rules AnyConstraint {
 				
 				/** Key. */
 				Integer a

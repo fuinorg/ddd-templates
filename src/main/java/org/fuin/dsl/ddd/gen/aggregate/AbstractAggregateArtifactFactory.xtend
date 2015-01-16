@@ -99,8 +99,8 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 					this.id = id;
 				}
 				
-				«new SrcGetters(ctx, "protected final", aggregate.variables)»
-				«new SrcSetters(ctx, "protected final", aggregate.variables)»
+				«new SrcGetters(ctx, "protected final", aggregate.attributes)»
+				«new SrcSetters(ctx, "protected final", aggregate.attributes)»
 				«new SrcAbstractChildEntityLocatorMethods(ctx, aggregate)»
 				«new SrcAbstractHandleEventMethods(ctx, aggregate.allEvents)»
 				«new SrcServices(ctx, aggregate.services)»

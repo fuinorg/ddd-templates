@@ -1,7 +1,7 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
@@ -14,20 +14,20 @@ class SrcGetters implements CodeSnippet {
 
 	val CodeSnippetContext ctx
 	val String modifiers
-	val List<Variable> variables
+	val List<Attribute> attributes
 
-	new(CodeSnippetContext ctx, String modifiers, List<Variable> variables) {
+	new(CodeSnippetContext ctx, String modifiers, List<Attribute> attributes) {
 		this.ctx = ctx
 		this.modifiers = modifiers
-		this.variables = variables
-		for (Variable variable : variables) {
-			ctx.requiresReference(variable.type.uniqueName)
+		this.attributes = attributes
+		for (Attribute attribute : attributes) {
+			ctx.requiresReference(attribute.type.uniqueName)
 		}
 	}
 
 	override toString() {
 		'''	
-			«FOR v : variables»
+			«FOR v : attributes»
 				«new SrcGetter(ctx, modifiers, v).toString»
 				
 			«ENDFOR»			

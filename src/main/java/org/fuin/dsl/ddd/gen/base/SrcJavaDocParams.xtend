@@ -1,7 +1,7 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
 import org.fuin.objects4j.common.Nullable
 
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
@@ -12,24 +12,24 @@ import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
  */
 class SrcJavaDocParams {
 
-	val List<Variable> variables
+	val List<Parameter> parameters
 
 	/**
 	 * Constructor with mandatory data.
 	 * 
-	 * @param variables List of variables.
+	 * @param parameters List of parameters.
 	 */
-	new(@Nullable List<Variable> variables) {
-		this.variables = variables
+	new(@Nullable List<Parameter> parameters) {
+		this.parameters = parameters
 	}
 
 	override toString() {
-		if (variables.nullSafe.size == 0) {
+		if (parameters.nullSafe.size == 0) {
 			''''''
 		} else {
 			'''
 				«sp»*
-				«FOR v : variables»
+				«FOR v : parameters»
 					«new SrcJavaDocParam(v.name, v.superDoc)»
 				«ENDFOR»
 			'''

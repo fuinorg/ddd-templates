@@ -2,6 +2,7 @@ package org.fuin.dsl.ddd.gen.enumobject
 
 import java.util.ArrayList
 import java.util.List
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumInstance
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
@@ -20,7 +21,7 @@ class SrcStaticEnumCode implements CodeSnippet {
 
 	val CodeSnippetContext ctx
 	val String className
-	val List<Variable> variables
+	val List<Attribute> attributes
 	val Variable baseVar
 	val List<EnumInstance> instances
 	val ExternalType base
@@ -28,8 +29,8 @@ class SrcStaticEnumCode implements CodeSnippet {
 	new(CodeSnippetContext ctx, EnumObject enumObject) {
 		this.ctx = ctx
 		this.className = enumObject.name
-		this.variables = enumObject.variables
-		this.baseVar = variables.nullSafe.first
+		this.attributes = enumObject.attributes
+		this.baseVar = attributes.nullSafe.first
 		this.instances = enumObject.instances
 		this.base = enumObject.base
 		if (base != null) {

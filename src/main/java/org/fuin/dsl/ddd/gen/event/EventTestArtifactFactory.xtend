@@ -16,6 +16,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEventExtensions.*
@@ -87,7 +88,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			ctx.requiresReference(event.aggregate.idType.uniqueName)
 			ctx.requiresReference(event.context.name.toFirstUpper + "EntityIdFactory")
 		}
-		for (v : event.variables.nullSafe) {
+		for (v : event.attributes.nullSafe) {
 			ctx.requiresReference(v.type.uniqueName)
 			if (v.multiplicity != null) {
 				ctx.requiresImport("java.util.List")
@@ -132,10 +133,10 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 				private «event.name» createTestee() {
 					// TODO Set test values
 					final «event.aggregate.idType.name» entityId = new «event.aggregate.idType.name»(«event.aggregate.idType.firstExample.str»);
-					«FOR v : event.variables.nullSafe»
+					«FOR v : event.attributes.nullSafe»
 						final «v.type(ctx)» «v.name» = «v.firstExample.str»;
 					«ENDFOR»
-					return new «new SrcInvokeMethod(ctx, event.name, union("new EntityIdPath(entityId)", event.variables.varNames))»
+					return new «new SrcInvokeMethod(ctx, event.name, union("new EntityIdPath(entityId)", event.attributes.asNames))»
 				}
 			
 				protected final XmlAdapter<?, ?>[] createAdapter() {
@@ -186,13 +187,13 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 				}
 			
 				private «event.name» createTestee() {
-					«IF event.variables.nullSafe.size > 0»
+					«IF event.attributes.nullSafe.size > 0»
 						// TODO Set test values
-						«FOR v : event.variables.nullSafe»
+						«FOR v : event.attributes.nullSafe»
 							final «v.type(ctx)» «v.name» = «v.firstExample.str»;
 						«ENDFOR»
 					«ENDIF»
-					return new «new SrcInvokeMethod(ctx, event.name, event.variables.varNames)»
+					return new «new SrcInvokeMethod(ctx, event.name, event.attributes.asNames)»
 				}
 			
 				protected final XmlAdapter<?, ?>[] createAdapter() {

@@ -4,6 +4,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
@@ -23,6 +24,9 @@ class SrcHandleEventMethodTest {
 	@Inject
 	private ParseHelper<DomainModel> parser
 
+	@Inject 
+	private ValidationTestHelper validationTester
+
 	@Test
 	def void testCreate() {
 
@@ -30,7 +34,7 @@ class SrcHandleEventMethodTest {
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("x.a.DidSomethingEvent", "a.b.c.DidSomethingEvent")
 		val ctx = new SimpleCodeSnippetContext(refReg)
-		val event = createModel().find(Event, "DidSomethingEvent")
+		val event = model().find(Event, "DidSomethingEvent")
 		val SrcHandleEventMethod testee = new SrcHandleEventMethod(ctx, event)
 
 		// TEST
@@ -55,8 +59,10 @@ class SrcHandleEventMethodTest {
 
 	}
 
-	private def DomainModel createModel() {
-		return parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+	private def model() {
+		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

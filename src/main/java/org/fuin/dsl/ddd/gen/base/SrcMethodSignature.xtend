@@ -32,7 +32,7 @@ class SrcMethodSignature implements CodeSnippet {
 	 * Constructor with all mandatory data.
 	 * 
 	 * @param ctx Context.
-	 * @param methodData Method data.
+	 * @param methodData data.
 	 */
 	new(CodeSnippetContext ctx, MethodData methodData) {
 		this.ctx = ctx
@@ -51,7 +51,7 @@ class SrcMethodSignature implements CodeSnippet {
 				«annotation»
 			«ENDFOR»
 			«methodData.modifiers» «IF methodData.makeAbstract»abstract «ENDIF»«returnType» «methodData.name»(«new SrcParamsDecl(ctx,
-				methodData.variables)»)«new SrcThrowsExceptions(ctx, methodData.exceptions)»'''
+				methodData.parameters)»)«new SrcThrowsExceptions(ctx, methodData.exceptions)»'''
 	}
 
 }

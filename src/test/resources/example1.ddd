@@ -29,7 +29,7 @@ context x {
 		aggregate MyAggregate identifier MyAggregateId {
 			
 			/** Does some cool things. */
-			method doSomething constraints AnyConstraint fires DidSomethingEvent, SomethingHappenedEvent {
+			method doSomething business-rules AnyConstraint fires DidSomethingEvent, SomethingHappenedEvent {
 				
 				MyAggregateId id
 				nullable MyValueObject vo
@@ -55,7 +55,7 @@ context x {
 		entity MyEntity identifier MyEntityId root MyAggregate {
 			
 			/** Creates the entity. */
-			constructor create constraints AnyConstraint {
+			constructor create business-rules AnyConstraint {
 				
 				MyEntityId id
 				

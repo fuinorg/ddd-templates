@@ -3,12 +3,12 @@ package org.fuin.dsl.ddd.gen.entity
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.ConstructorData
-import org.fuin.dsl.ddd.gen.base.ConstructorParam
+import org.fuin.dsl.ddd.gen.base.ConstructorParameter
 import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcAll
@@ -59,7 +59,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 		ctx.addImports
 		ctx.addReferences(entity)
 
-		val idVar = eINSTANCE.createVariable(null, entity.idType, "id", false)
+		val idVar = eINSTANCE.createAttribute(null, entity.idType, "id", false)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, entity, pkg, className, idVar).toString().getBytes("UTF-8"));
@@ -76,7 +76,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 		ctx.requiresReference(entity.root.idType.uniqueName)
 	}
 
-	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className, Variable idVar) {
+	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className, Attribute idVar) {
 		val String src = ''' 
 			«new SrcJavaDocType(entity)»
 			public abstract class «className» extends AbstractEntity<«entity.root.idType.name», «entity.root.name», «entity.
@@ -96,8 +96,8 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 					return id;
 				}
 			
-				«new SrcGetters(ctx, "protected final", entity.variables)»
-				«new SrcSetters(ctx, "protected final", entity.variables)»
+				«new SrcGetters(ctx, "protected final", entity.attributes)»
+				«new SrcSetters(ctx, "protected final", entity.attributes)»
 				«new SrcAbstractChildEntityLocatorMethods(ctx, entity)»
 				«new SrcAbstractHandleEventMethods(ctx, entity.allEvents)»
 				«new SrcServices(ctx, entity.services)»
@@ -110,10 +110,10 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
 	def constructorData(Entity entity, String className) {
 		val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
-		val rootParam = new ConstructorParam(eINSTANCE.createVariable("The root aggregate of this entity.", entity.root, "rootAggregate",	false), true)
-		val idParam = new ConstructorParam(eINSTANCE.createVariable("Unique entity identifier.", entity.idType, "id", false), false)
+		val rootParam = new ConstructorParameter(eINSTANCE.createParameter("The root aggregate of this entity.", entity.root, "rootAggregate", false), true)
+		val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idType, "id", false))
 		if (entity.constructors == null || entity.constructors.size == 0) {
-			val List<ConstructorParam> parameters = new ArrayList<ConstructorParam>()
+			val List<ConstructorParameter> parameters = new ArrayList<ConstructorParameter>()
 			parameters.add(rootParam)
 			parameters.add(idParam)
 			val ConstructorData cd = new ConstructorData("/** Constructor with mandatory data. */", null, "protected", className, parameters, null)

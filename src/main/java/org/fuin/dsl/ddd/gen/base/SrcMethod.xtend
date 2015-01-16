@@ -26,7 +26,7 @@ class SrcMethod implements CodeSnippet {
 	new(CodeSnippetContext ctx, List<String> annotations, String modifiers, boolean makeAbstract, Method method) {
 		this(ctx,
 			new MethodData(method.doc, annotations, modifiers, makeAbstract, method.returnType,
-				method.name, method.variables, method.allExceptions))
+				method.name, method.parameters, method.allExceptions))
 	}
 
 	/**

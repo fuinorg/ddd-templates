@@ -1,10 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
+import java.util.Collections
 import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
 
 import static extension org.fuin.dsl.ddd.extensions.DddConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
@@ -13,6 +14,8 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
  * Data required to create a constructor. 
  */
 class ConstructorData extends AbstractMethodData {
+
+	val List<ConstructorParameter> parameters
 
 	/**
 	 * Constructor with constructor.
@@ -31,10 +34,14 @@ class ConstructorData extends AbstractMethodData {
 	 * @param modifiers Modifiers.
 	 * @param typeName Name of the type the constructor belongs to.
 	 * @param constructor Constructor.
-	 * @param passToSuper Defines if all variables should be passed to the super call
+	 * @param passToSuper Defines if all parameters should be passed to the super call
 	 */
 	new(String modifiers, String typeName, Constructor constructor, boolean passToSuper) {
-		super(constructor.doc, modifiers, typeName, constructor.parameters(passToSuper).asVariables, constructor.allExceptions)
+		super(constructor.doc, modifiers, typeName, constructor.allExceptions)
+		this.parameters = new ArrayList<ConstructorParameter>()
+		if (constructor.parameters != null) {
+			this.parameters.addAll(constructor.asWrappedParameters(passToSuper))		
+		}
 	}
 	
 	/**
@@ -47,8 +54,12 @@ class ConstructorData extends AbstractMethodData {
 	 * @param parameters Parameters for the constructor.
 	 * @param exceptions Exceptions for the constructor.
 	 */
-	new(String doc, String modifiers, String typeName, List<ConstructorParam> parameters, List<Exception> exceptions) {
-		super(doc, modifiers, typeName, parameters.asVariables, exceptions)
+	new(String doc, String modifiers, String typeName, List<ConstructorParameter> parameters, List<Exception> exceptions) {
+		super(doc, modifiers, typeName, exceptions)
+		this.parameters = new ArrayList<ConstructorParameter>()
+		if (parameters != null) {
+			this.parameters.addAll(parameters)		
+		}
 	}
 
 	/**
@@ -61,57 +72,46 @@ class ConstructorData extends AbstractMethodData {
 	 * @param parameters Parameters for the constructor.
 	 * @param exceptions Exceptions for the constructor.
 	 */
-	new(String doc, List<String> annotations, String modifiers, String typeName, List<ConstructorParam> parameters,
+	new(String doc, List<String> annotations, String modifiers, String typeName, List<ConstructorParameter> parameters,
 		List<Exception> exceptions) {
-		super(doc, annotations, modifiers, typeName, parameters.asVariables, exceptions)
-	}
-
-	private static def List<Variable> asVariables(List<ConstructorParam> params) {
-
-		// Dirty cast...
-		((params as List<?>) as List<Variable>)
+		super(doc, annotations, modifiers, typeName, exceptions)
+		this.parameters = new ArrayList<ConstructorParameter>()
+		if (parameters != null) {
+			this.parameters.addAll(parameters)
+		}
 	}
 
 	/**
-	 * Returns the parameter list.
+	 * Returns all parameters to pass into the super call.
 	 * 
-	 * @return List of parameters. 
+	 * @return List of parameters.
 	 */
-	def List<ConstructorParam> getParameters() {
-		return (variables as List<?>) as List<ConstructorParam>
-	}
-	
-	/**
-	 * Returns all variables to pass into the super call.
-	 * 
-	 * @return List of variables.
-	 */
-	def List<Variable> getSuperCallVariables() {
+	def List<Parameter> getSuperCallParameters() {
 		if (parameters == null) {
 			return null;
 		}
-		val List<Variable> list = new ArrayList<Variable>()
+		val List<Parameter> list = new ArrayList<Parameter>()
 		for (param : parameters) {
 			if (param.isPassToSuper) {
-				list.add(param)
+				list.add(param.delegate)
 			}
 		}
 		return list
 	}
 	
 	/**
-	 * Returns all variables to assign to an instance variable.
+	 * Returns all parameters to assign to an instance parameter.
 	 * 
-	 * @return List of variables.
+	 * @return List of parameters.
 	 */
-	def List<Variable> getAssignmentVariables() {
+	def List<Parameter> getAssignmentParameters() {
 		if (parameters == null) {
 			return null;
 		}
-		val List<Variable> list = new ArrayList<Variable>()
+		val List<Parameter> list = new ArrayList<Parameter>()
 		for (param : parameters) {
 			if (!param.isPassToSuper) {
-				list.add(param)
+				list.add(param.delegate)
 			}
 		}
 		return list
@@ -120,19 +120,42 @@ class ConstructorData extends AbstractMethodData {
 	/**
 	 * Inserts a new parameter at the first position.
 	 * 
-	 * @param param Parameter to add.
+	 * @param parameter Parameter to add.
 	 */
-	def prepend(ConstructorParam param) {
-		prependVariable(param)
+	public final def prepend(ConstructorParameter parameter) {
+		parameters.add(0, parameter)
 	}
 
 	/**
 	 * Appends a new parameter at the last position.
 	 * 
-	 * @param param Parameter to add.
+	 * @param parameter Parameter to add.
 	 */
-	def append(ConstructorParam param) {
-		appendVariable(param)
+	public final def append(ConstructorParameter parameter) {
+		parameters.add(parameter)
 	}
 
+	
+	override def List<Parameter> getParameters() {
+		return Collections.unmodifiableList(parameters.asParameters)
+	}
+
+	/**
+	 * Creates a new parameter list from the wrapped parameters.
+	 * 
+	 * @param parameters List of wrapped parameters.
+	 * 
+	 * @return Parameter list
+	 */
+	private def static List<Parameter> asParameters(List<ConstructorParameter> parameters) {
+		if (parameters == null) {
+			return null
+		}
+		val List<Parameter> list = new ArrayList<Parameter>()
+		for (v : parameters) {
+			list.add(v.delegate)
+		}
+		return list
+	}
+	
 }

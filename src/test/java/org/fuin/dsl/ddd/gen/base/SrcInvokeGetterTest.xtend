@@ -4,6 +4,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
@@ -23,6 +24,9 @@ class SrcInvokeGetterTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testNullObjName() {
@@ -70,6 +74,7 @@ class SrcInvokeGetterTest {
 				}
 			'''
 		)
+		validationTester.assertNoIssues(model)
 		val ValueObject valueObject = model.contexts.get(0).namespaces.get(0).elements.get(0) as ValueObject
 		val Variable variable = DomainDrivenDesignDslFactory.eINSTANCE.createVariable()
 		variable.setName(varName)

@@ -4,10 +4,10 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
@@ -24,6 +24,9 @@ class SrcXmlAttributeOrElementTest {
 	@Inject
 	private ParseHelper<DomainModel> parser
 
+	@Inject 
+	private ValidationTestHelper validationTester
+
 	@Test
 	def void testCreateAggregateId() {
 
@@ -33,7 +36,7 @@ class SrcXmlAttributeOrElementTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
-		val Variable idVar = aggregate.variables.get(0)
+		val idVar = aggregate.attributes.get(0)
 		val SrcXmlAttributeOrElement testeeId = new SrcXmlAttributeOrElement(ctx, idVar)
 
 		// TEST
@@ -55,7 +58,7 @@ class SrcXmlAttributeOrElementTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
-		val Variable voVar = aggregate.variables.get(1)
+		val voVar = aggregate.attributes.get(1)
 		val SrcXmlAttributeOrElement testeeVo = new SrcXmlAttributeOrElement(ctx, voVar)
 
 		// TEST
@@ -68,7 +71,7 @@ class SrcXmlAttributeOrElementTest {
 	}
 
 	private def DomainModel createModel() {
-		parser.parse(
+		val DomainModel model =parser.parse(
 			'''
 				context x {
 					
@@ -94,6 +97,8 @@ class SrcXmlAttributeOrElementTest {
 				}
 			'''
 		)
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

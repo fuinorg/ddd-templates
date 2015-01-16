@@ -1,13 +1,13 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 
 import static org.fest.assertions.Assertions.*
+import static org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory.eINSTANCE
 
 import static extension org.fuin.dsl.ddd.extensions.DddDslFactoryExtensions.*
 
@@ -19,12 +19,12 @@ class SrcParamsAssignmentTest {
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
 		val codeSnippetContext = new SimpleCodeSnippetContext(refReg)
-		val vars = new ArrayList<Variable>()
-		vars.add(DomainDrivenDesignDslFactory.eINSTANCE.createVariable("a"))
-		vars.add(DomainDrivenDesignDslFactory.eINSTANCE.createVariable("b"))
-		vars.add(DomainDrivenDesignDslFactory.eINSTANCE.createVariable("c", true))
+		val params = new ArrayList<Parameter>()
+		params.add(eINSTANCE.createParameter("a"))
+		params.add(eINSTANCE.createParameter("b"))
+		params.add(eINSTANCE.createParameter("c", true))
 
-		val SrcParamsAssignment testee = new SrcParamsAssignment(codeSnippetContext, vars)
+		val SrcParamsAssignment testee = new SrcParamsAssignment(codeSnippetContext, params)
 
 		// TEST
 		val result = testee.toString

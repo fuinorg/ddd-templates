@@ -20,6 +20,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEventExtensions.*
@@ -119,14 +120,14 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				 * «event.doc.text»
 				 *
 				 * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
-				«FOR v : event.variables»
+				«FOR v : event.attributes»
 					* @param «v.name» «v.superDoc» 
 				«ENDFOR»
 				*/
-				public «event.name»(@NotNull final EntityIdPath entityIdPath«IF event.variables.nullSafe.size > 0», «new SrcParamsDecl(
-				ctx, event.variables)»«ENDIF») {
+				public «event.name»(@NotNull final EntityIdPath entityIdPath«IF event.attributes.nullSafe.size > 0», «new SrcParamsDecl(
+				ctx, event.attributes.asParameters)»«ENDIF») {
 					super(entityIdPath);
-					«new SrcParamsAssignment(ctx, event.variables)»
+					«new SrcParamsAssignment(ctx, event.attributes.asParameters)»
 				}
 			
 				@Override
@@ -134,13 +135,13 @@ class EventArtifactFactory extends AbstractSource<Event> {
 					return EVENT_TYPE;
 				}
 			
-				«new SrcGetters(ctx, "public final", event.variables)»
+				«new SrcGetters(ctx, "public final", event.attributes)»
 			
 				@Override
 				public final String toString() {
 					return KeyValue.replace("«event.message»",
 						new KeyValue("#entityIdPath", getEntityIdPath())
-						«FOR v : event.variables»
+						«FOR v : event.attributes»
 							, new KeyValue("«v.name»", «v.name»)
 						«ENDFOR»
 					);
@@ -166,7 +167,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				
 				«new SrcVarsDecl(ctx, "private", true, event)»
 			
-				«IF event.variables.nullSafe.size > 0»
+				«IF event.attributes.nullSafe.size > 0»
 					/**
 					 * Protected default constructor for deserialization.
 					 */
@@ -178,13 +179,13 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				/**
 				 * «event.doc.text»
 				 *
-				«FOR v : event.variables»
+				«FOR v : event.attributes»
 					* @param «v.name» «v.superDoc» 
 				«ENDFOR»
 				*/
-				public «event.name»(«new SrcParamsDecl(ctx, event.variables)») {
+				public «event.name»(«new SrcParamsDecl(ctx, event.attributes.asParameters)») {
 					super();
-					«new SrcParamsAssignment(ctx, event.variables)»
+					«new SrcParamsAssignment(ctx, event.attributes.asParameters)»
 				}
 			
 				@Override
@@ -192,15 +193,15 @@ class EventArtifactFactory extends AbstractSource<Event> {
 					return EVENT_TYPE;
 				}
 			
-				«new SrcGetters(ctx, "public final", event.variables)»
+				«new SrcGetters(ctx, "public final", event.attributes)»
 			
 				@Override
 				public final String toString() {
-					«IF event.variables.nullSafe.size == 0»
+					«IF event.attributes.nullSafe.size == 0»
 						return "«event.message»";
 					«ELSE»
 						return KeyValue.replace("«event.message»"
-						«FOR v : event.variables SEPARATOR ','»
+						«FOR v : event.attributes SEPARATOR ','»
 							new KeyValue("«v.name»", «v.name»)
 						«ENDFOR»
 						);

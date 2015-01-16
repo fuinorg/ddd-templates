@@ -54,7 +54,7 @@ context x {
 			Integer b
 
 			/** Creates the entity. */			
-			constructor create constraints AnyConstraint fires EntityCCreatedEvent {
+			constructor create business-rules AnyConstraint fires EntityCCreatedEvent {
 
 				/** Variable A. */
 				String a

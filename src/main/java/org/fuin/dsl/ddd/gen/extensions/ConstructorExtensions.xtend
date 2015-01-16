@@ -2,9 +2,10 @@ package org.fuin.dsl.ddd.gen.extensions
 
 import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
-import org.fuin.dsl.ddd.gen.base.ConstructorParam
+import org.fuin.dsl.ddd.gen.base.ConstructorParameter
 
-import static extension org.fuin.dsl.ddd.gen.extensions.CollectionExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.ParameterExtensions.*
 
 /**
  * Provides extension methods for Constructor.
@@ -19,8 +20,8 @@ class ConstructorExtensions {
 	 * 
 	 * @return Constructor parameter list
 	 */
-	def static List<ConstructorParam> parameters(Constructor constructor, boolean passToSuper) {
-		return constructor.variables.parameters(passToSuper)
+	def static List<ConstructorParameter> asWrappedParameters(Constructor constructor, boolean passToSuper) {
+		return constructor.parameters.nullSafe.asWrappedParameters(passToSuper)
 	}
 
 }

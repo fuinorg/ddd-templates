@@ -95,12 +95,12 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 				/** Payload with which the the constraint declaration is associated. */
 				Class<? extends Payload>[] payload() default {};
 			
-				«IF c.variables.size == 1»
-					«c.variables.last.doc»
-					«c.variables.last.asJavaPrimitive» value();
+				«IF c.attributes.size == 1»
+					«c.attributes.last.doc»
+					«c.attributes.last.asJavaPrimitive» value();
 					
-				«ELSEIF c.variables.size > 1»
-					«FOR v:c.variables»	
+				«ELSEIF c.attributes.size > 1»
+					«FOR v : c.attributes»	
 						«v.doc»
 						«v.asJavaPrimitive» «v.name»();
 						

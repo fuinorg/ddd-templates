@@ -4,6 +4,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
@@ -22,6 +23,9 @@ class SrcVoBaseMethodsStringTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testString() {
@@ -83,7 +87,7 @@ class SrcVoBaseMethodsStringTest {
 	}
 
 	private def DomainModel createModel() {
-		parser.parse(
+		val DomainModel model = parser.parse(
 			'''
 				context y {
 				
@@ -104,6 +108,8 @@ class SrcVoBaseMethodsStringTest {
 				}
 			'''
 		)
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

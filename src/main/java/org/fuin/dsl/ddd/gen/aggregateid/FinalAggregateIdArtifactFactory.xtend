@@ -79,8 +79,8 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false, true)»
 				@Override
 				public final String asString() {
-					«IF (id.variables.nullSafe.size == 1)»
-						return "" + get«id.variables.first.name.toFirstUpper»();
+					«IF (id.attributes.nullSafe.size == 1)»
+						return "" + get«id.attributes.first.name.toFirstUpper»();
 					«ELSE»
 						// TODO Implement!
 						return null;

@@ -4,6 +4,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
@@ -23,6 +24,9 @@ class SrcConstructorSignatureTest {
 	@Inject
 	private ParseHelper<DomainModel> parser
 
+	@Inject 
+	private ValidationTestHelper validationTester
+
 	@Test
 	def void testCreate() {
 
@@ -32,7 +36,7 @@ class SrcConstructorSignatureTest {
 		refReg.putReference("x.a.MyValueObject", "a.b.c.MyValueObject")
 		refReg.putReference("x.a.ConstraintViolatedException", "a.b.c.ConstraintViolatedException")
 		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Entity entity = createModel().find(Entity, "MyEntity")
+		val Entity entity = model().find(Entity, "MyEntity")
 		val constructor = entity.constructors.get(0)
 		val SrcConstructorSignature testee = new SrcConstructorSignature(ctx, "public",
 			entity.getName(), constructor)
@@ -48,8 +52,10 @@ class SrcConstructorSignatureTest {
 
 	}
 
-	private def DomainModel createModel() {
-		return parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+	private def model() {
+		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+		validationTester.assertNoIssues(model)
+		return model
 	}
 
 }

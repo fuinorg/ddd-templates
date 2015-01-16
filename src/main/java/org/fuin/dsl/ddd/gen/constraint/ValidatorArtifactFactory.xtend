@@ -74,7 +74,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 	def create(SimpleCodeSnippetContext ctx, Constraint c, String pkg, String className) {
 
 		val targetName = c.target.name
-		val variables = c.target.variables
+		val variables = c.target.attributes
 
 		val String src = ''' 
 			/** «c.doc.text» */

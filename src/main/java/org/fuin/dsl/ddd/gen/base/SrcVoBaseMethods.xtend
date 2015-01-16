@@ -39,8 +39,8 @@ class SrcVoBaseMethods implements CodeSnippet {
 		«IF vo.baseType != null»
 		@Override
 		public final «vo.baseType.simpleName(ctx)» asBaseType() {
-			«IF vo.variables.nullSafe.size == 1»
-			return get«vo.variables.first.name.toFirstUpper»();
+			«IF vo.attributes.nullSafe.size == 1»
+			return get«vo.attributes.first.name.toFirstUpper»();
 			«ELSE»
 			// TODO Implement!
 			return null;

@@ -5,7 +5,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
@@ -21,7 +21,7 @@ class SrcJavaDocMethod implements CodeSnippet {
 	val CodeSnippetContext ctx
 	val String doc
 	val ReturnType returnType
-	val List<Variable> variables
+	val List<Parameter> parameters
 	val List<Exception> exceptions
 
 	/**
@@ -31,7 +31,7 @@ class SrcJavaDocMethod implements CodeSnippet {
 	 * @param constructor Constructor.
 	 */
 	new(CodeSnippetContext ctx, Constructor constructor) {
-		this(ctx, constructor.doc, null, constructor.variables, constructor.allExceptions)
+		this(ctx, constructor.doc, null, constructor.parameters, constructor.allExceptions)
 	}
 
 	/**
@@ -41,7 +41,7 @@ class SrcJavaDocMethod implements CodeSnippet {
 	 * @param method method.
 	 */
 	new(CodeSnippetContext ctx, Method method) {
-		this(ctx, method.doc, method.returnType, method.allVariables, method.allExceptions)
+		this(ctx, method.doc, method.returnType, method.allParameters, method.allExceptions)
 	}
 
 	/**
@@ -51,7 +51,7 @@ class SrcJavaDocMethod implements CodeSnippet {
 	 * @param method Method data.
 	 */
 	new(CodeSnippetContext ctx, ConstructorData constructor) {
-		this(ctx, constructor.doc, null, constructor.variables, constructor.exceptions)
+		this(ctx, constructor.doc, null, constructor.parameters, constructor.exceptions)
 	}
 
 	/**
@@ -61,7 +61,7 @@ class SrcJavaDocMethod implements CodeSnippet {
 	 * @param method Method data.
 	 */
 	new(CodeSnippetContext ctx, MethodData method) {
-		this(ctx, method.doc, method.returnType, method.variables, method.exceptions)
+		this(ctx, method.doc, method.returnType, method.parameters, method.exceptions)
 	}
 
 	/**
@@ -70,14 +70,14 @@ class SrcJavaDocMethod implements CodeSnippet {
 	 * @param ctx Context.
 	 * @param doc Original doc.
 	 * @param returnType Return type.
-	 * @param variables Variables.
+	 * @param parameters Parameters.
 	 * @param exceptions Exceptions.
 	 */
-	new(CodeSnippetContext ctx, String doc, ReturnType returnType, List<Variable> variables, List<Exception> exceptions) {
+	new(CodeSnippetContext ctx, String doc, ReturnType returnType, List<Parameter> parameters, List<Exception> exceptions) {
 		this.ctx = ctx
 		this.doc = doc
 		this.returnType = returnType
-		this.variables = variables
+		this.parameters = parameters
 		this.exceptions = exceptions
 	}
 
@@ -92,7 +92,7 @@ class SrcJavaDocMethod implements CodeSnippet {
 		'''
 			/**
 			 * «doc.text»
-			«new SrcJavaDocParams(variables)»
+			«new SrcJavaDocParams(parameters)»
 			«new SrcJavaDocReturn(returnType)»
 			«new SrcJavaDocExceptions(exceptions)»
 			 */

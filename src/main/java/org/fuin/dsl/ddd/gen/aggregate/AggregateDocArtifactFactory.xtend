@@ -33,7 +33,7 @@ class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
 			<body>
 				«pkg».«aggregate.name»
 				<table border="1">
-				«FOR variable : aggregate.variables»
+				«FOR variable : aggregate.attributes»
 					<tr><td>«variable.name»</td><td>«variable.type.name»</td><td>«variable.doc.text»</td></tr>
 				«ENDFOR»
 				</table>

@@ -1,7 +1,7 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
@@ -11,24 +11,24 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 class SrcParamsDecl implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val List<Variable> variables
+	val List<Parameter> parameters
 
 	/**
 	 * Constructor with all mandatory data.
 	 * 
 	 * @param ctx Context.
-	 * @param variables Variables.
+	 * @param parameters Parameters.
 	 */
-	new(CodeSnippetContext ctx, List<Variable> variables) {
+	new(CodeSnippetContext ctx, List<Parameter> parameters) {
 		this.ctx = ctx
-		this.variables = variables
+		this.parameters = parameters
 	}
 
 	override toString() {
-		if (variables == null || variables.size == 0) {
+		if (parameters == null || parameters.size == 0) {
 			return "";
 		}
-		'''«FOR variable : variables SEPARATOR ', '»«new SrcParamDecl(ctx, variable)»«ENDFOR»'''
+		'''«FOR parameter : parameters SEPARATOR ', '»«new SrcParamDecl(ctx, parameter)»«ENDFOR»'''
 	}
 
 }

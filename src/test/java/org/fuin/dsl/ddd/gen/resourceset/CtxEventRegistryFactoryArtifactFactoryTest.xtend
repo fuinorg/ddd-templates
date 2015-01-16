@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.gen.base.AbstractSource
@@ -27,6 +28,9 @@ class CtxEventRegistryArtifactFactoryTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testCreate() {
@@ -66,7 +70,8 @@ class CtxEventRegistryArtifactFactoryTest {
 
 	private def model() {
 		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/event.ddd")))
-		model.eResource.resourceSet
+		validationTester.assertNoIssues(model)
+		return model.eResource.resourceSet
 	}
 
 }

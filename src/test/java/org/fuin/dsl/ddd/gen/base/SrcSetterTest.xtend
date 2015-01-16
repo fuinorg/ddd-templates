@@ -4,17 +4,19 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
+import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.fest.assertions.Assertions.*
-import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
+
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -22,6 +24,9 @@ class SrcSetterTest {
 
 	@Inject
 	private ParseHelper<DomainModel> parser
+
+	@Inject 
+	private ValidationTestHelper validationTester
 
 	@Test
 	def void testCreateNoMultiplicity() {
@@ -109,8 +114,7 @@ class SrcSetterTest {
 			'''
 		)
 		val ValueObject valueObject = model.contexts.get(0).namespaces.get(0).elements.get(0) as ValueObject
-		val Variable variable = valueObject.variables.get(0)
-		return new SrcSetter(codeSnippetContext, "public", variable)
+		return new SrcSetter(codeSnippetContext, "public", valueObject.attributes.first)
 	}
 
 	private def SrcSetter createTesteeWithMultiplicity(CodeSnippetContext codeSnippetContext) {
@@ -138,9 +142,9 @@ class SrcSetterTest {
 				}
 			'''
 		)
+		validationTester.assertNoIssues(model)
 		val ValueObject valueObject = model.contexts.get(0).namespaces.get(0).elements.get(0) as ValueObject
-		val Variable variable = valueObject.variables.get(0)
-		return new SrcSetter(codeSnippetContext, "public", variable)
+		return new SrcSetter(codeSnippetContext, "public", valueObject.attributes.first)
 	}
 
 }

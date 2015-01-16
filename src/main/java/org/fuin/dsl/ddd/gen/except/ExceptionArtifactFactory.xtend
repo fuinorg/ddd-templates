@@ -18,10 +18,10 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
@@ -61,7 +61,7 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 	}
 
 	def addReferences(CodeSnippetContext ctx, Exception ex) {
-		for (v : ex.variables) {
+		for (v : ex.attributes) {
 			ctx.requiresReference(v.type.uniqueName)
 		}
 	}
@@ -76,13 +76,13 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 				private static final long serialVersionUID = 1000L;
 			
 				«new SrcVarsDecl(ctx, "private", false, ex)»
-				«new SrcJavaDocMethod(ctx, "Constructs a new instance of the exception.", null, ex.variables, null)»
-				public «ex.name»(«new SrcParamsDecl(ctx, ex.variables)») {
-					super(«IF ex.cid > 0»«ex.cid», «ENDIF»«new SrcKeyValueReplace(ctx, ex.message, ex.variables.varNames)»);
-					«new SrcParamsAssignment(ctx, ex.variables)»
+				«new SrcJavaDocMethod(ctx, "Constructs a new instance of the exception.", null, ex.attributes.asParameters, null)»
+				public «ex.name»(«new SrcParamsDecl(ctx, ex.attributes.asParameters)») {
+					super(«IF ex.cid > 0»«ex.cid», «ENDIF»«new SrcKeyValueReplace(ctx, ex.message, ex.attributes.asNames)»);
+					«new SrcParamsAssignment(ctx, ex.attributes.asParameters)»
 				}
 			
-				«new SrcGetters(ctx, "public final", ex.variables)»
+				«new SrcGetters(ctx, "public final", ex.attributes)»
 			}
 		'''
 
