@@ -70,8 +70,8 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 	}
 
 	def String replaceValidatedValue(String msg) {
-		var String newMsg = msg.replace("${vv_", "${validatedValue.");
-		return newMsg.replace("${vv}", "${validatedValue}");
+		var String newMsg = msg.replace("${input.", "${validatedValue.");
+		return newMsg.replace("${input}", "${validatedValue}");
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Constraint c, String pkg, String className) {

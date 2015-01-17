@@ -57,25 +57,25 @@ context x {
 		
 		/** Constraint A - Value object target - No exception - No variables */
 		constraint ConstraintA input ValueObjectA {
-			message "A is not allowed: ${vv_a}"
+			message "A is not allowed: ${input.a}"
 		}
 
 		/** Constraint B - Value object target - No exception - With variables */
 		constraint ConstraintB input ValueObjectB {
 			Integer a
-			message "B is not allowed: ${a}: ${vv_a} - ${vv_b}"
+			message "B is not allowed: ${a}: ${input.a} - ${input.b}"
 		}
 		
 		/** Constraint C - Value object target - With exception - No variables */
 		constraint ConstraintC input ValueObjectC exception CException {
-			message "C is not allowed: ${vv_a} - ${vv_b} - ${vv_c}"
+			message "C is not allowed: ${input.a} - ${input.b} - ${input.c}"
 		}
 
 		/** Constraint D - Value object target - With exception - With variables */
 		constraint ConstraintD input ValueObjectD exception DException {
 			Integer a
 			String b
-			message "D is not allowed ${a} '${b}': ${vv_a} - ${vv_b} - ${vv_c} - ${vv_d}"
+			message "D is not allowed ${a} '${b}': ${input.a} - ${input.b} - ${input.c} - ${input.d}"
 		}
 		
 		/** Constraint E - External type target - No exception - No variables */
@@ -87,19 +87,19 @@ context x {
 		constraint ConstraintF input String {
 			Integer a
 			String b
-			message "F is not allowed: ${a} '${b}': ${vv}"
+			message "F is not allowed: ${a} '${b}': ${input}"
 		}
 		
 		/** Constraint G - External type target - With exception - No variables */
 		constraint ConstraintG input String exception GException {
-			message "G is not allowed: ${vv}"
+			message "G is not allowed: ${input}"
 		}
 
 		/** Constraint H - External type target - With exception - With variables */
 		constraint ConstraintH input String exception HException {
 			Integer a
 			String b
-			message "H is not allowed: ${vv}"
+			message "H is not allowed: ${input}"
 		}
 		
 	}
