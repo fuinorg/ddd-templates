@@ -24,7 +24,7 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 	}
 
 	override create(Constraint constraint, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (constraint.target == null) {
+		if (constraint.input == null) {
 			return null;
 		}
 
