@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.constraint
 
 import java.util.Map
+import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintTarget
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
@@ -13,13 +13,10 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.gen.base.Utils.*
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddConstraintTargetExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddTypeExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
 
 class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 
@@ -130,20 +127,6 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 
 		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
-
-	/**
-	 * Returns the unique name of the constraint target.
-	 * 
-	 * @param target Target to return a unique name for.
-	 * 
-	 * @return Unique name in the context/namespace.
-	 */
-	def String uniqueName(ConstraintTarget target) {
-		if (target == null) {
-			throw new IllegalArgumentException("argument 'target' cannot be null")
-		}
-		return separated(".", target.context.name, target.namespace.name, target.name)
 	}
 
 }
