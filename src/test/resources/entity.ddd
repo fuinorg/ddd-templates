@@ -11,6 +11,10 @@ context x {
 		
 		/** Checks something. */
 		constraint AnyConstraint exception AnyConstraintViolatedException {
+
+			/** Explain why it's strict. */
+			consistency strong
+
 			message "Any constraint"
 		}
 		
