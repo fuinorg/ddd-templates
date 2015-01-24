@@ -86,6 +86,10 @@ class SrcJavaDocMethodTest {
 				
 						/** Makes sure that this is compliant. */
 						constraint WhateverConstraint exception WhateverException {
+							
+							/** Explain why it's strict. */
+							consistency strong
+				
 							message "WhateverConstraint message"
 						}
 				
