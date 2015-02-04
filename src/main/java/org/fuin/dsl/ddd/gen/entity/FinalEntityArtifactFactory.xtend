@@ -25,6 +25,7 @@ import static org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactor
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddDslFactoryExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class FinalEntityArtifactFactory extends AbstractSource<Entity> {
@@ -84,7 +85,7 @@ class FinalEntityArtifactFactory extends AbstractSource<Entity> {
 	def constructorData(Entity entity, String className) {
 		val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
 		val rootParam = new ConstructorParameter(eINSTANCE.createParameter("The root aggregate of this entity.", entity.root, "rootAggregate", false), true)
-		val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idType, "id", false), true)
+		val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idTypeNullsafe, "id", false), true)
 		if (entity.constructors == null || entity.constructors.size == 0) {
 			val List<ConstructorParameter> parameters = new ArrayList<ConstructorParameter>()
 			parameters.add(rootParam)

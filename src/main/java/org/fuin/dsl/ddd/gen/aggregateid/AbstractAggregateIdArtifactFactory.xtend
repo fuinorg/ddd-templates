@@ -18,6 +18,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAggregateIdExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
@@ -73,7 +74,7 @@ class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 				«new SrcVarsDecl(ctx, "private", false, id)»
 				«new SrcConstructorsWithParamsAssignment(ctx, id, true)»
 				«new SrcGetters(ctx, "public final", id.attributes)»
-				«new SrcEntityIdTypeMethods(ctx, id.entity.name)»
+				«new SrcEntityIdTypeMethods(ctx, id.aggregateNullsafe.name)»
 			}
 		'''
 

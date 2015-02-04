@@ -14,6 +14,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
 
 class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements ArtifactFactory<Aggregate> {
 
@@ -56,7 +57,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
 		ctx.requiresReference(aggregate.uniqueName)
-		ctx.requiresReference(aggregate.idType.uniqueName)
+		ctx.requiresReference(aggregate.idTypeNullsafe.uniqueName)
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {
@@ -64,7 +65,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 			/**
 			 * Repository that is capable of storing a {@link «aggregate.name»}.
 			 */
-			public final class «aggregate.name»Repository extends EventStoreRepository<«aggregate.idType.name», «aggregate.name»> {
+			public final class «aggregate.name»Repository extends EventStoreRepository<«aggregate.idTypeNullsafe.name», «aggregate.name»> {
 			
 				/**
 				 * Constructor with event store to use as storage.
@@ -85,7 +86,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 			
 				@Override
 				public final EntityType getAggregateType() {
-					return «aggregate.idType.name».TYPE;
+					return «aggregate.idTypeNullsafe.name».TYPE;
 				}
 			
 				@Override
@@ -95,7 +96,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 			
 				@Override
 				protected final String getIdParamName() {
-					return "«aggregate.idType.name.toFirstLower»";
+					return "«aggregate.idTypeNullsafe.name.toFirstLower»";
 				}
 			
 			}

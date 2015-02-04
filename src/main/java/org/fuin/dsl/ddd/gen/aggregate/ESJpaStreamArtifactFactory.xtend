@@ -15,6 +15,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
 
 class ESJpaStreamArtifactFactory extends AbstractSource<Aggregate> implements ArtifactFactory<Aggregate> {
 
@@ -60,7 +61,7 @@ class ESJpaStreamArtifactFactory extends AbstractSource<Aggregate> implements Ar
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
-		ctx.requiresReference(aggregate.idType.uniqueName)
+		ctx.requiresReference(aggregate.idTypeNullsafe.uniqueName)
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {

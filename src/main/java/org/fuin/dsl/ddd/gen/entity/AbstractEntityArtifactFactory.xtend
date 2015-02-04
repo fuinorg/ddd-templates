@@ -29,7 +29,9 @@ import static org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactor
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddDslFactoryExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
@@ -59,7 +61,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 		ctx.addImports
 		ctx.addReferences(entity)
 
-		val idVar = eINSTANCE.createAttribute(null, entity.idType, "id", false)
+		val idVar = eINSTANCE.createAttribute(null, entity.idTypeNullsafe, "id", false)
 
 		return new GeneratedArtifact(artifactName, filename,
 			create(ctx, entity, pkg, className, idVar).toString().getBytes("UTF-8"));
@@ -71,16 +73,16 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 	}
 
 	def addReferences(CodeSnippetContext ctx, Entity entity) {
-		ctx.requiresReference(entity.idType.uniqueName)
+		ctx.requiresReference(entity.idTypeNullsafe.uniqueName)
 		ctx.requiresReference(entity.root.uniqueName)
-		ctx.requiresReference(entity.root.idType.uniqueName)
+		ctx.requiresReference(entity.root.idTypeNullsafe.uniqueName)
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className, Attribute idVar) {
 		val String src = ''' 
 			«new SrcJavaDocType(entity)»
-			public abstract class «className» extends AbstractEntity<«entity.root.idType.name», «entity.root.name», «entity.
-				idType.name»> {
+			public abstract class «className» extends AbstractEntity<«entity.root.idTypeNullsafe.name», «entity.root.name», «entity.
+				idTypeNullsafe.name»> {
 			
 				«new SrcVarDecl(ctx, "private", false, idVar)»
 			
@@ -88,11 +90,11 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 				«new SrcConstructorsWithParamsAssignment(ctx, constructorData(entity, className))»
 				@Override
 				public final EntityType getType() {
-					return «entity.idType.name».TYPE;
+					return «entity.idTypeNullsafe.name».TYPE;
 				}
 			
 				@Override
-				public final «entity.idType.name» getId() {
+				public final «entity.idTypeNullsafe.name» getId() {
 					return id;
 				}
 			
@@ -111,7 +113,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 	def constructorData(Entity entity, String className) {
 		val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
 		val rootParam = new ConstructorParameter(eINSTANCE.createParameter("The root aggregate of this entity.", entity.root, "rootAggregate", false), true)
-		val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idType, "id", false))
+		val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idTypeNullsafe, "id", false))
 		if (entity.constructors == null || entity.constructors.size == 0) {
 			val List<ConstructorParameter> parameters = new ArrayList<ConstructorParameter>()
 			parameters.add(rootParam)

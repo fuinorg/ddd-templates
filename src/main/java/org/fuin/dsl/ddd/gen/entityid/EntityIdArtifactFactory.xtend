@@ -21,6 +21,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddEntityIdExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class EntityIdArtifactFactory extends AbstractSource<EntityId> {
@@ -85,7 +86,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 				«new SrcVarsDecl(ctx, "private", false, id)»
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
 				«new SrcGetters(ctx, "public final", id.attributes)»
-				«new SrcEntityIdTypeMethods(ctx, id.entity.name)»
+				«new SrcEntityIdTypeMethods(ctx, id.entityNullsafe.name)»
 				@Override
 				public final String asString() {
 					«IF (id.attributes.nullSafe.size == 1)»

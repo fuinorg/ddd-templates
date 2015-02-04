@@ -20,6 +20,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 /**
@@ -64,7 +65,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
-		ctx.requiresReference(aggregate.idType.uniqueName)
+		ctx.requiresReference(aggregate.idTypeNullsafe.uniqueName)
 	}
 
 	/**
@@ -73,19 +74,19 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDocType(aggregate)»
-			public abstract class «className» extends AbstractAggregateRoot<«aggregate.idType.name»> {
+			public abstract class «className» extends AbstractAggregateRoot<«aggregate.idTypeNullsafe.name»> {
 			
 				@NotNull
-				private «aggregate.idType.name» id;
+				private «aggregate.idTypeNullsafe.name» id;
 			
 				«new SrcVarsDecl(ctx, "private", false, aggregate)»
 				@Override
 				public final EntityType getType() {
-					return «aggregate.idType.name».TYPE;
+					return «aggregate.idTypeNullsafe.name».TYPE;
 				}
 			
 				@Override
-				public final «aggregate.idType.name» getId() {
+				public final «aggregate.idTypeNullsafe.name» getId() {
 					return id;
 				}
 			
@@ -94,7 +95,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				 * 
 				 * @param id Unique aggregate identifier.
 				 */
-				protected final void setId(@NotNull final «aggregate.idType.name» id) {
+				protected final void setId(@NotNull final «aggregate.idTypeNullsafe.name» id) {
 					Contract.requireArgNotNull("id", id);
 					this.id = id;
 				}

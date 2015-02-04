@@ -20,6 +20,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
@@ -93,7 +94,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		if (event.entity == null) {
 			return null
 		}
-		return event.entity.idType
+		return event.entity.idTypeNullsafe
 	}
 
 	def createDomainEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {

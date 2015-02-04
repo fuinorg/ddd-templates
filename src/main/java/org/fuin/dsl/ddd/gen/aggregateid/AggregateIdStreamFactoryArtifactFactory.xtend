@@ -12,6 +12,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAggregateIdExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<AggregateId> {
@@ -22,7 +23,7 @@ class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<AggregateId
 
 	override create(AggregateId aggregateId, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		if (aggregateId.entity == null) {
+		if (aggregateId.aggregateNullsafe == null) {
 			return null;
 		}
 
@@ -56,20 +57,20 @@ class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<AggregateId
 
 	def addReferences(CodeSnippetContext ctx, AggregateId entityId) {
 		ctx.requiresReference(entityId.uniqueName)
-		ctx.requiresReference(entityId.entity.uniqueName + "Stream")
+		ctx.requiresReference(entityId.aggregateNullsafe.uniqueName + "Stream")
 	}
 
 	def create(SimpleCodeSnippetContext ctx, AggregateId id, String pkg, String className) {
 		val src = ''' 
 			/**
-			 * Creates a «id.entity.name»Stream based on a AggregateStreamId.
+			 * Creates a «id.aggregateNullsafe.name»Stream based on a AggregateStreamId.
 			 */
 			public class «id.name»StreamFactory implements IdStreamFactory {
 			
 			    @Override
 			    public final Stream createStream(final StreamId streamId) {
 					final String id = streamId.getSingleParamValue();
-					return new «id.entity.name»Stream(«id.name».valueOf(id));
+					return new «id.aggregateNullsafe.name»Stream(«id.name».valueOf(id));
 			  }
 			
 			    @Override

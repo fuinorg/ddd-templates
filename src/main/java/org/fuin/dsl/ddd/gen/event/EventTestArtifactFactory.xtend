@@ -25,6 +25,7 @@ import static extension org.fuin.dsl.ddd.extensions.DddTypeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
 
 class EventTestArtifactFactory extends AbstractSource<Event> {
 
@@ -85,7 +86,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 	def addReferences(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
 		ctx.requiresReference(event.uniqueName)
 		if (entity != null) {
-			ctx.requiresReference(event.aggregate.idType.uniqueName)
+			ctx.requiresReference(event.aggregate.idTypeNullsafe.uniqueName)
 			ctx.requiresReference(event.context.name.toFirstUpper + "EntityIdFactory")
 		}
 		for (v : event.attributes.nullSafe) {
@@ -132,7 +133,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 				private «event.name» createTestee() {
 					// TODO Set test values
-					final «event.aggregate.idType.name» entityId = new «event.aggregate.idType.name»(«event.aggregate.idType.firstExample.str»);
+					final «event.aggregate.idTypeNullsafe.name» entityId = new «event.aggregate.idTypeNullsafe.name»(«event.aggregate.idTypeNullsafe.firstExample.str»);
 					«FOR v : event.attributes.nullSafe»
 						final «v.type(ctx)» «v.name» = «v.firstExample.str»;
 					«ENDFOR»
