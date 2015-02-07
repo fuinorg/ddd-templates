@@ -74,14 +74,14 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
 	def addReferences(CodeSnippetContext ctx, Entity entity) {
 		ctx.requiresReference(entity.idTypeNullsafe.uniqueName)
-		ctx.requiresReference(entity.root.uniqueName)
-		ctx.requiresReference(entity.root.idTypeNullsafe.uniqueName)
+		ctx.requiresReference(entity.rootNullsafe.uniqueName)
+		ctx.requiresReference(entity.rootNullsafe.idTypeNullsafe.uniqueName)
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className, Attribute idVar) {
 		val String src = ''' 
 			«new SrcJavaDocType(entity)»
-			public abstract class «className» extends AbstractEntity<«entity.root.idTypeNullsafe.name», «entity.root.name», «entity.
+			public abstract class «className» extends AbstractEntity<«entity.rootNullsafe.idTypeNullsafe.name», «entity.rootNullsafe.name», «entity.
 				idTypeNullsafe.name»> {
 			
 				«new SrcVarDecl(ctx, "private", false, idVar)»
@@ -112,7 +112,7 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
 	def constructorData(Entity entity, String className) {
 		val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
-		val rootParam = new ConstructorParameter(eINSTANCE.createParameter("The root aggregate of this entity.", entity.root, "rootAggregate", false), true)
+		val rootParam = new ConstructorParameter(eINSTANCE.createParameter("The root aggregate of this entity.", entity.rootNullsafe, "rootAggregate", false), true)
 		val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idTypeNullsafe, "id", false))
 		if (entity.constructors == null || entity.constructors.size == 0) {
 			val List<ConstructorParameter> parameters = new ArrayList<ConstructorParameter>()
