@@ -4,7 +4,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
@@ -26,11 +25,7 @@ class SrcGetter implements CodeSnippet {
 		if (variable.nullable == null) {
 			ctx.requiresImport("org.fuin.objects4j.common.NeverNull")		
 		}
-		if (variable.multiplicity != null) {
-			ctx.requiresImport("java.util.List")
-		}
-		
-		ctx.requiresReference(variable.type.uniqueName)
+		addRequiredReferences(variable, ctx)
 	}
 
 	override toString() {

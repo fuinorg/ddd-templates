@@ -4,7 +4,6 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddPreconditionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
@@ -28,10 +27,7 @@ class SrcParamDecl implements CodeSnippet {
 		if (parameter.nullable == null) {
 			ctx.requiresImport("javax.validation.constraints.NotNull")
 		}
-		if (parameter.multiplicity != null) {
-			ctx.requiresImport("java.util.List")
-		}
-		ctx.requiresReference(parameter.type.uniqueName)
+		addRequiredReferences(parameter, ctx)
 	}
 
 	override toString() {

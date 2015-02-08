@@ -63,6 +63,7 @@ class SrcGetterTest {
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("ctx.types.String", "java.lang.String")
+		refReg.putReference("ctx.types.List", "java.util.List")
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val SrcGetter testee = createTesteeWithMultiplicity(ctx)
 
@@ -127,7 +128,7 @@ class SrcGetterTest {
 						value-object MyValueObject {
 							
 							/** List of human readable names. */
-							String* names
+							List<String> names
 							
 						}
 						
@@ -135,6 +136,7 @@ class SrcGetterTest {
 				
 					namespace types {
 						type String
+						type List generics 1
 					}
 					
 				}

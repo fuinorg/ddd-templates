@@ -16,6 +16,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
@@ -25,7 +26,6 @@ import static extension org.fuin.dsl.ddd.extensions.DddTypeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
 
 class EventTestArtifactFactory extends AbstractSource<Event> {
 
@@ -90,10 +90,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			ctx.requiresReference(event.context.name.toFirstUpper + "EntityIdFactory")
 		}
 		for (v : event.attributes.nullSafe) {
-			ctx.requiresReference(v.type.uniqueName)
-			if (v.multiplicity != null) {
-				ctx.requiresImport("java.util.List")
-			}
+			addRequiredReferences(v, ctx)
 		}
 	}
 

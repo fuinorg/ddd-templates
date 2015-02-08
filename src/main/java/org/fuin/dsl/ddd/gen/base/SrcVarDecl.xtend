@@ -1,12 +1,10 @@
 package org.fuin.dsl.ddd.gen.base
 
-import java.util.List
 import javax.validation.constraints.NotNull
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddInvariantsExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
@@ -38,10 +36,7 @@ class SrcVarDecl implements CodeSnippet {
 		if (attribute.nullable == null) {
 			ctx.requiresImport(NotNull.name)
 		}
-		if (attribute.multiplicity != null) {
-			ctx.requiresImport(List.name)
-		}
-		ctx.requiresReference(attribute.type.uniqueName)
+		addRequiredReferences(attribute, ctx)
 	}
 
 	override toString() {

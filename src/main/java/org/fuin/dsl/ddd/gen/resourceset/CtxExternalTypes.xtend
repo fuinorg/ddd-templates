@@ -19,6 +19,7 @@ import org.joda.time.LocalTime
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import java.util.Collection
 import java.util.List
+import java.util.Set
 
 /**
  * Registers a set of external types. It does NOT create any source code.
@@ -46,8 +47,10 @@ import java.util.List
  *         type Locale
  *         type Object
  *         type EntityIdPath
- *         type Collection
- *         type List
+ *         type Collection generics 1
+ *         type List generics 1
+ *         type Map generics 2
+ *         type Set generics 1
  *     }
  * }
  * <code>
@@ -101,6 +104,8 @@ class CtxExternalTypes extends AbstractSource<ResourceSet> {
 			refReg.putReference(name + "." + pkg + ".EntityIdPath", EntityIdPath.name)
 			refReg.putReference(name + "." + pkg + ".Collection", Collection.name)
 			refReg.putReference(name + "." + pkg + ".List", List.name)
+			refReg.putReference(name + "." + pkg + ".Map", Map.name)
+			refReg.putReference(name + "." + pkg + ".Set", Set.name)
 			
 		}
 

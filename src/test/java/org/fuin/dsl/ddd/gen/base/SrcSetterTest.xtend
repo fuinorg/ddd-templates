@@ -64,6 +64,7 @@ class SrcSetterTest {
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
 		refReg.putReference("ctx.types.String", "java.lang.String")
+		refReg.putReference("ctx.types.List", "java.util.List")
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val SrcSetter testee = createTesteeWithMultiplicity(ctx)
 
@@ -129,7 +130,7 @@ class SrcSetterTest {
 						value-object MyValueObject {
 							
 							/** List of human readable names. */
-							String* names
+							List<String> names
 							
 						}
 						
@@ -137,6 +138,7 @@ class SrcSetterTest {
 				
 					namespace types {
 						type String
+						type List generics 1
 					}
 					
 				}
