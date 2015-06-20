@@ -19,8 +19,7 @@ package tst2.x.aggregates;
 
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
-import org.fuin.ddd4j.eventstore.intf.EventStore;
-import tst2.x.resourceset.XEventRegistry;
+import org.fuin.esc.api.EventStoreSync;
 
 /**
  * Creates a AggregateCRepository.
@@ -32,13 +31,12 @@ public class AggregateCRepositoryFactory {
 	 * Produces a AggregateCRepository.
 	 * 
 	 * @param eventStore The event store to use for construction.
-	 * @param eventRegistry Registry with all events to use for construction.
 	 *
 	 * @return The new repository instance.
 	 */
 	@Produces
-	public AggregateCRepository create(final EventStore eventStore, final XEventRegistry eventRegistry) {
-		return new AggregateCRepository(eventStore, eventRegistry, eventRegistry);
+	public AggregateCRepository create(final EventStoreSync eventStore) {
+		return new AggregateCRepository(eventStore);
 	}
 
 }

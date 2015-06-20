@@ -17,11 +17,10 @@
  */
 package tst2.x.aggregates;
 
-import org.fuin.ddd4j.ddd.DeserializerRegistry;
 import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.ddd4j.ddd.SerializerRegistry;
 import org.fuin.ddd4j.esrepo.EventStoreRepository;
-import org.fuin.ddd4j.eventstore.intf.EventStore;
+import org.fuin.esc.api.EventStoreSync;
+
 import tst.x.aggregates.AggregateC;
 import tst.x.aggregates.AggregateCId;
 
@@ -30,17 +29,15 @@ import tst.x.aggregates.AggregateCId;
  */
 public final class AggregateCRepository extends EventStoreRepository<AggregateCId, AggregateC> {
 
-	/**
-	 * Constructor with event store to use as storage.
-	 * 
-	 * @param eventStore Event store.
-	 * @param serRegistry Registry used to locate serializers.
-	 * @param desRegistry Registry used to locate deserializers.
-	 */
-	public AggregateCRepository(final EventStore eventStore,
-			final SerializerRegistry serRegistry, final DeserializerRegistry desRegistry) {
-		super(eventStore, serRegistry, desRegistry);
-	}
+    /**
+     * Constructor without credentials.
+     * 
+     * @param eventStore
+     *            Event store.
+     */
+    public AggregateCRepository(final EventStoreSync eventStore) {
+        super(eventStore);
+    }
 
 	@Override
 	public Class<AggregateC> getAggregateClass() {
