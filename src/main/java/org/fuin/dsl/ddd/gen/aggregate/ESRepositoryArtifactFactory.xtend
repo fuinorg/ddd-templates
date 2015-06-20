@@ -48,11 +48,9 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 	}
 
 	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("org.fuin.ddd4j.ddd.DeserializerRegistry")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.SerializerRegistry")
 		ctx.requiresImport("org.fuin.ddd4j.esrepo.EventStoreRepository")
-		ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.EventStore")
+		ctx.requiresImport("org.fuin.esc.api.EventStoreSync")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
@@ -68,15 +66,12 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 			public final class «aggregate.name»Repository extends EventStoreRepository<«aggregate.idTypeNullsafe.name», «aggregate.name»> {
 			
 				/**
-				 * Constructor with event store to use as storage.
+				 * Constructor with all mandatory data.
 				 * 
 				 * @param eventStore Event store.
-				 * @param serRegistry Registry used to locate serializers.
-				 * @param desRegistry Registry used to locate deserializers.
 				 */
-				public «className»(final EventStore eventStore,
-						final SerializerRegistry serRegistry, final DeserializerRegistry desRegistry) {
-					super(eventStore, serRegistry, desRegistry);
+				public «className»(final EventStoreSync eventStore) {
+					super(eventStore);
 				}
 			
 				@Override

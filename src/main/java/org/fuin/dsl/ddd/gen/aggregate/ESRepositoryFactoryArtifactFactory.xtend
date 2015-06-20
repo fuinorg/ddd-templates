@@ -30,7 +30,6 @@ class ESRepositoryFactoryArtifactFactory extends AbstractSource<Aggregate> imple
 		val pkg = ns.asPackage
 		val fqn = pkg + "." + className
 		val filename = fqn.replace('.', '/') + ".java";
-		val eventRegistryName = aggregate.context.name.toFirstUpper + "EventRegistry"
 
 		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
 		refReg.putReference(aggregate.uniqueName + "RepositoryFactory", fqn)
@@ -43,25 +42,23 @@ class ESRepositoryFactoryArtifactFactory extends AbstractSource<Aggregate> imple
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 		ctx.addImports
-		ctx.addReferences(aggregate, eventRegistryName)
+		ctx.addReferences(aggregate)
 
 		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, aggregate, pkg, className, repositoryName, eventRegistryName).toString().getBytes("UTF-8"));
+			create(ctx, aggregate, pkg, className, repositoryName).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.EventStore")
+		ctx.requiresImport("org.fuin.esc.api.EventStoreSync")
 		ctx.requiresImport("javax.enterprise.context.Dependent")
 		ctx.requiresImport("javax.enterprise.inject.Produces")
 	}
 
-	def addReferences(CodeSnippetContext ctx, Aggregate aggregate, String eventRegistryName) {
+	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
 		ctx.requiresReference(aggregate.uniqueName + "Repository")
-		ctx.requiresReference(eventRegistryName)
 	}
 
-	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className, String repositoryName,
-		String eventRegistryName) {
+	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className, String repositoryName) {
 		val String src = ''' 
 			/**
 			 * Creates a «repositoryName».
@@ -73,13 +70,12 @@ class ESRepositoryFactoryArtifactFactory extends AbstractSource<Aggregate> imple
 				 * Produces a «repositoryName».
 				 * 
 				 * @param eventStore The event store to use for construction.
-				 * @param eventRegistry Registry with all events to use for construction.
 				 *
 				 * @return The new repository instance.
 				 */
 				@Produces
-				public «repositoryName» create(final EventStore eventStore, final «eventRegistryName» eventRegistry) {
-					return new «repositoryName»(eventStore, eventRegistry, eventRegistry);
+				public «repositoryName» create(final EventStoreSync eventStore) {
+					return new «repositoryName»(eventStore);
 				}
 			
 			}

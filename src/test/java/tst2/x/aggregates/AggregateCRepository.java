@@ -20,7 +20,6 @@ package tst2.x.aggregates;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.esrepo.EventStoreRepository;
 import org.fuin.esc.api.EventStoreSync;
-
 import tst.x.aggregates.AggregateC;
 import tst.x.aggregates.AggregateCId;
 
@@ -29,15 +28,14 @@ import tst.x.aggregates.AggregateCId;
  */
 public final class AggregateCRepository extends EventStoreRepository<AggregateCId, AggregateC> {
 
-    /**
-     * Constructor without credentials.
-     * 
-     * @param eventStore
-     *            Event store.
-     */
-    public AggregateCRepository(final EventStoreSync eventStore) {
-        super(eventStore);
-    }
+	/**
+	 * Constructor with all mandatory data.
+	 * 
+	 * @param eventStore Event store.
+	 */
+	public AggregateCRepository(final EventStoreSync eventStore) {
+		super(eventStore);
+	}
 
 	@Override
 	public Class<AggregateC> getAggregateClass() {
