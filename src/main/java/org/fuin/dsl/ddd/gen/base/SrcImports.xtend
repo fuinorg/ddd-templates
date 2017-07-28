@@ -37,7 +37,7 @@ class SrcImports implements CodeSnippet {
 	} 
 
 	override toString() {
-		if ((imports == null) || (imports.length == 0)) {
+		if ((imports === null) || (imports.length == 0)) {
 			return "";
 		}
 		'''

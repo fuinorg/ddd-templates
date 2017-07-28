@@ -86,7 +86,7 @@ class FinalEntityArtifactFactory extends AbstractSource<Entity> {
 		val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
 		val rootParam = new ConstructorParameter(eINSTANCE.createParameter("The root aggregate of this entity.", entity.rootNullsafe, "rootAggregate", false), true)
 		val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idTypeNullsafe, "id", false), true)
-		if (entity.constructors == null || entity.constructors.size == 0) {
+		if (entity.constructors === null || entity.constructors.size == 0) {
 			val List<ConstructorParameter> parameters = new ArrayList<ConstructorParameter>()
 			parameters.add(rootParam)
 			parameters.add(idParam)

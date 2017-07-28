@@ -22,7 +22,7 @@ class VariableExtensions {
 	 */
 	def static String type(Variable variable, CodeSnippetContext ctx) {
 		var String name = variable.type.simpleName(ctx);
-		if (variable.generics == null) {
+		if (variable.generics === null) {
 			return name;
 		}
 		val StringBuilder sb = new StringBuilder()
@@ -42,7 +42,7 @@ class VariableExtensions {
 	 * @param ctx Context to add the requirements to.
 	 */
 	def static void addRequiredReferences(Variable variable, CodeSnippetContext ctx) {
-		if (variable.generics != null) {
+		if (variable.generics !== null) {
 			for (arg : variable.generics.args) {
 				ctx.requiresReference(arg.uniqueName)
 			}

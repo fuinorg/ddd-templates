@@ -15,9 +15,9 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 
 class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
@@ -52,14 +52,14 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 	}
 
 	def addImports(CodeSnippetContext ctx, AggregateId aggregateId) {
-		if (aggregateId.base != null) {
+		if (aggregateId.base !== null) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
 		}
 		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
 	}
 
 	def addReferences(CodeSnippetContext ctx, AggregateId aggregateId) {
-		if (aggregateId.base != null) {
+		if (aggregateId.base !== null) {
 			ctx.requiresReference(aggregateId.uniqueName + "Converter")
 		}
 		ctx.requiresReference(aggregateId.uniqueAbstractName)
@@ -69,7 +69,7 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 		val String src = ''' 
 			«new SrcJavaDocType(id)»
 			@Immutable
-			«IF id.base != null»
+			«IF id.base !== null»
 				@XmlJavaTypeAdapter(«id.name»Converter.class)
 			«ENDIF»
 			public final class «className» extends «abstractClassName» {
@@ -77,6 +77,7 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 				private static final long serialVersionUID = 1000L;
 				
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false, true)»
+				«IF id.base === null»
 				@Override
 				public final String asString() {
 					«IF (id.attributes.nullSafe.size == 1)»
@@ -87,6 +88,7 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 					«ENDIF»
 				}
 
+				«ENDIF»
 				«new SrcVoBaseMethods(ctx, id)»
 			}
 		'''

@@ -52,14 +52,14 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 	}
 
 	def addImports(CodeSnippetContext ctx, EntityId entityId) {
-		if (entityId.base != null) {
+		if (entityId.base !== null) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")			
 		}
 		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
 	}
 
 	def addReferences(CodeSnippetContext ctx, EntityId entityId) {
-		if (entityId.base != null) {
+		if (entityId.base !== null) {
 			ctx.requiresReference(entityId.uniqueName + "Converter")			
 		}
 		ctx.requiresReference(entityId.uniqueAbstractName)
@@ -69,7 +69,7 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 		val String src = ''' 
 			«new SrcJavaDocType(id)»
 			@Immutable
-			«IF id.base != null»
+			«IF id.base !== null»
 			@XmlJavaTypeAdapter(«id.name»Converter.class)
 			«ENDIF»
 			public final class «className» extends «abstractClassName» {
@@ -77,6 +77,7 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 				private static final long serialVersionUID = 1000L;
 				
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false, true)»
+				«IF id.base === null»
 				@Override
 				public final String asString() {
 					«IF (id.attributes.nullSafe.size == 1)»
@@ -86,7 +87,8 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 					return null;
 					«ENDIF»
 				}
-			
+
+				«ENDIF»
 				«new SrcVoBaseMethods(ctx, id)»
 			}
 			'''

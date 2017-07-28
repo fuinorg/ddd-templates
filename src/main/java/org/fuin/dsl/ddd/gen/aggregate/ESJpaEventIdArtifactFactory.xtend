@@ -131,7 +131,7 @@ class ESJpaEventIdArtifactFactory extends AbstractSource<Aggregate> implements A
 			    return true;
 					if (obj == null)
 			    return false;
-					if (getClass() != obj.getClass())
+					if (getClass() !== obj.getClass())
 			    return false;
 					«aggregate.name»EventId other = («aggregate.name»EventId) obj;
 					if («aggregate.name.toFirstLower»Id == null) {

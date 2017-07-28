@@ -19,7 +19,7 @@ class SrcInvokeGetter implements CodeSnippet {
 	}
 
 	override toString() {
-		if (objName == null) {
+		if (objName === null) {
 			'''get«variable.name.toFirstUpper»()'''
 		} else {
 			'''«objName».get«variable.name.toFirstUpper»()'''

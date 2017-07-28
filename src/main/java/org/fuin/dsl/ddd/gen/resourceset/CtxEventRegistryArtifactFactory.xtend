@@ -70,9 +70,10 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
         ctx.requiresImport("org.fuin.esc.spi.SerDeserializerRegistry")
         ctx.requiresImport("org.fuin.esc.spi.Deserializer")
         ctx.requiresImport("org.fuin.esc.spi.Serializer")
+        ctx.requiresImport("org.fuin.esc.spi.EscEvents")
+        ctx.requiresImport("org.fuin.esc.spi.EscMeta")
         ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdFactory")
         ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
-        ctx.requiresImport("org.fuin.ddd4j.ddd.BasicEventMetaData")
         ctx.requiresImport("org.fuin.esc.spi.XmlDeSerializer")
         ctx.requiresImport("org.fuin.esc.spi.SimpleSerializerDeserializerRegistry")
         ctx.requiresImport("org.fuin.esc.spi.EnhancedMimeType")
@@ -91,7 +92,7 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
         while (iter.hasNext) {
             val Event event = iter.next
             var List<Event> events = contextEvents.get(event.context.name)
-            if (events == null) {
+            if (events === null) {
                 events = new ArrayList<Event>();
                 contextEvents.put(event.context.name, events)
             }
@@ -123,11 +124,15 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
             		
             		final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(entityIdFactory);
             		final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { entityIdPathConverter };
+            		final XmlDeSerializer xmlDeSer = new XmlDeSerializer(UTF8, adapters, false, EscEvents.class, EscMeta.class, «FOR event : events SEPARATOR ', '»«event.name».class«ENDFOR»);
             		
             		registry = new SimpleSerializerDeserializerRegistry();
-                    registry.add(new SerializedDataType("BasicEventMetaData"), CONTENT_TYPE, new XmlDeSerializer(UTF8, BasicEventMetaData.class));
+                    // Base types always needed
+                    registry.add(EscEvents.SER_TYPE, CONTENT_TYPE, xmlDeSer);
+                    registry.add(EscMeta.SER_TYPE, CONTENT_TYPE, xmlDeSer);
+                    // User types
             		«FOR event : events»
-            		registry.add(new SerializedDataType(«event.name».EVENT_TYPE.asBaseType()), CONTENT_TYPE, new XmlDeSerializer(UTF8, adapters, «event.name».class));
+            		registry.add(new SerializedDataType(«event.name».EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
             		«ENDFOR»
             	}
             
@@ -149,6 +154,21 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
                 @Override
                 public EnhancedMimeType getDefaultContentType(final SerializedDataType type) {
                     return registry.getDefaultContentType(type);
+                }
+            
+                @Override
+                public boolean serializerExists(final SerializedDataType type) {
+                	return registry.serializerExists(type);
+                }
+            
+                @Override
+                public boolean deserializerExists(final SerializedDataType type) {
+                	return registry.deserializerExists(type);
+                }
+            
+                @Override
+                public boolean deserializerExists(final SerializedDataType type, final EnhancedMimeType mimeType) {
+                	return registry.deserializerExists(type, mimeType);
                 }
             
             }

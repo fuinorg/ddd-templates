@@ -44,8 +44,8 @@ class SrcVoBaseOptionalExtendsTest {
 		val result = testee.toString
 
 		// VERIFY
-		assertThat(result).isEqualTo("extends AbstractUUIDVO ")
-		assertThat(ctx.imports).contains("org.fuin.ddd4j.ddd.AbstractUUIDVO")
+		assertThat(result).isEqualTo("extends AbstractUuidValueObject ")
+		assertThat(ctx.imports).contains("org.fuin.objects4j.vo.AbstractUuidValueObject")
 
 	}
 

@@ -96,12 +96,6 @@ private static final long serialVersionUID = 1000L;
 	}
 	
 	@Override
-	public final String asString() {
-		// TODO Implement!
-		return null;
-	}
-
-	@Override
 	public final String asBaseType() {
 		// TODO Implement!
 		return null;

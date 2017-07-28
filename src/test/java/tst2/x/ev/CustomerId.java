@@ -21,12 +21,16 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import org.fuin.ddd4j.ddd.AbstractUUIDVO;
+import org.fuin.objects4j.common.ConstraintViolationException;
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.vo.AbstractUuidValueObject;
+import org.fuin.objects4j.vo.UUIDStr;
+import org.fuin.objects4j.vo.UUIDStrValidator;
 import org.fuin.ddd4j.ddd.AggregateRootId;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 
-public final class CustomerId extends AbstractUUIDVO implements AggregateRootId {
+public final class CustomerId extends AbstractUuidValueObject implements AggregateRootId {
 
     private static final long serialVersionUID = 1000L;
 
@@ -34,11 +38,14 @@ public final class CustomerId extends AbstractUUIDVO implements AggregateRootId 
     public static final EntityType TYPE = new StringBasedEntityType(
             "CustomerId");
 
+    private final UUID uuid;
+    
     /**
      * Default constructor.
      */
-    protected CustomerId() {
+    public CustomerId() {
         super();
+        uuid = UUID.randomUUID();
     }
 
     /**
@@ -48,17 +55,24 @@ public final class CustomerId extends AbstractUUIDVO implements AggregateRootId 
      *            Persistent value.
      */
     public CustomerId(@NotNull final UUID value) {
-        super(value);
+        super();
+        Contract.requireArgNotNull("value", value);
+        this.uuid = value;        
     }
 
     /**
      * Constructor with all data.
      * 
-     * @param value
-     *            Persistent value.
+     * @param strValue
+     *            String value.
      */
-    public CustomerId(@NotNull final String value) {
-        super(UUID.fromString(value));
+    public CustomerId(@NotNull @UUIDStr final String strValue) {
+        super();
+        Contract.requireArgNotNull("strValue", strValue);
+        if (!UUIDStrValidator.isValid(strValue)) {
+        	throw new ConstraintViolationException("The argument 'strValue' is not a valid UUID");
+        }
+        this.uuid = UUID.fromString(strValue);
     }
     
     @Override
@@ -71,4 +85,14 @@ public final class CustomerId extends AbstractUUIDVO implements AggregateRootId 
         return TYPE + " " + asString();
     }
 
+    @Override
+    public final UUID asBaseType() {
+    	return uuid;
+    }
+    
+    @Override
+    public String asString() {
+    	return uuid.toString();
+    }
+    
 }

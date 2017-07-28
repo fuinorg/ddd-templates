@@ -83,11 +83,6 @@ public final class MyEntityId extends AbstractStringValueObject implements Entit
 	}
 	
 	@Override
-	public final String asString() {
-		return "" + getValue();
-	}
-
-	@Override
 	public final String asBaseType() {
 		return getValue();
 	}

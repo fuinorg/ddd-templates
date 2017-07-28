@@ -23,7 +23,7 @@ class SrcParamsSuperCall implements CodeSnippet {
 	}
 
 	override toString() {
-		if (parameters == null) {
+		if (parameters === null) {
 			'''super();'''
 		} else {
 			'''super(«FOR v : parameters SEPARATOR ", "»«v.name»«ENDFOR»);'''		

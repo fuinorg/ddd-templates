@@ -2,11 +2,11 @@ package org.fuin.dsl.ddd.gen.aggregateid
 
 import java.util.HashMap
 import javax.inject.Inject
-import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.junit4.util.ParseHelper
-import org.eclipse.xtext.junit4.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.util.ParseHelper
+import org.eclipse.xtext.testing.validation.ValidationTestHelper
+import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.gen.base.AbstractSource
@@ -67,7 +67,7 @@ class FinalAggregateIdArtifactFactoryTest {
 
 		// TEST
 		val result = new String(testee.create(aggregateId, context, false).data)
-
+		
 		// VERIFY
 		assertThat(result).isEqualTo("x/aggregateid/MyAggregate2Id.java".loadAbstractExample)
 		

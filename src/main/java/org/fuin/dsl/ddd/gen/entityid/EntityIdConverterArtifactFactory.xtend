@@ -20,7 +20,7 @@ class EntityIdConverterArtifactFactory extends AbstractSource<EntityId> {
 	}
 
 	override create(EntityId entityId, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (entityId.base == null) {
+		if (entityId.base === null) {
 			return null;
 		}
 		val className = entityId.getName() + "Converter"

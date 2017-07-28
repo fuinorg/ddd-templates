@@ -22,7 +22,7 @@ class Utils {
 	 *         An empty array or null will return an empty string. 
 	 */
 	def static String separated(String separator, String... tokens) {
-		if (tokens == null) {
+		if (tokens === null) {
 			return ""
 		}
 		val StringBuilder sb = new StringBuilder()

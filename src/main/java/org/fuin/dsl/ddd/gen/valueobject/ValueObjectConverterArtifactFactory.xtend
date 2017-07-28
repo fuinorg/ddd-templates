@@ -20,7 +20,7 @@ class ValueObjectConverterArtifactFactory extends AbstractSource<ValueObject> {
 	}
 
 	override create(ValueObject valueObject, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (valueObject.base == null) {
+		if (valueObject.base === null) {
 			return null;
 		}
 		val className = valueObject.getName() + "Converter"

@@ -20,7 +20,7 @@ class MapExtensions {
 	 */
 	def static CodeReferenceRegistry getCodeReferenceRegistry(Map<String, Object> map) {
 		var CodeReferenceRegistry reg = map.get(CODE_REFERENCE_REGISTRY_KEY) as CodeReferenceRegistry
-		if (reg == null) {
+		if (reg === null) {
 			reg = new SimpleCodeReferenceRegistry()
 			map.put(CODE_REFERENCE_REGISTRY_KEY, reg)
 		}

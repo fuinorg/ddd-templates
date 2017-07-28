@@ -22,7 +22,7 @@ class SrcGetter implements CodeSnippet {
 		this.modifiers = modifiers
 		this.variable = variable
 		
-		if (variable.nullable == null) {
+		if (variable.nullable === null) {
 			ctx.requiresImport("org.fuin.objects4j.common.NeverNull")		
 		}
 		addRequiredReferences(variable, ctx)
@@ -35,7 +35,7 @@ class SrcGetter implements CodeSnippet {
 			 *
 			 * @return Current value.
 			 */
-			 «IF variable.nullable == null»@NeverNull«ENDIF»
+			 «IF variable.nullable === null»@NeverNull«ENDIF»
 			«modifiers» «variable.type(ctx)» get«variable.name.toFirstUpper»() {
 				return «variable.name»;
 			}

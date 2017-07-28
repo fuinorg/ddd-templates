@@ -20,7 +20,7 @@ class AggregateIdConverterArtifactFactory extends AbstractSource<AggregateId> {
 	}
 
 	override create(AggregateId aggregateId, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (aggregateId.base == null) {
+		if (aggregateId.base === null) {
 			return null;
 		}
 		val className = aggregateId.getName() + "Converter"

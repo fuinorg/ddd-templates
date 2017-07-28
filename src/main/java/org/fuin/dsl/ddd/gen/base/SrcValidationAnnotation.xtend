@@ -29,7 +29,7 @@ class SrcValidationAnnotation implements CodeSnippet {
 		params = ci.params;
 		
 		ctx.requiresReference(constraint.uniqueName)
-		if (vars != null) {
+		if (vars !== null) {
 			for (Attribute v : vars) {
 				ctx.requiresReference(v.type.uniqueName)
 			}

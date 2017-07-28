@@ -48,11 +48,6 @@ public final class MyAggregateId extends AbstractMyAggregateId {
 	}
 	
 	@Override
-	public final String asString() {
-		return "" + getValue();
-	}
-
-	@Override
 	public final String asBaseType() {
 		return getValue();
 	}

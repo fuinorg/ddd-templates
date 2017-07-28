@@ -19,6 +19,7 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
+import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
@@ -39,7 +40,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		val AbstractEntity entity = event.entity;
 		val className = event.getName()
 		var Namespace ns;
-		if (entity == null) {
+		if (entity === null) {
 			ns = event.namespace;
 		} else {
 			ns = entity.namespace;
@@ -62,7 +63,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		ctx.addReferences(event)
 
 		var String src;
-		if (entity == null) {
+		if (entity === null) {
 			src = createStandardEvent(ctx, event, pkg, className).toString();
 		} else {
 			src = createDomainEvent(ctx, event, pkg, className).toString();
@@ -73,7 +74,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 
 	def addImports(CodeSnippetContext ctx, AbstractEntity entity) {
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EventType")
-		if (entity == null) {
+		if (entity === null) {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractEvent")
 		} else {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractDomainEvent")
@@ -84,13 +85,13 @@ class EventArtifactFactory extends AbstractSource<Event> {
 	}
 
 	def addReferences(CodeSnippetContext ctx, Event event) {
-		if (event.entity != null) {
+		if (event.entity !== null) {
 			ctx.requiresReference(event.entityIdType.uniqueName)
 		}
 	}
 
 	def AbstractEntityId getEntityIdType(Event event) {
-		if (event.entity == null) {
+		if (event.entity === null) {
 			return null
 		}
 		return event.entity.idType

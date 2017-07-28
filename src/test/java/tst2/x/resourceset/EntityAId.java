@@ -80,11 +80,6 @@ public final class EntityAId extends AbstractStringValueObject implements Entity
 	}
 	
 	@Override
-	public final String asString() {
-		return "" + getValue();
-	}
-
-	@Override
 	public final String asBaseType() {
 		return getValue();
 	}

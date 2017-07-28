@@ -30,7 +30,7 @@ class ParameterExtensions {
 	 * @return Constructor parameter list
 	 */
 	def static List<ConstructorParameter> asWrappedParameters(List<Parameter> parameters, boolean passToSuper) {
-		if (parameters == null) {
+		if (parameters === null) {
 			return null
 		}
 		val List<ConstructorParameter> list = new ArrayList<ConstructorParameter>()

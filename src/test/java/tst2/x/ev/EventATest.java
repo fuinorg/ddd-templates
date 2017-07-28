@@ -22,10 +22,10 @@ import org.fuin.ddd4j.ddd.EntityIdPath;
 import org.fuin.ddd4j.ddd.EntityIdPathConverter;
 import org.junit.Test;
 import static org.fest.assertions.Assertions.*;
-import static org.fuin.units4j.Units4JUtils.deserialize;
-import static org.fuin.units4j.Units4JUtils.marshal;
-import static org.fuin.units4j.Units4JUtils.serialize;
-import static org.fuin.units4j.Units4JUtils.unmarshal;
+import static org.fuin.utils4j.JaxbUtils.marshal;
+import static org.fuin.utils4j.JaxbUtils.unmarshal;
+import static org.fuin.utils4j.Utils4J.deserialize;
+import static org.fuin.utils4j.Utils4J.serialize;
 
 // CHECKSTYLE:OFF
 public final class EventATest {

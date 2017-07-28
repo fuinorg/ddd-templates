@@ -54,7 +54,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 	}
 
 	def addImports(CodeSnippetContext ctx, AggregateId aggregateId) {
-		if (aggregateId.base != null) {
+		if (aggregateId.base !== null) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
 		}
 		ctx.requiresImport("org.fuin.ddd4j.ddd.AggregateRootId")
@@ -65,7 +65,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 	}
 
 	def addReferences(CodeSnippetContext ctx, AggregateId entityId) {
-		if (entityId.base != null) {
+		if (entityId.base !== null) {
 			ctx.requiresReference(entityId.uniqueName + "Converter")
 		}
 	}
@@ -74,7 +74,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 		val src = '''
 			«new SrcJavaDocType(id)»
 			@Immutable
-			«IF id.base != null»
+			«IF id.base !== null»
 				@XmlJavaTypeAdapter(«id.name»Converter.class)
 			«ENDIF»
 			public final class «className» «new SrcVoBaseOptionalExtends(ctx, id.base)»implements AggregateRootId, ValueObject {
@@ -85,6 +85,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
 				«new SrcGetters(ctx, "public final", id.attributes)»
 				«new SrcEntityIdTypeMethods(ctx, id.aggregateNullsafe.name)»
+				«IF id.base === null»
 				@Override
 				public final String asString() {
 					«IF (id.attributes.nullSafe.size == 1)»
@@ -94,7 +95,8 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 						return null;
 					«ENDIF»
 				}
-			
+
+			«ENDIF»
 				«new SrcVoBaseMethods(ctx, id)»
 			}
 		'''

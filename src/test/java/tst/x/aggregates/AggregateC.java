@@ -18,7 +18,7 @@
 package tst.x.aggregates;
 
 import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.EventHandler;
+import org.fuin.ddd4j.ddd.ApplyEvent;
 
 /**
  * Aggregate C - With constructor, constraint and event.
@@ -51,7 +51,7 @@ public final class AggregateC extends AbstractAggregateC {
 	 * @param event Event to handle.
 	 */
 	@Override
-	@EventHandler
+	@ApplyEvent
 	protected final void handle(@NotNull final AggregateCCreatedEvent event) {
 		// TODO Handle event!
 	}

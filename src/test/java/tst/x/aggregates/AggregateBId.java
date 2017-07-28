@@ -45,11 +45,6 @@ public final class AggregateBId extends AbstractStringValueObject implements
     }
 
     @Override
-    public final String asString() {
-        return "" + getValue();
-    }
-
-    @Override
     public final String asBaseType() {
         return getValue();
     }

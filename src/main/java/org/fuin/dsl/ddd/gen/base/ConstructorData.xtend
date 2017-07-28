@@ -39,7 +39,7 @@ class ConstructorData extends AbstractMethodData {
 	new(String modifiers, String typeName, Constructor constructor, boolean passToSuper) {
 		super(constructor.doc, modifiers, typeName, constructor.allExceptions)
 		this.parameters = new ArrayList<ConstructorParameter>()
-		if (constructor.parameters != null) {
+		if (constructor.parameters !== null) {
 			this.parameters.addAll(constructor.asWrappedParameters(passToSuper))		
 		}
 	}
@@ -57,7 +57,7 @@ class ConstructorData extends AbstractMethodData {
 	new(String doc, String modifiers, String typeName, List<ConstructorParameter> parameters, List<Exception> exceptions) {
 		super(doc, modifiers, typeName, exceptions)
 		this.parameters = new ArrayList<ConstructorParameter>()
-		if (parameters != null) {
+		if (parameters !== null) {
 			this.parameters.addAll(parameters)		
 		}
 	}
@@ -76,7 +76,7 @@ class ConstructorData extends AbstractMethodData {
 		List<Exception> exceptions) {
 		super(doc, annotations, modifiers, typeName, exceptions)
 		this.parameters = new ArrayList<ConstructorParameter>()
-		if (parameters != null) {
+		if (parameters !== null) {
 			this.parameters.addAll(parameters)
 		}
 	}
@@ -87,7 +87,7 @@ class ConstructorData extends AbstractMethodData {
 	 * @return List of parameters.
 	 */
 	def List<Parameter> getSuperCallParameters() {
-		if (parameters == null) {
+		if (parameters === null) {
 			return null;
 		}
 		val List<Parameter> list = new ArrayList<Parameter>()
@@ -105,7 +105,7 @@ class ConstructorData extends AbstractMethodData {
 	 * @return List of parameters.
 	 */
 	def List<Parameter> getAssignmentParameters() {
-		if (parameters == null) {
+		if (parameters === null) {
 			return null;
 		}
 		val List<Parameter> list = new ArrayList<Parameter>()
@@ -148,7 +148,7 @@ class ConstructorData extends AbstractMethodData {
 	 * @return Parameter list
 	 */
 	private def static List<Parameter> asParameters(List<ConstructorParameter> parameters) {
-		if (parameters == null) {
+		if (parameters === null) {
 			return null
 		}
 		val List<Parameter> list = new ArrayList<Parameter>()

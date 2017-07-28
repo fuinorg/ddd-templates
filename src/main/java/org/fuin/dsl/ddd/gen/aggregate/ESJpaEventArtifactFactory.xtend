@@ -150,7 +150,7 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 			    public final int hashCode() {
 					final int prime = 31;
 					int result = 1;
-					result = prime * result	+ ((«aggregate.idTypeNullsafe.name.toFirstLower» == null) ? 0 : «aggregate.idTypeNullsafe.name.toFirstLower».hashCode());
+					result = prime * result	+ ((«aggregate.idTypeNullsafe.name.toFirstLower» === null) ? 0 : «aggregate.idTypeNullsafe.name.toFirstLower».hashCode());
 					result = prime * result	+ ((eventNumber == null) ? 0 : eventNumber.hashCode());
 					return result;
 			  }
@@ -161,7 +161,7 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
 			  return true;
 					if (obj == null)
 			  return false;
-					if (getClass() != obj.getClass())
+					if (getClass() !== obj.getClass())
 			  return false;
 					«aggregate.name»Event other = («aggregate.name»Event) obj;
 					if («aggregate.idTypeNullsafe.name.toFirstLower» == null) {

@@ -43,7 +43,7 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	def String getCopyrightHeader() {
 		val String header = varMap.nullSafe.get("copyrightHeader")
-		if (header == null) {
+		if (header === null) {
 			return ""
 		}
 		return header
@@ -51,21 +51,21 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	protected def String getVar(String key, String defaultVal) {
 		val str = this.varMap.nullSafe.get(key)
-		if (str == null) {
+		if (str === null) {
 			return defaultVal
 		}
 		return str
 	}
 
 	def String contextPkg(String ctxName) {
-		if (getPkg() == null) {
+		if (getPkg() === null) {
 			return getBasePkg() + "." + ctxName
 		}
 		return getBasePkg() + "." + ctxName + "." + getPkg()
 	}
 
 	def String asPackage(Namespace ns) {
-		if (getPkg() == null) {
+		if (getPkg() === null) {
 			return getBasePkg() + "." + ns.context.name + "." + ns.name;
 		}
 		return getBasePkg() + "." + ns.context.name + "." + getPkg() + "." + ns.name;

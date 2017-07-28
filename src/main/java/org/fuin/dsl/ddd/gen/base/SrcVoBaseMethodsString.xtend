@@ -24,10 +24,10 @@ class SrcVoBaseMethodsString implements CodeSnippet {
 	 */
 	new(CodeSnippetContext ctx, AbstractVO vo) {
 		this.ctx = ctx
-		if (vo == null) {
+		if (vo === null) {
 			throw new IllegalArgumentException("vo cannot be null")
 		}
-		if (vo.baseType == null) {
+		if (vo.baseType === null) {
 			throw new IllegalArgumentException("vo.base cannot be null")
 		}
 		this.typeName = vo.name

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.fuin</groupId>
 		<artifactId>pom-osgi</artifactId>
-		<version>1.1.1</version>
+		<version>1.4.0</version>
 	</parent>
 
 	<groupId>org.fuin.dsl.ddd</groupId>
@@ -29,32 +29,36 @@
 		<url>https://github.com/fuinorg/ddd-templates/issues</url>
 	</issueManagement>
 
+	<properties>
+		<xtext.version>2.12.0</xtext.version>
+	</properties>
+
 	<dependencies>
 
 		<!-- compile -->
 
 		<dependency>
 			<groupId>org.fuin.dsl.ddd</groupId>
-			<artifactId>org.fuin.dsl.ddd.dsl</artifactId>
-			<version>0.2.2-SNAPSHOT</version>
+			<artifactId>org.fuin.dsl.ddd</artifactId>
+			<version>0.2.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
-			<version>2.7.2</version>
+			<version>${xtext.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore</artifactId>
-			<version>2.9.1</version>
+			<version>2.11.2</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore.change</artifactId>
-			<version>2.9.0</version>
+			<version>2.11.0</version>
 		</dependency>
 
 		<dependency>
@@ -66,13 +70,13 @@
 		<dependency>
 			<groupId>org.fuin</groupId>
 			<artifactId>ddd-4-java</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>0.1.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.fuin</groupId>
 			<artifactId>objects4j</artifactId>
-			<version>0.6.1</version>
+			<version>0.6.4</version>
 		</dependency>
 
 		<dependency>
@@ -89,12 +93,12 @@
 
 		<!-- test -->
 
-        <dependency>
-            <groupId>org.fuin.esc</groupId>
-            <artifactId>esc-spi</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.fuin.esc</groupId>
+			<artifactId>esc-spi</artifactId>
+			<version>0.2.0</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -113,21 +117,28 @@
 		<dependency>
 			<groupId>org.fuin.dsl.ddd</groupId>
 			<artifactId>org.fuin.dsl.ddd.tests</artifactId>
-			<version>0.2.2-SNAPSHOT</version>
+			<version>0.2.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.core</artifactId>
-			<version>2.7.2</version>
+			<version>${xtext.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext.testing</artifactId>
+			<version>${xtext.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.fuin</groupId>
 			<artifactId>units4j</artifactId>
-			<version>0.6.1</version>
+			<version>0.8.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -153,31 +164,31 @@
 
 		<plugins>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.7</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<additionalparam>-Xdoclint:none</additionalparam>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -229,7 +240,7 @@
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
-				<version>2.7.2</version>
+				<version>${xtext.version}</version>
 				<executions>
 					<execution>
 						<goals>

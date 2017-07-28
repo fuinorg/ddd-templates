@@ -52,14 +52,14 @@ class FinalValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 	}
 
 	def addImports(CodeSnippetContext ctx, ValueObject vo) {
-		if (vo.base != null) {
+		if (vo.base !== null) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")			
 		}
 		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
 	}
 
 	def addReferences(CodeSnippetContext ctx, ValueObject vo) {
-		if (vo.base != null) {
+		if (vo.base !== null) {
 			ctx.requiresReference(vo.uniqueName + "Converter")			
 		}
 		ctx.requiresReference(vo.uniqueAbstractName)
@@ -70,7 +70,7 @@ class FinalValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			«new SrcJavaDocType(vo)»
 			@Immutable
 			«new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
-			«IF vo.base != null»
+			«IF vo.base !== null»
 			@XmlJavaTypeAdapter(«vo.name»Converter.class)
 			«ENDIF»
 			public final class «className» extends «abstractClassName» {

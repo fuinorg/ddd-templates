@@ -37,7 +37,7 @@ class SrcMethodSignature implements CodeSnippet {
 	new(CodeSnippetContext ctx, MethodData methodData) {
 		this.ctx = ctx
 		this.methodData = methodData
-		if (methodData.returnType == null) {
+		if (methodData.returnType === null) {
 			this.returnType = "void"
 		} else {
 			this.returnType = methodData.returnType.type.name

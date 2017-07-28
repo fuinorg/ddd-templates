@@ -18,7 +18,7 @@ class SrcThrowsExceptions implements CodeSnippet {
 	new(CodeSnippetContext ctx, List<Exception> exceptions) {
 		this.ctx = ctx
 		this.exceptions = exceptions
-		if (exceptions != null) {
+		if (exceptions !== null) {
 			for (Exception exception : exceptions) {
 				ctx.requiresReference(exception.uniqueName)
 			}
@@ -26,7 +26,7 @@ class SrcThrowsExceptions implements CodeSnippet {
 	}
 
 	override toString() {
-		if ((exceptions == null) || (exceptions.size == 0)) {
+		if ((exceptions === null) || (exceptions.size == 0)) {
 			return ""
 		}
 		''' throws «FOR ex : exceptions SEPARATOR ', '»«ex.name»«ENDFOR»'''

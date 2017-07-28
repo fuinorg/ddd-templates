@@ -84,7 +84,7 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 		while (iter.hasNext) {
 			val AbstractEntityId entityId = iter.next
 			var List<AbstractEntityId> entityIds = contextEntityIds.get(entityId.context.name)
-			if (entityIds == null) {
+			if (entityIds === null) {
 				entityIds = new ArrayList<AbstractEntityId>();
 				contextEntityIds.put(entityId.context.name, entityIds)
 			}

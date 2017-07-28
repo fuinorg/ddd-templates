@@ -33,7 +33,7 @@ class SrcVarDecl implements CodeSnippet {
 		this.xml = xml
 		this.attribute = attribute
 
-		if (attribute.nullable == null) {
+		if (attribute.nullable === null) {
 			ctx.requiresImport(NotNull.name)
 		}
 		addRequiredReferences(attribute, ctx)
@@ -53,7 +53,7 @@ class SrcVarDecl implements CodeSnippet {
 			«FOR cc : attribute.invariants.nullSafe SEPARATOR ' '»
 				«new SrcValidationAnnotation(ctx, cc)»
 			«ENDFOR»
-			«IF attribute.nullable == null»
+			«IF attribute.nullable === null»
 				@NotNull
 			«ENDIF»
 		'''

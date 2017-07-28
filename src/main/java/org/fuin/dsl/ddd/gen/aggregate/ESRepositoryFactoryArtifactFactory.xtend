@@ -13,7 +13,6 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class ESRepositoryFactoryArtifactFactory extends AbstractSource<Aggregate> implements ArtifactFactory<Aggregate> {
@@ -49,7 +48,7 @@ class ESRepositoryFactoryArtifactFactory extends AbstractSource<Aggregate> imple
 	}
 
 	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("org.fuin.esc.api.EventStoreSync")
+		ctx.requiresImport("org.fuin.esc.api.EventStore")
 		ctx.requiresImport("javax.enterprise.context.Dependent")
 		ctx.requiresImport("javax.enterprise.inject.Produces")
 	}
@@ -74,7 +73,7 @@ class ESRepositoryFactoryArtifactFactory extends AbstractSource<Aggregate> imple
 				 * @return The new repository instance.
 				 */
 				@Produces
-				public «repositoryName» create(final EventStoreSync eventStore) {
+				public «repositoryName» create(final EventStore eventStore) {
 					return new «repositoryName»(eventStore);
 				}
 			

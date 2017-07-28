@@ -18,7 +18,7 @@ class SrcJavaDocReturn {
 	 * @param doc Text for the comment.
 	 */
 	new(@Nullable String doc) {
-		if (doc == null) {
+		if (doc === null) {
 			this.doc = null
 		} else {
 			this.doc = doc.text
@@ -31,7 +31,7 @@ class SrcJavaDocReturn {
 	 * @param doc Text for the comment.
 	 */
 	new(@Nullable ReturnType returnType) {
-		if (returnType == null) {
+		if (returnType === null) {
 			this.doc = null
 		} else {
 			this.doc = returnType.doc.text		
@@ -39,7 +39,7 @@ class SrcJavaDocReturn {
 	}
 
 	override toString() {
-		if (doc == null) {
+		if (doc === null) {
 			''''''
 		} else {
 			'''

@@ -49,12 +49,6 @@ public final class MyEntity3Id extends AbstractMyEntity3Id {
 	}
 	
 	@Override
-	public final String asString() {
-		// TODO Implement!
-		return null;
-	}
-
-	@Override
 	public final String asBaseType() {
 		// TODO Implement!
 		return null;

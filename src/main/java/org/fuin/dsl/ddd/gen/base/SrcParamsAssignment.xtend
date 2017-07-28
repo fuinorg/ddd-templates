@@ -22,14 +22,14 @@ class SrcParamsAssignment implements CodeSnippet {
 	new(CodeSnippetContext ctx, List<Parameter> vars) {
 		this.ctx = ctx
 		this.vars = vars
-		if ((vars != null) && vars.atLeastOneVarIsNotNullable) {
+		if ((vars !== null) && vars.atLeastOneVarIsNotNullable) {
 			ctx.requiresImport("org.fuin.objects4j.common.Contract")		
 		}
 	}
 
 	private def static boolean atLeastOneVarIsNotNullable(List<Parameter> vars) {
 		for (v : vars) {
-			if (v.nullable == null) {
+			if (v.nullable === null) {
 				return true
 			}
 		}
@@ -37,12 +37,12 @@ class SrcParamsAssignment implements CodeSnippet {
 	}
 
 	override toString() {
-		if ((vars == null) || (vars.size == 0)) {
+		if ((vars === null) || (vars.size == 0)) {
 			return ""
 		}
 		'''	
 			«FOR v : vars»	
-				«IF v.nullable == null»
+				«IF v.nullable === null»
 					Contract.requireArgNotNull("«v.name»", «v.name»);
 				«ENDIF»
 			«ENDFOR»

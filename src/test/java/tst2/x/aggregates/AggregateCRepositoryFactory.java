@@ -19,7 +19,7 @@ package tst2.x.aggregates;
 
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
-import org.fuin.esc.api.EventStoreSync;
+import org.fuin.esc.api.EventStore;
 
 /**
  * Creates a AggregateCRepository.
@@ -35,7 +35,7 @@ public class AggregateCRepositoryFactory {
 	 * @return The new repository instance.
 	 */
 	@Produces
-	public AggregateCRepository create(final EventStoreSync eventStore) {
+	public AggregateCRepository create(final EventStore eventStore) {
 		return new AggregateCRepository(eventStore);
 	}
 

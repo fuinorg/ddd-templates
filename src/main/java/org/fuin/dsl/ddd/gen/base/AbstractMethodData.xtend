@@ -63,7 +63,7 @@ abstract class AbstractMethodData {
 	 * @return Immutable list of annotations.
 	 */
 	public final def getAnnotations() {
-		if (annotations == null) {
+		if (annotations === null) {
 			return null
 		}
 		Collections.unmodifiableList(annotations)
@@ -93,7 +93,7 @@ abstract class AbstractMethodData {
 	 * @return Immutable list of exceptions.
 	 */
 	public final def getExceptions() {
-		if (exceptions == null) {
+		if (exceptions === null) {
 			return null
 		}
 		Collections.unmodifiableList(exceptions)

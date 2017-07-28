@@ -96,12 +96,6 @@ public final class EntityBId extends AbstractStringValueObject implements Entity
 	}
 	
 	@Override
-	public final String asString() {
-		// TODO Implement!
-		return null;
-	}
-
-	@Override
 	public final String asBaseType() {
 		// TODO Implement!
 		return null;

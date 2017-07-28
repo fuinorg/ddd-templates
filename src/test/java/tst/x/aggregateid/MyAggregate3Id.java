@@ -49,12 +49,6 @@ public final class MyAggregate3Id extends AbstractMyAggregate3Id {
 	}
 	
 	@Override
-	public final String asString() {
-		// TODO Implement!
-		return null;
-	}
-
-	@Override
 	public final String asBaseType() {
 		// TODO Implement!
 		return null;

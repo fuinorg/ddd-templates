@@ -99,12 +99,6 @@ public final class MyEntity3Id extends AbstractStringValueObject implements Enti
 	}
 	
 	@Override
-	public final String asString() {
-		// TODO Implement!
-		return null;
-	}
-
-	@Override
 	public final String asBaseType() {
 		// TODO Implement!
 		return null;

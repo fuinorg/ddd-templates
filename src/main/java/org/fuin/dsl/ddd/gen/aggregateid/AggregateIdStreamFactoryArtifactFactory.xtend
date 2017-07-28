@@ -23,7 +23,7 @@ class AggregateIdStreamFactoryArtifactFactory extends AbstractSource<AggregateId
 
 	override create(AggregateId aggregateId, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		if (aggregateId.aggregateNullsafe == null) {
+		if (aggregateId.aggregateNullsafe === null) {
 			return null;
 		}
 

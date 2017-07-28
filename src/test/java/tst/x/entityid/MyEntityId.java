@@ -48,11 +48,6 @@ public final class MyEntityId extends AbstractMyEntityId {
 	}
 	
 	@Override
-	public final String asString() {
-		return "" + getValue();
-	}
-
-	@Override
 	public final String asBaseType() {
 		return getValue();
 	}

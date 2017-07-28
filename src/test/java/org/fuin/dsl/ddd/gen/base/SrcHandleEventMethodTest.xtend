@@ -1,11 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
 import javax.inject.Inject
-import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.junit4.util.ParseHelper
-import org.eclipse.xtext.junit4.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.util.ParseHelper
+import org.eclipse.xtext.testing.validation.ValidationTestHelper
+import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
@@ -49,13 +49,13 @@ class SrcHandleEventMethodTest {
 				 * @param event Event to handle.
 				 */
 				@Override
-				@EventHandler
+				@ApplyEvent
 				protected final void handle(@NotNull final DidSomethingEvent event) {
 					// TODO Handle event!
 				}
 			''')
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull",
-			"org.fuin.ddd4j.ddd.EventHandler", "a.b.c.DidSomethingEvent")
+			"org.fuin.ddd4j.ddd.ApplyEvent", "a.b.c.DidSomethingEvent")
 
 	}
 

@@ -102,7 +102,7 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 				name = vo.name
 			}
 			constructors.add(new ConstructorData("/** Default constructor. */", "protected", name, null, null))
-			if ((vo.constructors == null) || (vo.constructors.size == 0)) {
+			if ((vo.constructors === null) || (vo.constructors.size == 0)) {
 				constructors.add(
 					new ConstructorData("/** Constructor with all data. */", modifiers, name, vo.asWrappedParameters(passToSuper), null))
 			} else {
@@ -127,7 +127,7 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	}
 
 	override toString() {
-		if ((constructors == null) || (constructors.size == 0)) {
+		if ((constructors === null) || (constructors.size == 0)) {
 			return ""
 		}
 		'''	

@@ -50,7 +50,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType")
 		ctx.requiresImport("org.fuin.ddd4j.esrepo.EventStoreRepository")
-		ctx.requiresImport("org.fuin.esc.api.EventStoreSync")
+		ctx.requiresImport("org.fuin.esc.api.EventStore")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
@@ -70,7 +70,7 @@ class ESRepositoryArtifactFactory extends AbstractSource<Aggregate> implements A
 				 * 
 				 * @param eventStore Event store.
 				 */
-				public «className»(final EventStoreSync eventStore) {
+				public «className»(final EventStore eventStore) {
 					super(eventStore);
 				}
 			

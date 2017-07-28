@@ -83,7 +83,7 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 		while (iter.hasNext) {
 			val AggregateId aggregateId = iter.next
 			var List<AggregateId> aggregateIds = contextEntityIds.get(aggregateId.context.name)
-			if (aggregateIds == null) {
+			if (aggregateIds === null) {
 				aggregateIds = new ArrayList<AggregateId>();
 				contextEntityIds.put(aggregateId.context.name, aggregateIds)
 			}

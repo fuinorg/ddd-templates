@@ -37,7 +37,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 		val AbstractEntity entity = event.entity;
 		val className = event.getName() + "Test"
 		var Namespace ns;
-		if (entity == null) {
+		if (entity === null) {
 			ns = event.namespace;
 		} else {
 			ns = entity.namespace;
@@ -60,7 +60,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 		ctx.addReferences(entity, event)
 
 		var String src;
-		if (entity == null) {
+		if (entity === null) {
 			src = createStandardEventTest(ctx, event, pkg, className).toString();
 		} else {
 			src = createDomainEventTest(ctx, event, pkg, className).toString();
@@ -73,19 +73,19 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 		ctx.requiresImport("static org.fest.assertions.Assertions.*")
 		ctx.requiresImport("org.junit.Test")
 		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
-		if (entity != null) {
+		if (entity !== null) {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
 		}
-		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.serialize")
-		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.deserialize")
-		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.marshal")
-		ctx.requiresImport("static org.fuin.units4j.Units4JUtils.unmarshal")
+		ctx.requiresImport("static org.fuin.utils4j.Utils4J.serialize")
+		ctx.requiresImport("static org.fuin.utils4j.Utils4J.deserialize")
+		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.marshal")
+		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.unmarshal")
 	}
 
 	def addReferences(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
 		ctx.requiresReference(event.uniqueName)
-		if (entity != null) {
+		if (entity !== null) {
 			ctx.requiresReference(event.aggregate.idTypeNullsafe.uniqueName)
 			ctx.requiresReference(event.context.name.toFirstUpper + "EntityIdFactory")
 		}

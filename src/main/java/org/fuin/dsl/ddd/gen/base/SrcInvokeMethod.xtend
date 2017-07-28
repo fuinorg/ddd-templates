@@ -40,7 +40,7 @@ class SrcInvokeMethod implements CodeSnippet {
 		this.ctx = ctx
 		this.method = method
 		this.names = new ArrayList()
-		if (names != null) {
+		if (names !== null) {
 			this.names.addAll(names)		
 		}
 	}

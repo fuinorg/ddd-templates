@@ -27,7 +27,7 @@ class SrcVoBaseMethods implements CodeSnippet {
 	 */
 	new(CodeSnippetContext ctx, AbstractVO vo) {
 		this.ctx = ctx
-		if (vo == null) {
+		if (vo === null) {
 			throw new IllegalArgumentException("vo cannot be null")
 		}
 		this.vo = vo
@@ -36,7 +36,7 @@ class SrcVoBaseMethods implements CodeSnippet {
 
 	override toString() {
 		'''
-		«IF vo.baseType != null»
+		«IF vo.baseType !== null»
 		@Override
 		public final «vo.baseType.simpleName(ctx)» asBaseType() {
 			«IF vo.attributes.nullSafe.size == 1»

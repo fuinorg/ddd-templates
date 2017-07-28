@@ -86,7 +86,7 @@ class SrcJavaDocMethod implements CodeSnippet {
 	}
 
 	override toString() {
-		if (doc == null) {
+		if (doc === null) {
 			return ""
 		}
 		'''

@@ -79,11 +79,6 @@ public final class EntityBId extends AbstractStringValueObject implements
     }
 
     @Override
-    public final String asString() {
-        return "" + getValue();
-    }
-
-    @Override
     public final String asBaseType() {
         return getValue();
     }

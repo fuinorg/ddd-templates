@@ -4,7 +4,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.objects4j.vo.AbstractStringValueObject
-import org.fuin.ddd4j.ddd.AbstractUUIDVO
+import org.fuin.objects4j.vo.AbstractUuidValueObject
 import org.fuin.objects4j.vo.AbstractIntegerValueObject
 import org.fuin.objects4j.vo.AbstractLongValueObject
 
@@ -26,13 +26,13 @@ class SrcVoBaseOptionalExtends implements CodeSnippet {
 	 */
 	new(CodeSnippetContext ctx, ExternalType base) {
 		this.ctx = ctx
-		if (base == null) {
+		if (base === null) {
 			this.baseName = null
 		} else {
 			this.baseName = base.name
 			switch baseName {
 				case "String": ctx.requiresImport(AbstractStringValueObject.name)
-				case "UUID": ctx.requiresImport(AbstractUUIDVO.name)
+				case "UUID": ctx.requiresImport(AbstractUuidValueObject.name)
 				case "Integer": ctx.requiresImport(AbstractIntegerValueObject.name)
 				case "Long": ctx.requiresImport(AbstractLongValueObject.name)
 			}
@@ -40,12 +40,12 @@ class SrcVoBaseOptionalExtends implements CodeSnippet {
 	}
 
 	override toString() {
-		if (baseName == null) {
+		if (baseName === null) {
 			return ""
 		}
 		switch baseName {
 			case "String": return "extends AbstractStringValueObject "
-			case "UUID": return "extends AbstractUUIDVO "
+			case "UUID": return "extends AbstractUuidValueObject "
 			case "Integer": return "extends AbstractIntegerValueObject "
 			case "Long": return "extends AbstractLongValueObject "
 			default: return ""

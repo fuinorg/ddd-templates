@@ -2,11 +2,11 @@ package org.fuin.dsl.ddd.gen.constr
 
 import java.util.HashMap
 import javax.inject.Inject
-import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.junit4.util.ParseHelper
-import org.eclipse.xtext.junit4.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.DomainDrivenDesignDslInjectorProvider
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.util.ParseHelper
+import org.eclipse.xtext.testing.validation.ValidationTestHelper
+import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.gen.base.AbstractSource
@@ -87,7 +87,7 @@ class ValidatorArtifactFactoryTest {
 
 		val ValidatorArtifactFactory testee = createTestee()
 		val Constraint constraint = model.find(typeof(Constraint), constrName)
-		if (constraint.exception != null) {
+		if (constraint.exception !== null) {
 			val constrException = constrChar + "Exception"
 			refReg.putReference("x.constr." + constrException, EXAMPLES_CONCRETE + ".x.constr." + constrException)
 		}

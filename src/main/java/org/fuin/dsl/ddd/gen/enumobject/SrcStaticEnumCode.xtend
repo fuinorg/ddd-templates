@@ -33,7 +33,7 @@ class SrcStaticEnumCode implements CodeSnippet {
 		this.baseVar = attributes.nullSafe.first
 		this.instances = enumObject.instances
 		this.base = enumObject.base
-		if (base != null) {
+		if (base !== null) {
 			ctx.requiresImport("org.fuin.objects4j.common.NeverNull")
 			ctx.requiresImport("org.fuin.objects4j.common.Nullable")
 		}
@@ -56,7 +56,7 @@ class SrcStaticEnumCode implements CodeSnippet {
 			«FOR in : instances.deprecated SEPARATOR ", "»«in.name»«ENDFOR»
 		};
 		
-		«IF base != null»
+		«IF base !== null»
 		/**
 		 * Determines if it's possible to return an enumeration instance for the
 		 * given value.
@@ -108,7 +108,7 @@ class SrcStaticEnumCode implements CodeSnippet {
 	def private static List<EnumInstance> valid(List<EnumInstance> all) {
 		val List<EnumInstance> list = new ArrayList<EnumInstance>()
 		for (instance : all) {
-			if (instance.deprecated == null) {
+			if (instance.deprecated === null) {
 				list.add(instance)
 			}
 		}
@@ -118,7 +118,7 @@ class SrcStaticEnumCode implements CodeSnippet {
 	def private static List<EnumInstance> deprecated(List<EnumInstance> all) {
 		val List<EnumInstance> list = new ArrayList<EnumInstance>()
 		for (instance : all) {
-			if (instance.deprecated != null) {
+			if (instance.deprecated !== null) {
 				list.add(instance)
 			}
 		}

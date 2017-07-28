@@ -18,7 +18,7 @@
 package tst.x.entities;
 
 import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.EventHandler;
+import org.fuin.ddd4j.ddd.ApplyEvent;
 
 /**
  * Entity C - With constructor, constraint and event.
@@ -45,7 +45,7 @@ public final class EntityC extends AbstractEntityC {
 	 * @param event Event to handle.
 	 */
 	@Override
-	@EventHandler
+	@ApplyEvent
 	protected final void handle(@NotNull final EntityCCreatedEvent event) {
 		// TODO Handle event!
 	}

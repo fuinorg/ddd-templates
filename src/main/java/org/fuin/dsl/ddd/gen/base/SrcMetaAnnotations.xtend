@@ -33,38 +33,38 @@ class SrcMetaAnnotations implements CodeSnippet {
 		this.meta = meta
 		this.bundle = bundle
 		this.key = key
-		if (meta != null) {
-			if (meta.slabel != null) {
+		if (meta !== null) {
+			if (meta.slabel !== null) {
 				ctx.requiresImport(ShortLabel.name)
 			}
-			if (meta.label != null) {
+			if (meta.label !== null) {
 				ctx.requiresImport(Label.name)
 			}
-			if (meta.tooltip != null) {
+			if (meta.tooltip !== null) {
 				ctx.requiresImport(Tooltip.name)
 			}
-			if (meta.prompt != null) {
+			if (meta.prompt !== null) {
 				ctx.requiresImport(Prompt.name)
 			}
 		}
 	}
 
 	override toString() {
-		if (meta == null) {
+		if (meta === null) {
 			''''''
 		} else {
 			'''
-				«IF meta.slabel != null»
-					@ShortLabel(«IF bundle != null»bundle = "«bundle»", «ENDIF»key = "«key».slabel", value = "«meta.slabel»")
+				«IF meta.slabel !== null»
+					@ShortLabel(«IF bundle !== null»bundle = "«bundle»", «ENDIF»key = "«key».slabel", value = "«meta.slabel»")
 				«ENDIF»
-				«IF meta.label != null»
-					@Label(«IF bundle != null»bundle = "«bundle»", «ENDIF»key = "«key».label", value = "«meta.label»")
+				«IF meta.label !== null»
+					@Label(«IF bundle !== null»bundle = "«bundle»", «ENDIF»key = "«key».label", value = "«meta.label»")
 				«ENDIF»
-				«IF meta.tooltip != null»
-					@Tooltip(«IF bundle != null»bundle = "«bundle»", «ENDIF»key = "«key».tooltip", value = "«meta.tooltip»")
+				«IF meta.tooltip !== null»
+					@Tooltip(«IF bundle !== null»bundle = "«bundle»", «ENDIF»key = "«key».tooltip", value = "«meta.tooltip»")
 				«ENDIF»
-				«IF meta.prompt != null»
-					@Prompt(«IF bundle != null»bundle = "«bundle»", «ENDIF»key = "«key».prompt", value = "«meta.prompt»")
+				«IF meta.prompt !== null»
+					@Prompt(«IF bundle !== null»bundle = "«bundle»", «ENDIF»key = "«key».prompt", value = "«meta.prompt»")
 				«ENDIF»
 			'''
 		}

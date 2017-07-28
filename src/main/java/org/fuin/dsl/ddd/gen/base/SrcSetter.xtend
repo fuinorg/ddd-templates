@@ -21,7 +21,7 @@ class SrcSetter implements CodeSnippet {
 		this.ctx = ctx
 		this.modifiers = modifiers
 		this.variable = variable
-		if (variable.nullable == null) {
+		if (variable.nullable === null) {
 			ctx.requiresImport("javax.validation.constraints.NotNull")
 			ctx.requiresImport("org.fuin.objects4j.common.Contract")		
 		}
@@ -35,9 +35,9 @@ class SrcSetter implements CodeSnippet {
 			 *
 			 * @param «variable.name» Value to set.
 			 */
-			«modifiers» void set«variable.name.toFirstUpper»(«IF variable.nullable == null»@NotNull «ENDIF»final «variable.
+			«modifiers» void set«variable.name.toFirstUpper»(«IF variable.nullable === null»@NotNull «ENDIF»final «variable.
 				type(ctx)» «variable.name») {
-				«IF variable.nullable == null»
+				«IF variable.nullable === null»
 					Contract.requireArgNotNull("«variable.name»", «variable.name»);
 				«ENDIF»
 				this.«variable.name» = «variable.name»;

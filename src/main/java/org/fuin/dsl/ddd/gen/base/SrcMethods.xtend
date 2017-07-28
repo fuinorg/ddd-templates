@@ -58,7 +58,7 @@ class SrcMethods implements CodeSnippet {
 	}
 
 	override toString() {
-		if ((methods == null) || (methods.size == 0)) {
+		if ((methods === null) || (methods.size == 0)) {
 			return ""
 		}
 		'''	

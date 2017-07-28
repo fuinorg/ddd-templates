@@ -25,7 +25,7 @@ class SrcParamsDecl implements CodeSnippet {
 	}
 
 	override toString() {
-		if (parameters == null || parameters.size == 0) {
+		if (parameters === null || parameters.size == 0) {
 			return "";
 		}
 		'''«FOR parameter : parameters SEPARATOR ', '»«new SrcParamDecl(ctx, parameter)»«ENDFOR»'''

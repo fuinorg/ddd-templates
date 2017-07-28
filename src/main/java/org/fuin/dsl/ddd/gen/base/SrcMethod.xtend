@@ -53,7 +53,7 @@ class SrcMethod implements CodeSnippet {
 				«new SrcJavaDocMethod(ctx, method)»
 				«new SrcMethodSignature(ctx, method)» {
 					// TODO Implement!
-					«IF method.returnType != null»return null;«ENDIF»
+					«IF method.returnType !== null»return null;«ENDIF»
 				}
 			'''
 		}

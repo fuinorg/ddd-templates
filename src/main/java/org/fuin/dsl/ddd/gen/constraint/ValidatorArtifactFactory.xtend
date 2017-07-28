@@ -25,7 +25,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 	}
 
 	override create(Constraint constraint, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (constraint.input == null) {
+		if (constraint.input === null) {
 			return null;
 		}
 
@@ -55,7 +55,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 	def addImports(CodeSnippetContext ctx, Constraint constraint) {
 		ctx.requiresImport("javax.validation.ConstraintValidator")
 		ctx.requiresImport("javax.validation.ConstraintValidatorContext")
-		if ((constraint.exception != null) && (constraint.input instanceof AbstractVO)) {
+		if ((constraint.exception !== null) && (constraint.input instanceof AbstractVO)) {
 			ctx.requiresImport("javax.validation.Validator")
 		}
 	}
@@ -63,7 +63,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 	def addReferences(CodeSnippetContext ctx, Constraint constraint) {
 		ctx.requiresReference(constraint.uniqueName) 
 		ctx.requiresReference(constraint.input.uniqueName) 
-		if (constraint.exception != null) {
+		if (constraint.exception !== null) {
 			ctx.requiresReference(constraint.exception.uniqueName)
 		}
 	}
@@ -90,7 +90,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 					return true;
 				}
 			
-				«IF c.exception != null»
+				«IF c.exception !== null»
 					«IF c.input instanceof AbstractVO»
 					/**
 					 * Verifies that the argument is valid an throws an exception otherwise.

@@ -63,14 +63,14 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 		val String src = ''' 
 			«new SrcJavaDocType(vo)»
 			«new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
-			«IF vo.base == null»
+			«IF vo.base === null»
 				«new SrcXmlRootElement(ctx, vo)»
 			«ENDIF»
 			public final class «className» «new SrcVoBaseOptionalExtends(ctx, vo.base)»implements ValueObject, Serializable {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«new SrcVarsDecl(ctx, "private", (vo.base == null), vo)»
+				«new SrcVarsDecl(ctx, "private", (vo.base === null), vo)»
 				«new SrcConstructorsWithParamsAssignment(ctx, vo, false)»
 				«new SrcGetters(ctx, "public final", vo.attributes)»
 				«new SrcVoBaseMethods(ctx, vo)»
