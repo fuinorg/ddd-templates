@@ -7,14 +7,10 @@ import java.util.Locale
 import java.util.Map
 import java.util.UUID
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.fuin.ddd4j.ddd.EntityIdPath
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
-import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
-import org.joda.time.LocalTime
 
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import java.util.Collection
@@ -73,9 +69,9 @@ class CtxExternalTypes extends AbstractSource<ResourceSet> {
 	override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
 		val pkg = getVar("namespace", "types")
-		val dateType = getVar(pkg + ".Date", LocalDate.name)
-		val timeType = getVar(pkg + ".Time", LocalTime.name)
-		val dateTimeType = getVar(pkg + ".Timestamp", LocalDateTime.name)
+		val dateType = getVar(pkg + ".Date", "org.joda.time.LocalDate")
+		val timeType = getVar(pkg + ".Time", "org.joda.time.LocalDateTime")
+		val dateTimeType = getVar(pkg + ".Timestamp", "org.joda.time.LocalTime")
 		val uuidType = getVar(pkg + ".UUID", UUID.name)
 
 		// Just registers the external types
@@ -101,7 +97,7 @@ class CtxExternalTypes extends AbstractSource<ResourceSet> {
 			refReg.putReference(name + "." + pkg + ".BigDecimal", BigDecimal.name)
 			refReg.putReference(name + "." + pkg + ".Locale", Locale.name)
 			refReg.putReference(name + "." + pkg + ".Object", Object.name)
-			refReg.putReference(name + "." + pkg + ".EntityIdPath", EntityIdPath.name)
+			refReg.putReference(name + "." + pkg + ".EntityIdPath", "org.fuin.ddd4j.ddd.EntityIdPath")
 			refReg.putReference(name + "." + pkg + ".Collection", Collection.name)
 			refReg.putReference(name + "." + pkg + ".List", List.name)
 			refReg.putReference(name + "." + pkg + ".Map", Map.name)

@@ -75,12 +75,6 @@
 
 		<dependency>
 			<groupId>org.fuin</groupId>
-			<artifactId>ddd-4-java</artifactId>
-			<version>0.1.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.fuin</groupId>
 			<artifactId>objects4j</artifactId>
 			<version>0.6.4</version>
 		</dependency>
@@ -89,12 +83,6 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>2.8.1</version>
 		</dependency>
 
 		<!-- test -->
@@ -148,6 +136,20 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.fuin</groupId>
+			<artifactId>ddd-4-java</artifactId>
+			<version>0.1.0</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<dependency>
 			<!-- Artifact for Java Persistence API 2.1.0 is not available separately... 
 				We don't want to include the whole JEE stuff (javax:javaee-api:7.0) here. -->
