@@ -66,7 +66,6 @@ class FinalAggregateArtifactFactoryTest {
 
 		// TEST
 		val result = new String(testee.create(aggregate, context, false).data)
-		System.out.println(result)
 
 		// VERIFY
 		assertThat(result).isEqualTo(("x/aggregates/" + aggregateName + ".java").loadAbstractExample)
