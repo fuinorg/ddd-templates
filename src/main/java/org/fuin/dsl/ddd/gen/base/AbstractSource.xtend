@@ -16,6 +16,12 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	
 	public val static KEY_PKG = "pkg"
 
+	public val static KEY_JPA = "jpa"
+
+	public val static KEY_JAXB = "jaxb"
+
+	public val static KEY_JSONB = "jsonb"
+
 	String artifactName;
 
 	Map<String, String> varMap;
@@ -34,15 +40,27 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 	}
 
 	private def String getBasePkg() {
-		return varMap.nullSafe.get("basepkg")
+		return varMap.nullSafe.get(KEY_BASE_PKG)
 	}
 
 	private def String getPkg() {
-		return varMap.nullSafe.get("pkg")
+		return varMap.nullSafe.get(KEY_PKG)
 	}
 
+	def boolean getJpa() {
+		return varMap.nullSafe.get(KEY_JPA) !== null
+	}
+
+	def boolean getJaxb() {
+		return varMap.nullSafe.get(KEY_JAXB) !== null
+	}
+
+	def boolean getJsonb() {
+		return varMap.nullSafe.get(KEY_JSONB) !== null
+	}
+	
 	def String getCopyrightHeader() {
-		val String header = varMap.nullSafe.get("copyrightHeader")
+		val String header = varMap.nullSafe.get(KEY_COPYRIGHT_HEADER)
 		if (header === null) {
 			return ""
 		}
