@@ -36,6 +36,7 @@ public final class MyAggregate5Id extends AggregateRootUuid {
 
 	private static final long serialVersionUID = 1000L;
 
+	/** Unique name of the aggregate this identifier refers to. */
 	public static final EntityType TYPE = new StringBasedEntityType(
 			"MyAggregate5");
 
