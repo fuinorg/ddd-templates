@@ -221,7 +221,7 @@ public class MySimpleStringValueObject extends AbstractStringValueObject {
 		@Override
 		public final String adaptToJson(final MySimpleStringValueObject obj)
 				throws Exception {
-			return obj.asBaseType();
+			return fromVO(obj);
 		}
 
 		@Override
