@@ -17,7 +17,7 @@ class TestExtensions {
 	 * @return File content as text.
 	 */
 	def static loadAbstractExample(String filename) {
-		Utils.readAsString("src/test/java/" + EXAMPLES_ABSTRACT + "/" + filename)
+		Utils.readAsString("src/test/expected-java/" + EXAMPLES_ABSTRACT + "/" + filename)
 	}
 
 	/**
@@ -26,7 +26,7 @@ class TestExtensions {
 	 * @return File content as text.
 	 */
 	def static loadConcreteExample(String filename) {
-		Utils.readAsString("src/test/java/" + EXAMPLES_CONCRETE + "/" + filename)
+		Utils.readAsString("src/test/expected-java/" + EXAMPLES_CONCRETE + "/" + filename)
 	}
 	
 }
