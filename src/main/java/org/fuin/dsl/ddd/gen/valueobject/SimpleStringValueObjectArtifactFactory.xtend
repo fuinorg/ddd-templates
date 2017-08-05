@@ -71,8 +71,6 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		ctx.requiresImport(RetentionPolicy.name)
 		ctx.requiresImport(Target.name)
 		if (jsonb) {
-			ctx.requiresImport("javax.json.Json")
-			ctx.requiresImport("javax.json.JsonString")
 			ctx.requiresImport("javax.json.bind.adapter.JsonbAdapter")		
 		}
 		if (jpa) {
@@ -83,7 +81,6 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		ctx.requiresImport(ConstraintValidatorContext.name)
 		ctx.requiresImport(Payload.name)
 		ctx.requiresImport(NotNull.name)
-		
 		if (jaxb) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")		
 		}
@@ -212,7 +209,7 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 				public static final class Converter «IF jaxb»extends XmlAdapter<String, «className»>«ENDIF»
 						implements ValueObjectConverter<String, «className»>
 						«IF jpa», AttributeConverter<«className», String>«ENDIF»
-						«IF jsonb», JsonbAdapter<«className», JsonString>«ENDIF» {
+						«IF jsonb», JsonbAdapter<«className», String>«ENDIF» {
 			
 					// Attribute Converter
 			
@@ -283,21 +280,15 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 					// JSONB Adapter
 
 					@Override
-					public final JsonString adaptToJson(final «className» obj)
+					public final String adaptToJson(final «className» obj)
 							throws Exception {
-						if (obj == null) {
-							return null;
-						}
-						return Json.createValue(obj.asBaseType());
+						return fromVO(obj);
 					}
 
 					@Override
 					public final «className» adaptFromJson(
-							final JsonString obj) throws Exception {
-						if (obj == null) {
-							return null;
-						}
-						return toVO(obj.getString());
+							final String str) throws Exception {
+						return toVO(str);
 					}
 
 					«ENDIF»

@@ -3,6 +3,7 @@ context x {
 	namespace types {
 		type String
 		type Integer
+		type UUID
 	}
 	
 	namespace aggregateid {
@@ -55,6 +56,10 @@ context x {
 			
 		}
 
+		aggregate MyAggregate5 identifier MyAggregate5Id {}
+
+		/** Aggregate ID no attribute and with UUID base. */
+		aggregate-id MyAggregate5Id identifies MyAggregate5 base UUID {}
 
 	}
 

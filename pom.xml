@@ -140,7 +140,7 @@
 		<dependency>
 			<groupId>org.fuin</groupId>
 			<artifactId>ddd-4-java</artifactId>
-			<version>0.1.0</version>
+			<version>0.1.1-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -227,6 +227,7 @@
 						<configuration>
 							<sources>
 								<source>${basedir}/src/main/xtend-gen</source>
+								<source>${basedir}/src/test/xtend-gen</source>
 							</sources>
 						</configuration>
 					</execution>

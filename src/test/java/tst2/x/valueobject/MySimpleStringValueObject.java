@@ -22,8 +22,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.json.Json;
-import javax.json.JsonString;
 import javax.json.bind.adapter.JsonbAdapter;
 import javax.persistence.AttributeConverter;
 import javax.validation.Constraint;
@@ -155,7 +153,7 @@ public class MySimpleStringValueObject extends AbstractStringValueObject {
 	public static final class Converter extends XmlAdapter<String, MySimpleStringValueObject>
 			implements ValueObjectConverter<String, MySimpleStringValueObject>
 			, AttributeConverter<MySimpleStringValueObject, String>
-			, JsonbAdapter<MySimpleStringValueObject, JsonString> {
+			, JsonbAdapter<MySimpleStringValueObject, String> {
 
 		// Attribute Converter
 
@@ -221,21 +219,15 @@ public class MySimpleStringValueObject extends AbstractStringValueObject {
 		// JSONB Adapter
 
 		@Override
-		public final JsonString adaptToJson(final MySimpleStringValueObject obj)
+		public final String adaptToJson(final MySimpleStringValueObject obj)
 				throws Exception {
-			if (obj == null) {
-				return null;
-			}
-			return Json.createValue(obj.asBaseType());
+			return obj.asBaseType();
 		}
 
 		@Override
 		public final MySimpleStringValueObject adaptFromJson(
-				final JsonString obj) throws Exception {
-			if (obj == null) {
-				return null;
-			}
-			return toVO(obj.getString());
+				final String str) throws Exception {
+			return toVO(str);
 		}
 
 	}
