@@ -23,8 +23,8 @@ Aggregate Factories
 -------------------
 Factories generating code based on the the 'aggregate' model element.
 
-| Factory Name | ddd-4-java | Description |
-| :----------- | :--------- | :---------- |
+| Factory Name | Reference to ddd-4-java | Description |
+| :----------- | :---------------------- | :---------- |
 | [AbstractAggregateArtifactFactory](https://github.com/fuinorg/ddd-templates/blob/master/src/main/java/org/fuin/dsl/ddd/gen/aggregate/AbstractAggregateArtifactFactory.xtend) | [AbstractAggregateRoot](https://github.com/fuinorg/ddd-4-java/blob/master/src/main/java/org/fuin/ddd4j/ddd/AbstractAggregateRoot.java) | Abstract aggregate root Java class. |
 | [FinalAggregateArtifactFactory](https://github.com/fuinorg/ddd-templates/blob/master/src/main/java/org/fuin/dsl/ddd/gen/aggregate/FinalAggregateArtifactFactory.xtend)   | - | Final aggregate root Java source extending the above abstract class. |
 | [AggregateDocArtifactFactory](https://github.com/fuinorg/ddd-templates/blob/master/src/main/java/org/fuin/dsl/ddd/gen/aggregate/AggregateDocArtifactFactory.xtend)   | - | Single HTML page with all known aggregates. |
