@@ -50,9 +50,50 @@ Factories generating code based on the the 'aggregate-id' model element.
 | [AggregateIdStreamFactoryArtifactFactory](https://github.com/fuinorg/ddd-templates/blob/master/src/main/java/org/fuin/dsl/ddd/gen/aggregateid/AggregateIdStreamFactoryArtifactFactory.xtend)   | [IdStreamFactory]() | ![Warning](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/warning.gif) ~~OUTDATED~~ - Needs to be reworked. |
 | [SimpleAggregateIdArtifactFactory](https://github.com/fuinorg/ddd-templates/blob/master/src/main/java/org/fuin/dsl/ddd/gen/aggregateid/SimpleAggregateIdArtifactFactory.xtend)   | [AggregateRootUuid](https://github.com/fuinorg/ddd-4-java/blob/master/src/main/java/org/fuin/ddd4j/ddd/AggregateRootUuid.java) | UUID based aggregate root identifier Java class. |
 
-
-**TBD**
+Constraint Factories
+--------------------
 ![Work in progress](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/work-in-progress.png)
+See [source code](https://github.com/fuinorg/ddd-templates/tree/master/src/main/java/org/fuin/dsl/ddd/gen/constraint).
+
+Entity Factories
+----------------
+![Work in progress](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/work-in-progress.png)
+See [source code](https://github.com/fuinorg/ddd-templates/tree/master/src/main/java/org/fuin/dsl/ddd/gen/entity).
+
+Entity ID Factories
+-------------------
+![Work in progress](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/work-in-progress.png)
+See [source code](https://github.com/fuinorg/ddd-templates/tree/master/src/main/java/org/fuin/dsl/ddd/gen/entityid).
+
+Enum Object Factories
+---------------------
+![Work in progress](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/work-in-progress.png)
+See [source code](https://github.com/fuinorg/ddd-templates/tree/master/src/main/java/org/fuin/dsl/ddd/gen/enumobject).
+
+Event Factories
+---------------
+![Work in progress](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/work-in-progress.png)
+See [source code](https://github.com/fuinorg/ddd-templates/tree/master/src/main/java/org/fuin/dsl/ddd/gen/event).
+
+Exception Factories
+-------------------
+![Work in progress](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/work-in-progress.png)
+See [source code](https://github.com/fuinorg/ddd-templates/tree/master/src/main/java/org/fuin/dsl/ddd/gen/except).
+
+Resource Set Factories
+----------------------
+![Work in progress](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/work-in-progress.png)
+See [source code](https://github.com/fuinorg/ddd-templates/tree/master/src/main/java/org/fuin/dsl/ddd/gen/resourceset).
+
+Service Factories
+-----------------
+![Work in progress](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/work-in-progress.png)
+See [source code](https://github.com/fuinorg/ddd-templates/tree/master/src/main/java/org/fuin/dsl/ddd/gen/service).
+
+Value Object Factories
+----------------------
+![Work in progress](https://raw.githubusercontent.com/fuinorg/ddd-templates/master/doc/work-in-progress.png)
+See [source code](https://github.com/fuinorg/ddd-templates/tree/master/src/main/java/org/fuin/dsl/ddd/gen/valueobject).
 
 - - - - - - - - -
 
