@@ -13,7 +13,7 @@ import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.Utils
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 import org.fuin.srcgen4j.commons.DefaultContext
-import org.fuin.srcgen4j.commons.Variable
+import org.fuin.xmlcfg4j.Variable
 import org.junit.Test
 import org.junit.runner.RunWith
 
