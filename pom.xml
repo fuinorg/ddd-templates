@@ -1,303 +1,301 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.fuin</groupId>
-		<artifactId>pom-osgi</artifactId>
-		<version>1.4.0</version>
-	</parent>
+    <parent>
+        <groupId>org.fuin</groupId>
+        <artifactId>pom-osgi</artifactId>
+        <version>1.4.0</version>
+    </parent>
 
-	<groupId>org.fuin.dsl.ddd</groupId>
-	<artifactId>ddd-templates</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <groupId>org.fuin.dsl.ddd</groupId>
+    <artifactId>ddd-templates</artifactId>
+    <version>0.1.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-	<name>DDD Templates</name>
-	<description>Xtend based domain-driven design (DDD) code generation templates for use with SrcGen4J</description>
-	<url>http://www.fuin.org/ddd-templates/</url>
+    <name>DDD Templates</name>
+    <description>Xtend based domain-driven design (DDD) code generation templates for use with SrcGen4J</description>
+    <url>http://www.fuin.org/ddd-templates/</url>
 
-	<scm>
-		<url>https://github.com/fuinorg/ddd-templates/</url>
-		<connection>scm:git:git://github.com/fuinorg/ddd-templates.git</connection>
-		<developerConnection>scm:git:git@github.com:fuinorg/ddd-templates.git</developerConnection>
-	</scm>
+    <scm>
+        <url>https://github.com/fuinorg/ddd-templates/</url>
+        <connection>scm:git:git://github.com/fuinorg/ddd-templates.git</connection>
+        <developerConnection>scm:git:git@github.com:fuinorg/ddd-templates.git</developerConnection>
+    </scm>
 
-	<issueManagement>
-		<system>GitHub Issues</system>
-		<url>https://github.com/fuinorg/ddd-templates/issues</url>
-	</issueManagement>
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/fuinorg/ddd-templates/issues</url>
+    </issueManagement>
 
-	<properties>
-		<xtext.version>2.12.0</xtext.version>
-		<ddd-dsl.version>0.3.0</ddd-dsl.version>
-	</properties>
+    <properties>
+        <xtext.version>2.12.0</xtext.version>
+        <ddd-dsl.version>0.3.0</ddd-dsl.version>
+    </properties>
 
-	<dependencies>
+    <dependencies>
 
-		<!-- compile -->
+        <!-- compile -->
 
-		<dependency>
-			<groupId>org.fuin.dsl.ddd</groupId>
-			<artifactId>org.fuin.dsl.ddd</artifactId>
-			<version>${ddd-dsl.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.fuin.dsl.ddd</groupId>
+            <artifactId>org.fuin.dsl.ddd</artifactId>
+            <version>${ddd-dsl.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.eclipse.xtend</groupId>
-			<artifactId>org.eclipse.xtend.lib</artifactId>
-			<version>${xtext.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.eclipse.xtend</groupId>
+            <artifactId>org.eclipse.xtend.lib</artifactId>
+            <version>${xtext.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.eclipse.xtend</groupId>
-			<artifactId>org.eclipse.xtend.core</artifactId>
-			<version>${xtext.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.eclipse.xtend</groupId>
+            <artifactId>org.eclipse.xtend.core</artifactId>
+            <version>${xtext.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.eclipse.emf</groupId>
-			<artifactId>org.eclipse.emf.ecore</artifactId>
-			<version>2.11.2</version>
-		</dependency>
+        <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>org.eclipse.emf.ecore</artifactId>
+            <version>2.11.2</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.eclipse.emf</groupId>
-			<artifactId>org.eclipse.emf.ecore.change</artifactId>
-			<version>2.11.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>org.eclipse.emf.ecore.change</artifactId>
+            <version>2.11.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.fuin.srcgen4j</groupId>
-			<artifactId>srcgen4j-core</artifactId>
-			<version>0.4.1-SNAPSHOT</version>
-		</dependency>
+        <dependency>
+            <groupId>org.fuin.srcgen4j</groupId>
+            <artifactId>srcgen4j-core</artifactId>
+            <version>0.4.1-SNAPSHOT</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.fuin</groupId>
-			<artifactId>objects4j</artifactId>
-			<version>0.6.4</version>
-		</dependency>
+        <dependency>
+            <groupId>org.fuin</groupId>
+            <artifactId>objects4j</artifactId>
+            <version>0.6.4</version>
+        </dependency>
 
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
-		</dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
 
-		<!-- test -->
+        <!-- test -->
 
-		<dependency>
-			<groupId>org.fuin.esc</groupId>
-			<artifactId>esc-spi</artifactId>
-			<version>0.2.0</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.fuin.esc</groupId>
+            <artifactId>esc-spi</artifactId>
+            <version>0.2.0</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.easytesting</groupId>
-			<artifactId>fest-assert</artifactId>
-			<version>1.4</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+            <version>1.4</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.fuin.dsl.ddd</groupId>
-			<artifactId>org.fuin.dsl.ddd.tests</artifactId>
-			<version>${ddd-dsl.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.fuin.dsl.ddd</groupId>
+            <artifactId>org.fuin.dsl.ddd.tests</artifactId>
+            <version>${ddd-dsl.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.eclipse.xtext</groupId>
-			<artifactId>org.eclipse.xtext.testing</artifactId>
-			<version>${xtext.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.eclipse.xtext</groupId>
+            <artifactId>org.eclipse.xtext.testing</artifactId>
+            <version>${xtext.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.fuin</groupId>
-			<artifactId>units4j</artifactId>
-			<version>0.8.2</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.fuin</groupId>
+            <artifactId>units4j</artifactId>
+            <version>0.8.2</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<version>1.2</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>1.2</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.fuin</groupId>
-			<artifactId>ddd-4-java</artifactId>
-			<version>0.1.1-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.fuin</groupId>
+            <artifactId>ddd-4-java</artifactId>
+            <version>0.1.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>2.8.1</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.8.1</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<!-- Artifact for Java Persistence API 2.1.0 is not available separately... 
-				We don't want to include the whole JEE stuff (javax:javaee-api:7.0) here. -->
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<version>1.0.0.Final</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <!-- Artifact for Java Persistence API 2.1.0 is not available separately... We don't want to include the whole JEE stuff (javax:javaee-api:7.0) here. -->
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>javax.json.bind</groupId>
-			<artifactId>javax.json.bind-api</artifactId>
-			<version>1.0</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>javax.json.bind</groupId>
+            <artifactId>javax.json.bind-api</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.eclipse</groupId>
-			<artifactId>yasson</artifactId>
-			<version>1.0</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.eclipse</groupId>
+            <artifactId>yasson</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.json</artifactId>
-			<version>1.1</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
-	<build>
+    <build>
 
-		<plugins>
+        <plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.7</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<configuration>
-							<additionalparam>-Xdoclint:none</additionalparam>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.8</version>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${basedir}/src/main/xtend-gen</source>
-								<source>${basedir}/src/test/xtend-gen</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/src/main/xtend-gen</source>
+                                <source>${basedir}/src/test/xtend-gen</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${basedir}/src/main/xtend-gen</directory>
-							<includes>
-								<include>**</include>
-							</includes>
-							<excludes>
-								<exclude>.gitignore</exclude>
-							</excludes>
-						</fileset>
-						<fileset>
-							<directory>${basedir}/src/test/xtend-gen</directory>
-							<includes>
-								<include>**</include>
-							</includes>
-							<excludes>
-								<exclude>.gitignore</exclude>
-							</excludes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/src/main/xtend-gen</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                            <excludes>
+                                <exclude>.gitignore</exclude>
+                            </excludes>
+                        </fileset>
+                        <fileset>
+                            <directory>${basedir}/src/test/xtend-gen</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                            <excludes>
+                                <exclude>.gitignore</exclude>
+                            </excludes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>xtend-maven-plugin</artifactId>
-				<version>${xtext.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>testCompile</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
-							<testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.eclipse.xtend</groupId>
+                <artifactId>xtend-maven-plugin</artifactId>
+                <version>${xtext.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
+                            <testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-		</plugins>
+        </plugins>
 
-	</build>
+    </build>
 
-	<reporting>
+    <reporting>
 
-		<plugins>
+        <plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.10</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.10</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
 
-		</plugins>
+        </plugins>
 
-	</reporting>
+    </reporting>
 
 </project>

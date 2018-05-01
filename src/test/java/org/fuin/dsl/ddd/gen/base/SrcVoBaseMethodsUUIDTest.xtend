@@ -76,7 +76,7 @@ class SrcVoBaseMethodsUUIDTest {
 			
 		'''
 		)
-		assertThat(ctx.imports).containsOnly("a.b.c.MyAggregateId", "java.util.UUID")
+		assertThat(ctx.imports).containsOnly("a.b.c.MyAggregateId", "java.util.UUID", "org.fuin.objects4j.vo.UUIDStrValidator")
 
 	}
 

@@ -33,6 +33,7 @@ class SrcVoBaseMethodsUUID implements CodeSnippet {
 		this.typeName = vo.name
 		ctx.requiresReference(vo.uniqueName)
 		ctx.requiresImport("java.util.UUID")
+		ctx.requiresImport("org.fuin.objects4j.vo.UUIDStrValidator")
 	}
 
 	override toString() {
