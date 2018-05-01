@@ -1,5 +1,5 @@
 .*
-!/.gitignore
-!/.gitkeep
-/target
+!.gitignore
+!.gitkeep
+target
 META-INF/MANIFEST.MF
