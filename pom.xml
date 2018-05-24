@@ -30,7 +30,7 @@
 	<properties>
 		<xtext.version>2.12.0</xtext.version>
 		<ddd-dsl.version>0.3.0</ddd-dsl.version>
-		<esc.version>0.3.1-SNAPSHOT</esc.version>
+		<esc.version>0.3.0</esc.version>
 	</properties>
 
 	<dependencies>
@@ -70,7 +70,7 @@
 		<dependency>
 			<groupId>org.fuin.srcgen4j</groupId>
 			<artifactId>srcgen4j-core</artifactId>
-			<version>0.4.1-SNAPSHOT</version>
+			<version>0.4.2</version>
 		</dependency>
 
 		<dependency>
@@ -139,7 +139,7 @@
 		<dependency>
 			<groupId>org.fuin</groupId>
 			<artifactId>ddd-4-java</artifactId>
-			<version>0.1.1-SNAPSHOT</version>
+			<version>0.2.0</version>
 			<scope>test</scope>
 		</dependency>
 
