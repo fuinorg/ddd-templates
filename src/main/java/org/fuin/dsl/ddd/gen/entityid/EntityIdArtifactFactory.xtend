@@ -86,7 +86,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 				«new SrcVarsDecl(ctx, "private", false, id)»
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
 				«new SrcGetters(ctx, "public final", id.attributes)»
-				«new SrcEntityIdTypeMethods(ctx, id.entityNullsafe.name)»
+				«new SrcEntityIdTypeMethods(ctx, id.entityNullsafe.name, id.base)»
 				«IF id.base === null»
 				@Override
 				public final String asString() {

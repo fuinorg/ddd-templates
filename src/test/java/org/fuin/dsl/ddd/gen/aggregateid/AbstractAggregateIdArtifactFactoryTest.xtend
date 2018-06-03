@@ -109,6 +109,25 @@ class AbstractAggregateIdArtifactFactoryTest {
 		
 	}	
 
+	@Test
+	def void testCreateMyAggregate6Id() {
+		
+		// PREPARE
+		val context = new HashMap<String, Object>()
+		val refReg = context.codeReferenceRegistry
+		refReg.putReference("x.types.UUID", "java.util.UUID")
+
+		val AbstractAggregateIdArtifactFactory testee = createTestee()
+		val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregate6Id")
+
+		// TEST
+		val result = new String(testee.create(aggregateId, context, false).data)
+
+		// VERIFY
+		assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregate6Id.java".loadAbstractExample)
+		
+	}	
+
 	private def createTestee() {
 		val factory = new AbstractAggregateIdArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractAggregateId",
