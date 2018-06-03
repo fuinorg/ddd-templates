@@ -19,7 +19,6 @@ package tst2.x.except;
 
 import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.KeyValue;
 
 /**
@@ -49,7 +48,7 @@ public final class ExceptionC extends Exception {
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getA() {
 		return a;
 	}

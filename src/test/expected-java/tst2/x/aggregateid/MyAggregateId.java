@@ -17,14 +17,13 @@
  */
 package tst2.x.aggregateid;
 
+import javax.annotation.concurrent.Immutable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.fuin.ddd4j.ddd.AggregateRootId;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.Immutable;
-import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
@@ -64,7 +63,7 @@ private static final long serialVersionUID = 1000L;
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getValue() {
 		return value;
 	}

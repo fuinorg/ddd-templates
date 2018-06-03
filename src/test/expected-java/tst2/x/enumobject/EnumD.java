@@ -17,11 +17,10 @@
  */
 package tst2.x.enumobject;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.Nullable;
 
 /** Enumeration type C - With deprecated instance. */
 public enum EnumD {
@@ -80,7 +79,7 @@ public enum EnumD {
      * 
      * @return Instance
      */
-    @NeverNull
+    @NotNull
     public static EnumD valueOf(@Nullable final Integer value) {
         if (value == null) {
             return null;

@@ -49,7 +49,7 @@ class SrcGettersTest {
 				 *
 				 * @return Current value.
 				 */
-				 @NeverNull
+				 @NotNull
 				public String getName() {
 					return name;
 				}
@@ -65,7 +65,7 @@ class SrcGettersTest {
 				
 			''')
 		assertThat(ctx.imports).containsOnly("java.lang.String", "java.util.Locale",
-			"org.fuin.objects4j.common.NeverNull")
+			"javax.validation.constraints.NotNull")
 
 	}
 

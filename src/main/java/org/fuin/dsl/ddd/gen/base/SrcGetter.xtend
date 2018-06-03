@@ -23,7 +23,7 @@ class SrcGetter implements CodeSnippet {
 		this.variable = variable
 		
 		if (variable.nullable === null) {
-			ctx.requiresImport("org.fuin.objects4j.common.NeverNull")		
+			ctx.requiresImport("javax.validation.constraints.NotNull")		
 		}
 		addRequiredReferences(variable, ctx)
 	}
@@ -35,7 +35,7 @@ class SrcGetter implements CodeSnippet {
 			 *
 			 * @return Current value.
 			 */
-			 «IF variable.nullable === null»@NeverNull«ENDIF»
+			 «IF variable.nullable === null»@NotNull«ENDIF»
 			«modifiers» «variable.type(ctx)» get«variable.name.toFirstUpper»() {
 				return «variable.name»;
 			}

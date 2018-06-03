@@ -22,7 +22,6 @@ import org.fuin.ddd4j.ddd.EntityId;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
@@ -66,7 +65,7 @@ public abstract class AbstractMyEntity3Id extends AbstractStringValueObject impl
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getA() {
 		return a;
 	}
@@ -76,7 +75,7 @@ public abstract class AbstractMyEntity3Id extends AbstractStringValueObject impl
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getB() {
 		return b;
 	}

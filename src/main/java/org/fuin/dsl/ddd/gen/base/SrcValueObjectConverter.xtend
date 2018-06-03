@@ -62,7 +62,7 @@ class SrcValueObjectConverter implements CodeSnippet {
 		ctx.requiresImport("javax.enterprise.context.ApplicationScoped")
 		ctx.requiresImport("javax.persistence.AttributeConverter")
 		ctx.requiresImport("javax.persistence.Converter")
-		ctx.requiresImport("org.fuin.objects4j.common.ThreadSafe")
+		ctx.requiresImport("javax.annotation.concurrent.ThreadSafe")
 		ctx.requiresImport("org.fuin.objects4j.vo.AbstractValueObjectConverter")
 		if (implementsSingleEntityIdFactory) {
 			if (aggregateId) {

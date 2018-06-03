@@ -55,7 +55,7 @@ class FinalValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 		if (vo.base !== null) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")			
 		}
-		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
+		ctx.requiresImport("javax.annotation.concurrent.Immutable")
 	}
 
 	def addReferences(CodeSnippetContext ctx, ValueObject vo) {

@@ -57,7 +57,7 @@ class SimpleAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 		ctx.requiresImport("org.fuin.ddd4j.ddd.AggregateRootUuid")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.StringBasedEntityType")
-		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
+		ctx.requiresImport("javax.annotation.concurrent.Immutable")
 		ctx.requiresImport("org.fuin.objects4j.vo.ValueObjectConverter")		
 		ctx.requiresImport(UUID.name);
 		if (jsonb) {

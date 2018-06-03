@@ -22,7 +22,6 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
@@ -61,7 +60,7 @@ public final class MyValueObject2 implements ValueObject, Serializable {
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getId() {
 		return id;
 	}

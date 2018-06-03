@@ -21,7 +21,6 @@ import javax.validation.constraints.NotNull;
 import org.fuin.ddd4j.ddd.AbstractEntity;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 
 /**
  * Entity C - With constructor, constraint and event.
@@ -73,7 +72,7 @@ public abstract class AbstractEntityC extends AbstractEntity<AggregateXId, Aggre
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	protected final String getA() {
 		return a;
 	}
@@ -83,7 +82,7 @@ public abstract class AbstractEntityC extends AbstractEntity<AggregateXId, Aggre
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	protected final Integer getB() {
 		return b;
 	}

@@ -19,7 +19,6 @@ package tst.x.enumobject;
 
 import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 
 /** Enumeration type D - With integer base type. */
 public abstract class AbstractEnumD {
@@ -43,7 +42,7 @@ public abstract class AbstractEnumD {
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final Integer getId() {
 		return id;
 	}

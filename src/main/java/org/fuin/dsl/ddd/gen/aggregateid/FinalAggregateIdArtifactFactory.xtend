@@ -55,7 +55,7 @@ class FinalAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 		if (aggregateId.base !== null) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")
 		}
-		ctx.requiresImport("org.fuin.objects4j.common.Immutable")
+		ctx.requiresImport("javax.annotation.concurrent.Immutable")
 	}
 
 	def addReferences(CodeSnippetContext ctx, AggregateId aggregateId) {

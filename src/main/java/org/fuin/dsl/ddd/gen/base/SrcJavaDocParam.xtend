@@ -1,7 +1,7 @@
 package org.fuin.dsl.ddd.gen.base
 
 import javax.validation.constraints.NotNull
-import org.fuin.objects4j.common.Nullable
+import javax.annotation.Nullable
 
 /**
  * Creates the source code for a JavaDoc <code>@param</code> line.

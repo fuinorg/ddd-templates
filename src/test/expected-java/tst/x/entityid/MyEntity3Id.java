@@ -17,9 +17,9 @@
  */
 package tst.x.entityid;
 
+import javax.annotation.concurrent.Immutable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import org.fuin.objects4j.common.Immutable;
 import tst2.x.entityid.MyEntity3IdConverter;
 
 /**

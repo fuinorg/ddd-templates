@@ -21,7 +21,6 @@ import javax.validation.constraints.NotNull;
 import org.fuin.ddd4j.ddd.AbstractAggregateRoot;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 
 /**
  * Aggregate B - With variables.
@@ -62,7 +61,7 @@ public abstract class AbstractAggregateB extends AbstractAggregateRoot<Aggregate
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	protected final String getA() {
 		return a;
 	}
@@ -72,7 +71,7 @@ public abstract class AbstractAggregateB extends AbstractAggregateRoot<Aggregate
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	protected final Integer getB() {
 		return b;
 	}

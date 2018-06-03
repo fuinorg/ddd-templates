@@ -22,7 +22,6 @@ import org.fuin.ddd4j.ddd.AggregateRootId;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.ValueObject;
 
 /**
@@ -65,7 +64,7 @@ public abstract class AbstractMyAggregate4Id implements AggregateRootId, ValueOb
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getA() {
 		return a;
 	}
@@ -75,7 +74,7 @@ public abstract class AbstractMyAggregate4Id implements AggregateRootId, ValueOb
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getB() {
 		return b;
 	}

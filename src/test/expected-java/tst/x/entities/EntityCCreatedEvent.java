@@ -25,7 +25,6 @@ import org.fuin.ddd4j.ddd.AbstractDomainEvent;
 import org.fuin.ddd4j.ddd.EntityIdPath;
 import org.fuin.ddd4j.ddd.EventType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.KeyValue;
 
 /**
@@ -86,7 +85,7 @@ public final class EntityCCreatedEvent extends AbstractDomainEvent<EntityCId> {
      * 
      * @return Current value.
      */
-    @NeverNull
+    @NotNull
     public final String getA() {
         return a;
     }
@@ -96,7 +95,7 @@ public final class EntityCCreatedEvent extends AbstractDomainEvent<EntityCId> {
      * 
      * @return Current value.
      */
-    @NeverNull
+    @NotNull
     public final Integer getB() {
         return b;
     }

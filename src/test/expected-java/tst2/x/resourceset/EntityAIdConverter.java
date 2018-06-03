@@ -17,12 +17,12 @@
  */
 package tst2.x.resourceset;
 
+import javax.annotation.concurrent.ThreadSafe;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import org.fuin.ddd4j.ddd.EntityId;
 import org.fuin.ddd4j.ddd.SingleEntityIdFactory;
-import org.fuin.objects4j.common.ThreadSafe;
 import org.fuin.objects4j.vo.AbstractValueObjectConverter;
 
 @ThreadSafe

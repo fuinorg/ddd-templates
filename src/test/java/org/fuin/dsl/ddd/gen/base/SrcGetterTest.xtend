@@ -48,12 +48,12 @@ class SrcGetterTest {
 				 *
 				 * @return Current value.
 				 */
-				 @NeverNull
+				 @NotNull
 				public String getName() {
 					return name;
 				}
 			''')
-		assertThat(ctx.imports).containsOnly("org.fuin.objects4j.common.NeverNull", "java.lang.String")
+		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "java.lang.String")
 
 	}
 
@@ -78,12 +78,12 @@ class SrcGetterTest {
 				 *
 				 * @return Current value.
 				 */
-				 @NeverNull
+				 @NotNull
 				public List<String> getNames() {
 					return names;
 				}
 			''')
-		assertThat(ctx.imports).containsOnly("org.fuin.objects4j.common.NeverNull", "java.util.List", "java.lang.String")
+		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "java.util.List", "java.lang.String")
 
 	}
 

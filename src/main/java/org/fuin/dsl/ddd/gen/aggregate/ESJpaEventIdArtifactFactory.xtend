@@ -51,7 +51,6 @@ class ESJpaEventIdArtifactFactory extends AbstractSource<Aggregate> implements A
 		ctx.requiresImport("java.io.Serializable")
 		ctx.requiresImport("org.fuin.objects4j.common.Contract")
 		ctx.requiresImport("javax.validation.constraints.NotNull")
-		ctx.requiresImport("org.fuin.objects4j.common.NeverNull")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
@@ -100,7 +99,7 @@ class ESJpaEventIdArtifactFactory extends AbstractSource<Aggregate> implements A
 			     * 
 			     * @return Unique aggregate identifier.
 			     */
-			    @NeverNull
+			    @NotNull
 			    public String get«aggregate.name»Id() {
 					return «aggregate.name.toFirstLower»Id;
 			  }
@@ -110,7 +109,7 @@ class ESJpaEventIdArtifactFactory extends AbstractSource<Aggregate> implements A
 			     * 
 			     * @return Order of the event in the stream.
 			     */
-			    @NeverNull
+			    @NotNull
 			    public Integer getEventNumber() {
 					return eventNumber;
 			  }

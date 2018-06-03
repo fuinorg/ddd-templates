@@ -34,8 +34,8 @@ class SrcStaticEnumCode implements CodeSnippet {
 		this.instances = enumObject.instances
 		this.base = enumObject.base
 		if (base !== null) {
-			ctx.requiresImport("org.fuin.objects4j.common.NeverNull")
-			ctx.requiresImport("org.fuin.objects4j.common.Nullable")
+			ctx.requiresImport("javax.validation.constraints.NotNull")
+			ctx.requiresImport("javax.annotation.Nullable")
 		}
 	}
 	
@@ -88,7 +88,7 @@ class SrcStaticEnumCode implements CodeSnippet {
 		 * 
 		 * @return Instance
 		 */
-		@NeverNull
+		@NotNull
 		public static «className» valueOf(@Nullable final «base.simpleName(ctx)» value) {
 			if (value == null) {
 				return null;

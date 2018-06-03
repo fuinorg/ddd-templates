@@ -17,8 +17,8 @@
  */
 package tst.x.valueobject;
 
+import javax.annotation.concurrent.Immutable;
 import javax.validation.constraints.NotNull;
-import org.fuin.objects4j.common.Immutable;
 
 /**
  * Value object multiple attribute and without base.

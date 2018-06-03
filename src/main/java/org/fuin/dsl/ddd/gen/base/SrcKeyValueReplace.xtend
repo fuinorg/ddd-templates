@@ -2,7 +2,7 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
 import javax.validation.constraints.NotNull
-import org.fuin.objects4j.common.Nullable
+import javax.annotation.Nullable
 import org.fuin.objects4j.vo.KeyValue
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext

@@ -18,6 +18,7 @@
 package tst2.x.aggregateid;
 
 import java.util.UUID;
+import javax.annotation.concurrent.Immutable;
 import javax.json.bind.adapter.JsonbAdapter;
 import javax.persistence.AttributeConverter;
 import javax.validation.constraints.NotNull;
@@ -25,7 +26,6 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.fuin.ddd4j.ddd.AggregateRootUuid;
 import org.fuin.ddd4j.ddd.EntityType;
 import org.fuin.ddd4j.ddd.StringBasedEntityType;
-import org.fuin.objects4j.common.Immutable;
 import org.fuin.objects4j.vo.ValueObjectConverter;
 
 /**

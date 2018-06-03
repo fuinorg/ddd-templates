@@ -19,7 +19,6 @@ package tst.x.enumobject;
 
 import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 
 /** Enumeration type B - With variables. */
 public abstract class AbstractEnumB {
@@ -55,7 +54,7 @@ public abstract class AbstractEnumB {
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final Integer getId() {
 		return id;
 	}
@@ -65,7 +64,7 @@ public abstract class AbstractEnumB {
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getShortName() {
 		return shortName;
 	}
@@ -75,7 +74,7 @@ public abstract class AbstractEnumB {
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getLongName() {
 		return longName;
 	}

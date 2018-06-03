@@ -19,7 +19,6 @@ package tst2.x.except;
 
 import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.common.UniquelyNumberedException;
 import org.fuin.objects4j.vo.KeyValue;
 
@@ -56,7 +55,7 @@ public final class ExceptionF extends UniquelyNumberedException {
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getA() {
 		return a;
 	}
@@ -66,7 +65,7 @@ public final class ExceptionF extends UniquelyNumberedException {
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final Integer getB() {
 		return b;
 	}

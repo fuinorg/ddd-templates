@@ -17,9 +17,8 @@
  */
 package tst.x.enumobject;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.Nullable;
 
 /** Enumeration type D - With integer base type. */
 public final class EnumD extends AbstractEnumD {
@@ -78,7 +77,7 @@ public final class EnumD extends AbstractEnumD {
 	 * 
 	 * @return Instance
 	 */
-	@NeverNull
+	@NotNull
 	public static EnumD valueOf(@Nullable final Integer value) {
 		if (value == null) {
 			return null;

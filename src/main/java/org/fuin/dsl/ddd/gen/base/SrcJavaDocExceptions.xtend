@@ -2,7 +2,7 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
-import org.fuin.objects4j.common.Nullable
+import javax.annotation.Nullable
 
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 

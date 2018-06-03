@@ -20,7 +20,6 @@ package tst.x.valueobject;
 import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.vo.AbstractStringValueObject;
 import org.fuin.objects4j.vo.ValueObject;
 
@@ -58,7 +57,7 @@ public abstract class AbstractMyValueObject extends AbstractStringValueObject im
 	 *
 	 * @return Current value.
 	 */
-	 @NeverNull
+	 @NotNull
 	public final String getValue() {
 		return value;
 	}

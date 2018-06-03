@@ -17,8 +17,8 @@
  */
 package tst.x.entityid;
 
+import javax.annotation.concurrent.Immutable;
 import javax.validation.constraints.NotNull;
-import org.fuin.objects4j.common.Immutable;
 
 /**
  * Entity ID multiple attribute and without base.
