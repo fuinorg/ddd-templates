@@ -47,16 +47,16 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		return varMap.nullSafe.get(KEY_PKG)
 	}
 
-	def boolean getJpa() {
-		return varMap.nullSafe.get(KEY_JPA) !== null
+	def boolean getJpa() {		
+		return Boolean.valueOf(varMap.nullSafe.get(KEY_JPA))
 	}
 
 	def boolean getJaxb() {
-		return varMap.nullSafe.get(KEY_JAXB) !== null
+		return Boolean.valueOf(varMap.nullSafe.get(KEY_JAXB))
 	}
 
 	def boolean getJsonb() {
-		return varMap.nullSafe.get(KEY_JSONB) !== null
+		return Boolean.valueOf(varMap.nullSafe.get(KEY_JSONB))
 	}
 	
 	def String getCopyrightHeader() {
