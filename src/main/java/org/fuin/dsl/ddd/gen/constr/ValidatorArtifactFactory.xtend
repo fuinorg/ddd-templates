@@ -1,4 +1,4 @@
-package org.fuin.dsl.ddd.gen.constraint
+package org.fuin.dsl.ddd.gen.constr
 
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
@@ -25,7 +25,8 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 	}
 
 	override create(Constraint constraint, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (constraint.input === null) {
+		if (constraint.input === null || constraint.input.size > 1) {
+			// Do not generate something in case there is no base type or more than one base type
 			return null;
 		}
 
@@ -55,14 +56,14 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 	def addImports(CodeSnippetContext ctx, Constraint constraint) {
 		ctx.requiresImport("javax.validation.ConstraintValidator")
 		ctx.requiresImport("javax.validation.ConstraintValidatorContext")
-		if ((constraint.exception !== null) && (constraint.input instanceof AbstractVO)) {
+		if ((constraint.exception !== null) && (constraint.input.iterator.next instanceof AbstractVO)) {
 			ctx.requiresImport("javax.validation.Validator")
 		}
 	}
 
 	def addReferences(CodeSnippetContext ctx, Constraint constraint) {
 		ctx.requiresReference(constraint.uniqueName) 
-		ctx.requiresReference(constraint.input.uniqueName) 
+		ctx.requiresReference(constraint.input.iterator.next.uniqueName) 
 		if (constraint.exception !== null) {
 			ctx.requiresReference(constraint.exception.uniqueName)
 		}
@@ -70,8 +71,9 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 
 	def create(SimpleCodeSnippetContext ctx, Constraint c, String pkg, String className) {
 
-		val targetName = c.input.name
-		val variables = c.input.attributes
+		val first = c.input.iterator.next;
+		val targetName = first.name
+		val variables = first.attributes
 
 		val String src = ''' 
 			/** «c.doc.text» */
@@ -91,7 +93,7 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 				}
 			
 				«IF c.exception !== null»
-					«IF c.input instanceof AbstractVO»
+					«IF c.input.iterator.next instanceof AbstractVO»
 					/**
 					 * Verifies that the argument is valid an throws an exception otherwise.
 					 * 

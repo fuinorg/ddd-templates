@@ -1,4 +1,4 @@
-package org.fuin.dsl.ddd.gen.constraint
+package org.fuin.dsl.ddd.gen.constr
 
 import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
@@ -24,7 +24,8 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
 	}
 
 	override create(Constraint constraint, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (constraint.input === null) {
+		if (constraint.input === null || constraint.input.size > 1) {
+			// Do not generate something in case there is no base type or more than one base type
 			return null;
 		}
 
