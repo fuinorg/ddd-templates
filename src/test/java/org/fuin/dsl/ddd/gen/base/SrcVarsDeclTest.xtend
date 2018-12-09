@@ -52,11 +52,12 @@ class SrcVarsDeclTest {
 				@NotNull
 				private Integer b;
 				
+				@Nullable
 				private Boolean c;
 				
 			''')
 		assertThat(ctx.imports).containsOnly("java.lang.String", "java.lang.Integer", "java.lang.Boolean",
-			"javax.validation.constraints.NotNull")
+			"javax.validation.constraints.NotNull", "javax.annotation.Nullable")
 	}
 
 	private def DomainModel createModel() {

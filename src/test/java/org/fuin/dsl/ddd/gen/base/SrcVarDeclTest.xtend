@@ -98,10 +98,10 @@ class SrcVarDeclTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo(
-			'''
-				private String str3;
+			'''@Nullable
+private String str3;
 			''')
-		assertThat(ctx.imports).containsOnly("java.lang.String")
+		assertThat(ctx.imports).containsOnly("java.lang.String", "javax.annotation.Nullable")
 
 	}
 

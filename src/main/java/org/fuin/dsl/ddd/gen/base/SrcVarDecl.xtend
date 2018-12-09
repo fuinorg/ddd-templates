@@ -8,6 +8,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import static extension org.fuin.dsl.ddd.extensions.DddInvariantsExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import javax.annotation.Nullable
 
 /**
  * Creates source code for a single attribute declaration.
@@ -35,6 +36,8 @@ class SrcVarDecl implements CodeSnippet {
 
 		if (attribute.nullable === null) {
 			ctx.requiresImport(NotNull.name)
+		} else {
+			ctx.requiresImport(Nullable.name)
 		}
 		addRequiredReferences(attribute, ctx)
 	}
@@ -55,6 +58,8 @@ class SrcVarDecl implements CodeSnippet {
 			«ENDFOR»
 			«IF attribute.nullable === null»
 				@NotNull
+			«ELSE»
+				@Nullable
 			«ENDIF»
 		'''
 	}
