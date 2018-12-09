@@ -11,7 +11,7 @@
 
 	<groupId>org.fuin.dsl.ddd</groupId>
 	<artifactId>ddd-templates</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<description>Xtend based domain-driven design (DDD) code generation templates for use with SrcGen4J</description>
