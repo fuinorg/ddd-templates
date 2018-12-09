@@ -57,13 +57,13 @@ class SrcSettersTest {
 				 *
 				 * @param locale Value to set.
 				 */
-				public void setLocale(final Locale locale) {
+				public void setLocale(@Nullable final Locale locale) {
 					this.locale = locale;
 				}
 				
 			''')
 		assertThat(ctx.imports).containsOnly("java.lang.String", "java.util.Locale",
-			"javax.validation.constraints.NotNull", "org.fuin.objects4j.common.Contract")
+			"javax.validation.constraints.NotNull", "org.fuin.objects4j.common.Contract", "javax.annotation.Nullable")
 
 	}
 
