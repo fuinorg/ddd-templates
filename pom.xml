@@ -179,6 +179,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.fuin.dsl.ddd</groupId>
+			<artifactId>ddd-dsl-basics</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
