@@ -82,7 +82,7 @@ public final class FullName implements ValueObject, Serializable {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getFirstName() {
 		return firstName;
 	}
@@ -92,7 +92,7 @@ public final class FullName implements ValueObject, Serializable {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getLastName() {
 		return lastName;
 	}

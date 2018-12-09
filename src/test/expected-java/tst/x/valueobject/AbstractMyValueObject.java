@@ -57,7 +57,7 @@ public abstract class AbstractMyValueObject extends AbstractStringValueObject im
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getValue() {
 		return value;
 	}

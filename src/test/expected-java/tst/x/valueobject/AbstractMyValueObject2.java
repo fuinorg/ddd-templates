@@ -56,7 +56,7 @@ public abstract class AbstractMyValueObject2 implements ValueObject, Serializabl
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getId() {
 		return id;
 	}

@@ -48,7 +48,7 @@ class SrcGetterTest {
 				 *
 				 * @return Current value.
 				 */
-				 @NotNull
+				@NotNull
 				public String getName() {
 					return name;
 				}
@@ -78,7 +78,7 @@ class SrcGetterTest {
 				 *
 				 * @return Current value.
 				 */
-				 @NotNull
+				@NotNull
 				public List<String> getNames() {
 					return names;
 				}

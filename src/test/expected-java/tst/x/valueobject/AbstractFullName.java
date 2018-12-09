@@ -74,7 +74,7 @@ public abstract class AbstractFullName implements ValueObject, Serializable {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getFirstName() {
 		return firstName;
 	}
@@ -84,7 +84,7 @@ public abstract class AbstractFullName implements ValueObject, Serializable {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getLastName() {
 		return lastName;
 	}

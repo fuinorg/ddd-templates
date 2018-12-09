@@ -64,7 +64,7 @@ public abstract class AbstractMyAggregate4Id implements AggregateRootId, ValueOb
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getA() {
 		return a;
 	}
@@ -74,7 +74,7 @@ public abstract class AbstractMyAggregate4Id implements AggregateRootId, ValueOb
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getB() {
 		return b;
 	}

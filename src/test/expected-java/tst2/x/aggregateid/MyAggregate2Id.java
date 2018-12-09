@@ -60,7 +60,7 @@ private static final long serialVersionUID = 1000L;
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getId() {
 		return id;
 	}

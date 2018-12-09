@@ -49,7 +49,7 @@ public final class ExceptionE extends UniquelyNumberedException {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getA() {
 		return a;
 	}

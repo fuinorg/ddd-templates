@@ -60,7 +60,7 @@ public abstract class AbstractMyAggregate6Id extends AbstractUuidValueObject imp
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final UUID getValue() {
 		return value;
 	}

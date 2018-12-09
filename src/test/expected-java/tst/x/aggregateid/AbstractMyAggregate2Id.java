@@ -58,7 +58,7 @@ public abstract class AbstractMyAggregate2Id implements AggregateRootId, ValueOb
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getId() {
 		return id;
 	}

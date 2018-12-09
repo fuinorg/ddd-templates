@@ -55,7 +55,7 @@ public final class ExceptionF extends UniquelyNumberedException {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getA() {
 		return a;
 	}
@@ -65,7 +65,7 @@ public final class ExceptionF extends UniquelyNumberedException {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final Integer getB() {
 		return b;
 	}

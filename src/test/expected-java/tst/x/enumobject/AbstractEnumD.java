@@ -42,7 +42,7 @@ public abstract class AbstractEnumD {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final Integer getId() {
 		return id;
 	}

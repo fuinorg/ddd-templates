@@ -63,7 +63,7 @@ public final class MyEntityId extends AbstractStringValueObject implements Entit
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getValue() {
 		return value;
 	}

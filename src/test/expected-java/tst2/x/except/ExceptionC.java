@@ -48,7 +48,7 @@ public final class ExceptionC extends Exception {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getA() {
 		return a;
 	}

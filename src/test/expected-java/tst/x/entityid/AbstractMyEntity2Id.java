@@ -58,7 +58,7 @@ public abstract class AbstractMyEntity2Id implements EntityId, ValueObject {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getId() {
 		return id;
 	}

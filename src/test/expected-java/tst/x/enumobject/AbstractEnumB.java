@@ -54,7 +54,7 @@ public abstract class AbstractEnumB {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final Integer getId() {
 		return id;
 	}
@@ -64,7 +64,7 @@ public abstract class AbstractEnumB {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getShortName() {
 		return shortName;
 	}
@@ -74,7 +74,7 @@ public abstract class AbstractEnumB {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getLongName() {
 		return longName;
 	}

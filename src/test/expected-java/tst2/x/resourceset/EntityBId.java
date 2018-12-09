@@ -66,7 +66,7 @@ public final class EntityBId extends AbstractStringValueObject implements Entity
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getA() {
 		return a;
 	}
@@ -76,7 +76,7 @@ public final class EntityBId extends AbstractStringValueObject implements Entity
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getB() {
 		return b;
 	}

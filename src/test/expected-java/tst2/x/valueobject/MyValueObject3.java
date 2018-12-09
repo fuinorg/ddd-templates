@@ -63,7 +63,7 @@ public final class MyValueObject3 extends AbstractStringValueObject implements V
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getA() {
 		return a;
 	}
@@ -73,7 +73,7 @@ public final class MyValueObject3 extends AbstractStringValueObject implements V
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getB() {
 		return b;
 	}

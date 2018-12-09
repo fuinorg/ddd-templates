@@ -57,7 +57,7 @@ public final class MyValueObject extends AbstractStringValueObject implements Va
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getValue() {
 		return value;
 	}

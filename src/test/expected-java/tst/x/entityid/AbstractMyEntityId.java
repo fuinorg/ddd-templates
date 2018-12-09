@@ -59,7 +59,7 @@ public abstract class AbstractMyEntityId extends AbstractStringValueObject imple
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getValue() {
 		return value;
 	}

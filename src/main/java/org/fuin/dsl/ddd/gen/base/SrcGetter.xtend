@@ -24,6 +24,8 @@ class SrcGetter implements CodeSnippet {
 		
 		if (variable.nullable === null) {
 			ctx.requiresImport("javax.validation.constraints.NotNull")		
+		} else {
+			ctx.requiresImport("javax.annotation.Nullable")		
 		}
 		addRequiredReferences(variable, ctx)
 	}
@@ -35,7 +37,7 @@ class SrcGetter implements CodeSnippet {
 			 *
 			 * @return Current value.
 			 */
-			 «IF variable.nullable === null»@NotNull«ENDIF»
+			«IF variable.nullable === null»@NotNull«ELSE»@Nullable«ENDIF»
 			«modifiers» «variable.type(ctx)» get«variable.name.toFirstUpper»() {
 				return «variable.name»;
 			}

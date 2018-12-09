@@ -65,7 +65,7 @@ public abstract class AbstractMyAggregate3Id extends AbstractStringValueObject i
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getA() {
 		return a;
 	}
@@ -75,7 +75,7 @@ public abstract class AbstractMyAggregate3Id extends AbstractStringValueObject i
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getB() {
 		return b;
 	}

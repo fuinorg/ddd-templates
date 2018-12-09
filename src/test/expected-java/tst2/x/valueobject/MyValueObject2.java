@@ -60,7 +60,7 @@ public final class MyValueObject2 implements ValueObject, Serializable {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getId() {
 		return id;
 	}

@@ -72,7 +72,7 @@ public final class EventB extends AbstractDomainEvent<CustomerId> {
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getA() {
 		return a;
 	}

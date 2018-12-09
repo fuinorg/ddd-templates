@@ -62,7 +62,7 @@ public abstract class AbstractMyValueObject4 implements ValueObject, Serializabl
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getA() {
 		return a;
 	}
@@ -72,7 +72,7 @@ public abstract class AbstractMyValueObject4 implements ValueObject, Serializabl
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	public final String getB() {
 		return b;
 	}

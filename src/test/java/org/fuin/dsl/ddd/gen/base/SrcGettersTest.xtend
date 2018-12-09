@@ -49,7 +49,7 @@ class SrcGettersTest {
 				 *
 				 * @return Current value.
 				 */
-				 @NotNull
+				@NotNull
 				public String getName() {
 					return name;
 				}
@@ -59,13 +59,14 @@ class SrcGettersTest {
 				 *
 				 * @return Current value.
 				 */
+				@Nullable
 				public Locale getLocale() {
 					return locale;
 				}
 				
 			''')
 		assertThat(ctx.imports).containsOnly("java.lang.String", "java.util.Locale",
-			"javax.validation.constraints.NotNull")
+			"javax.validation.constraints.NotNull", "javax.annotation.Nullable")
 
 	}
 

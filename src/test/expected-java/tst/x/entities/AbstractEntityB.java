@@ -64,7 +64,7 @@ public abstract class AbstractEntityB extends AbstractEntity<AggregateXId, Aggre
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	protected final String getA() {
 		return a;
 	}
@@ -74,7 +74,7 @@ public abstract class AbstractEntityB extends AbstractEntity<AggregateXId, Aggre
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	protected final Integer getB() {
 		return b;
 	}

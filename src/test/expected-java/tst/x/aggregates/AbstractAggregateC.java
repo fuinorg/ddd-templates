@@ -61,7 +61,7 @@ public abstract class AbstractAggregateC extends AbstractAggregateRoot<Aggregate
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	protected final String getA() {
 		return a;
 	}
@@ -71,7 +71,7 @@ public abstract class AbstractAggregateC extends AbstractAggregateRoot<Aggregate
 	 *
 	 * @return Current value.
 	 */
-	 @NotNull
+	@NotNull
 	protected final Integer getB() {
 		return b;
 	}
