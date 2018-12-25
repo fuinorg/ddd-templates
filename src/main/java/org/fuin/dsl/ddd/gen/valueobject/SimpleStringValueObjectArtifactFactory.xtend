@@ -93,13 +93,13 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className, boolean jpa, boolean jaxb, boolean jsonb) {
 		val String src = ''' 
 			«new SrcJavaDocType(vo)»
-			public class «className» extends AbstractStringValueObject {
+			public final class «className» extends AbstractStringValueObject {
 			
 				private static final long serialVersionUID = 1000L;
 			
 				private static final int MAX_LENGTH = 100;
 			
-				private String value;
+				private final String value;
 			
 				/**
 				 * Constructor with mandatory data.

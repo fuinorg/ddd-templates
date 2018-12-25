@@ -37,13 +37,13 @@ import org.fuin.objects4j.vo.ValueObjectConverter;
 /**
  * Simple value object single attribute and base.
  */
-public class MySimpleStringValueObject extends AbstractStringValueObject {
+public final class MySimpleStringValueObject extends AbstractStringValueObject {
 
 	private static final long serialVersionUID = 1000L;
 
 	private static final int MAX_LENGTH = 100;
 
-	private String value;
+	private final String value;
 
 	/**
 	 * Constructor with mandatory data.
