@@ -60,10 +60,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
 		ctx.requiresImport("nl.jqno.equalsverifier.EqualsVerifier")
 		ctx.requiresImport("nl.jqno.equalsverifier.Warning")
-		ctx.requiresImport("static org.fuin.utils4j.Utils4J.serialize")
-		ctx.requiresImport("static org.fuin.utils4j.Utils4J.deserialize")
-		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.marshal")
-		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.unmarshal")
+		ctx.requiresImport("org.fuin.utils4j.Utils4J")
 	}
 
 	def addReferences(CodeSnippetContext ctx, ValueObject vo) {
