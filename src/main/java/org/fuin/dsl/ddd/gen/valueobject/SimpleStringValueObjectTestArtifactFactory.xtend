@@ -58,6 +58,8 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 		ctx.requiresImport("static org.assertj.core.api.Assertions.*")
 		ctx.requiresImport("org.junit.Test")
 		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
+		ctx.requiresImport("nl.jqno.equalsverifier.EqualsVerifier")
+		ctx.requiresImport("nl.jqno.equalsverifier.Warning")
 		ctx.requiresImport("static org.fuin.utils4j.Utils4J.serialize")
 		ctx.requiresImport("static org.fuin.utils4j.Utils4J.deserialize")
 		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.marshal")
@@ -82,133 +84,137 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 			// CHECKSTYLE:OFF
 			public final class «vo.name»Test {
 			
+				@Test
+				public void testSerialize() {
+					final «vo.name» original = new «vo.name»("«example»");
+					final «vo.name» copy = Utils4J.deserialize(Utils4J.serialize(original));
+					assertThat(original).isEqualTo(copy);
+				}
+
+				@Test
+				public void testHashCodeEquals() {
+					EqualsVerifier.forClass(«vo.name».class).suppress(Warning.NULL_FIELDS).withRedefinedSuperclass().verify();
+				}
+
+				@Test
+				public void testMarshalJson() throws Exception {
+
+					// PREPARE
+					final String str = "«example»";
+					final «vo.name» testee = new «vo.name»(str);
+
+					// TEST & VERIFY
+					assertThat(new «vo.name».Converter().adaptToJson(testee)).isEqualTo(str);
+					assertThat(new «vo.name».Converter().adaptToJson(null)).isNull();
+
+				}
+
+				@Test
+				public void testUnmarshalJson() throws Exception {
+
+					// PREPARE
+					final String str = "«example»";
+					final «vo.name» testee = new «vo.name»(str);
+
+					// TEST & VERIFY
+					assertThat(new «vo.name».Converter().adaptFromJson(str)).isEqualTo(testee);
+					assertThat(new «vo.name».Converter().adaptFromJson(null)).isNull();
+
+				}
+
+				@Test
+				public void testMarshalXml() throws Exception {
+
+					// PREPARE
+					final String str = "«example»";
+					final «vo.name» testee = new «vo.name»(str);
+
+					// TEST & VERIFY
+					assertThat(new «vo.name».Converter().marshal(testee)).isEqualTo(str);
+					assertThat(new «vo.name».Converter().marshal(null)).isNull();
+
+				}
+
+				@Test
+				public void testUnmarshalXml() throws Exception {
+
+					// PREPARE
+					final String str = "«example»";
+					final «vo.name» testee = new «vo.name»(str);
+
+					// TEST & VERIFY
+					assertThat(new «vo.name».Converter().unmarshal(str)).isEqualTo(testee);
+					assertThat(new «vo.name».Converter().unmarshal(null)).isNull();
+
+				}
+
+				@Test
+				public void testIsValid() {
+
+					assertThat(«vo.name».isValid(null)).isTrue();
+					assertThat(«vo.name».isValid("«example»")).isTrue();
+
+					fail("Implement assertions with some invalid values!");
+					/*
+					assertThat(«vo.name».isValid("")).isFalse();
+					assertThat(«vo.name».isValid("Invalid value xhjgahgjhsgd")).isFalse();
+					*/
+
+				}
+
+				@Test
+				public void testRequireArgValid() {
+
+					«vo.name».requireArgValid("a", "«example»");
+					«vo.name».requireArgValid("b", null);
+
+					fail("Implement assertions with some invalid values!");
+					/*
+					try {
+						«vo.name».requireArgValid("c", "");
+						Assert.fail();
+					} catch (final ConstraintViolationException ex) {
+						assertThat(ex.getMessage()).isEqualTo("The argument 'c' is not valid: ''");
+					}
+
+					try {
+						«vo.name».requireArgValid("d", "Invalid value xhjgahgjhsgd");
+						Assert.fail();
+					} catch (final ConstraintViolationException ex) {
+						assertThat(ex.getMessage()).isEqualTo("The argument 'd' is not valid: 'Invalid value xhjgahgjhsgd'");
+					}
+					*/
+
+				}
+
+				@Test
+				public void testValidator() {
+
+					assertThat(new «vo.name».Validator().isValid(null, null)).isTrue();
+					assertThat(new «vo.name».Validator().isValid("«example»", null)).isTrue();
+
+					fail("Implement assertions with some invalid values!");
+					/*
+					assertThat(new «vo.name».Validator().isValid("", null)).isFalse();
+					assertThat(new «vo.name».Validator().isValid("Invalid value xhjgahgjhsgd", null)).isFalse();
+					*/
+
+				}
+
+				@Test
+				public void testValueObjectConverter() {
+
+					assertThat(new «vo.name».Converter().getBaseTypeClass()).isEqualTo(String.class);
+					assertThat(new «vo.name».Converter().getValueObjectClass()).isEqualTo(«vo.name».class);
+					assertThat(new «vo.name».Converter().isValid(null)).isTrue();
+					assertThat(new «vo.name».Converter().isValid("«example»")).isTrue();
+					fail("Implement assertions with some invalid values!");
+					/*
+					assertThat(new «vo.name».Converter().isValid("Invalid value xhjgahgjhsgd")).isFalse();
+					*/
+
+				}
 			
-			@Test
-			public void testSerialize() {
-				final «vo.name» original = new «vo.name»("«example»");
-				final «vo.name» copy = Utils4J.deserialize(Utils4J.serialize(original));
-				assertThat(original).isEqualTo(copy);
-			}
-
-			@Test
-			public void testHashCodeEquals() {
-				EqualsVerifier.forClass(«vo.name».class).suppress(Warning.NULL_FIELDS).withRedefinedSuperclass().verify();
-			}
-
-			@Test
-			public void testMarshalJson() throws Exception {
-
-				// PREPARE
-				final String str = "«example»";
-				final «vo.name» testee = new «vo.name»(str);
-
-				// TEST & VERIFY
-				assertThat(new «vo.name».Converter().adaptToJson(testee)).isEqualTo(str);
-				assertThat(new «vo.name».Converter().adaptToJson(null)).isNull();
-
-			}
-
-			@Test
-			public void testUnmarshalJson() throws Exception {
-
-				// PREPARE
-				final String str = "«example»";
-				final «vo.name» testee = new «vo.name»(str);
-
-				// TEST & VERIFY
-				assertThat(new «vo.name».Converter().adaptFromJson(str)).isEqualTo(testee);
-				assertThat(new «vo.name».Converter().adaptFromJson(null)).isNull();
-
-			}
-
-			@Test
-			public void testMarshalXml() throws Exception {
-
-				// PREPARE
-				final String str = "«example»";
-				final «vo.name» testee = new «vo.name»(str);
-
-				// TEST & VERIFY
-				assertThat(new «vo.name».Converter().marshal(testee)).isEqualTo(str);
-				assertThat(new «vo.name».Converter().marshal(null)).isNull();
-
-			}
-
-			@Test
-			public void testUnmarshalXml() throws Exception {
-
-				// PREPARE
-				final String str = "«example»";
-				final «vo.name» testee = new «vo.name»(str);
-
-				// TEST & VERIFY
-				assertThat(new «vo.name».Converter().unmarshal(str)).isEqualTo(testee);
-				assertThat(new «vo.name».Converter().unmarshal(null)).isNull();
-
-			}
-
-			@Test
-			public void testIsValid() {
-
-				assertThat(«vo.name».isValid(null)).isTrue();
-				assertThat(«vo.name».isValid("«example»")).isTrue();
-
-				fail("Implement assertions with some invalid values!");
-				/*
-				assertThat(«vo.name».isValid("")).isFalse();
-				assertThat(«vo.name».isValid("Invalid value xhjgahgjhsgd")).isFalse();
-				*/
-
-			}
-
-			@Test
-			public void testRequireArgValid() {
-
-				«vo.name».requireArgValid("a", "«example»");
-				«vo.name».requireArgValid("b", null);
-
-				fail("Implement assertions with some invalid values!");
-				/*
-				try {
-					«vo.name».requireArgValid("c", "");
-					Assert.fail();
-				} catch (final ConstraintViolationException ex) {
-					assertThat(ex.getMessage()).isEqualTo("The argument 'c' is not valid: ''");
-				}
-
-				try {
-					«vo.name».requireArgValid("d", "Invalid value xhjgahgjhsgd");
-					Assert.fail();
-				} catch (final ConstraintViolationException ex) {
-					assertThat(ex.getMessage()).isEqualTo("The argument 'd' is not valid: 'Invalid value xhjgahgjhsgd'");
-				}
-				*/
-
-			}
-
-			@Test
-			public void testValidator() {
-
-				assertThat(new «vo.name».Validator().isValid(null, null)).isTrue();
-				assertThat(new «vo.name».Validator().isValid("«example»", null)).isTrue();
-
-				fail("Implement assertions with some invalid values!");
-				/*
-				assertThat(new «vo.name».Validator().isValid("", null)).isFalse();
-				assertThat(new «vo.name».Validator().isValid("Invalid value xhjgahgjhsgd", null)).isFalse();
-				*/
-
-			}
-
-			@Test
-			public void testValueObjectConverter() {
-
-				assertThat(new «vo.name».Converter().getBaseTypeClass()).isEqualTo(String.class);
-				assertThat(new «vo.name».Converter().getValueObjectClass()).isEqualTo(«vo.name».class);
-				assertThat(new «vo.name».Converter().isValid(null)).isTrue();
-				assertThat(new «vo.name».Converter().isValid("9717204")).isTrue();
-				assertThat(new «vo.name».Converter().isValid("9717200")).isFalse();
-
 			}
 			
 			// CHECKSTYLE:ON
