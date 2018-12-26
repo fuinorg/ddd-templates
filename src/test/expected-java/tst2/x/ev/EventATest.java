@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.fuin.ddd4j.ddd.EntityIdPath;
 import org.fuin.ddd4j.ddd.EntityIdPathConverter;
 import org.junit.Test;
-import static org.fest.assertions.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.fuin.utils4j.JaxbUtils.marshal;
 import static org.fuin.utils4j.JaxbUtils.unmarshal;
 import static org.fuin.utils4j.Utils4J.deserialize;

@@ -18,7 +18,7 @@ import org.fuin.xmlcfg4j.Variable
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 import static extension org.fuin.dsl.ddd.gen.base.TestExtensions.*

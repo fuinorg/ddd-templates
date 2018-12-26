@@ -70,7 +70,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 	}
 
 	def addImports(CodeSnippetContext ctx, AbstractEntity entity) {
-		ctx.requiresImport("static org.fest.assertions.Assertions.*")
+		ctx.requiresImport("static org.assertj.core.api.Assertions.*")
 		ctx.requiresImport("org.junit.Test")
 		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
 		if (entity !== null) {

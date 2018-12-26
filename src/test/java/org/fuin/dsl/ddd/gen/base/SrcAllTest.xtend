@@ -2,7 +2,7 @@ package org.fuin.dsl.ddd.gen.base
 
 import org.junit.Test
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 class SrcAllTest {
 
@@ -17,7 +17,7 @@ class SrcAllTest {
 			 */
 		 '''
 		val pkg = "org.fuin.dsl.ddd.gen"
-		val imports = #{"java.lang.Integer", "static org.fest.assertions.Assertions.assertThat"}
+		val imports = #{"java.lang.Integer", "static org.assertj.core.api.Assertions.assertThat"}
 		val src = "public class Dummy {}"
 		val testee = new SrcAll(copyright, pkg, imports, src)
 
@@ -33,10 +33,10 @@ class SrcAllTest {
 				 */
 				package org.fuin.dsl.ddd.gen;
 				
-				import static org.fest.assertions.Assertions.assertThat;
+				import static org.assertj.core.api.Assertions.assertThat;
 				
 				public class Dummy {}
-			''')
+			'''.toString)
 
 	}
 

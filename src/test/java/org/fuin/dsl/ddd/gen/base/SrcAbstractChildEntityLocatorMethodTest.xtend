@@ -13,7 +13,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 
@@ -52,7 +52,7 @@ class SrcAbstractChildEntityLocatorMethodTest {
 				 * @return Child entity or NULL if no entity with the given identifier was found.
 				 */
 				protected abstract MyEntity findMyEntity(@NotNull final MyEntityId myEntityId);
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyEntity",
 			"a.b.c.MyEntityId")
 

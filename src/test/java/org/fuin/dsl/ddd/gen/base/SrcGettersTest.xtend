@@ -16,7 +16,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -64,7 +64,7 @@ class SrcGettersTest {
 					return locale;
 				}
 				
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("java.lang.String", "java.util.Locale",
 			"javax.validation.constraints.NotNull", "javax.annotation.Nullable")
 

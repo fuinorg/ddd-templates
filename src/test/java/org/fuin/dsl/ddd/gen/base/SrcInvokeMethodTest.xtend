@@ -5,7 +5,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 class SrcInvokeMethodTest {
 
@@ -22,7 +22,7 @@ class SrcInvokeMethodTest {
 		val result = testee.toString
 
 		// VERIFY
-		assertThat(result).isEqualTo('''super();''')
+		assertThat(result).isEqualTo('''super();'''.toString)
 
 	}
 
@@ -40,7 +40,7 @@ class SrcInvokeMethodTest {
 		val result = testee.toString
 
 		// VERIFY
-		assertThat(result).isEqualTo('''super(a);''')
+		assertThat(result).isEqualTo('''super(a);'''.toString)
 
 	}
 
@@ -60,7 +60,7 @@ class SrcInvokeMethodTest {
 		val result = testee.toString
 
 		// VERIFY
-		assertThat(result).isEqualTo('''super(a, b, c);''')
+		assertThat(result).isEqualTo('''super(a, b, c);'''.toString)
 
 	}
 

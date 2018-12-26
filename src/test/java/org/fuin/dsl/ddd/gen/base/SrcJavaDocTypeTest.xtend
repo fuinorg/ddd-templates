@@ -3,7 +3,7 @@ package org.fuin.dsl.ddd.gen.base
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
 import org.junit.Test
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 class SrcJavaDocTypeTest {
 
@@ -30,7 +30,7 @@ class SrcJavaDocTypeTest {
 				/**
 				 * Bla.
 				 */
-			''')
+			'''.toString)
 
 	}
 

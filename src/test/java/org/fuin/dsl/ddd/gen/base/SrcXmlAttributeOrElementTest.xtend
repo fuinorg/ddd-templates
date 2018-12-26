@@ -13,7 +13,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 
@@ -44,7 +44,7 @@ class SrcXmlAttributeOrElementTest {
 
 
 		// VERIFY
-		assertThat(resultId).isEqualTo('''@XmlAttribute(name = "id")''')
+		assertThat(resultId).isEqualTo('''@XmlAttribute(name = "id")'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.xml.bind.annotation.XmlAttribute")
 
 	}
@@ -65,7 +65,7 @@ class SrcXmlAttributeOrElementTest {
 		val resultVo = testeeVo.toString
 
 		// VERIFY
-		assertThat(resultVo).isEqualTo('''@XmlElement(name = "vo")''')
+		assertThat(resultVo).isEqualTo('''@XmlElement(name = "vo")'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.xml.bind.annotation.XmlElement")
 
 	}

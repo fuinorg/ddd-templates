@@ -16,7 +16,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 @InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
 @RunWith(typeof(XtextRunner))
@@ -40,7 +40,7 @@ class SrcInvokeGetterTest {
 		val result = testee.toString
 
 		// VERIFY
-		assertThat(result).isEqualTo('''getA()''')
+		assertThat(result).isEqualTo('''getA()'''.toString)
 		assertThat(codeSnippetContext.imports).empty
 
 	}
@@ -57,7 +57,7 @@ class SrcInvokeGetterTest {
 		val result = testee.toString
 
 		// VERIFY
-		assertThat(result).isEqualTo('''x.getA()''')
+		assertThat(result).isEqualTo('''x.getA()'''.toString)
 		assertThat(codeSnippetContext.imports).empty
 
 	}

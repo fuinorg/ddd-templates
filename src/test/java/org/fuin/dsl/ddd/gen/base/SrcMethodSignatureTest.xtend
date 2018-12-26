@@ -13,7 +13,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 
@@ -45,7 +45,7 @@ class SrcMethodSignatureTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo(
-			'''public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException''')
+			'''public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyAggregateId",
 			"a.b.c.MyValueObject", "a.b.c.ConstraintViolatedException")
 
@@ -69,7 +69,7 @@ class SrcMethodSignatureTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo(
-			'''public abstract void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException''')
+			'''public abstract void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.MyAggregateId",
 			"a.b.c.MyValueObject", "a.b.c.ConstraintViolatedException")
 

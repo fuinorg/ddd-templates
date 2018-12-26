@@ -13,7 +13,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
@@ -166,7 +166,7 @@ class SrcValidationAnnotationTest {
 		assertThat(result).isEqualTo('''
   									@DecimalMin("0")
   									@DecimalMax("100")
-  									''')
+  									'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.DecimalMin", "javax.validation.constraints.DecimalMax")
 
 	}

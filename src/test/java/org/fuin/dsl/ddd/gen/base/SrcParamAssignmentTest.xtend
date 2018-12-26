@@ -4,7 +4,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 import static org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory.eINSTANCE
 
 import static extension org.fuin.dsl.ddd.extensions.DddDslFactoryExtensions.*

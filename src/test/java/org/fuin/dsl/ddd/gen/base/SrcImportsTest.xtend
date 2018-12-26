@@ -2,7 +2,7 @@ package org.fuin.dsl.ddd.gen.base
 
 import org.junit.Test
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 class SrcImportsTest {
 
@@ -24,7 +24,7 @@ class SrcImportsTest {
 				import c.d.e.F;
 				import java.lang.annotation.Annotation;
 				import java.lang.reflect.*;
-			''')
+			'''.toString)
 
 	}
 

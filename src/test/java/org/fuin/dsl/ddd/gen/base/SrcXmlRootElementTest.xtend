@@ -4,7 +4,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 class SrcXmlRootElementTest {
 
@@ -20,7 +20,7 @@ class SrcXmlRootElementTest {
 		val result = testee.toString
 
 		// VERIFY
-		assertThat(result).isEqualTo('''@XmlRootElement(name = "abc-def-ghi")''')
+		assertThat(result).isEqualTo('''@XmlRootElement(name = "abc-def-ghi")'''.toString)
 		assertThat(ctx.imports).contains("javax.xml.bind.annotation.XmlRootElement")
 
 	}

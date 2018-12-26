@@ -14,7 +14,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 
@@ -52,7 +52,7 @@ class SrcGetterTest {
 				public String getName() {
 					return name;
 				}
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "java.lang.String")
 
 	}
@@ -82,7 +82,7 @@ class SrcGetterTest {
 				public List<String> getNames() {
 					return names;
 				}
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "java.util.List", "java.lang.String")
 
 	}

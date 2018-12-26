@@ -13,7 +13,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 
@@ -49,7 +49,7 @@ class SrcAbstractHandleEventMethodTest {
 			 * @param event Event to handle.
 			 */
 			protected abstract void handle(@NotNull final DidSomethingEvent event);
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "a.b.c.DidSomethingEvent")
 
 	}

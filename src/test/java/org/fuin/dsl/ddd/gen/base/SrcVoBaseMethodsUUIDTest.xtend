@@ -13,7 +13,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 
@@ -74,7 +74,7 @@ class SrcVoBaseMethodsUUIDTest {
 				return new MyAggregateId(UUID.fromString(value));
 			}
 			
-		'''
+		'''.toString
 		)
 		assertThat(ctx.imports).containsOnly("a.b.c.MyAggregateId", "java.util.UUID", "org.fuin.objects4j.vo.UUIDStrValidator")
 

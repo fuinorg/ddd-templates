@@ -14,7 +14,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 
@@ -49,7 +49,7 @@ class SrcServiceTest {
 				public interface ServiceA {
 					
 				}
-			''')
+			'''.toString)
 		assertThat(ctx.imports).isEmpty
 
 	}
@@ -89,7 +89,7 @@ class SrcServiceTest {
 				public String find(@NotNull final Integer a) throws AnyConstraintViolatedException;
 				
 			}
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("java.lang.Integer", "java.lang.String", "x.services.AnyConstraintViolatedException", "javax.validation.constraints.NotNull")
 
 	}

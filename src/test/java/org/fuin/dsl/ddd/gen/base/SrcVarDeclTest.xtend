@@ -13,7 +13,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 
@@ -49,7 +49,7 @@ class SrcVarDeclTest {
 				@AnyConstraint
 				@NotNull
 				private String str;
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "x.y.z.AnyConstraint",
 			"java.lang.String")
 
@@ -76,7 +76,7 @@ class SrcVarDeclTest {
 			'''
 				@NotNull
 				private String str2;
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "java.lang.String")
 
 	}
@@ -100,7 +100,7 @@ class SrcVarDeclTest {
 		assertThat(result).isEqualTo(
 			'''@Nullable
 private String str3;
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("java.lang.String", "javax.annotation.Nullable")
 
 	}
@@ -126,7 +126,7 @@ private String str3;
 				@NotNull
 				@XmlAttribute(name = "abc-def-ghi")
 				private String abcDefGhi;
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull",
 			"javax.xml.bind.annotation.XmlAttribute", "java.lang.String")
 

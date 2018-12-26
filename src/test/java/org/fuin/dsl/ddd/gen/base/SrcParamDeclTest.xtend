@@ -14,7 +14,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*

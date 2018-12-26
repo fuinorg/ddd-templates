@@ -14,7 +14,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import static org.fest.assertions.Assertions.*
+import static org.assertj.core.api.Assertions.*
 
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 
@@ -52,7 +52,7 @@ class SrcSetterTest {
 					Contract.requireArgNotNull("name", name);
 					this.name = name;
 				}
-			''')
+			'''.toString)
 		assertThat(ctx.imports).contains("javax.validation.constraints.NotNull", "java.lang.String",
 			"org.fuin.objects4j.common.Contract")
 
@@ -83,7 +83,7 @@ class SrcSetterTest {
 					Contract.requireArgNotNull("names", names);
 					this.names = names;
 				}
-			''')
+			'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull", "java.util.List",
 			"java.lang.String", "org.fuin.objects4j.common.Contract")
 
