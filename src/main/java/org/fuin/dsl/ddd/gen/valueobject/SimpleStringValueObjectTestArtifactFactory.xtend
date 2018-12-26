@@ -57,7 +57,6 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("static org.assertj.core.api.Assertions.*")
 		ctx.requiresImport("org.junit.Test")
-		ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
 		ctx.requiresImport("nl.jqno.equalsverifier.EqualsVerifier")
 		ctx.requiresImport("nl.jqno.equalsverifier.Warning")
 		ctx.requiresImport("org.fuin.utils4j.Utils4J")
@@ -93,6 +92,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 					EqualsVerifier.forClass(«vo.name».class).suppress(Warning.NULL_FIELDS).withRedefinedSuperclass().verify();
 				}
 
+				«IF jsonb»
 				@Test
 				public void testMarshalJson() throws Exception {
 
@@ -118,7 +118,9 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 					assertThat(new «vo.name».Converter().adaptFromJson(null)).isNull();
 
 				}
+				«ENDIF»
 
+				«IF jaxb»
 				@Test
 				public void testMarshalXml() throws Exception {
 
@@ -144,6 +146,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 					assertThat(new «vo.name».Converter().unmarshal(null)).isNull();
 
 				}
+				«ENDIF»
 
 				@Test
 				public void testIsValid() {
