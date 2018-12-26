@@ -86,7 +86,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 			
 				@Test
 				public void testSerialize() {
-					final «vo.name» original = new «vo.name»("«example»");
+					final «vo.name» original = new «vo.name»(«example»);
 					final «vo.name» copy = Utils4J.deserialize(Utils4J.serialize(original));
 					assertThat(original).isEqualTo(copy);
 				}
@@ -100,7 +100,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 				public void testMarshalJson() throws Exception {
 
 					// PREPARE
-					final String str = "«example»";
+					final String str = «example»;
 					final «vo.name» testee = new «vo.name»(str);
 
 					// TEST & VERIFY
@@ -113,7 +113,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 				public void testUnmarshalJson() throws Exception {
 
 					// PREPARE
-					final String str = "«example»";
+					final String str = «example»;
 					final «vo.name» testee = new «vo.name»(str);
 
 					// TEST & VERIFY
@@ -126,7 +126,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 				public void testMarshalXml() throws Exception {
 
 					// PREPARE
-					final String str = "«example»";
+					final String str = «example»;
 					final «vo.name» testee = new «vo.name»(str);
 
 					// TEST & VERIFY
@@ -139,7 +139,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 				public void testUnmarshalXml() throws Exception {
 
 					// PREPARE
-					final String str = "«example»";
+					final String str = «example»;
 					final «vo.name» testee = new «vo.name»(str);
 
 					// TEST & VERIFY
@@ -152,7 +152,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 				public void testIsValid() {
 
 					assertThat(«vo.name».isValid(null)).isTrue();
-					assertThat(«vo.name».isValid("«example»")).isTrue();
+					assertThat(«vo.name».isValid(«example»)).isTrue();
 
 					fail("Implement assertions with some invalid values!");
 					/*
@@ -165,7 +165,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 				@Test
 				public void testRequireArgValid() {
 
-					«vo.name».requireArgValid("a", "«example»");
+					«vo.name».requireArgValid("a", «example»);
 					«vo.name».requireArgValid("b", null);
 
 					fail("Implement assertions with some invalid values!");
@@ -191,7 +191,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 				public void testValidator() {
 
 					assertThat(new «vo.name».Validator().isValid(null, null)).isTrue();
-					assertThat(new «vo.name».Validator().isValid("«example»", null)).isTrue();
+					assertThat(new «vo.name».Validator().isValid(«example», null)).isTrue();
 
 					fail("Implement assertions with some invalid values!");
 					/*
@@ -207,7 +207,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 					assertThat(new «vo.name».Converter().getBaseTypeClass()).isEqualTo(String.class);
 					assertThat(new «vo.name».Converter().getValueObjectClass()).isEqualTo(«vo.name».class);
 					assertThat(new «vo.name».Converter().isValid(null)).isTrue();
-					assertThat(new «vo.name».Converter().isValid("«example»")).isTrue();
+					assertThat(new «vo.name».Converter().isValid(«example»)).isTrue();
 					fail("Implement assertions with some invalid values!");
 					/*
 					assertThat(new «vo.name».Converter().isValid("Invalid value xhjgahgjhsgd")).isFalse();
