@@ -5,6 +5,7 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcGetters
@@ -23,7 +24,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
-import org.fuin.dsl.ddd.gen.base.GenerateOptions
 
 class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -77,7 +77,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 				private static final long serialVersionUID = 1000L;
 				
 				«new SrcVarsDecl(ctx, "private", localOptions, vo)»
-				«new SrcConstructorsWithParamsAssignment(ctx, vo, false)»
+				«new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), vo, false)»
 				«new SrcGetters(ctx, "public final", vo.attributes)»
 				«new SrcVoBaseMethods(ctx, vo)»
 			}

@@ -5,9 +5,9 @@ import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
@@ -38,7 +38,7 @@ class SrcParamsDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val SrcParamsDecl testee = new SrcParamsDecl(ctx, valueObject.attributes.asParameters)
+		val SrcParamsDecl testee = new SrcParamsDecl(ctx, GenerateOptions.empty(), valueObject.attributes.asParameters)
 
 		// TEST
 		val result = testee.toString

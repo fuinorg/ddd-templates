@@ -76,9 +76,9 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 			
 				private static final long serialVersionUID = 1000L;
 			
-				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), ex)»
+				«new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), ex)»
 				«new SrcJavaDocMethod(ctx, "Constructs a new instance of the exception.", null, ex.attributes.asParameters, null)»
-				public «ex.name»(«new SrcParamsDecl(ctx, ex.attributes.asParameters)») {
+				public «ex.name»(«new SrcParamsDecl(ctx, GenerateOptions.empty(), ex.attributes.asParameters)») {
 					super(«IF ex.cid > 0»«ex.cid», «ENDIF»«new SrcKeyValueReplace(ctx, ex.message, ex.attributes.asNames)»);
 					«new SrcParamsAssignment(ctx, ex.attributes.asParameters)»
 				}

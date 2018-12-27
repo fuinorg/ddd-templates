@@ -4,6 +4,7 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
@@ -75,7 +76,7 @@ class FinalEnumArtifactFactory extends AbstractSource<EnumObject> {
 				«ENDFOR»
 				«new SrcStaticEnumCode(ctx, eo)»
 				«IF eo.attributes.nullSafe.size > 0»
-					private «className»(«new SrcParamsDecl(ctx, eo.attributes.asParameters)») {
+					private «className»(«new SrcParamsDecl(ctx, GenerateOptions.empty(), eo.attributes.asParameters)») {
 						«new SrcInvokeMethod(ctx, "super", eo.attributes.asParameters.asNames)»
 					}
 					

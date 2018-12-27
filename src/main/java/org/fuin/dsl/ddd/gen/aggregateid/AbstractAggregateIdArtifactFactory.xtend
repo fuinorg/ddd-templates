@@ -72,8 +72,8 @@ class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), id)»
-				«new SrcConstructorsWithParamsAssignment(ctx, id, true)»
+				«new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), id)»
+				«new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), id, true)»
 				«new SrcGetters(ctx, "public final", id.attributes)»
 				«new SrcEntityIdTypeMethods(ctx, id.aggregateNullsafe.name, id.base)»
 			}

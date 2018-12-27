@@ -19,13 +19,15 @@ import static extension org.fuin.dsl.ddd.extensions.DddEntityExtensions.*
 class SrcChildEntityLocatorMethod implements CodeSnippet {
 
 	val CodeSnippetContext ctx
+	val GenerateOptions options 
 	val ReturnType returnType
 	val List<String> annotations
 	val List<Parameter> parameters
 	val List<Exception> exceptions = null
 
-	new(CodeSnippetContext ctx, Entity entity) {
+	new(CodeSnippetContext ctx, GenerateOptions options, Entity entity) {
 		this.ctx = ctx
+		this.options = options
 		this.returnType = DomainDrivenDesignDslFactory.eINSTANCE.createReturnType()
 		this.returnType.setType(entity)
 		this.annotations = #["@Override", "@ChildEntityLocator"]
@@ -38,7 +40,7 @@ class SrcChildEntityLocatorMethod implements CodeSnippet {
 	}
 
 	override toString() {
-		'''«new SrcMethod(ctx,
+		'''«new SrcMethod(ctx, options,
 			new MethodData(null, annotations,
 				"protected final", false, returnType, "find" + returnType.type.name, parameters, exceptions))»'''
 	}

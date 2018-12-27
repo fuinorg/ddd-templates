@@ -8,8 +8,8 @@ import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions.*
 
 /**
  * Creates source code for a number of constructors with 
@@ -18,27 +18,31 @@ import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 
 	val CodeSnippetContext ctx;
+	val GenerateOptions options
 	val List<ConstructorData> constructors
 
 	/**
 	 * Constructor with entity.
 	 * 
 	 * @param ctx Context.
+	 * @param options Options to use.
 	 * @param entity Entity.
 	 */
-	new(CodeSnippetContext ctx, AbstractEntity entity) {
-		this(ctx, entity, false)
+	new(CodeSnippetContext ctx, GenerateOptions options, AbstractEntity entity) {
+		this(ctx, options, entity, false)
 	}
 	
 	/**
 	 * Constructor with entity.
 	 * 
 	 * @param ctx Context.
+	 * @param options Options to use.
 	 * @param entity Entity.
 	 * @param passToSuper Defines if all variables should be passed to the super call
 	 */
-	new(CodeSnippetContext ctx, AbstractEntity entity, boolean passToSuper) {
+	new(CodeSnippetContext ctx, GenerateOptions options, AbstractEntity entity, boolean passToSuper) {
 		this.ctx = ctx
+		this.options = options
 		this.constructors = new ArrayList<ConstructorData>()
 		for (con : entity.constructors.nullSafe) {
 			this.constructors.add(new ConstructorData("public", entity.name, con))
@@ -49,48 +53,53 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	 * Constructor with value object.
 	 * 
 	 * @param ctx Context.
+	 * @param options Options to use.
 	 * @param vo Value object.
 	 * @param abstr Generate abstract class?
 	 */
-	new(CodeSnippetContext ctx, AbstractVO vo, boolean abstr) {
-		this(ctx, vo, "public", abstr, false)
+	new(CodeSnippetContext ctx, GenerateOptions options, AbstractVO vo, boolean abstr) {
+		this(ctx, options, vo, "public", abstr, false)
 	}
 	
 	/**
 	 * Constructor with value object.
 	 * 
 	 * @param ctx Context.
+	 * @param options Options to use.
 	 * @param vo Value object.
 	 * @param abstr Generate abstract class?
 	 * @param passToSuper Defines if all variables should be passed to the super call
 	 */
-	new(CodeSnippetContext ctx, AbstractVO vo, boolean abstr, boolean passToSuper) {
-		this(ctx, vo, "public", abstr, passToSuper)
+	new(CodeSnippetContext ctx, GenerateOptions options, AbstractVO vo, boolean abstr, boolean passToSuper) {
+		this(ctx, options, vo, "public", abstr, passToSuper)
 	}
 
 	/**
 	 * Constructor with value object.
 	 * 
 	 * @param ctx Context.
+	 * @param options Options to use.
 	 * @param vo Value object.
 	 * @param modifiers Modifiers for the constructor
 	 * @param abstr Generate abstract class?
 	 */
-	new(CodeSnippetContext ctx, AbstractVO vo, String modifiers, boolean abstr) {
-		this(ctx, vo, modifiers, abstr, false)
+	new(CodeSnippetContext ctx, GenerateOptions options, AbstractVO vo, String modifiers, boolean abstr) {
+		this(ctx, options, vo, modifiers, abstr, false)
 	}
 	
 	/**
 	 * Constructor with value object.
 	 * 
 	 * @param ctx Context.
+	 * @param options Options to use.
 	 * @param vo Value object.
 	 * @param modifiers Modifiers for the constructor
 	 * @param abstr Generate abstract class?
 	 * @param passToSuper Defines if all variables should be passed to the super call
 	 */
-	new(CodeSnippetContext ctx, AbstractVO vo, String modifiers, boolean abstr, boolean passToSuper) {
+	new(CodeSnippetContext ctx, GenerateOptions options, AbstractVO vo, String modifiers, boolean abstr, boolean passToSuper) {
 		this.ctx = ctx
+		this.options = options
 		this.constructors = new ArrayList<ConstructorData>()
 
 		if (vo.attributes.nullSafe.size > 0) {
@@ -119,10 +128,12 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 	 * Constructor with all mandatory data.
 	 * 
 	 * @param ctx Context.
+	 * @param options Options to use.
 	 * @param constructors Constructors.
 	 */
-	new(CodeSnippetContext ctx, List<ConstructorData> constructorData) {
+	new(CodeSnippetContext ctx, GenerateOptions options, List<ConstructorData> constructorData) {
 		this.ctx = ctx
+		this.options = options
 		this.constructors = constructorData
 	}
 
@@ -132,7 +143,7 @@ class SrcConstructorsWithParamsAssignment implements CodeSnippet {
 		}
 		'''	
 			«FOR constructor : constructors.nullSafe»
-				«new SrcConstructorWithParamsAssignment(ctx, constructor)»
+				«new SrcConstructorWithParamsAssignment(ctx, options, constructor)»
 				
 			«ENDFOR»
 		'''

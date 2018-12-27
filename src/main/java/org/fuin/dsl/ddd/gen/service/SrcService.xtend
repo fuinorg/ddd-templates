@@ -1,6 +1,7 @@
 package org.fuin.dsl.ddd.gen.service
 
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Service
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocMethod
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcMethodSignature
@@ -29,7 +30,7 @@ class SrcService implements CodeSnippet {
 			
 			«FOR method : service.methods.nullSafe»
 				«new SrcJavaDocMethod(ctx, method).toString»
-				«new SrcMethodSignature(ctx, "public", false, method).toString»;
+				«new SrcMethodSignature(ctx, "public", false, GenerateOptions.empty(), method).toString»;
 				
 			«ENDFOR»
 		}

@@ -52,7 +52,7 @@ class GenerateOptions {
 	/**
 	 * Default constructor.
 	 */
-	new() {
+	private new() {
 		super()
 	}
 
@@ -61,7 +61,7 @@ class GenerateOptions {
 	 * 
 	 * @param varMap Variables to use for retrieving the options.
 	 */
-	new(Map<String, String> varMap) {
+	protected new(Map<String, String> varMap) {
 		super()
 
 		basePkg = varMap.nullSafe.get(KEY_BASE_PKG)
@@ -153,13 +153,31 @@ class GenerateOptions {
 		return eventRelaxedTypes
 	}
 
+	/** 
+	 * Returns a new builder instance. Convenience method to shorten the builder creation in the code.
+	 * 
+	 * @return New builder instance.
+	 */
+	static def Builder builder() {
+		return new Builder()
+	}
+
+	/** 
+	 * Returns an empty instance.
+	 * 
+	 * @return New instance.
+	 */
+	static def GenerateOptions empty() {
+		return new GenerateOptions()
+	}
+
 	static class Builder {
 
 		GenerateOptions obj
 
 		public new() {
 			super();
-			obj = new GenerateOptions()
+			obj = GenerateOptions.empty()
 		}
 
 		public new(GenerateOptions other) {
@@ -241,7 +259,7 @@ class GenerateOptions {
 
 		public def GenerateOptions create() {
 			val GenerateOptions options = obj
-			obj = new GenerateOptions()
+			obj = GenerateOptions.empty()
 			return options
 		}
 

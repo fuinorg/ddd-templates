@@ -39,7 +39,7 @@ class SrcConstructorWithParamsAssignmentTest {
 		val Entity entity = model().find(Entity, "MyEntity")
 		val constructor = entity.constructors.get(0)
 		val SrcConstructorWithParamsAssignment testee = new SrcConstructorWithParamsAssignment(ctx, "public",
-			entity.getName(), constructor)
+			entity.getName(), GenerateOptions.empty(), constructor)
 
 		// TEST
 		val result = testee.toString

@@ -13,16 +13,19 @@ import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 class SrcParamDecl implements CodeSnippet {
 
 	val CodeSnippetContext ctx
+	val GenerateOptions options
 	val Parameter parameter
 
 	/**
 	 * Constructor with all mandatory data.
 	 * 
 	 * @param ctx Context.
+	 * @param options Options to use.
 	 * @param parameter Parameter.
 	 */
-	new(CodeSnippetContext ctx, Parameter parameter) {
+	new(CodeSnippetContext ctx, GenerateOptions options, Parameter parameter) {
 		this.ctx = ctx
+		this.options = options
 		this.parameter = parameter
 		if (parameter.nullable === null) {
 			ctx.requiresImport("javax.validation.constraints.NotNull")

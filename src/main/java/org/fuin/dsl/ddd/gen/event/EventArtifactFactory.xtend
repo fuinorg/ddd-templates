@@ -129,7 +129,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				«ENDFOR»
 				*/
 				public «event.name»(@NotNull final EntityIdPath entityIdPath«IF event.attributes.nullSafe.size > 0», «new SrcParamsDecl(
-				ctx, event.attributes.asParameters)»«ENDIF») {
+				ctx, options, event.attributes.asParameters)»«ENDIF») {
 					super(entityIdPath);
 					«new SrcParamsAssignment(ctx, event.attributes.asParameters)»
 				}
@@ -187,7 +187,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 					* @param «v.name» «v.superDoc» 
 				«ENDFOR»
 				*/
-				public «event.name»(«new SrcParamsDecl(ctx, event.attributes.asParameters)») {
+				public «event.name»(«new SrcParamsDecl(ctx, options, event.attributes.asParameters)») {
 					super();
 					«new SrcParamsAssignment(ctx, event.attributes.asParameters)»
 				}

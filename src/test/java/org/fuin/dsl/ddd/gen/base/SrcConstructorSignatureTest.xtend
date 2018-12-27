@@ -39,7 +39,7 @@ class SrcConstructorSignatureTest {
 		val Entity entity = model().find(Entity, "MyEntity")
 		val constructor = entity.constructors.get(0)
 		val SrcConstructorSignature testee = new SrcConstructorSignature(ctx, "public",
-			entity.getName(), constructor)
+			entity.getName(), GenerateOptions.empty(), constructor)
 
 		// TEST
 		val result = testee.toString

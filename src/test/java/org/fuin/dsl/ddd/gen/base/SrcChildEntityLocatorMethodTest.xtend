@@ -36,7 +36,7 @@ class SrcChildEntityLocatorMethodTest {
 		refReg.putReference("x.a.MyEntityId", "a.b.c.MyEntityId")
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Entity entity = model().find(Entity, "MyEntity")
-		val SrcChildEntityLocatorMethod testee = new SrcChildEntityLocatorMethod(ctx, entity)
+		val SrcChildEntityLocatorMethod testee = new SrcChildEntityLocatorMethod(ctx, GenerateOptions.empty(), entity)
 
 		// TEST
 		val result = testee.toString

@@ -4,6 +4,7 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcConstructorSignature
@@ -74,14 +75,14 @@ class FinalAggregateArtifactFactory extends AbstractSource<Aggregate> {
 			
 				«FOR constructor : aggregate.constructors.nullSafe»
 					«new SrcJavaDocMethod(ctx, constructor)»
-					«new SrcConstructorSignature(ctx, "public", className, constructor)» {
+					«new SrcConstructorSignature(ctx, "public", className, GenerateOptions.empty(), constructor)» {
 						super();
 						// TODO Implement!
 					}
 					
 				«ENDFOR»
-				«new SrcChildEntityLocatorMethods(ctx, aggregate)»
-				«new SrcMethods(ctx, aggregate)»
+				«new SrcChildEntityLocatorMethods(ctx, GenerateOptions.empty(), aggregate)»
+				«new SrcMethods(ctx, GenerateOptions.empty(), aggregate)»
 				«new SrcHandleEventMethods(ctx, aggregate.allEvents)»
 			}
 		'''
@@ -93,7 +94,7 @@ class FinalAggregateArtifactFactory extends AbstractSource<Aggregate> {
 		'''
 			«FOR constructor : aggregate.constructors.nullSafe»
 				«new SrcJavaDocMethod(ctx, constructor)»
-				«new SrcConstructorSignature(ctx, "public", className, constructor)» {
+				«new SrcConstructorSignature(ctx, "public", className, GenerateOptions.empty(), constructor)» {
 					super();
 					// TODO Implement!
 				}

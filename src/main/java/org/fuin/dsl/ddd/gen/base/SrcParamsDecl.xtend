@@ -11,16 +11,19 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 class SrcParamsDecl implements CodeSnippet {
 
 	val CodeSnippetContext ctx
+	val GenerateOptions options
 	val List<Parameter> parameters
 
 	/**
 	 * Constructor with all mandatory data.
 	 * 
 	 * @param ctx Context.
+	 * @param options Options to use.
 	 * @param parameters Parameters.
 	 */
-	new(CodeSnippetContext ctx, List<Parameter> parameters) {
+	new(CodeSnippetContext ctx, GenerateOptions options, List<Parameter> parameters) {
 		this.ctx = ctx
+		this.options = options
 		this.parameters = parameters
 	}
 
@@ -28,7 +31,7 @@ class SrcParamsDecl implements CodeSnippet {
 		if (parameters === null || parameters.size == 0) {
 			return "";
 		}
-		'''«FOR parameter : parameters SEPARATOR ', '»«new SrcParamDecl(ctx, parameter)»«ENDFOR»'''
+		'''«FOR parameter : parameters SEPARATOR ', '»«new SrcParamDecl(ctx, options, parameter)»«ENDFOR»'''
 	}
 
 }

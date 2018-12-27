@@ -11,6 +11,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 class SrcConstructorWithParamsAssignment implements CodeSnippet {
 
 	val CodeSnippetContext ctx
+	val GenerateOptions options
 	val ConstructorData constructorData
 
 	/**
@@ -21,29 +22,27 @@ class SrcConstructorWithParamsAssignment implements CodeSnippet {
 	 * @param typeName Name of the type the constructor belongs to.
 	 * @param constructor Constructor to create the source for.
 	 */
-	new(CodeSnippetContext ctx, String modifiers, String typeName, Constructor constructor) {
-		this(ctx, new ConstructorData(modifiers, typeName, constructor))
+	new(CodeSnippetContext ctx, String modifiers, String typeName, GenerateOptions options, Constructor constructor) {
+		this(ctx, options, new ConstructorData(modifiers, typeName, constructor))
 	}
 
 	/**
 	 * Constructor with variables and exceptions.
 	 * 
 	 * @param ctx Context.
-	 * @param ctx Documentation for the constructor.
-	 * @param modifiers Modifiers (Don't include "abstract" - Use next argument instead).
-	 * @param typeName Name of the type the constructor belongs to.
-	 * @param variables Variables for the constructor.
-	 * @param exceptions Exceptions for the constructor.
+	 * @param options Options to use.
+	 * @param constructorData Constructor.
 	 */
-	new(CodeSnippetContext ctx, ConstructorData constructorData) {
+	new(CodeSnippetContext ctx, GenerateOptions options, ConstructorData constructorData) {
 		this.ctx = ctx
+		this.options = options
 		this.constructorData = constructorData
 	}
 
 	override toString() {
 		'''	
 			«new SrcJavaDocMethod(ctx, constructorData.doc, null, constructorData.parameters, constructorData.exceptions)»
-			«new SrcConstructorSignature(ctx, constructorData)» {
+			«new SrcConstructorSignature(ctx, options, constructorData)» {
 				«new SrcParamsSuperCall(ctx, constructorData.superCallParameters)»
 				«new SrcParamsAssignment(ctx, constructorData.assignmentParameters)»
 			}

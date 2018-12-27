@@ -4,6 +4,7 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EntityId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
@@ -76,7 +77,7 @@ class FinalEntityIdArtifactFactory extends AbstractSource<EntityId> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«new SrcConstructorsWithParamsAssignment(ctx, id, false, true)»
+				«new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), id, false, true)»
 				«IF id.base === null»
 				@Override
 				public final String asString() {

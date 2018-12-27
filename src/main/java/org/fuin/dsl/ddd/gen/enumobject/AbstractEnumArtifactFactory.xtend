@@ -70,9 +70,9 @@ class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 			/** «eo.doc.text» */
 			public abstract class «className» {
 				
-				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), eo)»
+				«new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), eo)»
 				«new SrcJavaDocMethod(ctx, eo.doc, null, eo.attributes.asParameters, null)»
-				protected «className»(«new SrcParamsDecl(ctx, eo.attributes.asParameters)») {
+				protected «className»(«new SrcParamsDecl(ctx, GenerateOptions.empty(), eo.attributes.asParameters)») {
 					«new SrcParamsAssignment(ctx, eo.attributes.asParameters)»
 				}
 			

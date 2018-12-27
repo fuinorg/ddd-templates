@@ -38,7 +38,7 @@ class SrcMethodSignatureTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
-		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", false, method)
+		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", false, GenerateOptions.empty(), method)
 
 		// TEST
 		val result = testee.toString
@@ -62,7 +62,7 @@ class SrcMethodSignatureTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
-		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", true, method)
+		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", true, GenerateOptions.empty(), method)
 
 		// TEST
 		val result = testee.toString

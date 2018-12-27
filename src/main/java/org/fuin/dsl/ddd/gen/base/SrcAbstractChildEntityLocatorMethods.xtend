@@ -12,17 +12,19 @@ import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.
 class SrcAbstractChildEntityLocatorMethods implements CodeSnippet {
 
 	val CodeSnippetContext ctx
+	val GenerateOptions options
 	val AbstractEntity entity
 
-	new(CodeSnippetContext ctx, AbstractEntity entity) {
+	new(CodeSnippetContext ctx, GenerateOptions options, AbstractEntity entity) {
 		this.ctx = ctx
+		this.options = options
 		this.entity = entity
 	}
 
 	override toString() {
 		'''
 			«FOR child : entity.childEntities»
-				«new SrcAbstractChildEntityLocatorMethod(ctx, child)»
+				«new SrcAbstractChildEntityLocatorMethod(ctx, options, child)»
 				
 			«ENDFOR»
 		'''

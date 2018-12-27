@@ -38,7 +38,7 @@ class SrcVarDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(0)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", new GenerateOptions(), attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", GenerateOptions.empty(), attr)
 
 		// TEST
 		val result = testee.toString
@@ -66,7 +66,7 @@ class SrcVarDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(1)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", new GenerateOptions(), attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", GenerateOptions.empty(), attr)
 
 		// TEST
 		val result = testee.toString
@@ -91,7 +91,7 @@ class SrcVarDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(2)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", new GenerateOptions(), attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", GenerateOptions.empty(), attr)
 
 		// TEST
 		val result = testee.toString

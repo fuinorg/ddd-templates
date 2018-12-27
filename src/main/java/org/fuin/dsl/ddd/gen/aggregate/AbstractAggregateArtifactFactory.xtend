@@ -80,7 +80,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				@NotNull
 				private «aggregate.idTypeNullsafe.name» id;
 			
-				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), aggregate)»
+				«new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), aggregate)»
 				@Override
 				public final EntityType getType() {
 					return «aggregate.idTypeNullsafe.name».TYPE;
@@ -103,7 +103,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				
 				«new SrcGetters(ctx, "protected final", aggregate.attributes)»
 				«new SrcSetters(ctx, "protected final", aggregate.attributes)»
-				«new SrcAbstractChildEntityLocatorMethods(ctx, aggregate)»
+				«new SrcAbstractChildEntityLocatorMethods(ctx, GenerateOptions.empty(), aggregate)»
 				«new SrcAbstractHandleEventMethods(ctx, aggregate.allEvents)»
 				«new SrcServices(ctx, aggregate.services)»
 			}

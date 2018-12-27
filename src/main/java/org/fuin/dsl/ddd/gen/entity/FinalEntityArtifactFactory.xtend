@@ -8,6 +8,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.ConstructorData
 import org.fuin.dsl.ddd.gen.base.ConstructorParameter
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
@@ -71,9 +72,9 @@ class FinalEntityArtifactFactory extends AbstractSource<Entity> {
 			«new SrcJavaDocType(entity)»
 			public final class «entity.name» extends Abstract«entity.name» {
 			
-				«new SrcConstructorsWithParamsAssignment(ctx, constructorData(entity, className))»
-				«new SrcChildEntityLocatorMethods(ctx, entity)»
-				«new SrcMethods(ctx, entity)»
+				«new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), constructorData(entity, className))»
+				«new SrcChildEntityLocatorMethods(ctx, GenerateOptions.empty(), entity)»
+				«new SrcMethods(ctx, GenerateOptions.empty(), entity)»
 				«new SrcHandleEventMethods(ctx, entity.allEvents)»
 			}
 		'''

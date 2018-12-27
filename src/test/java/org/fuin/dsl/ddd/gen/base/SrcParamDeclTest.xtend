@@ -41,7 +41,7 @@ class SrcParamDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Parameter param = valueObject.attributes.first.asParameter
-		val SrcParamDecl testee = new SrcParamDecl(ctx, param)
+		val SrcParamDecl testee = new SrcParamDecl(ctx, GenerateOptions.empty(), param)
 
 		// TEST
 		val result = testee.toString
@@ -63,7 +63,7 @@ class SrcParamDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Parameter param = valueObject.attributes.get(1).asParameter
-		val SrcParamDecl testee = new SrcParamDecl(ctx, param)
+		val SrcParamDecl testee = new SrcParamDecl(ctx, GenerateOptions.empty(), param)
 
 		// TEST
 		val result = testee.toString
@@ -84,7 +84,7 @@ class SrcParamDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Parameter param = valueObject.attributes.get(2).asParameter
-		val SrcParamDecl testee = new SrcParamDecl(ctx, param)
+		val SrcParamDecl testee = new SrcParamDecl(ctx, GenerateOptions.empty(), param)
 
 		// TEST
 		val result = testee.toString
@@ -105,7 +105,7 @@ class SrcParamDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val Parameter param = valueObject.attributes.get(3).asParameter
-		val SrcParamDecl testee = new SrcParamDecl(ctx, param)
+		val SrcParamDecl testee = new SrcParamDecl(ctx, GenerateOptions.empty(), param)
 
 		// TEST
 		val result = testee.toString

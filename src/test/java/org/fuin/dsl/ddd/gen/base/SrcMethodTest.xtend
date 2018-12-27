@@ -39,7 +39,7 @@ class SrcMethodTest {
 		val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
 		val annotations = #["@One", "@Two(\"2\")"]
-		val SrcMethod testee = new SrcMethod(ctx, annotations, "public", false, method)
+		val SrcMethod testee = new SrcMethod(ctx, annotations, "public", false, GenerateOptions.empty(), method)
 
 		// TEST
 		val result = testee.toString
@@ -77,7 +77,7 @@ class SrcMethodTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 		val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
 		val method = aggregate.methods.get(0)
-		val SrcMethod testee = new SrcMethod(ctx, null, "public", true, method)
+		val SrcMethod testee = new SrcMethod(ctx, null, "public", true, GenerateOptions.empty(), method)
 
 		// TEST
 		val result = testee.toString
