@@ -17,9 +17,7 @@ class SrcVarDecl implements CodeSnippet {
 
 	val CodeSnippetContext ctx
 	val String modifiers
-	val boolean xml
-	val boolean xmlElements
-	val boolean json
+	val GenerateOptions options
 	val Attribute attribute
 
 	/**
@@ -27,17 +25,13 @@ class SrcVarDecl implements CodeSnippet {
 	 * 
 	 * @param ctx Context.
 	 * @param modifiers Modifiers for the attribute.
-	 * @param xml Create XML annotation.
-	 * @param xmlElements Create always XML elements instead of attributes.
-	 * @param json Create JSON annotation.
+	 * @param options Options to use.
 	 * @param attribute Attribute.
 	 */
-	new(CodeSnippetContext ctx, String modifiers, boolean xml, boolean xmlElements, boolean json, Attribute attribute) {
+	new(CodeSnippetContext ctx, String modifiers, GenerateOptions options, Attribute attribute) {
 		this.ctx = ctx
 		this.modifiers = modifiers
-		this.xml = xml
-		this.xmlElements = xmlElements
-		this.json = json
+		this.options = options
 		this.attribute = attribute
 
 		if (attribute.nullable === null) {
@@ -73,15 +67,15 @@ class SrcVarDecl implements CodeSnippet {
 
 	private def xmlAnnotations() {
 		'''
-			«IF xml»
-				«new SrcXmlAttributeOrElement(ctx, attribute, xmlElements)»
+			«IF options.jaxb»
+				«new SrcXmlAttributeOrElement(ctx, attribute, options.jaxbElements)»
 			«ENDIF»
 		'''
 	}
 
 	private def jsonAnnotations() {
 		'''
-			«IF json»
+			«IF options.jsonb»
 				«new SrcJsonProperty(ctx, attribute)»
 			«ENDIF»
 		'''

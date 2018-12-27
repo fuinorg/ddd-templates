@@ -58,25 +58,25 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		}
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports(valueObject, jpa, jaxb, jsonb)
+		ctx.addImports(valueObject)
 
 		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, ns, valueObject, pkg, className, jpa, jaxb, jsonb).toString().getBytes("UTF-8"));
+			create(ctx, ns, valueObject, pkg, className).toString().getBytes("UTF-8"));
 	}
 
-	def addImports(CodeSnippetContext ctx, ValueObject vo, boolean jpa, boolean jaxb, boolean jsonb) {
+	def addImports(CodeSnippetContext ctx, ValueObject vo) {
 		ctx.requiresImport(Documented.name)
 		ctx.requiresImport(ElementType.name)
 		ctx.requiresImport(Retention.name)
 		ctx.requiresImport(RetentionPolicy.name)
 		ctx.requiresImport(Target.name)
-		if (jaxb) {
+		if (options.jaxb) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")		
 		}
-		if (jsonb) {
+		if (options.jsonb) {
 			ctx.requiresImport("javax.json.bind.adapter.JsonbAdapter")		
 		}
-		if (jpa) {
+		if (options.jpa) {
 			ctx.requiresImport("javax.persistence.AttributeConverter")		
 		}		
 		ctx.requiresImport(Constraint.name)
@@ -90,7 +90,7 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		
 	}
 
-	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className, boolean jpa, boolean jaxb, boolean jsonb) {
+	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDocType(vo)»
 			public final class «className» extends AbstractStringValueObject {
@@ -213,10 +213,10 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 				/**
 				 * Converts the value object from/to string.
 				 */
-				public static final class Converter «IF jaxb»extends XmlAdapter<String, «className»>«ENDIF»
+				public static final class Converter «IF options.jaxb»extends XmlAdapter<String, «className»>«ENDIF»
 						implements ValueObjectConverter<String, «className»>
-						«IF jpa», AttributeConverter<«className», String>«ENDIF»
-						«IF jsonb», JsonbAdapter<«className», String>«ENDIF» {
+						«IF options.jpa», AttributeConverter<«className», String>«ENDIF»
+						«IF options.jsonb», JsonbAdapter<«className», String>«ENDIF» {
 			
 					// Attribute Converter
 			
@@ -251,7 +251,7 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 						return value.asBaseType();
 					}
 			
-					«IF jaxb»
+					«IF options.jaxb»
 					// JAXB XML Adapter
 
 					@Override
@@ -267,7 +267,7 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 					}
 
 					«ENDIF»
-					«IF jpa»
+					«IF options.jpa»
 					// JPA Attribute Converter
 
 					@Override
@@ -283,7 +283,7 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 					}
 
 					«ENDIF»
-					«IF jsonb»
+					«IF options.jsonb»
 					// JSONB Adapter
 
 					@Override

@@ -72,14 +72,14 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 	def addImports(CodeSnippetContext ctx, AbstractEntity entity) {
 		ctx.requiresImport("static org.assertj.core.api.Assertions.*")
 		ctx.requiresImport("org.junit.Test")
-		if (jaxb) {
+		if (options.jaxb) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")			
 		}
 		if (entity !== null) {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
 		}
-		if (jsonb) {
+		if (options.jsonb) {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EventIdConverter");
 			ctx.requiresImport("javax.json.bind.Jsonb");
 			ctx.requiresImport("javax.json.bind.JsonbBuilder");
@@ -125,7 +125,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 				}
 			
-			«IF jaxb»
+			«IF options.jaxb»
 				@Test
 				public final void testMarshalUnmarshalXml() {
 			
@@ -145,7 +145,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 				}
 			
 			«ENDIF»			
-			«IF jsonb»
+			«IF options.jsonb»
 				@Test
 				public final void testMarshalUnmarshalJson() {
 			
@@ -211,7 +211,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 				}
 			
-			«IF jaxb»
+			«IF options.jaxb»
 				@Test
 				public final void testMarshalUnmarshalXml() {
 			
@@ -228,7 +228,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 				}
 			
 			«ENDIF»			
-			«IF jsonb»
+			«IF options.jsonb»
 				@Test
 				public final void testMarshalUnmarshalJson() {
 			

@@ -111,7 +111,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				/** Unique name used to store the event. */
 				public static final EventType EVENT_TYPE = new EventType("«event.name»");
 				
-				«new SrcVarsDecl(ctx, "private", jaxb, jaxbElements, jsonb, event)»
+				«new SrcVarsDecl(ctx, "private", options, event)»
 			
 				/**
 				 * Protected default constructor for deserialization.
@@ -169,7 +169,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				/** Unique name used to store the event. */
 				public static final EventType EVENT_TYPE = new EventType("«event.name»");
 				
-				«new SrcVarsDecl(ctx, "private", jaxb, jaxbElements, jsonb, event)»
+				«new SrcVarsDecl(ctx, "private", options, event)»
 			
 				«IF event.attributes.nullSafe.size > 0»
 					/**

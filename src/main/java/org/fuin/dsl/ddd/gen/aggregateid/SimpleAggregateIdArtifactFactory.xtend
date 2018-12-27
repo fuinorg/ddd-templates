@@ -60,13 +60,13 @@ class SimpleAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 		ctx.requiresImport("javax.annotation.concurrent.Immutable")
 		ctx.requiresImport("org.fuin.objects4j.vo.ValueObjectConverter")		
 		ctx.requiresImport(UUID.name);
-		if (jsonb) {
+		if (options.jsonb) {
 			ctx.requiresImport("javax.json.bind.adapter.JsonbAdapter")		
 		}
-		if (jpa) {
+		if (options.jpa) {
 			ctx.requiresImport("javax.persistence.AttributeConverter")		
 		}		
-		if (jaxb) {
+		if (options.jaxb) {
 			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")		
 		}
 	}
@@ -124,10 +124,10 @@ class SimpleAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 				/**
 				 * Converts the value object from/to UUID.
 				 */
-				public static final class Converter «IF jaxb»extends XmlAdapter<UUID, «className»>«ENDIF»
+				public static final class Converter «IF options.jaxb»extends XmlAdapter<UUID, «className»>«ENDIF»
 						implements ValueObjectConverter<UUID, «className»>
-						«IF jpa», AttributeConverter<«className», UUID>«ENDIF»
-						«IF jsonb», JsonbAdapter<«className», UUID>«ENDIF» {
+						«IF options.jpa», AttributeConverter<«className», UUID>«ENDIF»
+						«IF options.jsonb», JsonbAdapter<«className», UUID>«ENDIF» {
 
 					// Attribute Converter
 
@@ -162,7 +162,7 @@ class SimpleAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 						return value.asBaseType();
 					}
 
-					«IF jaxb»
+					«IF options.jaxb»
 					// JAXB XML Adapter
 
 					@Override
@@ -178,7 +178,7 @@ class SimpleAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 					}
 
 					«ENDIF»
-					«IF jpa»
+					«IF options.jpa»
 					// JPA Attribute Converter
 
 					@Override
@@ -194,7 +194,7 @@ class SimpleAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 					}
 
 					«ENDIF»
-					«IF jsonb»
+					«IF options.jsonb»
 					// JSONB Adapter
 
 					@Override

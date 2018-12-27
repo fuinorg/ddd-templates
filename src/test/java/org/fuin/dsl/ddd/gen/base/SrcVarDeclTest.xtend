@@ -5,9 +5,9 @@ import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import org.junit.Test
@@ -38,7 +38,7 @@ class SrcVarDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(0)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, false, false, attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", new GenerateOptions(), attr)
 
 		// TEST
 		val result = testee.toString
@@ -66,7 +66,7 @@ class SrcVarDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(1)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, false, false, attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", new GenerateOptions(), attr)
 
 		// TEST
 		val result = testee.toString
@@ -91,7 +91,7 @@ class SrcVarDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(2)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, false, false, attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", new GenerateOptions(), attr)
 
 		// TEST
 		val result = testee.toString
@@ -115,7 +115,8 @@ private String str3;
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(3)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", true, false, true, attr)
+		val GenerateOptions options = new GenerateOptions.Builder().withJaxb().withJsonb().create();
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", options, attr)
 
 		// TEST
 		val result = testee.toString
@@ -144,7 +145,8 @@ private String str3;
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(3)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", true, true, true, attr)
+		val GenerateOptions options = new GenerateOptions.Builder().withJaxb().withJaxbElements().withJsonb().create();
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", options, attr)
 
 		// TEST
 		val result = testee.toString

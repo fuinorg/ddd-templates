@@ -4,6 +4,7 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcParamsDecl
@@ -15,12 +16,12 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddLiteralExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 
 class EnumArtifactFactory extends AbstractSource<EnumObject> {
 
@@ -86,7 +87,7 @@ class EnumArtifactFactory extends AbstractSource<EnumObject> {
 					
 					«ENDFOR»;
 					
-					«new SrcVarsDecl(ctx, "private", false, false, false, eo)»
+					«new SrcVarsDecl(ctx, "private", new GenerateOptions(), eo)»
 					«new SrcStaticEnumCode(ctx, eo)»
 					private «className»(«new SrcParamsDecl(ctx, eo.attributes.asParameters)») {
 						«new SrcParamsAssignment(ctx, eo.attributes.asParameters)»

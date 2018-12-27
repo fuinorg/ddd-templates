@@ -8,7 +8,7 @@ import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
-import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.Utils
 import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
@@ -58,11 +58,11 @@ class SimpleStringValueObjectTestArtifactFactoryTest {
 	private def createTestee() {
 		val factory = new SimpleStringValueObjectTestArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("test", SimpleStringValueObjectTestArtifactFactory.name)
-		config.addVariable(new Variable(AbstractSource.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(AbstractSource.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.addVariable(new Variable(AbstractSource.KEY_JPA, "true"))
-		config.addVariable(new Variable(AbstractSource.KEY_JAXB, "true"))
-		config.addVariable(new Variable(AbstractSource.KEY_JSONB, "true"))
+		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+		config.addVariable(new Variable(GenerateOptions.KEY_JPA, "true"))
+		config.addVariable(new Variable(GenerateOptions.KEY_JAXB, "true"))
+		config.addVariable(new Variable(GenerateOptions.KEY_JSONB, "true"))
 		config.init(new DefaultContext(), null)
 		factory.init(config)
 		return factory

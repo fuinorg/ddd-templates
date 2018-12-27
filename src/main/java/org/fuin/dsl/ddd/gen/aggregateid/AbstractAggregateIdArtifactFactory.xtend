@@ -21,6 +21,7 @@ import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions
 import static extension org.fuin.dsl.ddd.extensions.DddAggregateIdExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 
 class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
@@ -71,7 +72,7 @@ class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«new SrcVarsDecl(ctx, "private", false, false, false, id)»
+				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), id)»
 				«new SrcConstructorsWithParamsAssignment(ctx, id, true)»
 				«new SrcGetters(ctx, "public final", id.attributes)»
 				«new SrcEntityIdTypeMethods(ctx, id.aggregateNullsafe.name, id.base)»

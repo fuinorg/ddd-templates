@@ -4,6 +4,7 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcAll
@@ -79,7 +80,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				@NotNull
 				private «aggregate.idTypeNullsafe.name» id;
 			
-				«new SrcVarsDecl(ctx, "private", false, false, false, aggregate)»
+				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), aggregate)»
 				@Override
 				public final EntityType getType() {
 					return «aggregate.idTypeNullsafe.name».TYPE;

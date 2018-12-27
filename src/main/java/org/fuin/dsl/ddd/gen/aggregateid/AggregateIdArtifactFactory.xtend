@@ -4,6 +4,7 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
 import org.fuin.dsl.ddd.gen.base.SrcEntityIdTypeMethods
@@ -81,7 +82,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 			private static final long serialVersionUID = 1000L;
 			
-				«new SrcVarsDecl(ctx, "private", false, false, false, id)»
+				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), id)»
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
 				«new SrcGetters(ctx, "public final", id.attributes)»
 				«new SrcEntityIdTypeMethods(ctx, id.aggregateNullsafe.name, id.base)»

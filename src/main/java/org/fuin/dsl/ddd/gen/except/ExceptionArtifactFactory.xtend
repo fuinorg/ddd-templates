@@ -4,6 +4,7 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocMethod
@@ -75,7 +76,7 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 			
 				private static final long serialVersionUID = 1000L;
 			
-				«new SrcVarsDecl(ctx, "private", false, false, false, ex)»
+				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), ex)»
 				«new SrcJavaDocMethod(ctx, "Constructs a new instance of the exception.", null, ex.attributes.asParameters, null)»
 				public «ex.name»(«new SrcParamsDecl(ctx, ex.attributes.asParameters)») {
 					super(«IF ex.cid > 0»«ex.cid», «ENDIF»«new SrcKeyValueReplace(ctx, ex.message, ex.attributes.asNames)»);

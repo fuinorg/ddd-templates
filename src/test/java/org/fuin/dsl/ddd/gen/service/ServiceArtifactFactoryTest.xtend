@@ -6,11 +6,11 @@ import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Service
-import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.Utils
+import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 import org.fuin.srcgen4j.commons.DefaultContext
 import org.fuin.xmlcfg4j.Variable
@@ -67,8 +67,8 @@ class ServiceArtifactFactoryTest {
 	private def createTestee() {
 		val factory = new ServiceArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("service", ServiceArtifactFactory.name)
-		config.addVariable(new Variable(AbstractSource.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(AbstractSource.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
 		config.init(new DefaultContext(), null)
 		factory.init(config)
 		return factory

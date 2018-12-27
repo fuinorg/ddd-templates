@@ -38,7 +38,7 @@ class SrcVarsDeclTest {
 		val ctx = new SimpleCodeSnippetContext(refReg)
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val SrcVarsDecl testee = new SrcVarsDecl(ctx, "private", false, false, false, valueObject)
+		val SrcVarsDecl testee = new SrcVarsDecl(ctx, "private", new GenerateOptions(), valueObject)
 
 		// TEST
 		val result = testee.toString

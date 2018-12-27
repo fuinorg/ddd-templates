@@ -92,7 +92,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 					EqualsVerifier.forClass(«vo.name».class).suppress(Warning.NULL_FIELDS).withRedefinedSuperclass().verify();
 				}
 
-				«IF jsonb»
+				«IF options.jsonb»
 				@Test
 				public void testMarshalJson() throws Exception {
 
@@ -120,7 +120,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 				}
 				«ENDIF»
 
-				«IF jaxb»
+				«IF options.jaxb»
 				@Test
 				public void testMarshalXml() throws Exception {
 

@@ -18,9 +18,7 @@ class SrcVarsDecl implements CodeSnippet {
 
 	val CodeSnippetContext ctx
 	val String modifiers
-	val boolean xml
-	val boolean xmlElements
-	val boolean json
+	val GenerateOptions options
 	val List<Attribute> attributes
 
 	/**
@@ -28,17 +26,13 @@ class SrcVarsDecl implements CodeSnippet {
 	 * 
 	 * @param ctx Context.
 	 * @param modifiers Modifiers for the attribute.
-	 * @param xml Create XML annotation.
-	 * @param xmlElements Create always XML elements instead of attributes.
-	 * @param json Create JSON annotation.
+	 * @param options Options to use.
 	 * @param attributes List.
 	 */
-	new(CodeSnippetContext ctx, String modifiers, boolean xml, boolean xmlElements, boolean json, List<Attribute> attributes) {
+	new(CodeSnippetContext ctx, String modifiers, GenerateOptions options, List<Attribute> attributes) {
 		this.ctx = ctx
 		this.modifiers = modifiers
-		this.xml = xml
-		this.xmlElements = xmlElements
-		this.json = json
+		this.options = options
 		this.attributes = new ArrayList<Attribute>(attributes)
 	}
 
@@ -47,13 +41,11 @@ class SrcVarsDecl implements CodeSnippet {
 	 * 
 	 * @param ctx Context.
 	 * @param visibility Visibility for the attribute.
-	 * @param xml Create XML annotation.
-	 * @param xmlElements Create always XML elements instead of attributes.
-	 * @param json Create JSON annotation.
+	 * @param options Options to use.
 	 * @param internalType Type that has a list of attributes.
 	 */
-	new(CodeSnippetContext ctx, String visibility, boolean xml, boolean xmlElements, boolean json, InternalType internalType) {
-		this(ctx, visibility, xml, xmlElements, json, internalType.attributes)
+	new(CodeSnippetContext ctx, String visibility, GenerateOptions options, InternalType internalType) {
+		this(ctx, visibility, options, internalType.attributes)
 	}
 
 	/**
@@ -61,13 +53,11 @@ class SrcVarsDecl implements CodeSnippet {
 	 * 
 	 * @param ctx Context.
 	 * @param visibility Visibility for the attribute.
-	 * @param xml Create XML annotation.
-	 * @param xmlElements Create always XML elements instead of attributes.
-	 * @param json Create JSON annotation.
+	 * @param options Options to use.
 	 * @param event Event that has a list of attributes.
 	 */
-	new(CodeSnippetContext ctx, String visibility, boolean xml, boolean xmlElements, boolean json, Event event) {
-		this(ctx, visibility, xml, xmlElements, json, event.attributes)
+	new(CodeSnippetContext ctx, String visibility, GenerateOptions options, Event event) {
+		this(ctx, visibility, options, event.attributes)
 	}
 
 	/**
@@ -75,19 +65,17 @@ class SrcVarsDecl implements CodeSnippet {
 	 * 
 	 * @param ctx Context.
 	 * @param visibility Visibility for the attribute.
-	 * @param xml Create XML annotation.
-	 * @param xmlElements Create always XML elements instead of attributes.
-	 * @param json Create JSON annotation.
+	 * @param options Options to use.
 	 * @param exception Event that has a list of attributes.
 	 */
-	new(CodeSnippetContext ctx, String visibility, boolean xml, boolean xmlElements, boolean json, Exception ex) {
-		this(ctx, visibility, xml, xmlElements, json, ex.attributes)
+	new(CodeSnippetContext ctx, String visibility, GenerateOptions options, Exception ex) {
+		this(ctx, visibility, options, ex.attributes)
 	}
 
 	override toString() {
 		'''
 			«FOR attribute : attributes.nullSafe»
-				«new SrcVarDecl(ctx, "private", xml, xmlElements, json, attribute)»
+				«new SrcVarDecl(ctx, "private", options, attribute)»
 				
 			«ENDFOR»
 		'''

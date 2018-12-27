@@ -23,6 +23,7 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 
 class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -60,6 +61,11 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 	}
 
 	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className) {
+		val GenerateOptions localOptions = new GenerateOptions.Builder()
+			.withJaxb(vo.base === null && options.jaxb)
+			.withJaxbElements(options.jaxbElements)
+			.withJsonb((vo.base === null && options.jsonb))
+			.create();
 		val String src = ''' 
 			«new SrcJavaDocType(vo)»
 			«new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
@@ -70,7 +76,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«new SrcVarsDecl(ctx, "private", (vo.base === null && jaxb), jaxbElements, (vo.base === null && jsonb), vo)»
+				«new SrcVarsDecl(ctx, "private", localOptions, vo)»
 				«new SrcConstructorsWithParamsAssignment(ctx, vo, false)»
 				«new SrcGetters(ctx, "public final", vo.attributes)»
 				«new SrcVoBaseMethods(ctx, vo)»

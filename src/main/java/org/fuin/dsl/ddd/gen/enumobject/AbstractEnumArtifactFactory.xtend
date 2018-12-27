@@ -4,6 +4,7 @@ import java.util.Map
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
 import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocMethod
@@ -17,11 +18,11 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
-import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
+import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 
@@ -69,7 +70,7 @@ class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 			/** «eo.doc.text» */
 			public abstract class «className» {
 				
-				«new SrcVarsDecl(ctx, "private", false, false, false, eo)»
+				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), eo)»
 				«new SrcJavaDocMethod(ctx, eo.doc, null, eo.attributes.asParameters, null)»
 				protected «className»(«new SrcParamsDecl(ctx, eo.attributes.asParameters)») {
 					«new SrcParamsAssignment(ctx, eo.attributes.asParameters)»

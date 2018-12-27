@@ -9,6 +9,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.ConstructorData
 import org.fuin.dsl.ddd.gen.base.ConstructorParameter
+import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethods
 import org.fuin.dsl.ddd.gen.base.SrcAbstractHandleEventMethods
 import org.fuin.dsl.ddd.gen.base.SrcAll
@@ -84,9 +85,9 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 			public abstract class «className» extends AbstractEntity<«entity.rootNullsafe.idTypeNullsafe.name», «entity.rootNullsafe.name», «entity.
 				idTypeNullsafe.name»> {
 			
-				«new SrcVarDecl(ctx, "private", false, false, false, idVar)»
+				«new SrcVarDecl(ctx, "private", new GenerateOptions(), idVar)»
 			
-				«new SrcVarsDecl(ctx, "private", false, false, false, entity)»
+				«new SrcVarsDecl(ctx, "private", new GenerateOptions(), entity)»
 				«new SrcConstructorsWithParamsAssignment(ctx, constructorData(entity, className))»
 				@Override
 				public final EntityType getType() {
