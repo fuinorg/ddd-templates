@@ -18,6 +18,7 @@
 package tst2.x.ev;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import org.fuin.ddd4j.ddd.EventIdConverter;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.*;
 import static org.fuin.utils4j.JaxbUtils.marshal;
@@ -43,7 +44,7 @@ public final class EventDTest {
 	}
 
 	@Test
-	public final void testMarshalUnmarshal() {
+	public final void testMarshalUnmarshalXml() {
 
 		// PREPARE
 		final EventD original = createTestee();
@@ -51,6 +52,26 @@ public final class EventDTest {
 		// TEST
 		final String xml = marshal(original, createAdapter(), EventD.class);
 		final EventD copy = unmarshal(xml, createAdapter(), EventD.class);
+
+		// VERIFY
+		assertThat(original).isEqualTo(copy);
+
+	}
+
+	@Test
+	public final void testMarshalUnmarshalJson() {
+
+		// PREPARE
+		final EventD original = createTestee();
+
+		final JsonbConfig config = new JsonbConfig()
+				.withAdapters(new EventIdConverter())
+				.withPropertyVisibilityStrategy(new FieldAccessStrategy());
+		final Jsonb jsonb = JsonbBuilder.create(config);
+
+		// TEST
+		final String json = jsonb.toJson(original, EventD.class);
+		final EventD copy = jsonb.fromJson(json, EventD.class);
 
 		// VERIFY
 		assertThat(original).isEqualTo(copy);

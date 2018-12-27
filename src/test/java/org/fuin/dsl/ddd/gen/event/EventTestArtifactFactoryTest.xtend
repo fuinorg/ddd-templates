@@ -63,7 +63,7 @@ class EventTestArtifactFactoryTest {
 		refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
 		refReg.putReference("x.ev." + eventName, EXAMPLES_CONCRETE + ".x.ev." + eventName)
 		refReg.putReference("XEntityIdFactory", EXAMPLES_CONCRETE + ".x.ev.XEntityIdFactory")
-		val EventTestArtifactFactory testee = createTestee()
+		val EventTestArtifactFactory testee = createTestee(true, true, true)
 		val Event event = model.find(typeof(Event), eventName)
 
 		// TEST
@@ -74,11 +74,14 @@ class EventTestArtifactFactoryTest {
 
 	}
 
-	private def createTestee() {
+	private def createTestee(boolean jaxb, boolean jaxbElements, boolean jsonb) {
 		val factory = new EventTestArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("eventTest", EventTestArtifactFactory.name)
 		config.addVariable(new Variable(AbstractSource.KEY_BASE_PKG, EXAMPLES_CONCRETE))
 		config.addVariable(new Variable(AbstractSource.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+		config.addVariable(new Variable(AbstractSource.KEY_JAXB, jaxb.toString));
+		config.addVariable(new Variable(AbstractSource.KEY_JAXB_ELEMENTS, jaxbElements.toString));
+		config.addVariable(new Variable(AbstractSource.KEY_JSONB, jsonb.toString));
 		config.init(new DefaultContext(), null)
 		factory.init(config)
 		return factory

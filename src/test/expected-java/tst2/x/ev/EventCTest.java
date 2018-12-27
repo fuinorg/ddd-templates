@@ -20,6 +20,7 @@ package tst2.x.ev;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.fuin.ddd4j.ddd.EntityIdPath;
 import org.fuin.ddd4j.ddd.EntityIdPathConverter;
+import org.fuin.ddd4j.ddd.EventIdConverter;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.*;
 import static org.fuin.utils4j.JaxbUtils.marshal;
@@ -41,11 +42,13 @@ public final class EventCTest {
 
 		// VERIFY
 		assertThat(original).isEqualTo(copy);
+		assertThat(original.getA()).isEqualTo(copy.getA());
+		assertThat(original.getB()).isEqualTo(copy.getB());
 
 	}
 
 	@Test
-	public final void testMarshalUnmarshal() {
+	public final void testMarshalUnmarshalXml() {
 
 		// PREPARE
 		final EventC original = createTestee();
@@ -56,6 +59,30 @@ public final class EventCTest {
 
 		// VERIFY
 		assertThat(original).isEqualTo(copy);
+		assertThat(original.getA()).isEqualTo(copy.getA());
+		assertThat(original.getB()).isEqualTo(copy.getB());
+
+	}
+
+	@Test
+	public final void testMarshalUnmarshalJson() {
+
+		// PREPARE
+		final EventC original = createTestee();
+
+		final JsonbConfig config = new JsonbConfig()
+				.withAdapters(new EventIdConverter(), new ZonedDateTimeJsonbAdapter())
+				.withPropertyVisibilityStrategy(new FieldAccessStrategy());
+		final Jsonb jsonb = JsonbBuilder.create(config);
+
+		// TEST
+		final String json = jsonb.toJson(original, EventC.class);
+		final EventC copy = jsonb.fromJson(json, EventC.class);
+
+		// VERIFY
+		assertThat(original).isEqualTo(copy);
+		assertThat(original.getA()).isEqualTo(copy.getA());
+		assertThat(original.getB()).isEqualTo(copy.getB());
 
 	}
 

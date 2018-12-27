@@ -77,10 +77,13 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
 		}
+		if (jsonb) {
+			ctx.requiresImport("org.fuin.ddd4j.ddd.EventIdConverter");
+		}
 		ctx.requiresImport("static org.fuin.utils4j.Utils4J.serialize")
 		ctx.requiresImport("static org.fuin.utils4j.Utils4J.deserialize")
 		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.marshal")
-		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.unmarshal")
+		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.unmarshal")		
 	}
 
 	def addReferences(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
@@ -110,11 +113,15 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 					// VERIFY
 					assertThat(original).isEqualTo(copy);
+					«FOR v : event.attributes.nullSafe»
+						assertThat(original.get«v.name.toFirstUpper»()).isEqualTo(copy.get«v.name.toFirstUpper»());
+					«ENDFOR»
 			
 				}
 			
+			«IF jaxb»
 				@Test
-				public final void testMarshalUnmarshal() {
+				public final void testMarshalUnmarshalXml() {
 			
 					// PREPARE
 					final «event.name» original = createTestee();
@@ -125,9 +132,38 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 					// VERIFY
 					assertThat(original).isEqualTo(copy);
+					«FOR v : event.attributes.nullSafe»
+						assertThat(original.get«v.name.toFirstUpper»()).isEqualTo(copy.get«v.name.toFirstUpper»());
+					«ENDFOR»
 			
 				}
 			
+			«ENDIF»			
+			«IF jsonb»
+				@Test
+				public final void testMarshalUnmarshalJson() {
+			
+					// PREPARE
+					final «event.name» original = createTestee();
+			
+					final JsonbConfig config = new JsonbConfig()
+							.withAdapters(new EventIdConverter(), new ZonedDateTimeJsonbAdapter())
+							.withPropertyVisibilityStrategy(new FieldAccessStrategy());
+					final Jsonb jsonb = JsonbBuilder.create(config);
+			
+					// TEST
+					final String json = jsonb.toJson(original, «event.name».class);
+					final «event.name» copy = jsonb.fromJson(json, «event.name».class);
+			
+					// VERIFY
+					assertThat(original).isEqualTo(copy);
+					«FOR v : event.attributes.nullSafe»
+						assertThat(original.get«v.name.toFirstUpper»()).isEqualTo(copy.get«v.name.toFirstUpper»());
+					«ENDFOR»
+			
+				}
+			
+			«ENDIF»			
 				private «event.name» createTestee() {
 					// TODO Set test values
 					final «event.aggregate.idTypeNullsafe.name» entityId = new «event.aggregate.idTypeNullsafe.name»(«event.aggregate.idTypeNullsafe.firstExample.str»);
@@ -169,8 +205,9 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 				}
 			
+			«IF jaxb»
 				@Test
-				public final void testMarshalUnmarshal() {
+				public final void testMarshalUnmarshalXml() {
 			
 					// PREPARE
 					final «event.name» original = createTestee();
@@ -184,6 +221,32 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 				}
 			
+			«ENDIF»			
+			«IF jsonb»
+				@Test
+				public final void testMarshalUnmarshalJson() {
+			
+					// PREPARE
+					final «event.name» original = createTestee();
+			
+					final JsonbConfig config = new JsonbConfig()
+							.withAdapters(new EventIdConverter())
+							.withPropertyVisibilityStrategy(new FieldAccessStrategy());
+					final Jsonb jsonb = JsonbBuilder.create(config);
+			
+					// TEST
+					final String json = jsonb.toJson(original, «event.name».class);
+					final «event.name» copy = jsonb.fromJson(json, «event.name».class);
+			
+					// VERIFY
+					assertThat(original).isEqualTo(copy);
+					«FOR v : event.attributes.nullSafe»
+						assertThat(original.get«v.name.toFirstUpper»()).isEqualTo(copy.get«v.name.toFirstUpper»());
+					«ENDFOR»
+			
+				}
+			
+			«ENDIF»			
 				private «event.name» createTestee() {
 					«IF event.attributes.nullSafe.size > 0»
 						// TODO Set test values
