@@ -71,7 +71,7 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 
 	def createStandardEventTest(SimpleCodeSnippetContext ctx, ValueObject vo, String pkg, String className) {
 		
-		var example = "xxxxxxx"
+		var example = "\"xxxxxxx\""
 		if (vo.metaInfo !== null && vo.metaInfo.examples.size > 0) {
 			example = vo.metaInfo.examples.first.str
 		}
