@@ -74,13 +74,13 @@ class EventArtifactFactory extends AbstractSource<Event> {
 
 	def addImports(CodeSnippetContext ctx, AbstractEntity entity) {
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EventType")
+		ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
+		ctx.requiresImport("javax.validation.constraints.NotNull")
 		if (entity === null) {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractEvent")
 		} else {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractDomainEvent")
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
-			ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
-			ctx.requiresImport("javax.validation.constraints.NotNull")
 		}
 	}
 
