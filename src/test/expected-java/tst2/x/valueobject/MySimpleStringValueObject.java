@@ -43,7 +43,14 @@ public final class MySimpleStringValueObject extends AbstractStringValueObject {
 
 	private static final int MAX_LENGTH = 100;
 
-	private final String value;
+	private String value;
+
+	/**
+	 * Protected default constructor for deserialization.
+	 */
+	protected MySimpleStringValueObject() {
+		super();
+	}
 
 	/**
 	 * Constructor with mandatory data.

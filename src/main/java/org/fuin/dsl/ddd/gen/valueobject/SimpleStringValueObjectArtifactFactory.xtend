@@ -99,7 +99,14 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 			
 				private static final int MAX_LENGTH = 100;
 			
-				private final String value;
+				private String value;
+			
+				/**
+				 * Protected default constructor for deserialization.
+				 */
+				protected «className»() {
+					super();
+				}
 			
 				/**
 				 * Constructor with mandatory data.
