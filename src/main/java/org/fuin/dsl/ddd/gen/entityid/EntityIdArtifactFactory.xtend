@@ -83,7 +83,7 @@ class EntityIdArtifactFactory extends AbstractSource<EntityId> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«new SrcVarsDecl(ctx, "private", false, id)»
+				«new SrcVarsDecl(ctx, "private", false, false, false, id)»
 				«new SrcConstructorsWithParamsAssignment(ctx, id, false)»
 				«new SrcGetters(ctx, "public final", id.attributes)»
 				«new SrcEntityIdTypeMethods(ctx, id.entityNullsafe.name, id.base)»

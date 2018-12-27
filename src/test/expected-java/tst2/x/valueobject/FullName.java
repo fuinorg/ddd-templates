@@ -18,6 +18,7 @@
 package tst2.x.valueobject;
 
 import java.io.Serializable;
+import javax.json.bind.annotation.JsonbProperty;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,6 +42,7 @@ public final class FullName implements ValueObject, Serializable {
 	
 	@NotNull
 	@XmlAttribute(name = "first-name")
+	@JsonbProperty("first-name")
 	@ShortLabel(key = "firstName.slabel", value = "First")
 	@Label(key = "firstName.label", value = "First name")
 	@Tooltip(key = "firstName.tooltip", value = "A given name, also known as a personal name or forename")
@@ -49,6 +51,7 @@ public final class FullName implements ValueObject, Serializable {
 	
 	@NotNull
 	@XmlAttribute(name = "last-name")
+	@JsonbProperty("last-name")
 	@ShortLabel(key = "lastName.slabel", value = "Last")
 	@Label(key = "lastName.label", value = "Last name")
 	@Tooltip(key = "lastName.tooltip", value = "A family name, also known as a surname")

@@ -51,7 +51,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 		ctx.addImports(valueObject)
 
 		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, ns, valueObject, pkg, className).toString().getBytes("UTF-8"));
+			create(ctx, ns, valueObject, jaxb, jaxbElements, jsonb, pkg, className).toString().getBytes("UTF-8"));
 	}
 
 	def addImports(CodeSnippetContext ctx, ValueObject vo) {
@@ -59,7 +59,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 		ctx.requiresImport(org.fuin.objects4j.vo.ValueObject.name)
 	}
 
-	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className) {
+	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, boolean jaxb, boolean jaxbElements, boolean jsonb, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDocType(vo)»
 			«new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
@@ -70,7 +70,7 @@ class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«new SrcVarsDecl(ctx, "private", (vo.base === null), vo)»
+				«new SrcVarsDecl(ctx, "private", (vo.base === null && jaxb), jaxbElements, (vo.base === null && jsonb), vo)»
 				«new SrcConstructorsWithParamsAssignment(ctx, vo, false)»
 				«new SrcGetters(ctx, "public final", vo.attributes)»
 				«new SrcVoBaseMethods(ctx, vo)»

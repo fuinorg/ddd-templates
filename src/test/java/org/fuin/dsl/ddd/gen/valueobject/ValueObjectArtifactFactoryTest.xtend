@@ -66,7 +66,7 @@ class ValueObjectArtifactFactoryTest {
 		refReg.putReference("x.types.String", "java.lang.String")
 		refReg.putReference("x.valueobject." + name + "Converter", EXAMPLES_CONCRETE + ".x.valueobject." + name + "Converter")
 
-		val ValueObjectArtifactFactory testee = createTestee()
+		val ValueObjectArtifactFactory testee = createTestee(true, false, true)
 		val ValueObject vo = model.find(typeof(ValueObject), name)
 
 		// TEST
@@ -78,11 +78,14 @@ class ValueObjectArtifactFactoryTest {
 	}
 	
 
-	private def createTestee() {
+	private def createTestee(boolean jaxb, boolean jaxbElements, boolean jsonb) {
 		val factory = new ValueObjectArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("vo", ValueObjectArtifactFactory.name)
 		config.addVariable(new Variable(AbstractSource.KEY_BASE_PKG, EXAMPLES_CONCRETE))
 		config.addVariable(new Variable(AbstractSource.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+		config.addVariable(new Variable(AbstractSource.KEY_JAXB, jaxb.toString));
+		config.addVariable(new Variable(AbstractSource.KEY_JAXB_ELEMENTS, jaxbElements.toString));
+		config.addVariable(new Variable(AbstractSource.KEY_JSONB, jsonb.toString));
 		config.init(new DefaultContext(), null)
 		factory.init(config)
 		return factory

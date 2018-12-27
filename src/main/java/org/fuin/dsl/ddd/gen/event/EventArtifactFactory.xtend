@@ -64,9 +64,9 @@ class EventArtifactFactory extends AbstractSource<Event> {
 
 		var String src;
 		if (entity === null) {
-			src = createStandardEvent(ctx, event, pkg, className).toString();
+			src = createStandardEvent(ctx, event, jaxb, jaxbElements, jsonb, pkg, className).toString();
 		} else {
-			src = createDomainEvent(ctx, event, pkg, className).toString();
+			src = createDomainEvent(ctx, event, jaxb, jaxbElements, jsonb, pkg, className).toString();
 		}
 
 		return new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8"));
@@ -97,7 +97,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		return event.entity.idType
 	}
 
-	def createDomainEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
+	def createDomainEvent(SimpleCodeSnippetContext ctx, Event event, boolean jaxb, boolean jaxbElements, boolean jsonb, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDocType(event)»
 			«new SrcXmlRootElement(ctx, event.name)»
@@ -108,7 +108,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				/** Unique name used to store the event. */
 				public static final EventType EVENT_TYPE = new EventType("«event.name»");
 				
-				«new SrcVarsDecl(ctx, "private", true, event)»
+				«new SrcVarsDecl(ctx, "private", jaxb, jaxbElements, jsonb, event)»
 			
 				/**
 				 * Protected default constructor for deserialization.
@@ -155,7 +155,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 
 	}
 
-	def createStandardEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
+	def createStandardEvent(SimpleCodeSnippetContext ctx, Event event, boolean jaxb, boolean jaxbElements, boolean jsonb, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDocType(event)»
 			«new SrcXmlRootElement(ctx, event.name)»
@@ -166,7 +166,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 				/** Unique name used to store the event. */
 				public static final EventType EVENT_TYPE = new EventType("«event.name»");
 				
-				«new SrcVarsDecl(ctx, "private", true, event)»
+				«new SrcVarsDecl(ctx, "private", jaxb, jaxbElements, jsonb, event)»
 			
 				«IF event.attributes.nullSafe.size > 0»
 					/**

@@ -13,8 +13,8 @@ class SrcXmlAttributeOrElement implements CodeSnippet {
 
 	val CodeSnippet codeSnippet
 
-	new(CodeSnippetContext ctx, Variable variable) {
-		if ((variable.type.base !== null) && (variable.type.base.element === null)) {
+	new(CodeSnippetContext ctx, Variable variable, boolean xmlElements) {
+		if (!xmlElements && (variable.type.base !== null) && (variable.type.base.element === null)) {
 			codeSnippet = new SrcXmlAttribute(ctx, variable)			
 		} else {
 			codeSnippet = new SrcXmlElement(ctx, variable)

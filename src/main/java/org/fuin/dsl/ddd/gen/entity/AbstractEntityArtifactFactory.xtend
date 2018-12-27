@@ -84,9 +84,9 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 			public abstract class «className» extends AbstractEntity<«entity.rootNullsafe.idTypeNullsafe.name», «entity.rootNullsafe.name», «entity.
 				idTypeNullsafe.name»> {
 			
-				«new SrcVarDecl(ctx, "private", false, idVar)»
+				«new SrcVarDecl(ctx, "private", false, false, false, idVar)»
 			
-				«new SrcVarsDecl(ctx, "private", false, entity)»
+				«new SrcVarsDecl(ctx, "private", false, false, false, entity)»
 				«new SrcConstructorsWithParamsAssignment(ctx, constructorData(entity, className))»
 				@Override
 				public final EntityType getType() {

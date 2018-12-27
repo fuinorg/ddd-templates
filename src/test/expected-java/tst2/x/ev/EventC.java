@@ -17,6 +17,7 @@
  */
 package tst2.x.ev;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,10 +40,12 @@ public final class EventC extends AbstractDomainEvent<CustomerId> {
 	
 	@NotNull
 	@XmlAttribute(name = "a")
+	@JsonbProperty("a")
 	private String a;
 	
 	@NotNull
 	@XmlAttribute(name = "b")
+	@JsonbProperty("b")
 	private Integer b;
 	
 

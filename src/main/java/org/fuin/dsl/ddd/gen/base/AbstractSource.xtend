@@ -12,14 +12,22 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 
 	public val static KEY_COPYRIGHT_HEADER = "copyrightHeader"
 
+	/** Name of the base package to prepend right before the context from the DSL (Type: String). */
 	public val static KEY_BASE_PKG = "basepkg"
 	
+	/** Name of a package to insert right after the context from the DSL (Type: String). */
 	public val static KEY_PKG = "pkg"
 
+	/** Generate JPA annotations (Type: Boolean). */
 	public val static KEY_JPA = "jpa"
 
+	/** Generate JAX-B annotations (Type: Boolean). */
 	public val static KEY_JAXB = "jaxb"
 
+	/** Generate JAX-B elements instead of attributes. Used to harmonize JSON and XML structures (Type: Boolean). */
+	public val static KEY_JAXB_ELEMENTS = "jaxb_elements"
+
+	/** Generate JSON-B annotations (Type: Boolean). */
 	public val static KEY_JSONB = "jsonb"
 
 	String artifactName;
@@ -55,6 +63,10 @@ abstract class AbstractSource<T> implements ArtifactFactory<T> {
 		return Boolean.valueOf(varMap.nullSafe.get(KEY_JAXB))
 	}
 
+	def boolean getJaxbElements() {
+		return Boolean.valueOf(varMap.nullSafe.get(KEY_JAXB_ELEMENTS))
+	}
+	
 	def boolean getJsonb() {
 		return Boolean.valueOf(varMap.nullSafe.get(KEY_JSONB))
 	}

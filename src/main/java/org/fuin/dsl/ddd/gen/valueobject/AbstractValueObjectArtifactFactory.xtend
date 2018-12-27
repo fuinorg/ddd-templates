@@ -68,7 +68,7 @@ class AbstractValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 			
 				private static final long serialVersionUID = 1000L;
 				
-				«new SrcVarsDecl(ctx, "private", false, vo)»
+				«new SrcVarsDecl(ctx, "private", false, false, false, vo)»
 				«new SrcConstructorsWithParamsAssignment(ctx, vo, true)»
 				«new SrcGetters(ctx, "public final", vo.attributes)»
 			}

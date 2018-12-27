@@ -79,7 +79,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 				@NotNull
 				private «aggregate.idTypeNullsafe.name» id;
 			
-				«new SrcVarsDecl(ctx, "private", false, aggregate)»
+				«new SrcVarsDecl(ctx, "private", false, false, false, aggregate)»
 				@Override
 				public final EntityType getType() {
 					return «aggregate.idTypeNullsafe.name».TYPE;

@@ -6,6 +6,7 @@ import java.net.URL
 import java.util.ArrayList
 import java.util.List
 import org.apache.commons.io.IOUtils
+import java.nio.charset.Charset
 
 /**
  * Provides utility methods for templates.
@@ -60,7 +61,7 @@ class Utils {
 	def static String readAsString(URL url) {
 		val InputStream in = url.openStream()
 		try {
-			val List<String> lines = IOUtils.readLines(in)
+			val List<String> lines = IOUtils.readLines(in, Charset.forName("utf-8"))
 			val StringBuffer sb = new StringBuffer()
 			for (line : lines) {
 				sb.append(line)

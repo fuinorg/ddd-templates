@@ -70,6 +70,9 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		ctx.requiresImport(Retention.name)
 		ctx.requiresImport(RetentionPolicy.name)
 		ctx.requiresImport(Target.name)
+		if (jaxb) {
+			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")		
+		}
 		if (jsonb) {
 			ctx.requiresImport("javax.json.bind.adapter.JsonbAdapter")		
 		}
@@ -81,9 +84,6 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		ctx.requiresImport(ConstraintValidatorContext.name)
 		ctx.requiresImport(Payload.name)
 		ctx.requiresImport(NotNull.name)
-		if (jaxb) {
-			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")		
-		}
 		ctx.requiresImport(ConstraintViolationException.name)
 		ctx.requiresImport(AbstractStringValueObject.name)
 		ctx.requiresImport(ValueObjectConverter.name)

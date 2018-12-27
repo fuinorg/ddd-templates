@@ -38,7 +38,7 @@ class SrcVarDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(0)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, false, false, attr)
 
 		// TEST
 		val result = testee.toString
@@ -66,7 +66,7 @@ class SrcVarDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(1)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, false, false, attr)
 
 		// TEST
 		val result = testee.toString
@@ -91,7 +91,7 @@ class SrcVarDeclTest {
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(2)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", false, false, false, attr)
 
 		// TEST
 		val result = testee.toString
@@ -106,7 +106,7 @@ private String str3;
 	}
 
 	@Test
-	def void testCreateWithXml() {
+	def void testCreateWithXmlAttribute() {
 
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
@@ -115,7 +115,7 @@ private String str3;
 
 		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
 		val attr = valueObject.attributes.get(3)
-		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", true, attr)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", true, false, true, attr)
 
 		// TEST
 		val result = testee.toString
@@ -125,10 +125,41 @@ private String str3;
 			'''
 				@NotNull
 				@XmlAttribute(name = "abc-def-ghi")
+				@JsonbProperty("abc-def-ghi")
 				private String abcDefGhi;
 			'''.toString)
 		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull",
-			"javax.xml.bind.annotation.XmlAttribute", "java.lang.String")
+			"javax.xml.bind.annotation.XmlAttribute", "javax.json.bind.annotation.JsonbProperty", 
+			"java.lang.String")
+
+	}
+
+	@Test
+	def void testCreateWithXmlElement() {
+
+		// PREPARE
+		val refReg = new SimpleCodeReferenceRegistry()
+		refReg.putReference("a.types.String", "java.lang.String")
+		val ctx = new SimpleCodeSnippetContext(refReg)
+
+		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
+		val attr = valueObject.attributes.get(3)
+		val SrcVarDecl testee = new SrcVarDecl(ctx, "private", true, true, true, attr)
+
+		// TEST
+		val result = testee.toString
+
+		// VERIFY
+		assertThat(result).isEqualTo(
+			'''
+				@NotNull
+				@XmlElement(name = "abc-def-ghi")
+				@JsonbProperty("abc-def-ghi")
+				private String abcDefGhi;
+			'''.toString)
+		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull",
+			"javax.xml.bind.annotation.XmlElement", "javax.json.bind.annotation.JsonbProperty", 
+			"java.lang.String")
 
 	}
 

@@ -18,6 +18,7 @@
 package tst2.x.valueobject;
 
 import java.io.Serializable;
+import javax.json.bind.annotation.JsonbProperty;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,6 +35,7 @@ public final class MyValueObject2 implements ValueObject, Serializable {
 	
 	@NotNull
 	@XmlAttribute(name = "id")
+	@JsonbProperty("id")
 	private String id;
 	
 	/**

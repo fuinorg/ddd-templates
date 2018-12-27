@@ -28,7 +28,7 @@ class SrcXmlAttributeOrElementTest {
 	private ValidationTestHelper validationTester
 
 	@Test
-	def void testCreateAggregateId() {
+	def void testCreateAggregateIdAttribute() {
 
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
@@ -37,7 +37,7 @@ class SrcXmlAttributeOrElementTest {
 
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
 		val idVar = aggregate.attributes.get(0)
-		val SrcXmlAttributeOrElement testeeId = new SrcXmlAttributeOrElement(ctx, idVar)
+		val SrcXmlAttributeOrElement testeeId = new SrcXmlAttributeOrElement(ctx, idVar, false)
 
 		// TEST
 		val resultId = testeeId.toString
@@ -50,6 +50,28 @@ class SrcXmlAttributeOrElementTest {
 	}
 
 	@Test
+	def void testCreateAggregateIdElement() {
+
+		// PREPARE
+		val refReg = new SimpleCodeReferenceRegistry()
+		refReg.putReference("x.types.String", "java.lang.String")
+		val ctx = new SimpleCodeSnippetContext(refReg)
+
+		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
+		val idVar = aggregate.attributes.get(0)
+		val SrcXmlAttributeOrElement testeeId = new SrcXmlAttributeOrElement(ctx, idVar, true)
+
+		// TEST
+		val resultId = testeeId.toString
+
+
+		// VERIFY
+		assertThat(resultId).isEqualTo('''@XmlElement(name = "id")'''.toString)
+		assertThat(ctx.imports).containsOnly("javax.xml.bind.annotation.XmlElement")
+
+	}
+	
+	@Test
 	def void testCreateValueObject() {
 
 		// PREPARE
@@ -59,7 +81,7 @@ class SrcXmlAttributeOrElementTest {
 
 		val Aggregate aggregate = createModel().find(Aggregate, "MyAggregate")
 		val voVar = aggregate.attributes.get(1)
-		val SrcXmlAttributeOrElement testeeVo = new SrcXmlAttributeOrElement(ctx, voVar)
+		val SrcXmlAttributeOrElement testeeVo = new SrcXmlAttributeOrElement(ctx, voVar, false)
 
 		// TEST
 		val resultVo = testeeVo.toString
