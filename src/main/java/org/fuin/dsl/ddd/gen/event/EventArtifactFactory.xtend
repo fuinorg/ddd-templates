@@ -202,8 +202,8 @@ class EventArtifactFactory extends AbstractSource<Event> {
 						return "«event.message»";
 					«ELSE»
 						return KeyValue.replace("«event.message»"
-						«FOR v : event.attributes SEPARATOR ','»
-							new KeyValue("«v.name»", «v.name»)
+						«FOR v : event.attributes»
+							, new KeyValue("«v.name»", «v.name»)
 						«ENDFOR»
 						);
 					«ENDIF»
