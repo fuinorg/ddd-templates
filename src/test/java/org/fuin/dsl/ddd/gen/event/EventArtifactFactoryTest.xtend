@@ -90,7 +90,9 @@ class EventArtifactFactoryTest {
 	private def testCreate(Map<String, Object> context, String eventName) {
 		
 		// PREPARE
-		val EventArtifactFactory testee = createTestee(true, false, true)
+		val EventArtifactFactory testee = createTestee(GenerateOptions.builder.withJaxb()
+			.withJaxbElements(false).withJsonb().withEventRelaxedTypes().create()
+		)
 		val Event event = model.find(typeof(Event), eventName)
 
 		// TEST
@@ -101,14 +103,14 @@ class EventArtifactFactoryTest {
 		
 	}
 
-	private def createTestee(boolean jaxb, boolean jaxbElements, boolean jsonb) {
+	private def createTestee(GenerateOptions options) {
 		val factory = new EventArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("event", EventArtifactFactory.name)
 		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
 		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.addVariable(new Variable(GenerateOptions.KEY_JAXB, jaxb.toString));
-		config.addVariable(new Variable(GenerateOptions.KEY_JAXB_ELEMENTS, jaxbElements.toString));
-		config.addVariable(new Variable(GenerateOptions.KEY_JSONB, jsonb.toString));
+		config.addVariable(new Variable(GenerateOptions.KEY_JAXB, options.jaxb.toString));
+		config.addVariable(new Variable(GenerateOptions.KEY_JAXB_ELEMENTS, options.jaxbElements.toString));
+		config.addVariable(new Variable(GenerateOptions.KEY_JSONB, options.jsonb.toString));
 		config.init(new DefaultContext(), null)
 		factory.init(config)
 		return factory
