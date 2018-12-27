@@ -139,7 +139,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 					return EVENT_TYPE;
 				}
 			
-				«new SrcGetters(ctx, "public final", event.attributes)»
+				«new SrcGetters(ctx, options, "public final", event.attributes)»
 			
 				@Override
 				public final String toString() {
@@ -197,7 +197,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 					return EVENT_TYPE;
 				}
 			
-				«new SrcGetters(ctx, "public final", event.attributes)»
+				«new SrcGetters(ctx, options, "public final", event.attributes)»
 			
 				@Override
 				public final String toString() {

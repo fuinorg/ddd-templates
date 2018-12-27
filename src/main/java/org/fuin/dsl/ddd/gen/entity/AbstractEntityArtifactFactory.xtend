@@ -99,8 +99,8 @@ class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 					return id;
 				}
 			
-				«new SrcGetters(ctx, "protected final", entity.attributes)»
-				«new SrcSetters(ctx, "protected final", entity.attributes)»
+				«new SrcGetters(ctx, GenerateOptions.empty(), "protected final", entity.attributes)»
+				«new SrcSetters(ctx, GenerateOptions.empty(), "protected final", entity.attributes)»
 				«new SrcAbstractChildEntityLocatorMethods(ctx, GenerateOptions.empty(), entity)»
 				«new SrcAbstractHandleEventMethods(ctx, entity.allEvents)»
 				«new SrcServices(ctx, entity.services)»

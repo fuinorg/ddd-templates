@@ -98,7 +98,7 @@ class SrcSettersTest {
 		)
 		validationTester.assertNoIssues(model)
 		val ValueObject valueObject = model.contexts.get(0).namespaces.get(0).elements.get(0) as ValueObject
-		return new SrcSetters(codeSnippetContext, "public", valueObject.attributes)
+		return new SrcSetters(codeSnippetContext, GenerateOptions.empty(), "public", valueObject.attributes)
 	}
 
 }

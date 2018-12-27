@@ -84,7 +84,7 @@ class AggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 			
 				«new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), id)»
 				«new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), id, false)»
-				«new SrcGetters(ctx, "public final", id.attributes)»
+				«new SrcGetters(ctx, GenerateOptions.empty(), "public final", id.attributes)»
 				«new SrcEntityIdTypeMethods(ctx, id.aggregateNullsafe.name, id.base)»
 				«IF id.base === null»
 				@Override

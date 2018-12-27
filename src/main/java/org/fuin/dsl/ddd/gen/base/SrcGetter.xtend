@@ -14,11 +14,13 @@ import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 class SrcGetter implements CodeSnippet {
 
 	val CodeSnippetContext ctx
+	val GenerateOptions options
 	val String modifiers
 	val Variable variable
 
-	new(CodeSnippetContext ctx, String modifiers, Variable variable) {
+	new(CodeSnippetContext ctx, GenerateOptions options, String modifiers, Variable variable) {
 		this.ctx = ctx
+		this.options = options
 		this.modifiers = modifiers
 		this.variable = variable
 		

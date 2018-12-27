@@ -102,7 +102,7 @@ class SrcGettersTest {
 		validationTester.assertNoIssues(model)
 		val ValueObject valueObject = model.contexts.get(0).namespaces.get(0).elements.get(0) as ValueObject
 		val List<Attribute> attributes = valueObject.attributes
-		return new SrcGetters(codeSnippetContext, "public", attributes)
+		return new SrcGetters(codeSnippetContext, GenerateOptions.empty(), "public", attributes)
 	}
 
 }

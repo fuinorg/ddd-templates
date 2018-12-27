@@ -13,11 +13,13 @@ import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions
 class SrcGetters implements CodeSnippet {
 
 	val CodeSnippetContext ctx
+	val GenerateOptions options
 	val String modifiers
 	val List<Attribute> attributes
 
-	new(CodeSnippetContext ctx, String modifiers, List<Attribute> attributes) {
+	new(CodeSnippetContext ctx, GenerateOptions options, String modifiers, List<Attribute> attributes) {
 		this.ctx = ctx
+		this.options = options
 		this.modifiers = modifiers
 		this.attributes = attributes
 		for (Attribute attribute : attributes) {
@@ -28,7 +30,7 @@ class SrcGetters implements CodeSnippet {
 	override toString() {
 		'''	
 			«FOR v : attributes»
-				«new SrcGetter(ctx, modifiers, v).toString»
+				«new SrcGetter(ctx, options, modifiers, v).toString»
 				
 			«ENDFOR»			
 		'''

@@ -115,7 +115,7 @@ class SrcSetterTest {
 			'''
 		)
 		val ValueObject valueObject = model.contexts.get(0).namespaces.get(0).elements.get(0) as ValueObject
-		return new SrcSetter(codeSnippetContext, "public", valueObject.attributes.first)
+		return new SrcSetter(codeSnippetContext, GenerateOptions.empty(), "public", valueObject.attributes.first)
 	}
 
 	private def SrcSetter createTesteeWithMultiplicity(CodeSnippetContext codeSnippetContext) {
@@ -146,7 +146,7 @@ class SrcSetterTest {
 		)
 		validationTester.assertNoIssues(model)
 		val ValueObject valueObject = model.contexts.get(0).namespaces.get(0).elements.get(0) as ValueObject
-		return new SrcSetter(codeSnippetContext, "public", valueObject.attributes.first)
+		return new SrcSetter(codeSnippetContext, GenerateOptions.empty(), "public", valueObject.attributes.first)
 	}
 
 }

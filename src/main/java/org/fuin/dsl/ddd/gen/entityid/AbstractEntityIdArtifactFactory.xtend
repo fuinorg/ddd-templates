@@ -74,7 +74,7 @@ class AbstractEntityIdArtifactFactory extends AbstractSource<EntityId> {
 				
 				«new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), id)»
 				«new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), id, true)»
-				«new SrcGetters(ctx, "public final", id.attributes)»
+				«new SrcGetters(ctx, GenerateOptions.empty(), "public final", id.attributes)»
 				«new SrcEntityIdTypeMethods(ctx, id.entityNullsafe.name, id.base)»
 			}
 		'''

@@ -76,7 +76,7 @@ class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 					«new SrcParamsAssignment(ctx, eo.attributes.asParameters)»
 				}
 			
-				«new SrcGetters(ctx, "public final", eo.attributes)»
+				«new SrcGetters(ctx, GenerateOptions.empty(), "public final", eo.attributes)»
 			}
 			'''
 		

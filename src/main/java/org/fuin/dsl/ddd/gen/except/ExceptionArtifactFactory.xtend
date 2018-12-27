@@ -83,7 +83,7 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 					«new SrcParamsAssignment(ctx, ex.attributes.asParameters)»
 				}
 			
-				«new SrcGetters(ctx, "public final", ex.attributes)»
+				«new SrcGetters(ctx, GenerateOptions.empty(), "public final", ex.attributes)»
 			}
 		'''
 
