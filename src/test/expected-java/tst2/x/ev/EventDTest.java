@@ -17,7 +17,11 @@
  */
 package tst2.x.ev;
 
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import org.eclipse.yasson.FieldAccessStrategy;
 import org.fuin.ddd4j.ddd.EventIdConverter;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.*;
