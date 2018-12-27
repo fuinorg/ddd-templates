@@ -59,7 +59,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		}
 
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports(entity)
+		ctx.addImports(entity, event)
 		ctx.addReferences(event)
 
 		var String src;
@@ -72,15 +72,18 @@ class EventArtifactFactory extends AbstractSource<Event> {
 		return new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8"));
 	}
 
-	def addImports(CodeSnippetContext ctx, AbstractEntity entity) {
+	def addImports(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
 		ctx.requiresImport("org.fuin.ddd4j.ddd.EventType")
-		ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
-		ctx.requiresImport("javax.validation.constraints.NotNull")
 		if (entity === null) {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractEvent")
+			if (event.attributes.nullSafe.size > 0) {
+				ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
+			}
 		} else {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractDomainEvent")
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
+			ctx.requiresImport("javax.validation.constraints.NotNull")		
+			ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
 		}
 	}
 
