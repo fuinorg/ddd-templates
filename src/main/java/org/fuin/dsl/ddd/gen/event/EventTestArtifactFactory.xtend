@@ -79,6 +79,10 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 		}
 		if (jsonb) {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.EventIdConverter");
+			ctx.requiresImport("javax.json.bind.Jsonb");
+			ctx.requiresImport("javax.json.bind.JsonbBuilder");
+			ctx.requiresImport("javax.json.bind.JsonbConfig");
+			ctx.requiresImport("org.eclipse.yasson.FieldAccessStrategy");
 		}
 		ctx.requiresImport("static org.fuin.utils4j.Utils4J.serialize")
 		ctx.requiresImport("static org.fuin.utils4j.Utils4J.deserialize")
