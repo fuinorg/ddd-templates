@@ -30,9 +30,6 @@ class GenerateOptions {
 	/** Key if to generate JSON-B annotations (Type: Boolean). */
 	public val static KEY_JSONB = "jsonb"
 
-	/** Key if events should use strong typing (default) or not. */
-	public val static KEY_EVENT_RELAXED_TYPES = "event_relaxed_types"
-
 	var String basePkg
 
 	var String pkg
@@ -46,8 +43,6 @@ class GenerateOptions {
 	var boolean jsonb
 
 	var String copyrightHeader
-
-	var boolean eventRelaxedTypes
 
 	/**
 	 * Default constructor.
@@ -76,8 +71,6 @@ class GenerateOptions {
 			copyrightHeader = ""
 		}
 		copyrightHeader = header
-
-		eventRelaxedTypes = Boolean.valueOf(varMap.nullSafe.get(KEY_EVENT_RELAXED_TYPES))
 
 	}
 
@@ -189,7 +182,6 @@ class GenerateOptions {
 			obj.jaxbElements = other.jaxbElements
 			obj.jsonb = other.jsonb
 			obj.copyrightHeader = other.copyrightHeader
-			obj.eventRelaxedTypes = other.eventRelaxedTypes
 		}
 
 		public def Builder withBasePkg(String basePkg) {
@@ -244,16 +236,6 @@ class GenerateOptions {
 
 		public def Builder withCopyrightHeader(String header) {
 			obj.copyrightHeader = header
-			return this
-		}
-
-		public def Builder withEventRelaxedTypes(boolean eventRelaxedTypes) {
-			obj.eventRelaxedTypes = eventRelaxedTypes
-			return this
-		}
-
-		public def Builder withEventRelaxedTypes() {
-			obj.eventRelaxedTypes = true
 			return this
 		}
 
