@@ -257,7 +257,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 					«IF event.attributes.nullSafe.size > 0»
 						// TODO Set test values
 						«FOR v : event.attributes.nullSafe»
-							final «v.type(ctx)» «v.name» = «v.firstExample.str»;
+							final «v.type(ctx)» «v.name» = new «v.type(ctx)»(«v.firstExample.str»);
 						«ENDFOR»
 					«ENDIF»
 					return new «new SrcInvokeMethod(ctx, event.name, event.attributes.asNames)»
