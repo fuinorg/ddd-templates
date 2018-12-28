@@ -37,7 +37,7 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 
 	override create(ValueObject valueObject, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		if (valueObject.base === null || valueObject.base.name != "String") {
+		if (valueObject.base === null || valueObject.base.name != "String" || valueObject.attributes.size < 1) {
 			// Do not generate anything
 			return null
 		}
@@ -89,7 +89,7 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		ctx.requiresImport(ValueObjectConverter.name)
 		
 	}
-
+	
 	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDocType(vo)»
@@ -99,6 +99,12 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 			
 				private static final int MAX_LENGTH = 100;
 			
+				«IF vo.attributes.iterator.next.nullable === null»
+				@NotNull
+				«ELSE»
+				@Nullable
+				«ENDIF»
+				@«className»Str
 				private String value;
 			
 				/**

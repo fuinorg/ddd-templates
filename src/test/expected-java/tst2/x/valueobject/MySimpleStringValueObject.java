@@ -43,6 +43,8 @@ public final class MySimpleStringValueObject extends AbstractStringValueObject {
 
 	private static final int MAX_LENGTH = 100;
 
+	@NotNull
+	@MySimpleStringValueObjectStr
 	private String value;
 
 	/**

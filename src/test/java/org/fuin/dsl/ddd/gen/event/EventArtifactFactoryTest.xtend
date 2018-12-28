@@ -91,7 +91,7 @@ class EventArtifactFactoryTest {
 		
 		// PREPARE
 		val EventArtifactFactory testee = createTestee(GenerateOptions.builder.withJaxb()
-			.withJaxbElements(false).withJsonb().withEventRelaxedTypes().create()
+			.withJaxbElements(false).withJsonb().create()
 		)
 		val Event event = model.find(typeof(Event), eventName)
 
