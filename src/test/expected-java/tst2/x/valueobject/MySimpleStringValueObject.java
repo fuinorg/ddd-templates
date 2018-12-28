@@ -22,6 +22,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import javax.annotation.concurrent.Immutable;
 import javax.json.bind.adapter.JsonbAdapter;
 import javax.persistence.AttributeConverter;
 import javax.validation.Constraint;
@@ -37,6 +38,7 @@ import org.fuin.objects4j.vo.ValueObjectConverter;
 /**
  * Simple value object single attribute and base.
  */
+@Immutable
 public final class MySimpleStringValueObject extends AbstractStringValueObject {
 
 	private static final long serialVersionUID = 1000L;

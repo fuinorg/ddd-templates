@@ -87,12 +87,14 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		ctx.requiresImport(ConstraintViolationException.name)
 		ctx.requiresImport(AbstractStringValueObject.name)
 		ctx.requiresImport(ValueObjectConverter.name)
+		ctx.requiresImport("javax.annotation.concurrent.Immutable")
 		
 	}
 	
 	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDocType(vo)»
+			@Immutable
 			public final class «className» extends AbstractStringValueObject {
 			
 				private static final long serialVersionUID = 1000L;
