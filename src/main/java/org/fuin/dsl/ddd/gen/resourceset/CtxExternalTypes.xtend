@@ -51,9 +51,9 @@ import java.util.Set
  * }
  * <code>
  * You can provide the following variables to customize the implementations:<br>
- * <code>types.Date</code> - Default="org.joda.time.LocalDate"<br>
- * <code>types.Time</code> - Default="org.joda.time.LocalTime"<br>
- * <code>types.Timestamp</code> - Default="org.joda.time.LocalDateTime"<br>
+ * <code>types.Date</code> - Default="java.time.LocalDate"<br>
+ * <code>types.Time</code> - Default="java.time.LocalTime"<br>
+ * <code>types.Timestamp</code> - Default="java.time.ZonedDateTime"<br>
  * <code>types.UUID</code> - Default="java.util.UUID"<br>
  */
 class CtxExternalTypes extends AbstractSource<ResourceSet> {
@@ -69,9 +69,9 @@ class CtxExternalTypes extends AbstractSource<ResourceSet> {
 	override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
 		val pkg = getVar("namespace", "types")
-		val dateType = getVar(pkg + ".Date", "org.joda.time.LocalDate")
-		val timeType = getVar(pkg + ".Time", "org.joda.time.LocalDateTime")
-		val dateTimeType = getVar(pkg + ".Timestamp", "org.joda.time.LocalTime")
+		val dateType = getVar(pkg + ".Date", "java.time.LocalDate")
+		val timeType = getVar(pkg + ".Time", "java.time.LocalDateTime")
+		val dateTimeType = getVar(pkg + ".Timestamp", "java.time.ZonedDateTime")
 		val uuidType = getVar(pkg + ".UUID", UUID.name)
 
 		// Just registers the external types
