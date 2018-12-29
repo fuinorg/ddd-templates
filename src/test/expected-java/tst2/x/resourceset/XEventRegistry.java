@@ -37,6 +37,7 @@ import tst2.x.ev.EventA;
 import tst2.x.ev.EventB;
 import tst2.x.ev.EventC;
 import tst2.x.ev.EventD;
+import tst2.x.ev.EventE;
 
 /**
  * Contains a list of all events defined by this package.
@@ -58,7 +59,7 @@ public class XEventRegistry implements SerDeserializerRegistry {
 		
 		final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(entityIdFactory);
 		final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { entityIdPathConverter };
-		final XmlDeSerializer xmlDeSer = new XmlDeSerializer(UTF8, adapters, false, EscEvents.class, EscMeta.class, EventA.class, EventB.class, EventC.class, EventD.class);
+		final XmlDeSerializer xmlDeSer = new XmlDeSerializer(UTF8, adapters, false, EscEvents.class, EscMeta.class, EventA.class, EventB.class, EventC.class, EventD.class, EventE.class);
 		
 		registry = new SimpleSerializerDeserializerRegistry();
         // Base types always needed
@@ -69,6 +70,7 @@ public class XEventRegistry implements SerDeserializerRegistry {
 		registry.add(new SerializedDataType(EventB.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
 		registry.add(new SerializedDataType(EventC.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
 		registry.add(new SerializedDataType(EventD.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
+		registry.add(new SerializedDataType(EventE.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
 	}
 
 	@Override

@@ -53,6 +53,11 @@ class EventTestArtifactFactoryTest {
 		testCreate("EventD")
 	}
 
+	@Test
+	def void testCreateEventE() {
+		testCreate("EventE")
+	}
+	
 	private def testCreate(String eventName) {
 
 		// PREPARE
@@ -63,6 +68,7 @@ class EventTestArtifactFactoryTest {
 		refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
 		refReg.putReference("x.ev." + eventName, EXAMPLES_CONCRETE + ".x.ev." + eventName)
 		refReg.putReference("XEntityIdFactory", EXAMPLES_CONCRETE + ".x.ev.XEntityIdFactory")
+		refReg.putReference("x.ev.MyString", EXAMPLES_CONCRETE + ".x.ev.MyString")
 		val EventTestArtifactFactory testee = createTestee(true, true, true)
 		val Event event = model.find(typeof(Event), eventName)
 

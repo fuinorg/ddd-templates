@@ -44,6 +44,7 @@ class CtxEventRegistryArtifactFactoryTest {
 		refReg.putReference("x.ev.EventB", EXAMPLES_CONCRETE + ".x.ev.EventB");
 		refReg.putReference("x.ev.EventC", EXAMPLES_CONCRETE + ".x.ev.EventC");
 		refReg.putReference("x.ev.EventD", EXAMPLES_CONCRETE + ".x.ev.EventD");
+		refReg.putReference("x.ev.EventE", EXAMPLES_CONCRETE + ".x.ev.EventE");
 
 		val CtxEventRegistryArtifactFactory testee = createTestee()
 		val ResourceSet resourceSet = model()

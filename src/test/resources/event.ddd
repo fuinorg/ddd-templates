@@ -54,6 +54,25 @@ context x {
 		event EventD {
 			message "Something interesting happened!"
 		}
+
+		value-object MyString base String {
+			examples "abc" "def"
+			String value
+		}
+
+		/** Event E - Independent of an aggregate with value object reference. */
+		event EventE {
+			
+			/** Field A */
+			MyString a
+			
+			/** Field B */
+			MyString b {
+				examples "123" "456"
+			}
+			
+			message "Something interesting happened!"
+		}
 	
 	}
 
