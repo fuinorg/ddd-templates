@@ -16,6 +16,7 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
+import org.fuin.dsl.ddd.gen.base.SrcMetaAnnotations
 import org.fuin.objects4j.common.ConstraintViolationException
 import org.fuin.objects4j.vo.AbstractStringValueObject
 import org.fuin.objects4j.vo.ValueObjectConverter
@@ -94,6 +95,7 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className) {
 		val String src = ''' 
 			«new SrcJavaDocType(vo)»
+			«new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
 			@Immutable
 			public final class «className» extends AbstractStringValueObject {
 			
