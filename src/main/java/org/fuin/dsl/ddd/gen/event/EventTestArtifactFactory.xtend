@@ -208,6 +208,9 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 					// VERIFY
 					assertThat(original).isEqualTo(copy);
+					«FOR v : event.attributes.nullSafe»
+						assertThat(original.get«v.name.toFirstUpper»()).isEqualTo(copy.get«v.name.toFirstUpper»());
+					«ENDFOR»
 			
 				}
 			
@@ -224,6 +227,9 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			
 					// VERIFY
 					assertThat(original).isEqualTo(copy);
+					«FOR v : event.attributes.nullSafe»
+						assertThat(original.get«v.name.toFirstUpper»()).isEqualTo(copy.get«v.name.toFirstUpper»());
+					«ENDFOR»
 			
 				}
 			
