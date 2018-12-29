@@ -137,15 +137,6 @@ class GenerateOptions {
 		return copyrightHeader
 	}
 
-	/**
-	 * Determines if events should use strong typing (default) or not.
-	 * 
-	 * @return {@code true} if base types along with an validation annotation should be used instead of the types itself.
-	 */
-	public def boolean getEventRelaxedTypes() {
-		return eventRelaxedTypes
-	}
-
 	/** 
 	 * Returns a new builder instance. Convenience method to shorten the builder creation in the code.
 	 * 
