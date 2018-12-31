@@ -122,7 +122,7 @@ class ConstructorData extends AbstractMethodData {
 	 * 
 	 * @param parameter Parameter to add.
 	 */
-	public final def prepend(ConstructorParameter parameter) {
+	final def prepend(ConstructorParameter parameter) {
 		parameters.add(0, parameter)
 	}
 
@@ -131,12 +131,12 @@ class ConstructorData extends AbstractMethodData {
 	 * 
 	 * @param parameter Parameter to add.
 	 */
-	public final def append(ConstructorParameter parameter) {
+	final def append(ConstructorParameter parameter) {
 		parameters.add(parameter)
 	}
 
 	
-	override def List<Parameter> getParameters() {
+	override List<Parameter> getParameters() {
 		return Collections.unmodifiableList(parameters.asParameters)
 	}
 

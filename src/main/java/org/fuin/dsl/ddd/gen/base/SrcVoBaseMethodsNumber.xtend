@@ -12,8 +12,6 @@ import static extension org.fuin.dsl.ddd.extensions.DddAbstractVOExtensions.*
  */
 class SrcVoBaseMethodsNumber implements CodeSnippet {
 
-	val CodeSnippetContext ctx;
-
 	val String typeName;
 
 	val String baseName;
@@ -25,7 +23,6 @@ class SrcVoBaseMethodsNumber implements CodeSnippet {
 	 * @param vo Value object.
 	 */
 	new(CodeSnippetContext ctx, AbstractVO vo) {
-		this.ctx = ctx
 		if (vo === null) {
 			throw new IllegalArgumentException("vo cannot be null")
 		}

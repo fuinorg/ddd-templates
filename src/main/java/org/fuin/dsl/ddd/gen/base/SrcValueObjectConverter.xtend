@@ -14,23 +14,21 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
  */
 class SrcValueObjectConverter implements CodeSnippet {
 
-	private val CodeReferenceRegistry refReg;
+	val String copyrightHeader
 
-	private val String copyrightHeader
+	val String pkg
 
-	private val String pkg
+	val String voTypeName
 
-	private val String voTypeName
+	val String targetTypeName
 
-	private val String targetTypeName
-
-	private val boolean implementsSingleEntityIdFactory
+	val boolean implementsSingleEntityIdFactory
 	
-	private val boolean aggregateId
+	val boolean aggregateId
 
-	private val String className
+	val String className
 
-	private val SimpleCodeSnippetContext ctx
+	val SimpleCodeSnippetContext ctx
 
 	/**
 	 * Constructor with all mandatory data.
@@ -45,7 +43,6 @@ class SrcValueObjectConverter implements CodeSnippet {
 	new(CodeReferenceRegistry refReg, String copyrightHeader, String pkg, AbstractVO vo, ExternalType targetType,
 		boolean implementsSingleEntityIdFactory) {
 
-		this.refReg = refReg
 		this.copyrightHeader = copyrightHeader
 		this.pkg = pkg
 		this.voTypeName = vo.name

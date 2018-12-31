@@ -53,7 +53,7 @@ abstract class AbstractMethodData {
 	 * 
 	 * @return Documentation.
 	 */
-	public final def getDoc() {
+	final def getDoc() {
 		doc
 	}
 
@@ -62,7 +62,7 @@ abstract class AbstractMethodData {
 	 * 
 	 * @return Immutable list of annotations.
 	 */
-	public final def getAnnotations() {
+	final def getAnnotations() {
 		if (annotations === null) {
 			return null
 		}
@@ -74,7 +74,7 @@ abstract class AbstractMethodData {
 	 * 
 	 * @return Modifiers.
 	 */
-	public final def getModifiers() {
+	final def getModifiers() {
 		modifiers
 	}
 
@@ -83,7 +83,7 @@ abstract class AbstractMethodData {
 	 * 
 	 * @return Name.
 	 */
-	public final def getName() {
+	final def getName() {
 		name
 	}
 
@@ -92,7 +92,7 @@ abstract class AbstractMethodData {
 	 * 
 	 * @return Immutable list of exceptions.
 	 */
-	public final def getExceptions() {
+	final def getExceptions() {
 		if (exceptions === null) {
 			return null
 		}
@@ -104,7 +104,7 @@ abstract class AbstractMethodData {
 	 * 
 	 * @return Immutable list of parameters.
 	 */
-	public abstract def List<Parameter> getParameters();
+	abstract def List<Parameter> getParameters();
 
 	
 }

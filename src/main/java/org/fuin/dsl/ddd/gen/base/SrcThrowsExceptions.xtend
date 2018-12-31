@@ -12,11 +12,9 @@ import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions
  */
 class SrcThrowsExceptions implements CodeSnippet {
 
-	val CodeSnippetContext ctx
 	val List<Exception> exceptions
 
 	new(CodeSnippetContext ctx, List<Exception> exceptions) {
-		this.ctx = ctx
 		this.exceptions = exceptions
 		if (exceptions !== null) {
 			for (Exception exception : exceptions) {

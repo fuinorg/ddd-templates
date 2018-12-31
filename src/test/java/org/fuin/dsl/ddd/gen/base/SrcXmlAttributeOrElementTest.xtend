@@ -22,10 +22,10 @@ import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 class SrcXmlAttributeOrElementTest {
 
 	@Inject
-	private ParseHelper<DomainModel> parser
+	ParseHelper<DomainModel> parser
 
 	@Inject 
-	private ValidationTestHelper validationTester
+	ValidationTestHelper validationTester
 
 	@Test
 	def void testCreateAggregateIdAttribute() {
@@ -92,7 +92,7 @@ class SrcXmlAttributeOrElementTest {
 
 	}
 
-	private def DomainModel createModel() {
+	def DomainModel createModel() {
 		val DomainModel model =parser.parse(
 			'''
 				context x {

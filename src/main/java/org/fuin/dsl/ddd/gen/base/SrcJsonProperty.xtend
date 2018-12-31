@@ -11,11 +11,9 @@ import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
  */
 class SrcJsonProperty implements CodeSnippet {
 
-	val CodeSnippetContext ctx
 	val Variable variable
 
 	new(CodeSnippetContext ctx, Variable variable) {
-		this.ctx = ctx
 		this.variable = variable
 
 		ctx.requiresImport("javax.json.bind.annotation.JsonbProperty")

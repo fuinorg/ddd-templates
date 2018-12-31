@@ -21,10 +21,10 @@ import static org.assertj.core.api.Assertions.*
 class SrcSettersTest {
 
 	@Inject
-	private ParseHelper<DomainModel> parser
+	ParseHelper<DomainModel> parser
 
 	@Inject 
-	private ValidationTestHelper validationTester
+	ValidationTestHelper validationTester
 
 	@Test
 	def void testCreate() {

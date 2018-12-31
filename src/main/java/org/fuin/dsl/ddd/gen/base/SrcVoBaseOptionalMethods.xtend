@@ -10,8 +10,6 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
  */
 class SrcVoBaseOptionalMethods implements CodeSnippet {
 
-	val CodeSnippetContext ctx;
-
 	val String baseName;
 
 	/**
@@ -21,7 +19,6 @@ class SrcVoBaseOptionalMethods implements CodeSnippet {
 	 * @param base External base type: "String", "UUID", "Integer" or "Long" are currently supported.
 	 */
 	new(CodeSnippetContext ctx, ExternalType base) {
-		this.ctx = ctx
 		if (base === null) {
 			this.baseName = null
 		} else {

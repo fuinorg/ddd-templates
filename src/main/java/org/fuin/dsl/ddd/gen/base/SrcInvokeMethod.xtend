@@ -12,7 +12,6 @@ import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
  */
 class SrcInvokeMethod implements CodeSnippet {
 
-	val CodeSnippetContext ctx
 	val String method
 	val List<String> names
 
@@ -24,7 +23,6 @@ class SrcInvokeMethod implements CodeSnippet {
 	 * @param names List of names to use to invoke the super constructor.
 	 */
 	new(CodeSnippetContext ctx, String method, List<String> names) {
-		this.ctx = ctx
 		this.method = method
 		this.names = names;
 	}
@@ -37,7 +35,6 @@ class SrcInvokeMethod implements CodeSnippet {
 	 * @param names Names to use to invoke the super constructor.
 	 */
 	new(CodeSnippetContext ctx, String method, String...names) {
-		this.ctx = ctx
 		this.method = method
 		this.names = new ArrayList()
 		if (names !== null) {

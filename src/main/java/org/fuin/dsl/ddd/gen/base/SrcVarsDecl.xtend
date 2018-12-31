@@ -17,7 +17,6 @@ import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
 class SrcVarsDecl implements CodeSnippet {
 
 	val CodeSnippetContext ctx
-	val String modifiers
 	val GenerateOptions options
 	val List<Attribute> attributes
 
@@ -31,7 +30,6 @@ class SrcVarsDecl implements CodeSnippet {
 	 */
 	new(CodeSnippetContext ctx, String modifiers, GenerateOptions options, List<Attribute> attributes) {
 		this.ctx = ctx
-		this.modifiers = modifiers
 		this.options = options
 		this.attributes = new ArrayList<Attribute>(attributes)
 	}

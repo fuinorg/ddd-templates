@@ -79,7 +79,7 @@ class GenerateOptions {
 	 * 
 	 * @return Base package name.
 	 */
-	public def String getBasePkg() {
+	def String getBasePkg() {
 		return basePkg
 	}
 
@@ -88,7 +88,7 @@ class GenerateOptions {
 	 * 
 	 * @return Package name.
 	 */
-	public def String getPkg() {
+	def String getPkg() {
 		return pkg
 	}
 
@@ -97,7 +97,7 @@ class GenerateOptions {
 	 * 
 	 * @return {@code true} if JPA annotations should be generated.
 	 */
-	public def boolean getJpa() {
+	def boolean getJpa() {
 		return jpa
 	}
 
@@ -106,7 +106,7 @@ class GenerateOptions {
 	 * 
 	 * @return {@code true} if XML binding annotations should be generated.
 	 */
-	public def boolean getJaxb() {
+	def boolean getJaxb() {
 		return jaxb
 	}
 
@@ -115,7 +115,7 @@ class GenerateOptions {
 	 * 
 	 * @return {@code true} if element annotations should be generated.
 	 */
-	public def boolean getJaxbElements() {
+	def boolean getJaxbElements() {
 		return jaxbElements
 	}
 
@@ -124,7 +124,7 @@ class GenerateOptions {
 	 * 
 	 * @return {@code true} if JSON binding annotations should be generated.
 	 */
-	public def boolean getJsonb() {
+	def boolean getJsonb() {
 		return jsonb
 	}
 
@@ -133,7 +133,7 @@ class GenerateOptions {
 	 * 
 	 * @return Copyright header for source files.
 	 */
-	public def String getCopyrightHeader() {
+	def String getCopyrightHeader() {
 		return copyrightHeader
 	}
 
@@ -159,12 +159,12 @@ class GenerateOptions {
 
 		GenerateOptions obj
 
-		public new() {
+		new() {
 			super();
 			obj = GenerateOptions.empty()
 		}
 
-		public new(GenerateOptions other) {
+		new(GenerateOptions other) {
 			this();
 			obj.basePkg = other.basePkg
 			obj.pkg = other.pkg
@@ -175,62 +175,62 @@ class GenerateOptions {
 			obj.copyrightHeader = other.copyrightHeader
 		}
 
-		public def Builder withBasePkg(String basePkg) {
+		def Builder withBasePkg(String basePkg) {
 			obj.basePkg = basePkg
 			return this
 		}
 
-		public def Builder withPkg(String pkg) {
+		def Builder withPkg(String pkg) {
 			obj.pkg = pkg
 			return this
 		}
 
-		public def Builder withJpa(boolean jpa) {
+		def Builder withJpa(boolean jpa) {
 			obj.jpa = jpa
 			return this
 		}
 
-		public def Builder withJpa() {
+		def Builder withJpa() {
 			obj.jpa = true
 			return this
 		}
 
-		public def Builder withJaxb(boolean jaxb) {
+		def Builder withJaxb(boolean jaxb) {
 			obj.jaxb = jaxb
 			return this
 		}
 
-		public def Builder withJaxb() {
+		def Builder withJaxb() {
 			obj.jaxb = true
 			return this
 		}
 
-		public def Builder withJaxbElements(boolean jaxbElements) {
+		def Builder withJaxbElements(boolean jaxbElements) {
 			obj.jaxbElements = jaxbElements
 			return this
 		}
 
-		public def Builder withJaxbElements() {
+		def Builder withJaxbElements() {
 			obj.jaxbElements = true
 			return this
 		}
 
-		public def Builder withJsonb(boolean jsonb) {
+		def Builder withJsonb(boolean jsonb) {
 			obj.jsonb = jsonb
 			return this
 		}
 
-		public def Builder withJsonb() {
+		def Builder withJsonb() {
 			obj.jsonb = true
 			return this
 		}
 
-		public def Builder withCopyrightHeader(String header) {
+		def Builder withCopyrightHeader(String header) {
 			obj.copyrightHeader = header
 			return this
 		}
 
-		public def GenerateOptions create() {
+		def GenerateOptions create() {
 			val GenerateOptions options = obj
 			obj = GenerateOptions.empty()
 			return options

@@ -14,8 +14,6 @@ import org.fuin.objects4j.vo.AbstractLongValueObject
  */
 class SrcVoBaseOptionalExtends implements CodeSnippet {
 
-	val CodeSnippetContext ctx;
-
 	val String baseName;
 
 	/**
@@ -25,7 +23,6 @@ class SrcVoBaseOptionalExtends implements CodeSnippet {
 	 * @param base External base type: "String", "UUID", "Integer" or "Long" are currently supported.
 	 */
 	new(CodeSnippetContext ctx, ExternalType base) {
-		this.ctx = ctx
 		if (base === null) {
 			this.baseName = null
 		} else {

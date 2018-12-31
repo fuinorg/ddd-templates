@@ -93,7 +93,7 @@ class MethodData extends AbstractMethodData {
 		returnType
 	}
 
-	override def List<Parameter> getParameters() {
+	override List<Parameter> getParameters() {
 		return Collections.unmodifiableList(parameters)
 	}
 
@@ -102,7 +102,7 @@ class MethodData extends AbstractMethodData {
 	 * 
 	 * @param parameter Parameter to add.
 	 */
-	public final def prepend(Parameter parameter) {
+	final def prepend(Parameter parameter) {
 		parameters.add(0, parameter)
 	}
 
@@ -111,7 +111,7 @@ class MethodData extends AbstractMethodData {
 	 * 
 	 * @param parameter Parameter to add.
 	 */
-	public final def append(Parameter parameter) {
+	final def append(Parameter parameter) {
 		parameters.add(parameter)
 	}
 

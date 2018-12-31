@@ -28,10 +28,10 @@ import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
 class SrcValidationAnnotationTest {
 
 	@Inject
-	private ParseHelper<DomainModel> parser
+	ParseHelper<DomainModel> parser
 
 	@Inject 
-	private ValidationTestHelper validationTester
+	ValidationTestHelper validationTester
 
 	@Test
 	def void testCreateNoArgConstraint() {
@@ -521,7 +521,7 @@ class SrcValidationAnnotationTest {
 	}
 	
 
-	private def DomainModel createModel() {
+	def DomainModel createModel() {
 		
 		val URL url = class.classLoader.getResource("org/fuin/dsl/ddd/Basics.ddd")
 		val basics = IOUtils.toString(url, "utf-8")

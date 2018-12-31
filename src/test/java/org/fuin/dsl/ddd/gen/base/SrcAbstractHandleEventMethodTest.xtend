@@ -22,10 +22,10 @@ import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 class SrcAbstractHandleEventMethodTest {
 
 	@Inject
-	private ParseHelper<DomainModel> parser
+	ParseHelper<DomainModel> parser
 
 	@Inject 
-	private ValidationTestHelper validationTester
+	ValidationTestHelper validationTester
 
 	@Test
 	def void testCreate() {
@@ -54,7 +54,7 @@ class SrcAbstractHandleEventMethodTest {
 
 	}
 
-	private def model() {
+	def model() {
 		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
 		validationTester.assertNoIssues(model)
 		return model

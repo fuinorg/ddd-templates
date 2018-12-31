@@ -18,7 +18,6 @@ import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
  */
 class SrcJavaDocMethod implements CodeSnippet {
 
-	val CodeSnippetContext ctx
 	val String doc
 	val ReturnType returnType
 	val List<Parameter> parameters
@@ -74,7 +73,6 @@ class SrcJavaDocMethod implements CodeSnippet {
 	 * @param exceptions Exceptions.
 	 */
 	new(CodeSnippetContext ctx, String doc, ReturnType returnType, List<Parameter> parameters, List<Exception> exceptions) {
-		this.ctx = ctx
 		this.doc = doc
 		this.returnType = returnType
 		this.parameters = parameters

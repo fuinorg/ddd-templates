@@ -22,10 +22,10 @@ import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 class SrcVarsDeclTest {
 
 	@Inject
-	private ParseHelper<DomainModel> parser
+	ParseHelper<DomainModel> parser
 
 	@Inject 
-	private ValidationTestHelper validationTester
+	ValidationTestHelper validationTester
 
 	@Test
 	def void testCreate() {
@@ -60,7 +60,7 @@ class SrcVarsDeclTest {
 			"javax.validation.constraints.NotNull", "javax.annotation.Nullable")
 	}
 
-	private def DomainModel createModel() {
+	def DomainModel createModel() {
 		val DomainModel model = parser.parse(
 			'''
 				context a {

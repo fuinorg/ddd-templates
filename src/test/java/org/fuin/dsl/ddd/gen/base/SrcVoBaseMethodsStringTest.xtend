@@ -22,10 +22,10 @@ import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
 class SrcVoBaseMethodsStringTest {
 
 	@Inject
-	private ParseHelper<DomainModel> parser
+	ParseHelper<DomainModel> parser
 
 	@Inject 
-	private ValidationTestHelper validationTester
+	ValidationTestHelper validationTester
 
 	@Test
 	def void testString() {
@@ -86,7 +86,7 @@ class SrcVoBaseMethodsStringTest {
 
 	}
 
-	private def DomainModel createModel() {
+	def DomainModel createModel() {
 		val DomainModel model = parser.parse(
 			'''
 				context y {

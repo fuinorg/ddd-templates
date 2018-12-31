@@ -15,12 +15,10 @@ import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
  */
 class SrcKeyValueReplace implements CodeSnippet {
 
-	val CodeSnippetContext ctx
 	val String message
 	val List<String> variables
 
 	new(@NotNull CodeSnippetContext ctx, @NotNull String message, @Nullable List<String> variables) {
-		this.ctx = ctx
 		this.message = message
 		this.variables = variables
 

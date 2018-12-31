@@ -17,13 +17,11 @@ import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions
  */
 class SrcValidationAnnotation implements CodeSnippet {
 
-	val CodeSnippetContext ctx
 	var Constraint constraint
 	var List<Attribute> vars
 	var List<Literal> params
 
 	new(CodeSnippetContext ctx, ConstraintInstance ci) {
-		this.ctx = ctx
 		constraint = ci.constraint;
 		vars = constraint.attributes;
 		params = ci.params;

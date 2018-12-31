@@ -13,7 +13,6 @@ import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
  */
 class SrcXmlRootElement implements CodeSnippet {
 
-	val CodeSnippetContext ctx
 	val String name
 
 	/**
@@ -23,7 +22,6 @@ class SrcXmlRootElement implements CodeSnippet {
 	 * @param name Type name.
 	 */
 	new(CodeSnippetContext ctx, String name) {
-		this.ctx = ctx
 		this.name = name
 		ctx.requiresImport("javax.xml.bind.annotation.XmlRootElement")
 	}

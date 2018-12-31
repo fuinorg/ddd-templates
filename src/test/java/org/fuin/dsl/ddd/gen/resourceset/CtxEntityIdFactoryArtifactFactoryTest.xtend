@@ -27,10 +27,10 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 class CtxEntityIdFactoryArtifactFactoryTest {
 
 	@Inject
-	private ParseHelper<DomainModel> parser
+	ParseHelper<DomainModel> parser
 
 	@Inject 
-	private ValidationTestHelper validationTester
+	ValidationTestHelper validationTester
 
 	@Test
 	def void testCreate() {
@@ -63,7 +63,7 @@ class CtxEntityIdFactoryArtifactFactoryTest {
 
 	}
 
-	private def createTestee() {
+	def createTestee() {
 		val factory = new CtxEntityIdFactoryArtifactFactory()
 		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("ctxEntityIdFactory",
 			CtxEntityIdFactoryArtifactFactory.name)
@@ -75,7 +75,7 @@ class CtxEntityIdFactoryArtifactFactoryTest {
 		return factory
 	}
 
-	private def model() {
+	def model() {
 		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/resourceset.ddd")))
 		validationTester.assertNoIssues(model)
 		return model.eResource.resourceSet
