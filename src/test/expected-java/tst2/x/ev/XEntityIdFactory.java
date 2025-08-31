@@ -2,8 +2,8 @@ package tst2.x.ev;
 
 import java.util.UUID;
 
-import org.fuin.ddd4j.ddd.EntityId;
-import org.fuin.ddd4j.ddd.EntityIdFactory;
+import org.fuin.ddd4j.core.EntityId;
+import org.fuin.ddd4j.core.EntityIdFactory;
 
 public class XEntityIdFactory implements EntityIdFactory {
 

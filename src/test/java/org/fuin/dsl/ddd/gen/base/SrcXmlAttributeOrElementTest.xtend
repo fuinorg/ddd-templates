@@ -1,24 +1,24 @@
 package org.fuin.dsl.ddd.gen.base
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
-import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
+import org.fuin.dsl.cqrs.tests.CqrsDslInjectorProvider
+import org.fuin.dsl.cqrs.cqrsDsl.Aggregate
+import org.fuin.dsl.cqrs.cqrsDsl.DomainModel
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.^extension.ExtendWith
 
 import static org.assertj.core.api.Assertions.*
 
-import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 
-@InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
-@RunWith(typeof(XtextRunner))
+@InjectWith(typeof(CqrsDslInjectorProvider))
+@ExtendWith(InjectionExtension) 
 class SrcXmlAttributeOrElementTest {
 
 	@Inject
@@ -45,7 +45,7 @@ class SrcXmlAttributeOrElementTest {
 
 		// VERIFY
 		assertThat(resultId).isEqualTo('''@XmlAttribute(name = "id")'''.toString)
-		assertThat(ctx.imports).containsOnly("javax.xml.bind.annotation.XmlAttribute")
+		assertThat(ctx.imports).containsOnly("jakarta.xml.bind.annotation.XmlAttribute")
 
 	}
 
@@ -67,7 +67,7 @@ class SrcXmlAttributeOrElementTest {
 
 		// VERIFY
 		assertThat(resultId).isEqualTo('''@XmlElement(name = "id")'''.toString)
-		assertThat(ctx.imports).containsOnly("javax.xml.bind.annotation.XmlElement")
+		assertThat(ctx.imports).containsOnly("jakarta.xml.bind.annotation.XmlElement")
 
 	}
 	
@@ -88,7 +88,7 @@ class SrcXmlAttributeOrElementTest {
 
 		// VERIFY
 		assertThat(resultVo).isEqualTo('''@XmlElement(name = "vo")'''.toString)
-		assertThat(ctx.imports).containsOnly("javax.xml.bind.annotation.XmlElement")
+		assertThat(ctx.imports).containsOnly("jakarta.xml.bind.annotation.XmlElement")
 
 	}
 

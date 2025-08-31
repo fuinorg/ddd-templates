@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType
-import javax.annotation.Nullable
+import org.fuin.dsl.cqrs.cqrsDsl.ReturnType
+import jakarta.annotation.Nullable
 
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
 
 /**
  * Creates the source code for a JavaDoc <code>@return</code> line.

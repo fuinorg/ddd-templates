@@ -1,25 +1,25 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
-import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import org.fuin.dsl.cqrs.tests.CqrsDslInjectorProvider
+import org.fuin.dsl.cqrs.cqrsDsl.Attribute
+import org.fuin.dsl.cqrs.cqrsDsl.DomainModel
+import org.fuin.dsl.cqrs.cqrsDsl.ValueObject
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.^extension.ExtendWith
 
 import static org.assertj.core.api.Assertions.*
 
-@InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
-@RunWith(typeof(XtextRunner))
+@InjectWith(typeof(CqrsDslInjectorProvider))
+@ExtendWith(InjectionExtension) 
 class SrcGettersTest {
 
 	@Inject
@@ -66,7 +66,7 @@ class SrcGettersTest {
 				
 			'''.toString)
 		assertThat(ctx.imports).containsOnly("java.lang.String", "java.util.Locale",
-			"javax.validation.constraints.NotNull", "javax.annotation.Nullable")
+			"jakarta.validation.constraints.NotNull", "jakarta.annotation.Nullable")
 
 	}
 

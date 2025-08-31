@@ -17,7 +17,7 @@
  */
 package tst.x.entities;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Entity B - With variables.

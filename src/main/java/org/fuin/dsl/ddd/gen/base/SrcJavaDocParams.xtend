@@ -1,11 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
-import javax.annotation.Nullable
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
+import jakarta.annotation.Nullable
 
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsVariableExtensions.*
 
 /**
  * Creates the source code for a JavaDoc <code>@param</code> lines.

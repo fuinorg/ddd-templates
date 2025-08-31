@@ -17,20 +17,20 @@
  */
 package tst2.x.ev;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbConfig;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.eclipse.yasson.FieldAccessStrategy;
-import org.fuin.ddd4j.ddd.EntityIdPath;
-import org.fuin.ddd4j.ddd.EntityIdPathConverter;
-import org.fuin.ddd4j.ddd.EventIdConverter;
-import org.junit.Test;
+import org.fuin.ddd4j.core.EntityIdPath;
+import org.fuin.ddd4j.jaxb.EntityIdPathXmlAdapter;
+import org.fuin.ddd4j.jsonb.EventIdJsonbAdapter;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
-import static org.fuin.utils4j.JaxbUtils.marshal;
-import static org.fuin.utils4j.JaxbUtils.unmarshal;
 import static org.fuin.utils4j.Utils4J.deserialize;
 import static org.fuin.utils4j.Utils4J.serialize;
+import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
+import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
 
 // CHECKSTYLE:OFF
 public final class EventCTest {
@@ -75,7 +75,7 @@ public final class EventCTest {
 		final EventC original = createTestee();
 
 		final JsonbConfig config = new JsonbConfig()
-				.withAdapters(new EventIdConverter(), new ZonedDateTimeJsonbAdapter())
+				.withAdapters(new EventIdJsonbAdapter())
 				.withPropertyVisibilityStrategy(new FieldAccessStrategy());
 		final Jsonb jsonb = JsonbBuilder.create(config);
 
@@ -99,8 +99,8 @@ public final class EventCTest {
 	}
 
 	protected final XmlAdapter<?, ?>[] createAdapter() {
-		final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new XEntityIdFactory());
-		return new XmlAdapter[] { entityIdPathConverter };
+		final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(new XEntityIdFactory());
+		return new XmlAdapter[] { EntityIdPathXmlAdapter };
 	}
 
 }

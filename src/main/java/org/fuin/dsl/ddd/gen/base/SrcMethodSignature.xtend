@@ -1,11 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
+import org.fuin.dsl.cqrs.cqrsDsl.Method
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 
 /**
  * Creates source code for a single method.

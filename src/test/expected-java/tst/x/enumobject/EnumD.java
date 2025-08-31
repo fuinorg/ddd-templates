@@ -17,8 +17,8 @@
  */
 package tst.x.enumobject;
 
-import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 
 /** Enumeration type D - With integer base type. */
 public final class EnumD extends AbstractEnumD {

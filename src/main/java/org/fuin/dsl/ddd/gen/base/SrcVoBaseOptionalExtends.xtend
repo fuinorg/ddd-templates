@@ -1,12 +1,12 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
+import org.fuin.dsl.cqrs.cqrsDsl.ExternalType
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
-import org.fuin.objects4j.vo.AbstractStringValueObject
-import org.fuin.objects4j.vo.AbstractUuidValueObject
-import org.fuin.objects4j.vo.AbstractIntegerValueObject
-import org.fuin.objects4j.vo.AbstractLongValueObject
+import org.fuin.objects4j.core.AbstractStringValueObject
+import org.fuin.objects4j.core.AbstractUuidValueObject
+import org.fuin.objects4j.core.AbstractIntegerValueObject
+import org.fuin.objects4j.core.AbstractLongValueObject
 
 /**
  * Creates source code 'extends X' where X is the 

@@ -1,11 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractVO
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractVOExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractVOExtensions.*
 
 /**
  * Creates source code for value objects that have an external 'base' of type 'UUID'.
@@ -30,7 +30,7 @@ class SrcVoBaseMethodsUUID implements CodeSnippet {
 		this.typeName = vo.name
 		ctx.requiresReference(vo.uniqueName)
 		ctx.requiresImport("java.util.UUID")
-		ctx.requiresImport("org.fuin.objects4j.vo.UUIDStrValidator")
+		ctx.requiresImport("org.fuin.objects4j.core.UUIDStrValidator")
 	}
 
 	override toString() {

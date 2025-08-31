@@ -2,8 +2,8 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.Collections
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
+import org.fuin.dsl.cqrs.cqrsDsl.Exception
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
 
 /**
  * Data required to create a method or method. 

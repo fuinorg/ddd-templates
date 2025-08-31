@@ -17,23 +17,23 @@
  */
 package tst2.x.valueobject;
 
+import jakarta.json.bind.adapter.JsonbAdapter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.validation.Constraint;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import jakarta.validation.Payload;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.annotation.concurrent.Immutable;
-import javax.json.bind.adapter.JsonbAdapter;
-import javax.persistence.AttributeConverter;
-import javax.validation.Constraint;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.Payload;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.fuin.objects4j.common.ConstraintViolationException;
-import org.fuin.objects4j.vo.AbstractStringValueObject;
-import org.fuin.objects4j.vo.ValueObjectConverter;
+import org.fuin.objects4j.common.ValueObjectConverter;
+import org.fuin.objects4j.core.AbstractStringValueObject;
 
 /**
  * Simple value object single attribute and base.

@@ -1,12 +1,12 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractElement
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractElement
+import org.fuin.dsl.cqrs.cqrsDsl.Event
+import org.fuin.dsl.cqrs.cqrsDsl.ValueObject
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
 
 /**
  * Creates source code for a JAXB root element annotation.
@@ -23,7 +23,7 @@ class SrcXmlRootElement implements CodeSnippet {
 	 */
 	new(CodeSnippetContext ctx, String name) {
 		this.name = name
-		ctx.requiresImport("javax.xml.bind.annotation.XmlRootElement")
+		ctx.requiresImport("jakarta.xml.bind.annotation.XmlRootElement")
 	}
 
 	/**

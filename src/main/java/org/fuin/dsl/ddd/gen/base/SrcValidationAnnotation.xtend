@@ -2,15 +2,15 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ConstraintInstance
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Literal
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
+import org.fuin.dsl.cqrs.cqrsDsl.Constraint
+import org.fuin.dsl.cqrs.cqrsDsl.ConstraintInstance
+import org.fuin.dsl.cqrs.cqrsDsl.Literal
+import org.fuin.dsl.cqrs.cqrsDsl.Attribute
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddLiteralExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsLiteralExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
 
 /**
  * Creates source code for a validation annotation.
@@ -52,7 +52,7 @@ class SrcValidationAnnotation implements CodeSnippet {
 			if (vars.size == 0) {
 				return '''@«constraint.name»''';
 			} else if (vars.size == 1) {
-				return '''@«constraint.name»(«params.last.str»)''';
+				return '''@«constraint.name»(«params.lastOrNull.str»)''';
 			} else if (vars.size() > 1) {
 				var List<String> list = new ArrayList<String>();
 				var int i = 0;
@@ -98,7 +98,7 @@ class SrcValidationAnnotation implements CodeSnippet {
 
 	def List<String> pkg(Constraint constr) {
 		val list = new ArrayList<String>()
-		val p = "javax.validation.constraints."
+		val p = "jakarta.validation.constraints."
 		switch constr.name {
 			case "MaxValue":
 				list.add(p + "DecimalMax")

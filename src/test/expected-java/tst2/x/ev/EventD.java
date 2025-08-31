@@ -17,9 +17,9 @@
  */
 package tst2.x.ev;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import org.fuin.ddd4j.core.EventType;
 import org.fuin.ddd4j.ddd.AbstractEvent;
-import org.fuin.ddd4j.ddd.EventType;
 
 /**
  * Event D - Independent of an aggregate.

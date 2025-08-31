@@ -17,9 +17,9 @@
  */
 package tst2.x.constr;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import jakarta.validation.Validator;
 
 /** Constraint C - Value object target - With exception - No variables */
 // CHECKSTYLE:OFF:LineLength

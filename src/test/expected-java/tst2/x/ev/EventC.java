@@ -17,15 +17,15 @@
  */
 package tst2.x.ev;
 
-import javax.json.bind.annotation.JsonbProperty;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import org.fuin.ddd4j.ddd.AbstractDomainEvent;
-import org.fuin.ddd4j.ddd.EntityIdPath;
-import org.fuin.ddd4j.ddd.EventType;
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import org.fuin.ddd4j.core.EntityIdPath;
+import org.fuin.ddd4j.core.EventType;
+import org.fuin.ddd4j.jsonb.AbstractDomainEvent;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.vo.KeyValue;
+import org.fuin.objects4j.core.KeyValue;
 
 /**
  * Aggregate event C.

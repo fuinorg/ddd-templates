@@ -3,11 +3,11 @@ package org.fuin.dsl.ddd.gen.base
 import java.util.ArrayList
 import java.util.Collections
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
+import org.fuin.dsl.cqrs.cqrsDsl.Constructor
+import org.fuin.dsl.cqrs.cqrsDsl.Exception
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
 
-import static extension org.fuin.dsl.ddd.extensions.DddConstructorExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsConstructorExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ConstructorExtensions.*
 
 /**

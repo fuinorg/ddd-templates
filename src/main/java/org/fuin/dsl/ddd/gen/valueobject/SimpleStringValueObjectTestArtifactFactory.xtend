@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.valueobject
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.ValueObject
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.srcgen4j.commons.GenerateException
@@ -11,12 +11,13 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddLiteralExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsLiteralExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import java.util.List
 
 class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -51,12 +52,12 @@ class SimpleStringValueObjectTestArtifactFactory extends AbstractSource<ValueObj
 
 		var String src = createStandardEventTest(ctx, valueObject, pkg, className).toString();
 
-		return new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("static org.assertj.core.api.Assertions.*")
-		ctx.requiresImport("org.junit.Test")
+		ctx.requiresImport("org.junit.jupiter.api.Test")
 		ctx.requiresImport("nl.jqno.equalsverifier.EqualsVerifier")
 		ctx.requiresImport("nl.jqno.equalsverifier.Warning")
 		ctx.requiresImport("org.fuin.utils4j.Utils4J")

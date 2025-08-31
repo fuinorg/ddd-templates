@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.valueobject
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
@@ -16,9 +16,10 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import java.util.List
 
 class FinalValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -48,13 +49,13 @@ class FinalValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 		ctx.addImports(vo)
 		ctx.addReferences(vo)
 
-		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, ns, vo, pkg, className, abstractClassName).toString().getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename,
+			create(ctx, ns, vo, pkg, className, abstractClassName).toString().getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx, ValueObject vo) {
 		if (vo.base !== null) {
-			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter")			
+			ctx.requiresImport("jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter")			
 		}
 		ctx.requiresImport("javax.annotation.concurrent.Immutable")
 	}

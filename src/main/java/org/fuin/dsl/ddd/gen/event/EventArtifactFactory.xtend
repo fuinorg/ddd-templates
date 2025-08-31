@@ -1,10 +1,10 @@
 package org.fuin.dsl.ddd.gen.event
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractEntity
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractEntityId
+import org.fuin.dsl.cqrs.cqrsDsl.Event
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcGetters
@@ -19,15 +19,16 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEventExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractEntityExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAttributeExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEventExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import java.util.List
 
 class EventArtifactFactory extends AbstractSource<Event> {
 
@@ -69,21 +70,21 @@ class EventArtifactFactory extends AbstractSource<Event> {
 			src = createDomainEvent(ctx, event, pkg, className).toString();
 		}
 
-		return new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
-		ctx.requiresImport("org.fuin.ddd4j.ddd.EventType")
+		ctx.requiresImport("org.fuin.ddd4j.core.EventType")
 		if (entity === null) {
 			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractEvent")
 			if (event.attributes.nullSafe.size > 0) {
-				ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
+				ctx.requiresImport("org.fuin.objects4j.core.KeyValue")
 			}
 		} else {
-			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractDomainEvent")
-			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
-			ctx.requiresImport("javax.validation.constraints.NotNull")		
-			ctx.requiresImport("org.fuin.objects4j.vo.KeyValue")
+			ctx.requiresImport("org.fuin.ddd4j.jsonb.AbstractDomainEvent")
+			ctx.requiresImport("org.fuin.ddd4j.core.EntityIdPath")
+			ctx.requiresImport("jakarta.validation.constraints.NotNull")		
+			ctx.requiresImport("org.fuin.objects4j.core.KeyValue")
 		}
 	}
 

@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
+import org.fuin.dsl.cqrs.cqrsDsl.CqrsDslFactory
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 import static org.assertj.core.api.Assertions.*
 
@@ -15,7 +15,7 @@ class SrcJsonPropertyTest {
 		// PREPARE
 		val refReg = new SimpleCodeReferenceRegistry()
 		val ctx = new SimpleCodeSnippetContext(refReg)
-		val variable = DomainDrivenDesignDslFactory.eINSTANCE.createVariable
+		val variable = CqrsDslFactory.eINSTANCE.createVariable
 		variable.setName("AbcDefGhi")
 		val SrcJsonProperty testee = new SrcJsonProperty(ctx, variable)
 
@@ -24,7 +24,7 @@ class SrcJsonPropertyTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo('''@JsonbProperty("abc-def-ghi")'''.toString)
-		assertThat(ctx.imports).contains("javax.json.bind.annotation.JsonbProperty")
+		assertThat(ctx.imports).contains("jakarta.json.bind.annotation.JsonbProperty")
 
 	}
 

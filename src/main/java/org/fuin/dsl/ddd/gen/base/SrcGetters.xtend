@@ -1,11 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
+import org.fuin.dsl.cqrs.cqrsDsl.Attribute
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
 
 /**
  * Creates source code for one or more getters.

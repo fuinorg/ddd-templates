@@ -1,7 +1,7 @@
 package tst.x.entities;
 
-import org.fuin.ddd4j.ddd.AbstractAggregateRoot;
-import org.fuin.ddd4j.ddd.EntityType;
+import org.fuin.ddd4j.core.AbstractAggregateRoot;
+import org.fuin.ddd4j.core.EntityType;
 
 public class AggregateX extends AbstractAggregateRoot<AggregateXId> {
 

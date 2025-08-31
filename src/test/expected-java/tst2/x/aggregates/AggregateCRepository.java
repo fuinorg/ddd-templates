@@ -17,8 +17,8 @@
  */
 package tst2.x.aggregates;
 
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.ddd4j.esrepo.EventStoreRepository;
+import org.fuin.ddd4j.core.EntityType;
+import org.fuin.ddd4j.esc.EventStoreRepository;
 import org.fuin.esc.api.EventStore;
 import tst.x.aggregates.AggregateC;
 import tst.x.aggregates.AggregateCId;

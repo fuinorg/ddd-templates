@@ -17,7 +17,7 @@
  */
 package tst.x.enumobject;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /** Enumeration type B - With variables. */
 public final class EnumB extends AbstractEnumB {

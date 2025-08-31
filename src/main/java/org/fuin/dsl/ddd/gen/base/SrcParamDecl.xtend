@@ -1,10 +1,10 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 /**
@@ -26,7 +26,7 @@ class SrcParamDecl implements CodeSnippet {
 		this.ctx = ctx
 		this.parameter = parameter
 		if (parameter.nullable === null) {
-			ctx.requiresImport("javax.validation.constraints.NotNull")
+			ctx.requiresImport("jakarta.validation.constraints.NotNull")
 		}
 		addRequiredReferences(parameter, ctx)
 	}

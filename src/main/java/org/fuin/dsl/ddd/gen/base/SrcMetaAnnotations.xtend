@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.base
 
-import javax.validation.constraints.NotNull
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.TypeMetaInfo
-import javax.annotation.Nullable
+import jakarta.validation.constraints.NotNull
+import org.fuin.dsl.cqrs.cqrsDsl.TypeMetaInfo
+import jakarta.annotation.Nullable
 import org.fuin.objects4j.ui.Label
 import org.fuin.objects4j.ui.Prompt
 import org.fuin.objects4j.ui.ShortLabel

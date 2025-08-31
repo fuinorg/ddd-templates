@@ -1,24 +1,24 @@
 package org.fuin.dsl.ddd.gen.base
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
-import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
+import org.fuin.dsl.cqrs.tests.CqrsDslInjectorProvider
+import org.fuin.dsl.cqrs.cqrsDsl.DomainModel
+import org.fuin.dsl.cqrs.cqrsDsl.Event
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.^extension.ExtendWith
 
 import static org.assertj.core.api.Assertions.*
 
-import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 
-@InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
-@RunWith(typeof(XtextRunner))
+@InjectWith(typeof(CqrsDslInjectorProvider))
+@ExtendWith(InjectionExtension) 
 class SrcHandleEventMethodTest {
 
 	@Inject
@@ -54,8 +54,8 @@ class SrcHandleEventMethodTest {
 					// TODO Handle event!
 				}
 			'''.toString)
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull",
-			"org.fuin.ddd4j.ddd.ApplyEvent", "a.b.c.DidSomethingEvent")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull",
+			"org.fuin.ddd4j.core.ApplyEvent", "a.b.c.DidSomethingEvent")
 
 	}
 

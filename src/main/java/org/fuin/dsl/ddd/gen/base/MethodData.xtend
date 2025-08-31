@@ -3,12 +3,12 @@ package org.fuin.dsl.ddd.gen.base
 import java.util.ArrayList
 import java.util.Collections
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType
+import org.fuin.dsl.cqrs.cqrsDsl.Exception
+import org.fuin.dsl.cqrs.cqrsDsl.Method
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
+import org.fuin.dsl.cqrs.cqrsDsl.ReturnType
 
-import static extension org.fuin.dsl.ddd.extensions.DddMethodExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsMethodExtensions.*
 
 /**
  * Data required to create a method. 

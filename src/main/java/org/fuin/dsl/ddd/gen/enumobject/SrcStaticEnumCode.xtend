@@ -2,16 +2,17 @@ package org.fuin.dsl.ddd.gen.enumobject
 
 import java.util.ArrayList
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumInstance
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.EnumObject
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.cqrs.cqrsDsl.Attribute
+import org.fuin.dsl.cqrs.cqrsDsl.EnumInstance
+import org.fuin.dsl.cqrs.cqrsDsl.EnumObject
+import org.fuin.dsl.cqrs.cqrsDsl.ExternalType
+import org.fuin.dsl.cqrs.cqrsDsl.Variable
 import org.fuin.dsl.ddd.gen.base.SrcInvokeGetter
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
 
 /**
@@ -30,12 +31,13 @@ class SrcStaticEnumCode implements CodeSnippet {
 		this.ctx = ctx
 		this.className = enumObject.name
 		this.attributes = enumObject.attributes
-		this.baseVar = attributes.nullSafe.first
+		// Workaround for "getFirst()" default method in List that collides with extension
+		this.baseVar = CqrsCollectionExtensions.<Attribute>first(attributes.nullSafe)
 		this.instances = enumObject.instances
 		this.base = enumObject.base
 		if (base !== null) {
-			ctx.requiresImport("javax.validation.constraints.NotNull")
-			ctx.requiresImport("javax.annotation.Nullable")
+			ctx.requiresImport("jakarta.validation.constraints.NotNull")
+			ctx.requiresImport("jakarta.annotation.Nullable")
 		}
 	}
 	

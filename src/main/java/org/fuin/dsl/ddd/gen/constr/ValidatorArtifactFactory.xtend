@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.constr
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constraint
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractVO
+import org.fuin.dsl.cqrs.cqrsDsl.Constraint
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcInvokeGetter
@@ -13,10 +13,11 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddTypeExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsTypeExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import java.util.List
 
 class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 
@@ -49,15 +50,15 @@ class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 		ctx.addImports(constraint)
 		ctx.addReferences(constraint)
 
-		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, constraint, pkg, className).toString().getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename,
+			create(ctx, constraint, pkg, className).toString().getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx, Constraint constraint) {
-		ctx.requiresImport("javax.validation.ConstraintValidator")
-		ctx.requiresImport("javax.validation.ConstraintValidatorContext")
+		ctx.requiresImport("jakarta.validation.ConstraintValidator")
+		ctx.requiresImport("jakarta.validation.ConstraintValidatorContext")
 		if ((constraint.exception !== null) && (constraint.input.iterator.next instanceof AbstractVO)) {
-			ctx.requiresImport("javax.validation.Validator")
+			ctx.requiresImport("jakarta.validation.Validator")
 		}
 	}
 

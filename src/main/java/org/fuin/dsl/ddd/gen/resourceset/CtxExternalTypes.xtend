@@ -7,7 +7,7 @@ import java.util.Locale
 import java.util.Map
 import java.util.UUID
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Context
+import org.fuin.dsl.cqrs.cqrsDsl.Context
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
@@ -97,7 +97,7 @@ class CtxExternalTypes extends AbstractSource<ResourceSet> {
 			refReg.putReference(name + "." + pkg + ".BigDecimal", BigDecimal.name)
 			refReg.putReference(name + "." + pkg + ".Locale", Locale.name)
 			refReg.putReference(name + "." + pkg + ".Object", Object.name)
-			refReg.putReference(name + "." + pkg + ".EntityIdPath", "org.fuin.ddd4j.ddd.EntityIdPath")
+			refReg.putReference(name + "." + pkg + ".EntityIdPath", "org.fuin.ddd4j.core.EntityIdPath")
 			refReg.putReference(name + "." + pkg + ".Collection", Collection.name)
 			refReg.putReference(name + "." + pkg + ".List", List.name)
 			refReg.putReference(name + "." + pkg + ".Map", Map.name)

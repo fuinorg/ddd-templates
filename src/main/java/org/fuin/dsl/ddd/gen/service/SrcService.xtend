@@ -1,6 +1,6 @@
 package org.fuin.dsl.ddd.gen.service
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Service
+import org.fuin.dsl.cqrs.cqrsDsl.Service
 import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocMethod
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
@@ -8,7 +8,7 @@ import org.fuin.dsl.ddd.gen.base.SrcMethodSignature
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 
 /**
  * Creates source code for a service.

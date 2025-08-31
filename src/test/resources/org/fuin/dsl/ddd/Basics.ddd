@@ -1,0 +1,221 @@
+context org.fuin {
+
+	namespace types {
+		type Number // BigDecimal, BigInteger, Integer, Long, Double, Float
+		type Integer // Signed 32 bit integer		
+		type Long // Signed 64 bit integer
+		type Float // Floating-point numbers
+		type Double // Floating-point numbers with double precision
+		type BigDecimal // Arbitrary-precision signed decimal numbers
+		type BigInteger // Arbitrary-precision integers
+		type Boolean // Represents two values: true and false.
+		type String // Text
+		type Date // RFC3339 full-date
+		type Time // RFC3339 partial-time
+		type Timestamp // RFC3339 date-time
+		type Password // Secret value
+		type UUID // Universally Unique Identifier
+		type Base64 // Base64 encoded string
+		type Binary // Array of bytes
+		type List generics 1 // List of a given type
+	}
+		
+	namespace constr {
+		
+		import org.fuin.types.*
+		
+		/**
+		 * Ensures that the element is null (not set).
+		 */
+		constraint Null {
+			
+			message "The value must be null"
+			
+		}
+				
+		/**
+		 * Ensures that the element is not null (is set).
+		 */
+		constraint NotNull {
+			
+			message "The value must not be null"
+			
+		}
+		
+		/**
+		 * Ensures that the element is 'true'.
+		 */
+		constraint AssertTrue input Boolean {
+			
+			message "The value must be 'true'"
+			
+		}
+		
+		/**
+		 * Ensures that the element is 'false'.
+		 */
+		constraint AssertFalse input Boolean {
+			
+			message "The value must be 'false'"
+			
+		}
+		
+		/**
+		 * Makes sure a numeric is not less than a given value.
+		 */
+		constraint MinValue input BigDecimal | BigInteger | Integer | Long {
+	
+			/** Expected minimum value (inclusive). */
+			String expected
+			
+			message "Expected a minimum value of ${expected}, but actual was: ${input}"
+			
+		}
+		
+		/**
+		 * Makes sure a numeric is not greater than a given value.
+	 	 */
+		constraint MaxValue input BigDecimal | BigInteger | Integer | Long {
+	
+			/** Expected maximum value (inclusive). */
+			String expected
+	
+			message "Expected a maximum value of ${expected}, but actual was: ${input}"
+			
+		}
+
+		/**
+		 * Makes sure a numeric is not less than or greater than a given value.
+		 */
+		constraint ValueRange input BigDecimal | BigInteger | Integer | Long {
+			
+			/** Expected minimum value (inclusive). */
+			String min
+			
+			/** Expected maximum value (inclusive). */
+			String max
+			
+			message "Expected a value between ${min} and ${max}, but actual was: ${input}"
+			
+		}
+		
+		/**
+		 * Makes sure a numeric is less than zero.
+	 	 */
+		constraint Negative input BigDecimal | BigInteger | Integer | Long | Double | Float | Number {
+	
+			message "Expected a value less than zero, but actual was: ${input}"
+			
+		}
+
+		/**
+		 * Makes sure a numeric is zero or less.
+	 	 */
+		constraint NegativeOrZero input BigDecimal | BigInteger | Integer | Long | Double | Float | Number {
+	
+			message "Expected a value zero or less, but actual was: ${input}"
+			
+		}
+
+		/**
+		 * Makes sure a numeric is more than zero.
+	 	 */
+		constraint Positive input BigDecimal | BigInteger | Integer | Long | Double | Float | Number {
+	
+			message "Expected a value more than zero, but actual was: ${input}"
+			
+		}
+
+		/**
+		 * Makes sure a numeric is zero or more.
+	 	 */
+		constraint PositiveOrZero input BigDecimal | BigInteger | Integer | Long | Double | Float | Number {
+	
+			message "Expected a value zero or more, but actual was: ${input}"
+			
+		}
+
+		/**
+		 * Makes sure a string has at least a given length.
+		 */
+		constraint MinLength input String {
+		
+			/** Expected minimum length (inclusive). */
+			Integer expected
+			
+			message "Expected a minimum length of ${expected} characters, but value was: ${input}"
+			
+		}
+
+		/**
+		 * Makes sure an element has a given maximum length.
+	  	 */
+		constraint MaxLength input String {
+	
+			/** Expected maximum size (inclusive). */
+			Integer expected
+	
+			message "Expected a maximum length of ${expected} characters, but value was: '${input}'"
+		
+		}
+
+		
+		/**
+		 * Makes sure a string has exactly a given length.
+	 	 */
+		constraint ExactLength input String {
+	
+			/** Expected length. */
+			Integer expected
+	        
+	        message "Expected an exact length of ${expected}, but value was: '${input}'"
+	        
+		}
+		
+		/**
+		 * Makes sure a string has a defined length (min/max).
+		 */
+		constraint Length input String {
+			
+			/** Expected minimum length (inclusive). */
+			Integer min
+	
+			/** Expected maximum length (inclusive). */
+			Integer max
+	
+	        message "Expected a length between ${min} and ${max} characters, but value was: '${input}'"
+	
+		}
+		
+		/**
+		 * Ensures that the value is not null (is set) and has at least one element.
+		 */
+		constraint NotEmpty input String | List {
+			
+			message "Cannot be null or empty, but value was: '${input}'"
+			
+		}
+		
+		/**
+		 * Ensures that the string is not null (is set) and the trimmed length is greater than zero.
+		 */
+		constraint NotBlank input String {
+			
+			message "Cannot be null or trimmed empty, but value was: '${input}'"
+			
+		}
+
+		/**
+		 * Ensures that the string matches the specified regular expression.
+		 */
+		constraint Pattern input String {
+			
+			String expression
+			
+			message "Expected the value has pattern '${expression}', but value was: '${input}'"
+			
+		}
+		
+	}
+
+}

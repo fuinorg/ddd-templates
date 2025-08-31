@@ -17,13 +17,13 @@
  */
 package tst2.x.resourceset;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import javax.annotation.concurrent.ThreadSafe;
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
-import org.fuin.ddd4j.ddd.AggregateRootId;
+import org.fuin.ddd4j.core.AggregateRootId;
 import org.fuin.ddd4j.ddd.SingleEntityIdFactory;
-import org.fuin.objects4j.vo.AbstractValueObjectConverter;
+import org.fuin.objects4j.core.AbstractValueObjectConverter;
 
 /**
  * Converts AggregateBId from/to String.

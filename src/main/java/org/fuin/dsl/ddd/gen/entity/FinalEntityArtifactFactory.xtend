@@ -3,8 +3,8 @@ package org.fuin.dsl.ddd.gen.entity
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.Entity
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.ConstructorData
 import org.fuin.dsl.ddd.gen.base.ConstructorParameter
@@ -21,12 +21,12 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory.eINSTANCE
+import static org.fuin.dsl.cqrs.cqrsDsl.CqrsDslFactory.eINSTANCE
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddDslFactoryExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEntityExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractEntityExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsDslFactoryExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class FinalEntityArtifactFactory extends AbstractSource<Entity> {
@@ -56,8 +56,8 @@ class FinalEntityArtifactFactory extends AbstractSource<Entity> {
 		ctx.addImports
 		ctx.addReferences(entity)
 
-		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, entity, pkg, className).toString().getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename,
+			create(ctx, entity, pkg, className).toString().getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx) {

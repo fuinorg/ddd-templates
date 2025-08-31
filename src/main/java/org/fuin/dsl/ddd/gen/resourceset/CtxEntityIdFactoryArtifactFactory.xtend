@@ -6,7 +6,7 @@ import java.util.Iterator
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntityId
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractEntityId
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.srcgen4j.commons.GenerateException
@@ -15,8 +15,8 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
@@ -55,20 +55,20 @@ class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 			sctx.addImports
 			sctx.addReferences(entityIds)
 
-			return new GeneratedArtifact(artifactName, filename,
-				create(sctx, ctx, pkg, className, entityIds, resourceSet).toString().getBytes("UTF-8"));
+			return List.of(new GeneratedArtifact(artifactName, filename,
+				create(sctx, ctx, pkg, className, entityIds, resourceSet).toString().getBytes("UTF-8")));
 
 		}
 
 	}
 
 	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("javax.enterprise.context.ApplicationScoped")
+		ctx.requiresImport("jakarta.enterprise.context.ApplicationScoped")
 		ctx.requiresImport("java.util.Map")
 		ctx.requiresImport("java.util.HashMap")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdFactory")
+		ctx.requiresImport("org.fuin.ddd4j.core.EntityIdFactory")
 		ctx.requiresImport("org.fuin.ddd4j.ddd.SingleEntityIdFactory")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityId")
+		ctx.requiresImport("org.fuin.ddd4j.core.EntityId")
 	}
 
 	def addReferences(CodeSnippetContext ctx, List<AbstractEntityId> entityIds) {

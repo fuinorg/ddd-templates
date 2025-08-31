@@ -17,10 +17,10 @@
  */
 package tst2.x.except;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.UniquelyNumberedException;
-import org.fuin.objects4j.vo.KeyValue;
+import org.fuin.objects4j.core.KeyValue;
 
 /**
  * Exception F - With CID - Multiple variables

@@ -2,7 +2,7 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.Map
 
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 
 /**
  * Options used in the generation process. 
@@ -30,6 +30,9 @@ class GenerateOptions {
 	/** Key if to generate JSON-B annotations (Type: Boolean). */
 	public val static KEY_JSONB = "jsonb"
 
+	/** Key if to generate Jackson annotations (Type: Boolean). */
+	public val static KEY_JACKSON = "jackson"
+
 	var String basePkg
 
 	var String pkg
@@ -41,6 +44,8 @@ class GenerateOptions {
 	var boolean jaxbElements
 
 	var boolean jsonb
+
+	var boolean jackson
 
 	var String copyrightHeader
 
@@ -65,6 +70,7 @@ class GenerateOptions {
 		jaxb = Boolean.valueOf(varMap.nullSafe.get(KEY_JAXB))
 		jaxbElements = Boolean.valueOf(varMap.nullSafe.get(KEY_JAXB_ELEMENTS))
 		jsonb = Boolean.valueOf(varMap.nullSafe.get(KEY_JSONB))
+		jackson = Boolean.valueOf(varMap.nullSafe.get(KEY_JACKSON))
 
 		val String header = varMap.nullSafe.get(KEY_COPYRIGHT_HEADER)
 		if (header === null) {
@@ -129,6 +135,15 @@ class GenerateOptions {
 	}
 
 	/**
+	 * Determines if Jackson annotations should be generated.
+	 * 
+	 * @return {@code true} if Jackson annotations should be generated.
+	 */
+	def boolean getJackson() {
+		return jackson
+	}
+
+	/**
 	 * Returns the copyright header to use.
 	 * 
 	 * @return Copyright header for source files.
@@ -172,6 +187,7 @@ class GenerateOptions {
 			obj.jaxb = other.jaxb
 			obj.jaxbElements = other.jaxbElements
 			obj.jsonb = other.jsonb
+			obj.jackson = other.jackson
 			obj.copyrightHeader = other.copyrightHeader
 		}
 
@@ -222,6 +238,16 @@ class GenerateOptions {
 
 		def Builder withJsonb() {
 			obj.jsonb = true
+			return this
+		}
+
+		def Builder withJackson(boolean jackson) {
+			obj.jackson = jackson
+			return this
+		}
+
+		def Builder withJackson() {
+			obj.jackson = true
 			return this
 		}
 

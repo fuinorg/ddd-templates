@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.except
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.Exception
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
@@ -18,11 +18,12 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAttributeExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import java.util.List
 
 class ExceptionArtifactFactory extends AbstractSource<Exception> {
 
@@ -51,8 +52,8 @@ class ExceptionArtifactFactory extends AbstractSource<Exception> {
 		ctx.addImports(ex)
 		ctx.addReferences(ex)
 
-		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, ex, pkg, className).toString().getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename,
+			create(ctx, ex, pkg, className).toString().getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx, Exception ex) {

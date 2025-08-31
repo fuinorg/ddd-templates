@@ -17,14 +17,14 @@
  */
 package tst.x.valueobject;
 
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.ValueObject;
 import org.fuin.objects4j.ui.Label;
 import org.fuin.objects4j.ui.Prompt;
 import org.fuin.objects4j.ui.ShortLabel;
 import org.fuin.objects4j.ui.Tooltip;
-import org.fuin.objects4j.vo.ValueObject;
 
 /**
  * A person's full nomenclature, also known as a personal name.

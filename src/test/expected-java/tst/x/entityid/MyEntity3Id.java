@@ -17,9 +17,9 @@
  */
 package tst.x.entityid;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.annotation.concurrent.Immutable;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import tst2.x.entityid.MyEntity3IdConverter;
 
 /**

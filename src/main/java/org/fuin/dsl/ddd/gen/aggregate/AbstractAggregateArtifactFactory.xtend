@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.aggregate
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.Aggregate
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAbstractChildEntityLocatorMethods
@@ -19,15 +19,16 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractEntityExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAggregateExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import java.util.List
 
 /**
  * Generates an abstract aggregate Java class.
  */
-class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
+abstract class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 
 	override getModelType() {
 		return typeof(Aggregate)
@@ -54,14 +55,14 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 		ctx.addImports
 		ctx.addReferences(aggregate)
 
-		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, aggregate, pkg, className).toString().getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename,
+			create(ctx, aggregate, pkg, className).toString().getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractAggregateRoot")
-		ctx.requiresImport("javax.validation.constraints.NotNull")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType")
+		ctx.requiresImport("org.fuin.ddd4j.core.AbstractAggregateRoot")
+		ctx.requiresImport("jakarta.validation.constraints.NotNull")
+		ctx.requiresImport("org.fuin.ddd4j.core.EntityType")
 		ctx.requiresImport("org.fuin.objects4j.common.Contract")
 	}
 

@@ -1,14 +1,14 @@
 package org.fuin.dsl.ddd.gen.base
 
-import javax.validation.constraints.NotNull
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
+import jakarta.validation.constraints.NotNull
+import org.fuin.dsl.cqrs.cqrsDsl.Attribute
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddInvariantsExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsInvariantsExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
-import javax.annotation.Nullable
+import jakarta.annotation.Nullable
 
 /**
  * Creates source code for a single attribute declaration.

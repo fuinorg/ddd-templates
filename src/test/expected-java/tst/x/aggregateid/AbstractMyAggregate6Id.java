@@ -17,14 +17,14 @@
  */
 package tst.x.aggregateid;
 
+import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
-import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.AggregateRootId;
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.ddd4j.ddd.StringBasedEntityType;
+import org.fuin.ddd4j.core.AggregateRootId;
+import org.fuin.ddd4j.core.EntityType;
+import org.fuin.ddd4j.core.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.vo.AbstractUuidValueObject;
-import org.fuin.objects4j.vo.ValueObject;
+import org.fuin.objects4j.common.ValueObject;
+import org.fuin.objects4j.core.AbstractUuidValueObject;
 
 /**
  * Aggregate ID single attribute and UUID base.

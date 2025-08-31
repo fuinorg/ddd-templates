@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.aggregate
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.Aggregate
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.SrcAll
@@ -18,10 +18,11 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractEntityExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractEntityExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import java.util.List
 
 class FinalAggregateArtifactFactory extends AbstractSource<Aggregate> {
 
@@ -50,8 +51,8 @@ class FinalAggregateArtifactFactory extends AbstractSource<Aggregate> {
 		ctx.addImports
 		ctx.addReferences(aggregate)
 
-		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, aggregate, pkg, className).toString().getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename,
+			create(ctx, aggregate, pkg, className).toString().getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx) {

@@ -1,11 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.cqrs.cqrsDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 
 /**
@@ -23,9 +23,9 @@ class SrcGetter implements CodeSnippet {
 		this.variable = variable
 		
 		if (variable.nullable === null) {
-			ctx.requiresImport("javax.validation.constraints.NotNull")		
+			ctx.requiresImport("jakarta.validation.constraints.NotNull")		
 		} else {
-			ctx.requiresImport("javax.annotation.Nullable")		
+			ctx.requiresImport("jakarta.annotation.Nullable")		
 		}
 		addRequiredReferences(variable, ctx)
 	}

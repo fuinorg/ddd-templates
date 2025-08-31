@@ -1,16 +1,16 @@
 package org.fuin.dsl.ddd.gen.extensions
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractVO
 import org.fuin.dsl.ddd.gen.base.ConstructorParameter
 
-import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAttributeExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.ParameterExtensions.*
 
 /**
  * Provides extension methods for AbstractVO.
  */
-class AbstractVOExtensions {
+abstract class AbstractVOExtensions {
 
 	/**
 	 * Creates a new constructor parameter list from the variables.

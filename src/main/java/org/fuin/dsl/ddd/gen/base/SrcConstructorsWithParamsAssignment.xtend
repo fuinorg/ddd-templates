@@ -2,13 +2,13 @@ package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractVO
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractEntity
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractVO
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.AbstractVOExtensions.*
 
 /**

@@ -17,8 +17,8 @@
  */
 package tst2.x.constr;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /** Constraint G - External type target - With exception - No variables */
 // CHECKSTYLE:OFF:LineLength

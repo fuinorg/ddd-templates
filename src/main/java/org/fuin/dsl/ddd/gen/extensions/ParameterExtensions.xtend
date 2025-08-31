@@ -2,7 +2,7 @@ package org.fuin.dsl.ddd.gen.extensions
 
 import java.util.ArrayList
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
 import org.fuin.dsl.ddd.gen.base.ConstructorParameter
 
 /**

@@ -17,11 +17,11 @@
  */
 package tst2.x.resourceset;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.HashMap;
 import java.util.Map;
-import javax.enterprise.context.ApplicationScoped;
-import org.fuin.ddd4j.ddd.EntityId;
-import org.fuin.ddd4j.ddd.EntityIdFactory;
+import org.fuin.ddd4j.core.EntityId;
+import org.fuin.ddd4j.core.EntityIdFactory;
 import org.fuin.ddd4j.ddd.SingleEntityIdFactory;
 
 /**

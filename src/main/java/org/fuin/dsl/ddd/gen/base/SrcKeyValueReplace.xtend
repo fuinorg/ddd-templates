@@ -1,13 +1,13 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import javax.validation.constraints.NotNull
-import javax.annotation.Nullable
-import org.fuin.objects4j.vo.KeyValue
+import jakarta.validation.constraints.NotNull
+import jakarta.annotation.Nullable
+import org.fuin.objects4j.core.KeyValue
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 
 /**
  * Creates source code for a {@link KeyValue#replace(String, KeyValue...)}.

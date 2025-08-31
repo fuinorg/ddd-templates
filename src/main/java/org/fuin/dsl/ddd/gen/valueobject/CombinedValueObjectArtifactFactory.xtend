@@ -1,7 +1,7 @@
 package org.fuin.dsl.ddd.gen.valueobject
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import org.fuin.dsl.cqrs.cqrsDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig

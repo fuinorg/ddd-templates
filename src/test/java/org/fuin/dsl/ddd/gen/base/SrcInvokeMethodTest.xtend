@@ -3,7 +3,7 @@ package org.fuin.dsl.ddd.gen.base
 import java.util.ArrayList
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 import static org.assertj.core.api.Assertions.*
 

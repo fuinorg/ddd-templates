@@ -17,13 +17,13 @@
  */
 package tst2.x.valueobject;
 
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import javax.json.bind.annotation.JsonbProperty;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.vo.ValueObject;
+import org.fuin.objects4j.common.ValueObject;
 
 /**
  * Value object multiple attribute and without base.

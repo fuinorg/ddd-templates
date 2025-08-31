@@ -17,13 +17,13 @@
  */
 package tst2.x.resourceset;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.nio.charset.Charset;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import org.fuin.ddd4j.ddd.EntityIdFactory;
-import org.fuin.ddd4j.ddd.EntityIdPathConverter;
+import org.fuin.ddd4j.core.EntityIdFactory;
+import org.fuin.ddd4j.jaxb.EntityIdPathXmlAdapter;
 import org.fuin.esc.spi.Deserializer;
 import org.fuin.esc.spi.EnhancedMimeType;
 import org.fuin.esc.spi.EscEvents;
@@ -57,8 +57,8 @@ public class XEventRegistry implements SerDeserializerRegistry {
 	@PostConstruct
 	protected void init() {
 		
-		final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(entityIdFactory);
-		final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { entityIdPathConverter };
+		final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(entityIdFactory);
+		final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { EntityIdPathXmlAdapter };
 		final XmlDeSerializer xmlDeSer = new XmlDeSerializer(UTF8, adapters, false, EscEvents.class, EscMeta.class, EventA.class, EventB.class, EventC.class, EventD.class, EventE.class);
 		
 		registry = new SimpleSerializerDeserializerRegistry();

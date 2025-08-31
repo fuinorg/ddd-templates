@@ -1,15 +1,15 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.ArrayList
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 import static org.assertj.core.api.Assertions.*
-import static org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory.eINSTANCE
+import static org.fuin.dsl.cqrs.cqrsDsl.CqrsDslFactory.eINSTANCE
 
-import static extension org.fuin.dsl.ddd.extensions.DddDslFactoryExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsDslFactoryExtensions.*
 
 class SrcParamsAssignmentTest {
 

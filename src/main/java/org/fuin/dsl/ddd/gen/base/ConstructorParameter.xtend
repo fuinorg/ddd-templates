@@ -1,6 +1,6 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
 
 /**
  * Wraps a parameter to add additional data.

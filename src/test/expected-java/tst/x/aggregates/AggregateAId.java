@@ -1,13 +1,13 @@
 package tst.x.aggregates;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
-import org.fuin.ddd4j.ddd.AggregateRootId;
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.ddd4j.ddd.StringBasedEntityType;
+import org.fuin.ddd4j.core.AggregateRootId;
+import org.fuin.ddd4j.core.EntityType;
+import org.fuin.ddd4j.core.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.vo.AbstractStringValueObject;
-import org.fuin.objects4j.vo.ValueObject;
+import org.fuin.objects4j.common.ValueObject;
+import org.fuin.objects4j.core.AbstractStringValueObject;
 
 public final class AggregateAId extends AbstractStringValueObject implements
         AggregateRootId, ValueObject {

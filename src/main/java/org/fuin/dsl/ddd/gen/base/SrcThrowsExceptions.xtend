@@ -1,11 +1,11 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
+import org.fuin.dsl.cqrs.cqrsDsl.Exception
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
 
 /**
  * Creates source code for "throws" clause.

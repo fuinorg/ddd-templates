@@ -2,10 +2,10 @@ package org.fuin.dsl.ddd.gen.base
 
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ExternalType
+import org.fuin.dsl.cqrs.cqrsDsl.ExternalType
 
 /**
- * Creates source code for the type related methods from {@ org.fuin.ddd4j.ddd.EntityId}.
+ * Creates source code for the type related methods from {@ org.fuin.ddd4j.core.EntityId}.
  */
 class SrcEntityIdTypeMethods implements CodeSnippet {
 
@@ -19,7 +19,7 @@ class SrcEntityIdTypeMethods implements CodeSnippet {
 		this.ctx = ctx
 		this.entityName = entityName
 		this.entityId = entityId
-		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType")
+		ctx.requiresImport("org.fuin.ddd4j.core.EntityType")
 	}
 
 	override toString() {

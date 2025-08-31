@@ -1,10 +1,10 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.cqrs.cqrsDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
 
 /**
  * Creates source code for a JSONB element annotation.
@@ -16,7 +16,7 @@ class SrcJsonProperty implements CodeSnippet {
 	new(CodeSnippetContext ctx, Variable variable) {
 		this.variable = variable
 
-		ctx.requiresImport("javax.json.bind.annotation.JsonbProperty")
+		ctx.requiresImport("jakarta.json.bind.annotation.JsonbProperty")
 	}
 
 	override toString() {

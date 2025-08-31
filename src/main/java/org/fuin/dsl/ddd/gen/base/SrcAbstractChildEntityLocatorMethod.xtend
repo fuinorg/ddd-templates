@@ -1,17 +1,17 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Entity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Parameter
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ReturnType
+import org.fuin.dsl.cqrs.cqrsDsl.CqrsDslFactory
+import org.fuin.dsl.cqrs.cqrsDsl.Entity
+import org.fuin.dsl.cqrs.cqrsDsl.Exception
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
+import org.fuin.dsl.cqrs.cqrsDsl.ReturnType
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddDslFactoryExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEntityExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsDslFactoryExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEntityExtensions.*
 
 /**
  * Creates source code for a single abstract child entity locator method.
@@ -28,10 +28,10 @@ class SrcAbstractChildEntityLocatorMethod implements CodeSnippet {
 	new(CodeSnippetContext ctx, GenerateOptions options, Entity entity) {
 		this.ctx = ctx
 		this.options = options
-		this.returnType = DomainDrivenDesignDslFactory.eINSTANCE.createReturnType()
+		this.returnType = CqrsDslFactory.eINSTANCE.createReturnType()
 		this.returnType.setDoc("Child entity or NULL if no entity with the given identifier was found.")
 		this.returnType.setType(entity)
-		val parameter = DomainDrivenDesignDslFactory.eINSTANCE.createParameter(
+		val parameter = CqrsDslFactory.eINSTANCE.createParameter(
 			"Unique identifier of the child entity to find.", entity.idTypeNullsafe, entity.idTypeNullsafe.name.toFirstLower, false)
 		this.parameters = #[parameter]
 

@@ -17,7 +17,7 @@
  */
 package tst2.x.services;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Service B - Single method.

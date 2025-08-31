@@ -17,16 +17,16 @@
  */
 package tst2.x.aggregateid;
 
+import jakarta.json.bind.adapter.JsonbAdapter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.UUID;
 import javax.annotation.concurrent.Immutable;
-import javax.json.bind.adapter.JsonbAdapter;
-import javax.persistence.AttributeConverter;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import org.fuin.ddd4j.ddd.AggregateRootUuid;
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.ddd4j.ddd.StringBasedEntityType;
-import org.fuin.objects4j.vo.ValueObjectConverter;
+import org.fuin.ddd4j.core.AggregateRootUuid;
+import org.fuin.ddd4j.core.EntityType;
+import org.fuin.ddd4j.core.StringBasedEntityType;
+import org.fuin.objects4j.common.ValueObjectConverter;
 
 /**
  * Aggregate ID no attribute and with UUID base.

@@ -6,29 +6,30 @@ import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import java.lang.annotation.Target
 import java.util.Map
-import javax.validation.Constraint
-import javax.validation.ConstraintValidator
-import javax.validation.ConstraintValidatorContext
-import javax.validation.Payload
-import javax.validation.constraints.NotNull
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import jakarta.validation.Constraint
+import jakarta.validation.ConstraintValidator
+import jakarta.validation.ConstraintValidatorContext
+import jakarta.validation.Payload
+import jakarta.validation.constraints.NotNull
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcJavaDocType
 import org.fuin.dsl.ddd.gen.base.SrcMetaAnnotations
 import org.fuin.objects4j.common.ConstraintViolationException
-import org.fuin.objects4j.vo.AbstractStringValueObject
-import org.fuin.objects4j.vo.ValueObjectConverter
+import org.fuin.objects4j.core.AbstractStringValueObject
+import org.fuin.objects4j.common.ValueObjectConverter
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import java.util.List
 
 class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
@@ -61,8 +62,8 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
 		ctx.addImports(valueObject)
 
-		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, ns, valueObject, pkg, className).toString().getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename,
+			create(ctx, ns, valueObject, pkg, className).toString().getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx, ValueObject vo) {
@@ -72,13 +73,13 @@ class SimpleStringValueObjectArtifactFactory extends AbstractSource<ValueObject>
 		ctx.requiresImport(RetentionPolicy.name)
 		ctx.requiresImport(Target.name)
 		if (options.jaxb) {
-			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")		
+			ctx.requiresImport("jakarta.xml.bind.annotation.adapters.XmlAdapter")		
 		}
 		if (options.jsonb) {
-			ctx.requiresImport("javax.json.bind.adapter.JsonbAdapter")		
+			ctx.requiresImport("jakarta.json.bind.adapter.JsonbAdapter")		
 		}
 		if (options.jpa) {
-			ctx.requiresImport("javax.persistence.AttributeConverter")		
+			ctx.requiresImport("jakarta.persistence.AttributeConverter")		
 		}		
 		ctx.requiresImport(Constraint.name)
 		ctx.requiresImport(ConstraintValidator.name)

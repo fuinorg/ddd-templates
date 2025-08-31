@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.extensions
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Type
+import org.fuin.dsl.cqrs.cqrsDsl.Type
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
 
 /**
  * Provides extension methods for Type.

@@ -1,7 +1,7 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainDrivenDesignDslFactory
-import org.junit.Test
+import org.fuin.dsl.cqrs.cqrsDsl.CqrsDslFactory
+import org.junit.jupiter.api.Test
 
 import static org.assertj.core.api.Assertions.*
 
@@ -11,7 +11,7 @@ class SrcJavaDocTypeTest {
 	def void test() {
 
 		// PREPARE
-		val vo = DomainDrivenDesignDslFactory.eINSTANCE.createValueObject
+		val vo = CqrsDslFactory.eINSTANCE.createValueObject
 		vo.setDoc(
 			'''
 				/**

@@ -5,8 +5,8 @@
 
 	<parent>
 		<groupId>org.fuin</groupId>
-		<artifactId>pom-osgi</artifactId>
-		<version>1.6.0</version>
+		<artifactId>pom</artifactId>
+		<version>2.0.0</version>
 	</parent>
 
 	<groupId>org.fuin.dsl.ddd</groupId>
@@ -14,7 +14,7 @@
 	<version>0.2.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<description>Xtend based domain-driven design (DDD) code generation templates for use with SrcGen4J</description>
+	<description>Xtend based DDD/CQRS code generation templates for use with SrcGen4J</description>
 
 	<scm>
 		<url>https://github.com/fuinorg/ddd-templates/</url>
@@ -28,9 +28,32 @@
 	</issueManagement>
 
 	<properties>
-		<xtext.version>2.16.0</xtext.version>
-		<ddd-dsl.version>0.3.1-SNAPSHOT</ddd-dsl.version>
-		<esc.version>0.3.0</esc.version>
+		<java.version>21</java.version>
+		<maven.compiler.release>${java.version}</maven.compiler.release>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
+		<assertj-core.version>3.27.3</assertj-core.version>
+		<ddd-4-java.version>0.8.0-SNAPSHOT</ddd-4-java.version>
+		<ddd-cqrs-dsl.version>1.0.0-SNAPSHOT</ddd-cqrs-dsl.version>
+		<equalsverifier.version>4.0.9</equalsverifier.version>
+		<esc.version>0.10.0-SNAPSHOT</esc.version>
+		<hibernate-core.version>6.6.11.Final</hibernate-core.version>
+		<jakarta.enterprise.cdi-api.version>4.1.0</jakarta.enterprise.cdi-api.version>
+		<jakarta.json.version>2.0.1</jakarta.json.version>
+		<jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
+		<jaxb-runtime.version>4.0.5</jaxb-runtime.version>
+		<threeten-jaxb-core.version>2.2.0</threeten-jaxb-core.version>
+		<jsr305.version>3.0.2</jsr305.version>
+		<junit-jupiter.version>5.10.5</junit-jupiter.version>
+		<objects4j.version>0.11.1-SNAPSHOT</objects4j.version>
+		<org.eclipse.emf.ecore.change.version>2.16.0</org.eclipse.emf.ecore.change.version>
+		<org.eclipse.emf.ecore.version>2.36.0</org.eclipse.emf.ecore.version>
+		<srcgen4j-core.version>0.5.0-SNAPSHOT</srcgen4j-core.version>
+		<units4j.version>0.12.0</units4j.version>
+		<xtext.version>2.39.0</xtext.version>
+		<yasson.version>3.0.4</yasson.version>
+		
 	</properties>
 
 	<dependencies>
@@ -38,9 +61,9 @@
 		<!-- compile -->
 
 		<dependency>
-			<groupId>org.fuin.dsl.ddd</groupId>
-			<artifactId>org.fuin.dsl.ddd</artifactId>
-			<version>${ddd-dsl.version}</version>
+			<groupId>org.fuin.dsl</groupId>
+			<artifactId>ddd-cqrs-dsl</artifactId>
+			<version>${ddd-cqrs-dsl.version}</version>
 		</dependency>
 
 		<dependency>
@@ -58,37 +81,37 @@
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore</artifactId>
-			<version>2.15.0</version>
+			<version>${org.eclipse.emf.ecore.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore.change</artifactId>
-			<version>2.13.0</version>
+			<version>${org.eclipse.emf.ecore.change.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.fuin.srcgen4j</groupId>
 			<artifactId>srcgen4j-core</artifactId>
-			<version>0.4.3-SNAPSHOT</version>
+			<version>${srcgen4j-core.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.fuin</groupId>
-			<artifactId>objects4j</artifactId>
-			<version>0.6.8</version>
+			<groupId>org.fuin.objects4j</groupId>
+			<artifactId>objects4j-core</artifactId>
+			<version>${objects4j.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>${jakarta.validation-api.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
-			<version>3.0.2</version>
+			<version>${jsr305.version}</version>
 		</dependency>
 
 		<!-- test -->
@@ -101,23 +124,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit-jupiter.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>3.5.1</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.fuin.dsl.ddd</groupId>
-			<artifactId>org.fuin.dsl.ddd.tests</artifactId>
-			<version>${ddd-dsl.version}</version>
+			<version>${assertj-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -131,59 +146,84 @@
 		<dependency>
 			<groupId>org.fuin</groupId>
 			<artifactId>units4j</artifactId>
-			<version>0.8.3</version>
+			<version>${units4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<version>2.0</version>
+			<groupId>jakarta.enterprise</groupId>
+			<artifactId>jakarta.enterprise.cdi-api</artifactId>
+			<version>${jakarta.enterprise.cdi-api.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.fuin</groupId>
-			<artifactId>ddd-4-java</artifactId>
-			<version>0.2.0</version>
+			<groupId>org.fuin.ddd4j</groupId>
+			<artifactId>ddd-4-java-core</artifactId>
+			<version>${ddd-4-java.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.fuin.ddd4j</groupId>
+			<artifactId>ddd-4-java-jaxb</artifactId>
+			<version>${ddd-4-java.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.fuin.ddd4j</groupId>
+			<artifactId>ddd-4-java-jsonb</artifactId>
+			<version>${ddd-4-java.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.fuin.ddd4j</groupId>
+			<artifactId>ddd-4-java-esc</artifactId>
+			<version>${ddd-4-java.version}</version>
+			<scope>test</scope>
+		</dependency>		
+
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<!-- Artifact for Java Persistence API 2.1.0 is not available separately... 
-				We don't want to include the whole JEE stuff (javax:javaee-api:7.0) here. -->
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<version>1.0.2</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.json.bind</groupId>
-			<artifactId>javax.json.bind-api</artifactId>
-			<version>1.0</version>
+			<groupId>org.glassfish</groupId>
+			<artifactId>jakarta.json</artifactId>
+			<version>${jakarta.json.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse</groupId>
 			<artifactId>yasson</artifactId>
-			<version>1.0.1</version>
+			<version>${yasson.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.json</artifactId>
-			<version>1.1.2</version>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>${jaxb-runtime.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.fuin.dsl.ddd</groupId>
-			<artifactId>ddd-dsl-basics</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
-			<scope>test</scope>
+		    <groupId>nl.jqno.equalsverifier</groupId>
+		    <artifactId>equalsverifier</artifactId>
+		    <version>${equalsverifier.version}</version>
+		    <scope>test</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>io.github.threeten-jaxb</groupId>
+		    <artifactId>threeten-jaxb-core</artifactId>
+		    <version>${threeten-jaxb-core.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -195,14 +235,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.0</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
 						</goals>
-						<configuration>
+						<configuration>						
 						    <doclint>none</doclint>
 						</configuration>
 					</execution>
@@ -212,7 +251,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.6.0</version>
 				<executions>
 					<execution>
 						<id>add-source</id>
@@ -223,8 +262,21 @@
 						<configuration>
 							<sources>
 								<source>${basedir}/src/main/xtend-gen</source>
+							</sources>
+							
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
 								<source>${basedir}/src/test/xtend-gen</source>
 							</sources>
+							
 						</configuration>
 					</execution>
 				</executions>
@@ -232,7 +284,7 @@
 
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.5.0</version>
 				<configuration>
 					<filesets>
 						<fileset>
@@ -265,7 +317,7 @@
 					<dependency>
 						<groupId>org.assertj</groupId>
 						<artifactId>assertj-core</artifactId>
-						<version>3.5.1</version>
+						<version>3.27.3</version>
 					</dependency>
 				</dependencies>
 				<executions>

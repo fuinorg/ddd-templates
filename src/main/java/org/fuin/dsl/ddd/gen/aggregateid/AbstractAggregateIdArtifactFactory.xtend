@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.aggregateid
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.AggregateId
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcConstructorsWithParamsAssignment
@@ -17,13 +17,14 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAggregateIdExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAggregateIdExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import org.fuin.dsl.ddd.gen.base.GenerateOptions
+import java.util.List
 
-class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
+abstract class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
 	override getModelType() {
 		typeof(AggregateId)
@@ -50,15 +51,15 @@ class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 		ctx.addImports
 		ctx.addReferences(aggregateId)
 
-		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, aggregateId, pkg, className).toString().getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename,
+			create(ctx, aggregateId, pkg, className).toString().getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("org.fuin.ddd4j.ddd.AggregateRootId")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.EntityType")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.StringBasedEntityType")
-		ctx.requiresImport("org.fuin.objects4j.vo.ValueObject")
+		ctx.requiresImport("org.fuin.ddd4j.core.AggregateRootId")
+		ctx.requiresImport("org.fuin.ddd4j.core.EntityType")
+		ctx.requiresImport("org.fuin.ddd4j.core.StringBasedEntityType")
+		ctx.requiresImport("org.fuin.objects4j.common.ValueObject")
 	}
 
 	def addReferences(CodeSnippetContext ctx, AggregateId aggregateId) {

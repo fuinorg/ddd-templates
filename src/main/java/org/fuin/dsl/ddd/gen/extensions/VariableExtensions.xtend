@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.extensions
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Variable
+import org.fuin.dsl.cqrs.cqrsDsl.Variable
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
 
 /**

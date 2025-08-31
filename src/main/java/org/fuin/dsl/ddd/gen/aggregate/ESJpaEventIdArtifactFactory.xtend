@@ -1,8 +1,8 @@
 package org.fuin.dsl.ddd.gen.aggregate
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.Aggregate
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.srcgen4j.commons.ArtifactFactory
@@ -12,9 +12,10 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAggregateExtensions.*
+import java.util.List
 
 class ESJpaEventIdArtifactFactory extends AbstractSource<Aggregate> implements ArtifactFactory<Aggregate> {
 
@@ -43,14 +44,14 @@ class ESJpaEventIdArtifactFactory extends AbstractSource<Aggregate> implements A
 		ctx.addImports
 		ctx.addReferences(aggregate)
 
-		return new GeneratedArtifact(artifactName, filename,
-			create(ctx, aggregate, pkg, className).toString().getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename,
+			create(ctx, aggregate, pkg, className).toString().getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx) {
 		ctx.requiresImport("java.io.Serializable")
 		ctx.requiresImport("org.fuin.objects4j.common.Contract")
-		ctx.requiresImport("javax.validation.constraints.NotNull")
+		ctx.requiresImport("jakarta.validation.constraints.NotNull")
 	}
 
 	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {

@@ -6,7 +6,7 @@ import java.util.List
 import java.util.Set
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
 
 /**
  * Creates the import statements source code.

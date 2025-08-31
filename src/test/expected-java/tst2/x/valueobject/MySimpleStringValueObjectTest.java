@@ -20,7 +20,7 @@ package tst2.x.valueobject;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.fuin.utils4j.Utils4J;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import x.valueobject.MySimpleStringValueObject;
 

@@ -2,7 +2,7 @@ package org.fuin.dsl.ddd.gen.base
 
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 import static org.assertj.core.api.Assertions.*
 
@@ -21,7 +21,7 @@ class SrcXmlRootElementTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo('''@XmlRootElement(name = "abc-def-ghi")'''.toString)
-		assertThat(ctx.imports).contains("javax.xml.bind.annotation.XmlRootElement")
+		assertThat(ctx.imports).contains("jakarta.xml.bind.annotation.XmlRootElement")
 
 	}
 

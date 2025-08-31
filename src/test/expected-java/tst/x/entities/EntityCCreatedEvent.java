@@ -17,15 +17,15 @@
  */
 package tst.x.entities;
 
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
-import org.fuin.ddd4j.ddd.AbstractDomainEvent;
-import org.fuin.ddd4j.ddd.EntityIdPath;
-import org.fuin.ddd4j.ddd.EventType;
+import org.fuin.ddd4j.jsonb.AbstractDomainEvent;
+import org.fuin.ddd4j.core.EntityIdPath;
+import org.fuin.ddd4j.core.EventType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.vo.KeyValue;
+import org.fuin.objects4j.core.KeyValue;
 
 /**
  * The entity C was created.

@@ -17,8 +17,8 @@
  */
 package tst.x.aggregateid;
 
+import jakarta.validation.constraints.NotNull;
 import javax.annotation.concurrent.Immutable;
-import javax.validation.constraints.NotNull;
 
 /**
  * Aggregate ID multiple attribute and without base.

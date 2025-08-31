@@ -1,9 +1,9 @@
 package org.fuin.dsl.ddd.gen.event
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AbstractEntity
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.AbstractEntity
+import org.fuin.dsl.cqrs.cqrsDsl.Event
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.dsl.ddd.gen.base.SrcInvokeMethod
@@ -15,17 +15,18 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static org.fuin.dsl.ddd.gen.base.Utils.*
 
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAggregateExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAttributeExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEventExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddLiteralExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddTypeExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddVariableExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAggregateExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAttributeExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEventExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsLiteralExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsTypeExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
+import java.util.List
 
 class EventTestArtifactFactory extends AbstractSource<Event> {
 
@@ -66,30 +67,30 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 			src = createDomainEventTest(ctx, event, pkg, className).toString();
 		}
 
-		return new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8"));
+		return List.of(new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8")));
 	}
 
 	def addImports(CodeSnippetContext ctx, AbstractEntity entity) {
 		ctx.requiresImport("static org.assertj.core.api.Assertions.*")
-		ctx.requiresImport("org.junit.Test")
+		ctx.requiresImport("org.junit.jupiter.api.Test")
 		if (options.jaxb) {
-			ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")			
+			ctx.requiresImport("jakarta.xml.bind.annotation.adapters.XmlAdapter")			
 		}
 		if (entity !== null) {
-			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
-			ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPath")
+			ctx.requiresImport("org.fuin.ddd4j.jaxb.EntityIdPathXmlAdapter")
+			ctx.requiresImport("org.fuin.ddd4j.core.EntityIdPath")
 		}
 		if (options.jsonb) {
-			ctx.requiresImport("org.fuin.ddd4j.ddd.EventIdConverter");
-			ctx.requiresImport("javax.json.bind.Jsonb");
-			ctx.requiresImport("javax.json.bind.JsonbBuilder");
-			ctx.requiresImport("javax.json.bind.JsonbConfig");
+			ctx.requiresImport("org.fuin.ddd4j.jsonb.EventIdJsonbAdapter");
+			ctx.requiresImport("jakarta.json.bind.Jsonb");
+			ctx.requiresImport("jakarta.json.bind.JsonbBuilder");
+			ctx.requiresImport("jakarta.json.bind.JsonbConfig");
 			ctx.requiresImport("org.eclipse.yasson.FieldAccessStrategy");
 		}
 		ctx.requiresImport("static org.fuin.utils4j.Utils4J.serialize")
 		ctx.requiresImport("static org.fuin.utils4j.Utils4J.deserialize")
-		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.marshal")
-		ctx.requiresImport("static org.fuin.utils4j.JaxbUtils.unmarshal")		
+		ctx.requiresImport("static org.fuin.utils4j.jaxb.JaxbUtils.marshal")
+		ctx.requiresImport("static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal")		
 	}
 
 	def addReferences(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
@@ -153,7 +154,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 					final «event.name» original = createTestee();
 			
 					final JsonbConfig config = new JsonbConfig()
-							.withAdapters(new EventIdConverter(), new ZonedDateTimeJsonbAdapter())
+							.withAdapters(new EventIdJsonbAdapter())
 							.withPropertyVisibilityStrategy(new FieldAccessStrategy());
 					final Jsonb jsonb = JsonbBuilder.create(config);
 			
@@ -180,8 +181,8 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 				}
 			
 				protected final XmlAdapter<?, ?>[] createAdapter() {
-					final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(new «event.context.name.toFirstUpper»EntityIdFactory());
-					return new XmlAdapter[] { entityIdPathConverter };
+					final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(new «event.context.name.toFirstUpper»EntityIdFactory());
+					return new XmlAdapter[] { EntityIdPathXmlAdapter };
 				}
 			
 			}
@@ -242,7 +243,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
 					final «event.name» original = createTestee();
 			
 					final JsonbConfig config = new JsonbConfig()
-							.withAdapters(new EventIdConverter())
+							.withAdapters(new EventIdJsonbAdapter())
 							.withPropertyVisibilityStrategy(new FieldAccessStrategy());
 					final Jsonb jsonb = JsonbBuilder.create(config);
 			

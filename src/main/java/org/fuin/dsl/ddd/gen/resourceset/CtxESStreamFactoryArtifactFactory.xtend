@@ -6,7 +6,7 @@ import java.util.Iterator
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.AggregateId
+import org.fuin.dsl.cqrs.cqrsDsl.AggregateId
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.srcgen4j.commons.GenerateException
@@ -15,8 +15,8 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddAbstractElementExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
@@ -55,14 +55,14 @@ class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 			sctx.addImports
 			sctx.addReferences(aggregateIds)
 
-			return new GeneratedArtifact(artifactName, filename,
-				create(sctx, ctx, pkg, className, aggregateIds, resourceSet).toString().getBytes("UTF-8"));
+			return List.of(new GeneratedArtifact(artifactName, filename,
+				create(sctx, ctx, pkg, className, aggregateIds, resourceSet).toString().getBytes("UTF-8")));
 		}
 
 	}
 
 	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("javax.enterprise.context.ApplicationScoped")
+		ctx.requiresImport("jakarta.enterprise.context.ApplicationScoped")
 		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.IdStreamFactory")
 		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.Stream")
 		ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.StreamId")

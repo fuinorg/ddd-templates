@@ -17,8 +17,8 @@
  */
 package tst.x.valueobject;
 
+import jakarta.validation.constraints.NotNull;
 import javax.annotation.concurrent.Immutable;
-import javax.validation.constraints.NotNull;
 
 /**
  * Value object single attribute and without base.

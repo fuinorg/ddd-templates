@@ -1,10 +1,10 @@
 package org.fuin.dsl.ddd.gen.base
 
 import java.util.List
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Exception
-import javax.annotation.Nullable
+import org.fuin.dsl.cqrs.cqrsDsl.Exception
+import jakarta.annotation.Nullable
 
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 
 /**
  * Creates the source code for a JavaDoc <code>@throws</code> lines.

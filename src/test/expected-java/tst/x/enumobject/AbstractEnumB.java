@@ -17,7 +17,7 @@
  */
 package tst.x.enumobject;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
 
 /** Enumeration type B - With variables. */

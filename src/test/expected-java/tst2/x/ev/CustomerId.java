@@ -19,16 +19,16 @@ package tst2.x.ev;
 
 import java.util.UUID;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import org.fuin.objects4j.common.ConstraintViolationException;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.vo.AbstractUuidValueObject;
-import org.fuin.objects4j.vo.UUIDStr;
-import org.fuin.objects4j.vo.UUIDStrValidator;
-import org.fuin.ddd4j.ddd.AggregateRootId;
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.ddd4j.ddd.StringBasedEntityType;
+import org.fuin.objects4j.core.AbstractUuidValueObject;
+import org.fuin.objects4j.core.UUIDStr;
+import org.fuin.objects4j.core.UUIDStrValidator;
+import org.fuin.ddd4j.core.AggregateRootId;
+import org.fuin.ddd4j.core.EntityType;
+import org.fuin.ddd4j.core.StringBasedEntityType;
 
 public final class CustomerId extends AbstractUuidValueObject implements AggregateRootId {
 

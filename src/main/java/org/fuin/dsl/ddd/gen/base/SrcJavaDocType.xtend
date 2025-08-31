@@ -1,13 +1,13 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Constructor
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.InternalType
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Method
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Service
+import org.fuin.dsl.cqrs.cqrsDsl.Constructor
+import org.fuin.dsl.cqrs.cqrsDsl.Event
+import org.fuin.dsl.cqrs.cqrsDsl.InternalType
+import org.fuin.dsl.cqrs.cqrsDsl.Method
+import org.fuin.dsl.cqrs.cqrsDsl.Service
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
 
 /**
  * Creates the source code for a type (class, interface) JavaDoc.

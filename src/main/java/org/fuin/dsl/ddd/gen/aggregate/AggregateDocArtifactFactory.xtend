@@ -1,14 +1,15 @@
 package org.fuin.dsl.ddd.gen.aggregate
 
 import java.util.Map
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Aggregate
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Namespace
+import org.fuin.dsl.cqrs.cqrsDsl.Aggregate
+import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.srcgen4j.commons.GenerateException
 import org.fuin.srcgen4j.commons.GeneratedArtifact
 
-import static extension org.fuin.dsl.ddd.extensions.DddStringExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
+import java.util.List
 
 class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
 
@@ -20,7 +21,7 @@ class AggregateDocArtifactFactory extends AbstractSource<Aggregate> {
         val Namespace ns = aggregate.namespace;
         val String pkg = ns.asPackage
         val filename = (pkg + "." + aggregate.getName()).replace('.', '/') + ".html"
-        return new GeneratedArtifact(artifactName, filename, create(aggregate, pkg).toString().getBytes("UTF-8"));
+        return List.of(new GeneratedArtifact(artifactName, filename, create(aggregate, pkg).toString().getBytes("UTF-8")));
 	}
 	
 	def create(Aggregate aggregate, String pkg) {

@@ -1,10 +1,10 @@
 package org.fuin.dsl.ddd.gen.base
 
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
+import org.fuin.dsl.cqrs.cqrsDsl.Event
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddEventExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEventExtensions.*
 
 /**
  * Creates an abstract event handler method.
@@ -22,7 +22,7 @@ class SrcAbstractHandleEventMethod implements CodeSnippet {
 	new(CodeSnippetContext ctx, Event event) {
 		this.name = event.name
 		ctx.requiresReference(event.uniqueName)
-		ctx.requiresImport("javax.validation.constraints.NotNull")
+		ctx.requiresImport("jakarta.validation.constraints.NotNull")
 	}
 
 	override toString() {

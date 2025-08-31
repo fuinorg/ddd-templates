@@ -17,9 +17,9 @@
  */
 package tst.x.aggregates;
 
-import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.AbstractAggregateRoot;
-import org.fuin.ddd4j.ddd.EntityType;
+import jakarta.validation.constraints.NotNull;
+import org.fuin.ddd4j.core.AbstractAggregateRoot;
+import org.fuin.ddd4j.core.EntityType;
 import org.fuin.objects4j.common.Contract;
 
 /**

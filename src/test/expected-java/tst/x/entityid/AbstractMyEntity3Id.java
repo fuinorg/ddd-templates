@@ -17,13 +17,13 @@
  */
 package tst.x.entityid;
 
-import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.EntityId;
-import org.fuin.ddd4j.ddd.EntityType;
-import org.fuin.ddd4j.ddd.StringBasedEntityType;
+import jakarta.validation.constraints.NotNull;
+import org.fuin.ddd4j.core.EntityId;
+import org.fuin.ddd4j.core.EntityType;
+import org.fuin.ddd4j.core.StringBasedEntityType;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.vo.AbstractStringValueObject;
-import org.fuin.objects4j.vo.ValueObject;
+import org.fuin.objects4j.common.ValueObject;
+import org.fuin.objects4j.core.AbstractStringValueObject;
 
 /**
  * Entity ID multiple attributes and base.

@@ -6,7 +6,7 @@ import java.util.Iterator
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Event
+import org.fuin.dsl.cqrs.cqrsDsl.Event
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
 import org.fuin.srcgen4j.commons.GenerateException
@@ -15,8 +15,8 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.ddd.extensions.DddEObjectExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddEventExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsEventExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
@@ -55,25 +55,25 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
             sctx.addImports
             sctx.addReferences(events)
 
-            return new GeneratedArtifact(artifactName, filename,
-                create(sctx, ctx, pkg, className, events, resourceSet).toString().getBytes("UTF-8"));
+            return List.of(new GeneratedArtifact(artifactName, filename,
+                create(sctx, ctx, pkg, className, events, resourceSet).toString().getBytes("UTF-8")));
         }
 
     }
 
     def addImports(CodeSnippetContext ctx) {
-        ctx.requiresImport("javax.enterprise.context.ApplicationScoped")
-        ctx.requiresImport("javax.xml.bind.annotation.adapters.XmlAdapter")
+        ctx.requiresImport("jakarta.enterprise.context.ApplicationScoped")
+        ctx.requiresImport("jakarta.xml.bind.annotation.adapters.XmlAdapter")
         ctx.requiresImport("java.nio.charset.Charset")
-        ctx.requiresImport("javax.inject.Inject")
-        ctx.requiresImport("javax.annotation.PostConstruct")
+        ctx.requiresImport("jakarta.inject.Inject")
+        ctx.requiresImport("jakarta.annotation.PostConstruct")
         ctx.requiresImport("org.fuin.esc.spi.SerDeserializerRegistry")
         ctx.requiresImport("org.fuin.esc.spi.Deserializer")
         ctx.requiresImport("org.fuin.esc.spi.Serializer")
         ctx.requiresImport("org.fuin.esc.spi.EscEvents")
         ctx.requiresImport("org.fuin.esc.spi.EscMeta")
-        ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdFactory")
-        ctx.requiresImport("org.fuin.ddd4j.ddd.EntityIdPathConverter")
+        ctx.requiresImport("org.fuin.ddd4j.core.EntityIdFactory")
+        ctx.requiresImport("org.fuin.ddd4j.jaxb.EntityIdPathXmlAdapter")
         ctx.requiresImport("org.fuin.esc.spi.XmlDeSerializer")
         ctx.requiresImport("org.fuin.esc.spi.SimpleSerializerDeserializerRegistry")
         ctx.requiresImport("org.fuin.esc.spi.EnhancedMimeType")
@@ -122,8 +122,8 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
             	@PostConstruct
             	protected void init() {
             		
-            		final EntityIdPathConverter entityIdPathConverter = new EntityIdPathConverter(entityIdFactory);
-            		final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { entityIdPathConverter };
+            		final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(entityIdFactory);
+            		final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { EntityIdPathXmlAdapter };
             		final XmlDeSerializer xmlDeSer = new XmlDeSerializer(UTF8, adapters, false, EscEvents.class, EscMeta.class, «FOR event : events SEPARATOR ', '»«event.name».class«ENDFOR»);
             		
             		registry = new SimpleSerializerDeserializerRegistry();

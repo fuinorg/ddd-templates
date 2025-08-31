@@ -17,8 +17,8 @@
  */
 package tst.x.valueobject;
 
+import jakarta.validation.constraints.NotNull;
 import javax.annotation.concurrent.Immutable;
-import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.ui.Label;
 import org.fuin.objects4j.ui.ShortLabel;
 import org.fuin.objects4j.ui.Tooltip;

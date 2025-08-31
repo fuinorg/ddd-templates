@@ -1,30 +1,30 @@
 package org.fuin.dsl.ddd.gen.valueobject
 
 import java.util.HashMap
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
-import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import org.fuin.dsl.cqrs.cqrsDsl.DomainModel
+import org.fuin.dsl.cqrs.cqrsDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.Utils
-import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
+import org.fuin.dsl.cqrs.tests.CqrsDslInjectorProvider
 import org.fuin.srcgen4j.commons.ArtifactFactoryConfig
 import org.fuin.srcgen4j.commons.DefaultContext
-import org.fuin.xmlcfg4j.Variable
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.fuin.srcgen4j.commons.Variable
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.^extension.ExtendWith
 
 import static org.assertj.core.api.Assertions.*
 
-import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 import static extension org.fuin.dsl.ddd.gen.base.TestExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
-@InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
-@RunWith(typeof(XtextRunner))
+@InjectWith(typeof(CqrsDslInjectorProvider))
+@ExtendWith(InjectionExtension) 
 class SimpleStringValueObjectTestArtifactFactoryTest {
 
 	@Inject
@@ -48,7 +48,7 @@ class SimpleStringValueObjectTestArtifactFactoryTest {
 		val ValueObject vo = model.find(typeof(ValueObject), name)
 
 		// TEST
-		val result = new String(testee.create(vo, context, false).data)
+		val result = new String(testee.create(vo, context, false).iterator().next().data)
 
 		// VERIFY
 		assertThat(result).isEqualTo(("x/valueobject/" + name + "Test.java").loadConcreteExample)

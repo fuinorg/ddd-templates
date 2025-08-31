@@ -17,8 +17,8 @@
  */
 package tst.x.entities;
 
-import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.ApplyEvent;
+import jakarta.validation.constraints.NotNull;
+import org.fuin.ddd4j.core.ApplyEvent;
 
 /**
  * Entity C - With constructor, constraint and event.

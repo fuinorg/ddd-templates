@@ -17,10 +17,10 @@
  */
 package tst.x.valueobject;
 
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.vo.ValueObject;
+import org.fuin.objects4j.common.ValueObject;
 
 /**
  * Value object single attribute and without base.

@@ -1,30 +1,30 @@
 package org.fuin.dsl.ddd.gen.base
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
-import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
-import org.fuin.dsl.ddd.tests.DomainDrivenDesignDslInjectorProvider
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.DomainModel
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.ValueObject
+import org.fuin.dsl.cqrs.tests.CqrsDslInjectorProvider
+import org.fuin.dsl.cqrs.cqrsDsl.DomainModel
+import org.fuin.dsl.cqrs.cqrsDsl.ValueObject
 import org.fuin.srcgen4j.core.emf.SimpleCodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.^extension.ExtendWith
 
 import static org.assertj.core.api.Assertions.*
 
-import static extension org.fuin.dsl.ddd.extensions.DddCollectionExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddDomainModelExtensions.*
-import static extension org.fuin.dsl.ddd.extensions.DddInvariantsExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsInvariantsExtensions.*
 import java.net.URL
 import org.apache.commons.io.IOUtils
 import org.eclipse.emf.common.util.EList
-import org.fuin.dsl.ddd.domainDrivenDesignDsl.Attribute
+import org.fuin.dsl.cqrs.cqrsDsl.Attribute
 
-@InjectWith(typeof(DomainDrivenDesignDslInjectorProvider))
-@RunWith(typeof(XtextRunner))
+@InjectWith(typeof(CqrsDslInjectorProvider))
+@ExtendWith(InjectionExtension) 
 class SrcValidationAnnotationTest {
 
 	@Inject
@@ -122,7 +122,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@DecimalMin(\"123.45\")")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.DecimalMin")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.DecimalMin")
 
 	}
 	
@@ -143,7 +143,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@DecimalMax(\"123.45\")")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.DecimalMax")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.DecimalMax")
 
 	}
 	
@@ -167,7 +167,7 @@ class SrcValidationAnnotationTest {
   									@DecimalMin("0")
   									@DecimalMax("100")
   									'''.toString)
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.DecimalMin", "javax.validation.constraints.DecimalMax")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.DecimalMin", "jakarta.validation.constraints.DecimalMax")
 
 	}
 	
@@ -188,7 +188,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@Negative")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.Negative")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.Negative")
 
 	}
 	
@@ -210,7 +210,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@NegativeOrZero")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NegativeOrZero")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NegativeOrZero")
 
 	}
 	
@@ -231,7 +231,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@Positive")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.Positive")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.Positive")
 
 	}
 	
@@ -253,7 +253,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@PositiveOrZero")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.PositiveOrZero")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.PositiveOrZero")
 
 	}
 	
@@ -274,7 +274,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@Size(min=1)")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.Size")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.Size")
 
 	}
 	
@@ -295,7 +295,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@Size(max=2)")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.Size")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.Size")
 
 	}
 	
@@ -316,7 +316,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@Size(min=3, max=3)")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.Size")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.Size")
 
 	}
 
@@ -337,7 +337,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@Size(min=1, max=100)")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.Size")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.Size")
 
 	}
 	
@@ -358,7 +358,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@NotNull")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotNull")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull")
 
 	}
 
@@ -379,7 +379,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@Null")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.Null")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.Null")
 
 	}
 				
@@ -400,7 +400,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@AssertTrue")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.AssertTrue")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.AssertTrue")
 
 	}
 				
@@ -421,7 +421,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@AssertFalse")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.AssertFalse")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.AssertFalse")
 
 	}
 				
@@ -442,7 +442,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@NotEmpty")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotEmpty")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotEmpty")
 
 	}
 				
@@ -463,7 +463,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@NotEmpty")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotEmpty")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotEmpty")
 
 	}
 	
@@ -486,7 +486,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@NotBlank")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.NotBlank")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotBlank")
 
 	}
 	
@@ -507,7 +507,7 @@ class SrcValidationAnnotationTest {
 
 		// VERIFY
 		assertThat(result).isEqualTo("@Pattern(regexp=\"\\d\")")
-		assertThat(ctx.imports).containsOnly("javax.validation.constraints.Pattern")
+		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.Pattern")
 
 	}
 	

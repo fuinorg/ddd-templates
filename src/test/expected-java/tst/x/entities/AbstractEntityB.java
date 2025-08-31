@@ -17,9 +17,9 @@
  */
 package tst.x.entities;
 
-import javax.validation.constraints.NotNull;
-import org.fuin.ddd4j.ddd.AbstractEntity;
-import org.fuin.ddd4j.ddd.EntityType;
+import jakarta.validation.constraints.NotNull;
+import org.fuin.ddd4j.core.AbstractEntity;
+import org.fuin.ddd4j.core.EntityType;
 import org.fuin.objects4j.common.Contract;
 
 /**
