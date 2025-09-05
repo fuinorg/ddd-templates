@@ -24,31 +24,31 @@ import jakarta.validation.Validator;
 /** Constraint C - Value object target - With exception - No variables */
 // CHECKSTYLE:OFF:LineLength
 public final class ConstraintCValidator implements ConstraintValidator<ConstraintC, ValueObjectC> {
-	// CHECKSTYLE:ON:LineLength
+    // CHECKSTYLE:ON:LineLength
 
-	@Override
-	public final void initialize(final ConstraintC annotation) {
-		// TODO Implement!
-	}
+    @Override
+    public final void initialize(final ConstraintC annotation) {
+        // TODO Implement!
+    }
 
-	@Override
-	public final boolean isValid(final ValueObjectC object, final ConstraintValidatorContext ctx) {
-		// TODO Implement!
-		return true;
-	}
+    @Override
+    public final boolean isValid(final ValueObjectC object, final ConstraintValidatorContext ctx) {
+        // TODO Implement!
+        return true;
+    }
 
-	/**
-	 * Verifies that the argument is valid an throws an exception otherwise.
-	 * 
-	 * @param validator Validator to use.
-	 * @param obj Object to validate.
-	 * 
-	 * @throws CException The constraint was violated.
-	 */
-	public static void requireValid(final Validator validator, final ValueObjectC obj) throws CException {
-		if (validator.validate(obj).size() > 0) {
-			throw new CException(obj.getA(), obj.getB(), obj.getC());
-		}
-	}
+    /**
+     * Verifies that the argument is valid an throws an exception otherwise.
+     * 
+     * @param validator Validator to use.
+     * @param obj Object to validate.
+     * 
+     * @throws CException The constraint was violated.
+     */
+    public static void requireValid(final Validator validator, final ValueObjectC obj) throws CException {
+        if (validator.validate(obj).size() > 0) {
+            throw new CException(obj.getA(), obj.getB(), obj.getC());
+        }
+    }
 
 }

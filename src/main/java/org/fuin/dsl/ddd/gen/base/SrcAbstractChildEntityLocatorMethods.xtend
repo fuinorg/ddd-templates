@@ -11,23 +11,23 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractEntityExtension
  */
 class SrcAbstractChildEntityLocatorMethods implements CodeSnippet {
 
-	val CodeSnippetContext ctx
-	val GenerateOptions options
-	val AbstractEntity entity
+    val CodeSnippetContext ctx
+    val GenerateOptions options
+    val AbstractEntity entity
 
-	new(CodeSnippetContext ctx, GenerateOptions options, AbstractEntity entity) {
-		this.ctx = ctx
-		this.options = options
-		this.entity = entity
-	}
+    new(CodeSnippetContext ctx, GenerateOptions options, AbstractEntity entity) {
+        this.ctx = ctx
+        this.options = options
+        this.entity = entity
+    }
 
-	override toString() {
-		'''
-			«FOR child : entity.childEntities»
-				«new SrcAbstractChildEntityLocatorMethod(ctx, options, child)»
-				
-			«ENDFOR»
-		'''
-	}
+    override toString() {
+        '''
+            «FOR child : entity.childEntities»
+                «new SrcAbstractChildEntityLocatorMethod(ctx, options, child)»
+                
+            «ENDFOR»
+        '''
+    }
 
 }

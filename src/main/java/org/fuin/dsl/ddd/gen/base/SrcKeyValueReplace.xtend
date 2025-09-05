@@ -15,24 +15,24 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
  */
 class SrcKeyValueReplace implements CodeSnippet {
 
-	val String message
-	val List<String> variables
+    val String message
+    val List<String> variables
 
-	new(@NotNull CodeSnippetContext ctx, @NotNull String message, @Nullable List<String> variables) {
-		this.message = message
-		this.variables = variables
+    new(@NotNull CodeSnippetContext ctx, @NotNull String message, @Nullable List<String> variables) {
+        this.message = message
+        this.variables = variables
 
-		if (variables.nullSafe.size > 0) {
-			ctx.requiresImport(KeyValue.name)
-		}
-	}
+        if (variables.nullSafe.size > 0) {
+            ctx.requiresImport(KeyValue.name)
+        }
+    }
 
-	override toString() {
-		if (variables.nullSafe.size == 0) {
-			'''"«message»"'''
-		} else {
-			'''KeyValue.replace("«message»", «FOR name : variables SEPARATOR ','» new KeyValue("«name»", «name»)«ENDFOR»)'''
-		}
-	}
+    override toString() {
+        if (variables.nullSafe.size == 0) {
+            '''"«message»"'''
+        } else {
+            '''KeyValue.replace("«message»", «FOR name : variables SEPARATOR ','» new KeyValue("«name»", «name»)«ENDFOR»)'''
+        }
+    }
 
 }

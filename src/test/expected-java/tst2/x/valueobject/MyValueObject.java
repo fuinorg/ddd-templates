@@ -18,6 +18,7 @@
 package tst2.x.valueobject;
 
 import jakarta.validation.constraints.NotNull;
+import java.io.Serial;
 import java.io.Serializable;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.ValueObject;
@@ -28,78 +29,79 @@ import org.fuin.objects4j.core.AbstractStringValueObject;
  */
 public final class MyValueObject extends AbstractStringValueObject implements ValueObject, Serializable {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	private String value;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected MyValueObject() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param value Persistent value.
-	 */
-	public MyValueObject(@NotNull final String value) {
-		super();
-		Contract.requireArgNotNull("value", value);
-		
-		this.value = value;
-	}
-	
-	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getValue() {
-		return value;
-	}
-	
-	@Override
-	public final String asBaseType() {
-		return getValue();
-	}
-	
-	/**
-	 * Returns the information if a given string can be converted into
-	 * an instance of MyValueObject. A <code>null</code> value returns <code>true</code>.
-	 * 
-	 * @param value
-	 *            Value to check.
-	 * 
-	 * @return TRUE if it's a valid string, else FALSE.
-	 */
-	public static boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		// TODO Verify the value is valid!
-		return true;
-	}
-	
-	/**
-	 * Parses a given string and returns a new instance of MyValueObject.
-	 * 
-	 * @param value
-	 *            Value to convert. A <code>null</code> value returns
-	 *            <code>null</code>.
-	 * 
-	 * @return Converted value.
-	 */
-	public static MyValueObject valueOf(final String value) {
-		if (value == null) {
-			return null;
-		}
-		// TODO Parse string value and return new instance! 
-		// return new MyValueObject(value);
-		return null;
-	}
-	
+    @Serial
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    private String value;
+    
+    /**
+     * Default constructor.
+     */
+    protected MyValueObject() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param value Persistent value.
+     */
+    public MyValueObject(@NotNull final String value) {
+        super();
+        Contract.requireArgNotNull("value", value);
+        
+        this.value = value;
+    }
+    
+    /**
+     * Returns: Persistent value.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getValue() {
+        return value;
+    }
+    
+    @Override
+    public final String asBaseType() {
+        return getValue();
+    }
+    
+    /**
+     * Returns the information if a given string can be converted into
+     * an instance of MyValueObject. A <code>null</code> value returns <code>true</code>.
+     * 
+     * @param value
+     *            Value to check.
+     * 
+     * @return TRUE if it's a valid string, else FALSE.
+     */
+    public static boolean isValid(final String value) {
+        if (value == null) {
+            return true;
+        }
+        // TODO Verify the value is valid!
+        return true;
+    }
+    
+    /**
+     * Parses a given string and returns a new instance of MyValueObject.
+     * 
+     * @param value
+     *            Value to convert. A <code>null</code> value returns
+     *            <code>null</code>.
+     * 
+     * @return Converted value.
+     */
+    public static MyValueObject valueOf(final String value) {
+        if (value == null) {
+            return null;
+        }
+        // TODO Parse string value and return new instance! 
+        // return new MyValueObject(value);
+        return null;
+    }
+    
 }

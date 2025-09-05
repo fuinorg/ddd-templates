@@ -22,29 +22,29 @@ import org.fuin.objects4j.common.Contract;
 
 /** Enumeration type D - With integer base type. */
 public abstract class AbstractEnumD {
-	
-	@NotNull
-	private Integer id;
-	
-	/**
-	 * Enumeration type D - With integer base type.
-	 *
-	 * @param id Identifier.
-	 */
-	protected AbstractEnumD(@NotNull final Integer id) {
-		Contract.requireArgNotNull("id", id);
-		
-		this.id = id;
-	}
+    
+    @NotNull
+    private Integer id;
+    
+    /**
+     * Enumeration type D - With integer base type.
+     *
+     * @param id Identifier.
+     */
+    protected AbstractEnumD(@NotNull final Integer id) {
+        Contract.requireArgNotNull("id", id);
+        
+        this.id = id;
+    }
 
-	/**
-	 * Returns: Identifier.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final Integer getId() {
-		return id;
-	}
-	
+    /**
+     * Returns: Identifier.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final Integer getId() {
+        return id;
+    }
+    
 }

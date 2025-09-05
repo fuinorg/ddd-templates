@@ -30,51 +30,51 @@ import org.fuin.objects4j.core.AbstractStringValueObject;
  */
 public abstract class AbstractMyEntityId extends AbstractStringValueObject implements EntityId, ValueObject {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	private String value;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected AbstractMyEntityId() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param value Persistent value.
-	 */
-	public AbstractMyEntityId(@NotNull final String value) {
-		super();
-		Contract.requireArgNotNull("value", value);
-		
-		this.value = value;
-	}
-	
-	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getValue() {
-		return value;
-	}
-	
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
-	
-	@Override
-	public final EntityType getType() {
-		return TYPE;
-	}
-	
-	@Override
-	public final String asTypedString() {
-		return TYPE + " " + asString();
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    private String value;
+    
+    /**
+     * Default constructor.
+     */
+    protected AbstractMyEntityId() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param value Persistent value.
+     */
+    public AbstractMyEntityId(@NotNull final String value) {
+        super();
+        Contract.requireArgNotNull("value", value);
+        
+        this.value = value;
+    }
+    
+    /**
+     * Returns: Persistent value.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getValue() {
+        return value;
+    }
+    
+    /** Name that identifies the entity uniquely within the context. */    
+    public static final EntityType TYPE = new StringBasedEntityType("MyEntity");
+    
+    @Override
+    public final EntityType getType() {
+        return TYPE;
+    }
+    
+    @Override
+    public final String asTypedString() {
+        return TYPE + " " + asString();
+    }
+    
 }

@@ -19,73 +19,71 @@ package tst2.x.ev;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import org.fuin.ddd4j.core.EntityIdPath;
 import org.fuin.ddd4j.core.EventType;
 import org.fuin.ddd4j.jsonb.AbstractDomainEvent;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.core.KeyValue;
+import org.fuin.objects4j.ui.Examples;
 
 /**
  * Aggregate event B.
  */
-@XmlRootElement(name = "event-b")
 public final class EventB extends AbstractDomainEvent<CustomerId> {
 
-	private static final long serialVersionUID = 1000L;
+    private static final long serialVersionUID = 1000L;
 
-	/** Unique name used to store the event. */
-	public static final EventType EVENT_TYPE = new EventType("EventB");
-	
-	@NotNull
-	@XmlAttribute(name = "a")
-	@JsonbProperty("a")
-	private String a;
-	
+    /** Unique name used to store the event. */
+    public static final EventType EVENT_TYPE = new EventType("EventB");
+    
+    @NotNull
+    @JsonbProperty("a")
+    @Examples(value = { "Abc" })
+    private String a;
+    
 
-	/**
-	 * Protected default constructor for deserialization.
-	 */
-	protected EventB() {
-		super();
-	}
-	
-	/**
-	 * Aggregate event B.
-	 *
-	 * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
-	* @param a A. 
-	*/
-	public EventB(@NotNull final EntityIdPath entityIdPath, @NotNull final String a) {
-		super(entityIdPath);
-		Contract.requireArgNotNull("a", a);
-		
-		this.a = a;
-	}
+    /**
+     * Protected default constructor for deserialization.
+     */
+    protected EventB() {
+        super();
+    }
+    
+    /**
+     * Aggregate event B.
+     *
+     * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
+    * @param a A. 
+    */
+    public EventB(@NotNull final EntityIdPath entityIdPath, @NotNull final String a) {
+        super(entityIdPath);
+        Contract.requireArgNotNull("a", a);
+        
+        this.a = a;
+    }
 
-	@Override
-	public final EventType getEventType() {
-		return EVENT_TYPE;
-	}
+    @Override
+    public final EventType getEventType() {
+        return EVENT_TYPE;
+    }
 
-	/**
-	 * Returns: A.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getA() {
-		return a;
-	}
-	
+    /**
+     * Returns: A.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getA() {
+        return a;
+    }
+    
 
-	@Override
-	public final String toString() {
-		return KeyValue.replace("Event B: ${a} [${#entityIdPath}]",
-			new KeyValue("#entityIdPath", getEntityIdPath())
-			, new KeyValue("a", a)
-		);
-	}
-	
+    @Override
+    public final String toString() {
+        return KeyValue.replace("Event B: ${a} [${#entityIdPath}]",
+            new KeyValue("#entityIdPath", getEntityIdPath())
+            , new KeyValue("a", a)
+        );
+    }
+    
 }

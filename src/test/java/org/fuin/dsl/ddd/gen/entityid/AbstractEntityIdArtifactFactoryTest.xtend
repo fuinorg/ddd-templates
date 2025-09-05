@@ -27,103 +27,103 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class AbstractEntityIdArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreateMyEntityId() {
+    @Test
+    def void testCreateMyEntityId() {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		val AbstractEntityIdArtifactFactory testee = createTestee()
-		val EntityId entityId = model.find(typeof(EntityId), "MyEntityId")
+        val AbstractEntityIdArtifactFactory testee = createTestee()
+        val EntityId entityId = model.find(typeof(EntityId), "MyEntityId")
 
-		// TEST
-		val result = new String(testee.create(entityId, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(entityId, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo("x/entityid/AbstractMyEntityId.java".loadAbstractExample)
+        // VERIFY
+        assertThat(result).isEqualTo("x/entityid/AbstractMyEntityId.java".loadAbstractExample)
 
-	}
-	
-	@Test
-	def void testCreateMyEntity2Id() {
-		
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+    }
+    
+    @Test
+    def void testCreateMyEntity2Id() {
+        
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		val AbstractEntityIdArtifactFactory testee = createTestee()
-		val EntityId entityId = model.find(typeof(EntityId), "MyEntity2Id")
+        val AbstractEntityIdArtifactFactory testee = createTestee()
+        val EntityId entityId = model.find(typeof(EntityId), "MyEntity2Id")
 
-		// TEST
-		val result = new String(testee.create(entityId, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(entityId, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo("x/entityid/AbstractMyEntity2Id.java".loadAbstractExample)
-		
-	}	
+        // VERIFY
+        assertThat(result).isEqualTo("x/entityid/AbstractMyEntity2Id.java".loadAbstractExample)
+        
+    }    
 
-	@Test
-	def void testCreateMyEntity3Id() {
+    @Test
+    def void testCreateMyEntity3Id() {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		val AbstractEntityIdArtifactFactory testee = createTestee()
-		val EntityId entityId = model.find(typeof(EntityId), "MyEntity3Id")
+        val AbstractEntityIdArtifactFactory testee = createTestee()
+        val EntityId entityId = model.find(typeof(EntityId), "MyEntity3Id")
 
-		// TEST
-		val result = new String(testee.create(entityId, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(entityId, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo("x/entityid/AbstractMyEntity3Id.java".loadAbstractExample)
+        // VERIFY
+        assertThat(result).isEqualTo("x/entityid/AbstractMyEntity3Id.java".loadAbstractExample)
 
-	}
+    }
 
-	@Test
-	def void testCreateMyEntity4Id() {
-		
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+    @Test
+    def void testCreateMyEntity4Id() {
+        
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		val AbstractEntityIdArtifactFactory testee = createTestee()
-		val EntityId entityId = model.find(typeof(EntityId), "MyEntity4Id")
+        val AbstractEntityIdArtifactFactory testee = createTestee()
+        val EntityId entityId = model.find(typeof(EntityId), "MyEntity4Id")
 
-		// TEST
-		val result = new String(testee.create(entityId, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(entityId, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo("x/entityid/AbstractMyEntity4Id.java".loadAbstractExample)
-		
-	}	
+        // VERIFY
+        assertThat(result).isEqualTo("x/entityid/AbstractMyEntity4Id.java".loadAbstractExample)
+        
+    }    
 
-	private def createTestee() {
-		val factory = new AbstractEntityIdArtifactFactory() {}
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractEntityId",
-			AbstractEntityIdArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new AbstractEntityIdArtifactFactory() {}
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractEntityId",
+            AbstractEntityIdArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/entityid.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/entityid.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

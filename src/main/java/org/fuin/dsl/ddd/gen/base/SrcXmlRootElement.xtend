@@ -13,51 +13,51 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
  */
 class SrcXmlRootElement implements CodeSnippet {
 
-	val String name
+    val String name
 
-	/**
-	 * Constructor with name.
-	 * 
-	 * @param ctx Context.
-	 * @param name Type name.
-	 */
-	new(CodeSnippetContext ctx, String name) {
-		this.name = name
-		ctx.requiresImport("jakarta.xml.bind.annotation.XmlRootElement")
-	}
+    /**
+     * Constructor with name.
+     * 
+     * @param ctx Context.
+     * @param name Type name.
+     */
+    new(CodeSnippetContext ctx, String name) {
+        this.name = name
+        ctx.requiresImport("jakarta.xml.bind.annotation.XmlRootElement")
+    }
 
-	/**
-	 * Constructor with value object.
-	 * 
-	 * @param ctx Context.
-	 * @param vo Value object.
-	 */
-	new(CodeSnippetContext ctx, ValueObject vo) {
-		this(ctx, vo.name)
-	}
+    /**
+     * Constructor with value object.
+     * 
+     * @param ctx Context.
+     * @param vo Value object.
+     */
+    new(CodeSnippetContext ctx, ValueObject vo) {
+        this(ctx, vo.name)
+    }
 
-	/**
-	 * Constructor with event.
-	 * 
-	 * @param ctx Context.
-	 * @param event Event.
-	 */
-	new(CodeSnippetContext ctx, Event event) {
-		this(ctx, event.name)
-	}
+    /**
+     * Constructor with event.
+     * 
+     * @param ctx Context.
+     * @param event Event.
+     */
+    new(CodeSnippetContext ctx, Event event) {
+        this(ctx, event.name)
+    }
 
-	/**
-	 * Constructor with element.
-	 * 
-	 * @param ctx Context.
-	 * @param el Element.
-	 */
-	new(CodeSnippetContext ctx, AbstractElement el) {
-		this(ctx, el.name)
-	}
+    /**
+     * Constructor with element.
+     * 
+     * @param ctx Context.
+     * @param el Element.
+     */
+    new(CodeSnippetContext ctx, AbstractElement el) {
+        this(ctx, el.name)
+    }
 
-	override toString() {
-		'''@XmlRootElement(name = "«name.toXmlName»")'''
-	}
+    override toString() {
+        '''@XmlRootElement(name = "«name.toXmlName»")'''
+    }
 
 }

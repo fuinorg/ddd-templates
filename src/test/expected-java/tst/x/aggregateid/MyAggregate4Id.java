@@ -26,29 +26,29 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class MyAggregate4Id extends AbstractMyAggregate4Id {
 
-	private static final long serialVersionUID = 1000L;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected MyAggregate4Id() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param a Persistent value A.
-	 * @param b Persistent value B.
-	 */
-	public MyAggregate4Id(@NotNull final String a, @NotNull final String b) {
-		super(a, b);
-	}
-	
-	@Override
-	public final String asString() {
-		// TODO Implement!
-		return null;
-	}
+    private static final long serialVersionUID = 1000L;
+    
+    /**
+     * Default constructor.
+     */
+    protected MyAggregate4Id() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param a Persistent value A.
+     * @param b Persistent value B.
+     */
+    public MyAggregate4Id(@NotNull final String a, @NotNull final String b) {
+        super(a, b);
+    }
+    
+    @Override
+    public final String asString() {
+        // TODO Implement!
+        return null;
+    }
 
 }

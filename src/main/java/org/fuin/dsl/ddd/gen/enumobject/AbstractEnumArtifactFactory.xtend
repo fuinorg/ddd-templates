@@ -27,63 +27,63 @@ import java.util.List
 
 abstract class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 
-	override getModelType() {
-		typeof(EnumObject)
-	}
+    override getModelType() {
+        typeof(EnumObject)
+    }
 
-	override create(EnumObject enu, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (enu.attributes.nullSafe.size == 0) {
-			// No abstract class necessary without variables
-			return null
-		}
-		
-		val className = enu.abstractName
-		val Namespace ns = enu.namespace;
-		val pkg = ns.asPackage
-		val fqn = pkg + "." + className
-		val filename = fqn.replace('.', '/') + ".java";
+    override create(EnumObject enu, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+        if (enu.attributes.nullSafe.size == 0) {
+            // No abstract class necessary without variables
+            return null
+        }
+        
+        val className = enu.abstractName
+        val Namespace ns = enu.namespace;
+        val pkg = ns.asPackage
+        val fqn = pkg + "." + className
+        val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(enu.uniqueAbstractName, fqn)
+        val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+        refReg.putReference(enu.uniqueAbstractName, fqn)
 
-		if (preparationRun) {
+        if (preparationRun) {
 
-			// No code generation during preparation phase
-			return null
-		}
+            // No code generation during preparation phase
+            return null
+        }
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports
-		ctx.addReferences(enu)
+        val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
+        ctx.addImports
+        ctx.addReferences(enu)
 
-		return List.of(new GeneratedArtifact(artifactName, filename,
-			create(ctx, enu, pkg, className).toString().getBytes("UTF-8")));
-	}
+        return List.of(new GeneratedArtifact(artifactName, filename,
+            create(ctx, enu, pkg, className).toString().getBytes("UTF-8")));
+    }
 
-	def addImports(CodeSnippetContext ctx) {
-	}
+    def addImports(CodeSnippetContext ctx) {
+    }
 
-	def addReferences(CodeSnippetContext ctx, EnumObject enu) {
-	}
+    def addReferences(CodeSnippetContext ctx, EnumObject enu) {
+    }
 
-	def create(SimpleCodeSnippetContext ctx, EnumObject eo, String pkg, String className) {
-		val String src = ''' 
-			/** «eo.doc.text» */
-			public abstract class «className» {
-				
-				«new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), eo)»
-				«new SrcJavaDocMethod(ctx, eo.doc, null, eo.attributes.asParameters, null)»
-				protected «className»(«new SrcParamsDecl(ctx, GenerateOptions.empty(), eo.attributes.asParameters)») {
-					«new SrcParamsAssignment(ctx, eo.attributes.asParameters)»
-				}
-			
-				«new SrcGetters(ctx, GenerateOptions.empty(), "public final", eo.attributes)»
-			}
-			'''
-		
+    def create(SimpleCodeSnippetContext ctx, EnumObject eo, String pkg, String className) {
+        val String src = ''' 
+            /** «eo.doc.text» */
+            public abstract class «className» {
+                
+                «new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), eo)»
+                «new SrcJavaDocMethod(ctx, eo.doc, null, eo.attributes.asParameters, null)»
+                protected «className»(«new SrcParamsDecl(ctx, GenerateOptions.empty(), eo.attributes.asParameters)») {
+                    «new SrcParamsAssignment(ctx, eo.attributes.asParameters)»
+                }
+            
+                «new SrcGetters(ctx, GenerateOptions.empty(), "public final", eo.attributes)»
+            }
+            '''
+        
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
 }

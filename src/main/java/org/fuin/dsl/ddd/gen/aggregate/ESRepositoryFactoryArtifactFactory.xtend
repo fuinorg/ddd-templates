@@ -18,71 +18,71 @@ import java.util.List
 
 class ESRepositoryFactoryArtifactFactory extends AbstractSource<Aggregate> implements ArtifactFactory<Aggregate> {
 
-	override getModelType() {
-		return typeof(Aggregate)
-	}
+    override getModelType() {
+        return typeof(Aggregate)
+    }
 
-	override create(Aggregate aggregate, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(Aggregate aggregate, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val repositoryName = aggregate.name + "Repository"
-		val className = repositoryName + "Factory"
-		val Namespace ns = aggregate.eContainer() as Namespace;
-		val pkg = ns.asPackage
-		val fqn = pkg + "." + className
-		val filename = fqn.replace('.', '/') + ".java";
+        val repositoryName = aggregate.name + "Repository"
+        val className = repositoryName + "Factory"
+        val Namespace ns = aggregate.eContainer() as Namespace;
+        val pkg = ns.asPackage
+        val fqn = pkg + "." + className
+        val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(aggregate.uniqueName + "RepositoryFactory", fqn)
+        val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+        refReg.putReference(aggregate.uniqueName + "RepositoryFactory", fqn)
 
-		if (preparationRun) {
+        if (preparationRun) {
 
-			// No code generation during preparation phase
-			return null
-		}
+            // No code generation during preparation phase
+            return null
+        }
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports
-		ctx.addReferences(aggregate)
+        val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
+        ctx.addImports
+        ctx.addReferences(aggregate)
 
-		return List.of(new GeneratedArtifact(artifactName, filename,
-			create(ctx, aggregate, pkg, className, repositoryName).toString().getBytes("UTF-8")));
-	}
+        return List.of(new GeneratedArtifact(artifactName, filename,
+            create(ctx, aggregate, pkg, className, repositoryName).toString().getBytes("UTF-8")));
+    }
 
-	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("org.fuin.esc.api.EventStore")
-		ctx.requiresImport("jakarta.enterprise.context.Dependent")
-		ctx.requiresImport("jakarta.enterprise.inject.Produces")
-	}
+    def addImports(CodeSnippetContext ctx) {
+        ctx.requiresImport("org.fuin.esc.api.EventStore")
+        ctx.requiresImport("jakarta.enterprise.context.Dependent")
+        ctx.requiresImport("jakarta.enterprise.inject.Produces")
+    }
 
-	def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
-		ctx.requiresReference(aggregate.uniqueName + "Repository")
-	}
+    def addReferences(CodeSnippetContext ctx, Aggregate aggregate) {
+        ctx.requiresReference(aggregate.uniqueName + "Repository")
+    }
 
-	def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className, String repositoryName) {
-		val String src = ''' 
-			/**
-			 * Creates a «repositoryName».
-			 */
-			@Dependent
-			public class «className» {
-			
-				/**
-				 * Produces a «repositoryName».
-				 * 
-				 * @param eventStore The event store to use for construction.
-				 *
-				 * @return The new repository instance.
-				 */
-				@Produces
-				public «repositoryName» create(final EventStore eventStore) {
-					return new «repositoryName»(eventStore);
-				}
-			
-			}
-		'''
+    def create(SimpleCodeSnippetContext ctx, Aggregate aggregate, String pkg, String className, String repositoryName) {
+        val String src = ''' 
+            /**
+             * Creates a «repositoryName».
+             */
+            @Dependent
+            public class «className» {
+            
+                /**
+                 * Produces a «repositoryName».
+                 * 
+                 * @param eventStore The event store to use for construction.
+                 *
+                 * @return The new repository instance.
+                 */
+                @Produces
+                public «repositoryName» create(final EventStore eventStore) {
+                    return new «repositoryName»(eventStore);
+                }
+            
+            }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
 }

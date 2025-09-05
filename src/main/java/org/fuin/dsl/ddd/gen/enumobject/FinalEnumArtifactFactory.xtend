@@ -26,67 +26,67 @@ import java.util.List
 
 class FinalEnumArtifactFactory extends AbstractSource<EnumObject> {
 
-	override getModelType() {
-		typeof(EnumObject)
-	}
+    override getModelType() {
+        typeof(EnumObject)
+    }
 
-	override create(EnumObject enu, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(EnumObject enu, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val className = enu.name
-		val abstractClassName = enu.abstractName
-		val Namespace ns = enu.namespace;
-		val pkg = ns.asPackage
-		val fqn = pkg + "." + className
-		val filename = fqn.replace('.', '/') + ".java";
+        val className = enu.name
+        val abstractClassName = enu.abstractName
+        val Namespace ns = enu.namespace;
+        val pkg = ns.asPackage
+        val fqn = pkg + "." + className
+        val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(enu.uniqueName, fqn)
+        val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+        refReg.putReference(enu.uniqueName, fqn)
 
-		if (preparationRun) {
+        if (preparationRun) {
 
-			// No code generation during preparation phase
-			return null
-		}
+            // No code generation during preparation phase
+            return null
+        }
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports
-		ctx.addReferences(enu)
+        val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
+        ctx.addImports
+        ctx.addReferences(enu)
 
-		return List.of(new GeneratedArtifact(artifactName, filename,
-			create(ctx, enu, pkg, className, abstractClassName).toString().getBytes("UTF-8")));
-	}
+        return List.of(new GeneratedArtifact(artifactName, filename,
+            create(ctx, enu, pkg, className, abstractClassName).toString().getBytes("UTF-8")));
+    }
 
-	def addImports(CodeSnippetContext ctx) {
-	}
+    def addImports(CodeSnippetContext ctx) {
+    }
 
-	def addReferences(CodeSnippetContext ctx, EnumObject enu) {
-		if (enu.attributes.nullSafe.size > 0) {
-			ctx.requiresReference(enu.uniqueAbstractName)
-		}
-	}
+    def addReferences(CodeSnippetContext ctx, EnumObject enu) {
+        if (enu.attributes.nullSafe.size > 0) {
+            ctx.requiresReference(enu.uniqueAbstractName)
+        }
+    }
 
-	def create(SimpleCodeSnippetContext ctx, EnumObject eo, String pkg, String className, String abstractClassName) {
-		val String src = ''' 
-			/** «eo.doc.text» */
-			public final class «className» «IF eo.attributes.nullSafe.size > 0»extends «abstractClassName» «ENDIF»{
-				
-				«FOR in : eo.instances»
-					«in.doc»
-					public static final «className» «in.name» = new «className»(«FOR lit : in.params SEPARATOR ', '»«lit.str»«ENDFOR»);
-					
-				«ENDFOR»
-				«new SrcStaticEnumCode(ctx, eo)»
-				«IF eo.attributes.nullSafe.size > 0»
-					private «className»(«new SrcParamsDecl(ctx, GenerateOptions.empty(), eo.attributes.asParameters)») {
-						«new SrcInvokeMethod(ctx, "super", eo.attributes.asParameters.asNames)»
-					}
-					
-				«ENDIF»
-			}
-		'''
+    def create(SimpleCodeSnippetContext ctx, EnumObject eo, String pkg, String className, String abstractClassName) {
+        val String src = ''' 
+            /** «eo.doc.text» */
+            public final class «className» «IF eo.attributes.nullSafe.size > 0»extends «abstractClassName» «ENDIF»{
+                
+                «FOR in : eo.instances»
+                    «in.doc»
+                    public static final «className» «in.name» = new «className»(«FOR lit : in.params SEPARATOR ', '»«lit.str»«ENDFOR»);
+                    
+                «ENDFOR»
+                «new SrcStaticEnumCode(ctx, eo)»
+                «IF eo.attributes.nullSafe.size > 0»
+                    private «className»(«new SrcParamsDecl(ctx, GenerateOptions.empty(), eo.attributes.asParameters)») {
+                        «new SrcInvokeMethod(ctx, "super", eo.attributes.asParameters.asNames)»
+                    }
+                    
+                «ENDIF»
+            }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
 }

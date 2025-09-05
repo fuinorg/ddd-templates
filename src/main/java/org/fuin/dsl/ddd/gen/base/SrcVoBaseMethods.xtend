@@ -13,49 +13,49 @@ import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
  */
 class SrcVoBaseMethods implements CodeSnippet {
 
-	val CodeSnippetContext ctx;
+    val CodeSnippetContext ctx;
 
-	val AbstractVO vo;
-	
-	val String baseName
+    val AbstractVO vo;
+    
+    val String baseName
 
-	/**
-	 * Constructor with value object.
-	 * 
-	 * @param ctx Context.
-	 * @param vo Value object.
-	 */
-	new(CodeSnippetContext ctx, AbstractVO vo) {
-		this.ctx = ctx
-		if (vo === null) {
-			throw new IllegalArgumentException("vo cannot be null")
-		}
-		this.vo = vo
-		this.baseName = vo.baseTypeName
-	}
+    /**
+     * Constructor with value object.
+     * 
+     * @param ctx Context.
+     * @param vo Value object.
+     */
+    new(CodeSnippetContext ctx, AbstractVO vo) {
+        this.ctx = ctx
+        if (vo === null) {
+            throw new IllegalArgumentException("vo cannot be null")
+        }
+        this.vo = vo
+        this.baseName = vo.baseTypeName
+    }
 
-	override toString() {
-		'''
-		«IF vo.baseType !== null»
-		@Override
-		public final «vo.baseType.simpleName(ctx)» asBaseType() {
-			«IF vo.attributes.nullSafe.size == 1»
-			return get«vo.attributes.first.name.toFirstUpper»();
-			«ELSE»
-			// TODO Implement!
-			return null;
-			«ENDIF»
-		}
-		
-		«ENDIF»
-		«IF "String".equals(baseName)»
-			«new SrcVoBaseMethodsString(ctx, vo)»
-		«ELSEIF "UUID".equals(baseName)»
-			«new SrcVoBaseMethodsUUID(ctx, vo)»
-		«ELSEIF "Integer".equals(baseName) || "Long".equals(baseName)»
-			«new SrcVoBaseMethodsNumber(ctx, vo)»
-		«ENDIF»
-		'''
-	}
+    override toString() {
+        '''
+        «IF vo.baseType !== null»
+        @Override
+        public final «vo.baseType.simpleName(ctx)» asBaseType() {
+            «IF vo.attributes.nullSafe.size == 1»
+            return get«vo.attributes.first.name.toFirstUpper»();
+            «ELSE»
+            // TODO Implement!
+            return null;
+            «ENDIF»
+        }
+        
+        «ENDIF»
+        «IF "String".equals(baseName)»
+            «new SrcVoBaseMethodsString(ctx, vo)»
+        «ELSEIF "UUID".equals(baseName)»
+            «new SrcVoBaseMethodsUUID(ctx, vo)»
+        «ELSEIF "Integer".equals(baseName) || "Long".equals(baseName)»
+            «new SrcVoBaseMethodsNumber(ctx, vo)»
+        «ENDIF»
+        '''
+    }
 
 }

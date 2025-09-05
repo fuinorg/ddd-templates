@@ -70,7 +70,7 @@ public final class CustomerId extends AbstractUuidValueObject implements Aggrega
         super();
         Contract.requireArgNotNull("strValue", strValue);
         if (!UUIDStrValidator.isValid(strValue)) {
-        	throw new ConstraintViolationException("The argument 'strValue' is not a valid UUID");
+            throw new ConstraintViolationException("The argument 'strValue' is not a valid UUID");
         }
         this.uuid = UUID.fromString(strValue);
     }
@@ -87,12 +87,12 @@ public final class CustomerId extends AbstractUuidValueObject implements Aggrega
 
     @Override
     public final UUID asBaseType() {
-    	return uuid;
+        return uuid;
     }
     
     @Override
     public String asString() {
-    	return uuid.toString();
+        return uuid.toString();
     }
     
 }

@@ -12,16 +12,16 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ParameterExtensions.*
  */
 class ConstructorExtensions {
 
-	/**
-	 * Creates a new constructor parameter list from the variables.
-	 * 
-	 * @param constructor Constructor with list of variables.
-	 * @param passToSuper Defines if all variables should be passed to the super call
-	 * 
-	 * @return Constructor parameter list
-	 */
-	def static List<ConstructorParameter> asWrappedParameters(Constructor constructor, boolean passToSuper) {
-		return constructor.parameters.nullSafe.asWrappedParameters(passToSuper)
-	}
+    /**
+     * Creates a new constructor parameter list from the variables.
+     * 
+     * @param constructor Constructor with list of variables.
+     * @param passToSuper Defines if all variables should be passed to the super call
+     * 
+     * @return Constructor parameter list
+     */
+    def static List<ConstructorParameter> asWrappedParameters(Constructor constructor, boolean passToSuper) {
+        return constructor.parameters.nullSafe.asWrappedParameters(passToSuper)
+    }
 
 }

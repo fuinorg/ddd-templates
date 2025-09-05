@@ -28,109 +28,107 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class EventArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreateEventA() {
+    @Test
+    def void testCreateEventA() {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
 
-		testCreate(context, "EventA")
+        testCreate(context, "EventA")
 
-	}
+    }
 
-	
-	@Test
-	def void testCreateEventB() {
+    
+    @Test
+    def void testCreateEventB() {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
 
-		testCreate(context, "EventB")
+        testCreate(context, "EventB")
 
-	}
-	
-	
-	@Test
-	def void testCreateEventC() {
+    }
+    
+    
+    @Test
+    def void testCreateEventC() {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.types.Integer", "java.lang.Integer")
-		refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.types.Integer", "java.lang.Integer")
+        refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
 
-		testCreate(context, "EventC")
+        testCreate(context, "EventC")
 
-	}
-	
-	@Test
-	def void testCreateEventD() {
+    }
+    
+    @Test
+    def void testCreateEventD() {
 
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		testCreate(context, "EventD")
-		
-	}
+        testCreate(context, "EventD")
+        
+    }
 
-	@Test
-	def void testCreateEventE() {
+    @Test
+    def void testCreateEventE() {
 
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		testCreate(context, "EventE")
-		
-	}
-	
-	private def testCreate(Map<String, Object> context, String eventName) {
-		
-		// PREPARE
-		val EventArtifactFactory testee = createTestee(GenerateOptions.builder.withJaxb()
-			.withJaxbElements(false).withJsonb().create()
-		)
-		val Event event = model.find(typeof(Event), eventName)
+        testCreate(context, "EventE")
+        
+    }
+    
+    private def testCreate(Map<String, Object> context, String eventName) {
+        
+        // PREPARE
+        val EventArtifactFactory testee = createTestee(GenerateOptions.builder.withJaxb()
+            .withJaxbElements(false).withJsonb().create()
+        )
+        val Event event = model.find(typeof(Event), eventName)
 
-		// TEST
-		val result = new String(testee.create(event, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(event, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/ev/" + eventName + ".java").loadConcreteExample)
-		
-	}
+        // VERIFY
+        assertThat(result).isEqualTo(("x/ev/" + eventName + ".java").loadConcreteExample)
+        
+    }
 
-	private def createTestee(GenerateOptions options) {
-		val factory = new EventArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("event", EventArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.addVariable(new Variable(GenerateOptions.KEY_JAXB, options.jaxb.toString));
-		config.addVariable(new Variable(GenerateOptions.KEY_JAXB_ELEMENTS, options.jaxbElements.toString));
-		config.addVariable(new Variable(GenerateOptions.KEY_JSONB, options.jsonb.toString));
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee(GenerateOptions options) {
+        val factory = new EventArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("event", EventArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.addVariable(new Variable(GenerateOptions.KEY_JSONB, options.jsonb.toString));
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/event.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/event.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

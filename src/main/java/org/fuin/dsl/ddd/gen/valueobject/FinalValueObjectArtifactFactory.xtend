@@ -23,69 +23,69 @@ import java.util.List
 
 class FinalValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
-	override getModelType() {
-		typeof(ValueObject)
-	}
+    override getModelType() {
+        typeof(ValueObject)
+    }
 
-	override create(ValueObject vo, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(ValueObject vo, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val className = vo.name
-		val abstractClassName = vo.abstractName
-		val Namespace ns = vo.namespace;
-		val pkg = ns.asPackage
-		val fqn = pkg + "." + className
-		val filename = fqn.replace('.', '/') + ".java";
+        val className = vo.name
+        val abstractClassName = vo.abstractName
+        val Namespace ns = vo.namespace;
+        val pkg = ns.asPackage
+        val fqn = pkg + "." + className
+        val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(vo.uniqueName, fqn)
+        val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+        refReg.putReference(vo.uniqueName, fqn)
 
-		if (preparationRun) {
+        if (preparationRun) {
 
-			// No code generation during preparation phase
-			return null
-		}
+            // No code generation during preparation phase
+            return null
+        }
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports(vo)
-		ctx.addReferences(vo)
+        val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
+        ctx.addImports(vo)
+        ctx.addReferences(vo)
 
-		return List.of(new GeneratedArtifact(artifactName, filename,
-			create(ctx, ns, vo, pkg, className, abstractClassName).toString().getBytes("UTF-8")));
-	}
+        return List.of(new GeneratedArtifact(artifactName, filename,
+            create(ctx, ns, vo, pkg, className, abstractClassName).toString().getBytes("UTF-8")));
+    }
 
-	def addImports(CodeSnippetContext ctx, ValueObject vo) {
-		if (vo.base !== null) {
-			ctx.requiresImport("jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter")			
-		}
-		ctx.requiresImport("javax.annotation.concurrent.Immutable")
-	}
+    def addImports(CodeSnippetContext ctx, ValueObject vo) {
+        if (vo.base !== null) {
+            ctx.requiresImport("jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter")            
+        }
+        ctx.requiresImport("javax.annotation.concurrent.Immutable")
+    }
 
-	def addReferences(CodeSnippetContext ctx, ValueObject vo) {
-		if (vo.base !== null) {
-			ctx.requiresReference(vo.uniqueName + "Converter")			
-		}
-		ctx.requiresReference(vo.uniqueAbstractName)
-	}
+    def addReferences(CodeSnippetContext ctx, ValueObject vo) {
+        if (vo.base !== null) {
+            ctx.requiresReference(vo.uniqueName + "Converter")            
+        }
+        ctx.requiresReference(vo.uniqueAbstractName)
+    }
 
-	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className, String abstractClassName) {
-		val String src = ''' 
-			«new SrcJavaDocType(vo)»
-			@Immutable
-			«new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
-			«IF vo.base !== null»
-			@XmlJavaTypeAdapter(«vo.name»Converter.class)
-			«ENDIF»
-			public final class «className» extends «abstractClassName» {
-			
-				private static final long serialVersionUID = 1000L;
-				
-				«new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), vo, false, true)»
-				«new SrcVoBaseMethods(ctx, vo)»
-			}
-		'''
+    def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className, String abstractClassName) {
+        val String src = ''' 
+            «new SrcJavaDocType(vo)»
+            @Immutable
+            «new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
+            «IF vo.base !== null»
+            @XmlJavaTypeAdapter(«vo.name»Converter.class)
+            «ENDIF»
+            public final class «className» extends «abstractClassName» {
+            
+                private static final long serialVersionUID = 1000L;
+                
+                «new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), vo, false, true)»
+                «new SrcVoBaseMethods(ctx, vo)»
+            }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
 }

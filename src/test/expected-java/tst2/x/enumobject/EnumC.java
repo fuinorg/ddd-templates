@@ -20,31 +20,31 @@ package tst2.x.enumobject;
 
 /** Enumeration type C - With deprecated instance. */
 public enum EnumC {
-	
-	/** First. */
-	A,
-	
-		/** Second - Only kept for backward compatibility. */
-	B,
-	
-		/** Third. */
-	C
-	
-	;
-	
-	/** All instances. */
-	public static final EnumC[] ALL = new EnumC[] {
-		A, B, C
-	};
-	
-	/** Valid instances. */
-	public static final EnumC[] VALID = new EnumC[] {
-		A, C
-	};
-	
-	/** Deprecated instances. */
-	public static final EnumC[] DEPRECTAED = new EnumC[] {
-		B
-	};
-	
+    
+    /** First. */
+    A,
+    
+        /** Second - Only kept for backward compatibility. */
+    B,
+    
+        /** Third. */
+    C
+    
+    ;
+    
+    /** All instances. */
+    public static final List<EnumC> ALL = List.of(
+        A, B, C
+    );
+    
+    /** Valid instances. */
+    public static final List<EnumC> VALID = List.of(
+        A, C
+    );
+    
+    /** Deprecated instances. */
+    public static final List<EnumC> DEPRECATED = List.of(
+        B
+    );
+    
 }

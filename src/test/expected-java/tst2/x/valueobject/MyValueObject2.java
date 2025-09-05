@@ -21,6 +21,7 @@ import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import java.io.Serial;
 import java.io.Serializable;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.ValueObject;
@@ -31,40 +32,41 @@ import org.fuin.objects4j.common.ValueObject;
 @XmlRootElement(name = "my-value-object2")
 public final class MyValueObject2 implements ValueObject, Serializable {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	@XmlAttribute(name = "id")
-	@JsonbProperty("id")
-	private String id;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected MyValueObject2() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param id Persistent value.
-	 */
-	public MyValueObject2(@NotNull final String id) {
-		super();
-		Contract.requireArgNotNull("id", id);
-		
-		this.id = id;
-	}
-	
-	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getId() {
-		return id;
-	}
-	
+    @Serial
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    @XmlAttribute(name = "id")
+    @JsonbProperty("id")
+    private String id;
+    
+    /**
+     * Default constructor.
+     */
+    protected MyValueObject2() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param id Persistent value.
+     */
+    public MyValueObject2(@NotNull final String id) {
+        super();
+        Contract.requireArgNotNull("id", id);
+        
+        this.id = id;
+    }
+    
+    /**
+     * Returns: Persistent value.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getId() {
+        return id;
+    }
+    
 }

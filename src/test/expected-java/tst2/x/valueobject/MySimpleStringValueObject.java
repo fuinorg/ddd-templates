@@ -17,6 +17,7 @@
  */
 package tst2.x.valueobject;
 
+import jakarta.annotation.Generated;
 import jakarta.json.bind.adapter.JsonbAdapter;
 import jakarta.persistence.AttributeConverter;
 import jakarta.validation.Constraint;
@@ -25,222 +26,259 @@ import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import java.io.Serial;
+import java.io.Serializable;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Objects;
 import javax.annotation.concurrent.Immutable;
+import org.fuin.objects4j.common.AsStringCapable;
 import org.fuin.objects4j.common.ConstraintViolationException;
-import org.fuin.objects4j.common.ValueObjectConverter;
-import org.fuin.objects4j.core.AbstractStringValueObject;
+import org.fuin.objects4j.common.HasPublicStaticIsValidMethod;
+import org.fuin.objects4j.common.HasPublicStaticValueOfMethod;
+import org.fuin.objects4j.common.ValueObjectWithBaseType;
+import org.fuin.objects4j.ui.Examples;
 
 /**
  * Simple value object single attribute and base.
  */
+@Examples(value = { "one","two","three" })
 @Immutable
-public final class MySimpleStringValueObject extends AbstractStringValueObject {
+@Generated("Generated class - Manual changes will be overwritten")
+@HasPublicStaticIsValidMethod
+@HasPublicStaticValueOfMethod
+public final class MySimpleStringValueObject implements ValueObjectWithBaseType<String>, Comparable<MySimpleStringValueObject>, Serializable, AsStringCapable {
 
-	private static final long serialVersionUID = 1000L;
+    @Serial
+    private static final long serialVersionUID = 1000L;
 
-	private static final int MAX_LENGTH = 100;
+    private static final int MAX_LENGTH = 100;
 
-	@NotNull
-	@MySimpleStringValueObjectStr
-	private String value;
+    @NotNull
+    @MySimpleStringValueObjectStr
+    private String value;
 
-	/**
-	 * Protected default constructor for deserialization.
-	 */
-	protected MySimpleStringValueObject() {
-		super();
-	}
+    /**
+     * Protected default constructor for deserialization.
+     */
+    protected MySimpleStringValueObject() {
+        super();
+    }
 
-	/**
-	 * Constructor with mandatory data.
-	 * 
-	 * @param value
-	 *            Value.
-	 */
-	public MySimpleStringValueObject(final String value) {
-		super();
-		requireArgValid("value", value);
-		this.value = value;
-	}
+    /**
+     * Constructor with mandatory data.
+     * 
+     * @param value
+     *            Value.
+     */
+    public MySimpleStringValueObject(final String value) {
+        super();
+        requireArgValid("value", value);
+        this.value = value;
+    }
 
-	@Override
-	public final String asBaseType() {
-		return value;
-	}
+    @Override
+    public String asBaseType() {
+        return value;
+    }
 
-	/**
-	 * Verifies that a given string can be converted into the type.
-	 * 
-	 * @param value
-	 *            Value to validate.
-	 * 
-	 * @return Returns <code>true</code> if it's a valid type else
-	 *         <code>false</code>.
-	 */
-	public static boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		if (value.length() == 0) {
-			return false;
-		}
-		final String trimmed = value.trim();
-		if (trimmed.length() > MAX_LENGTH) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public String toString() {
+        return value;
+    }
 
-	/**
-	 * Verifies if the argument is valid and throws an exception if this is not
-	 * the case.
-	 * 
-	 * @param name
-	 *            Name of the value for a possible error message.
-	 * @param value
-	 *            Value to check.
-	 * 
-	 * @throws ConstraintViolationException
-	 *             The value was not valid.
-	 */
-	public static void requireArgValid(@NotNull final String name,
-			@NotNull final String value) throws ConstraintViolationException {
+    @Override
+    public String asString() {
+        return value;
+    }
 
-		if (!isValid(value)) {
-			throw new ConstraintViolationException("The argument '" + name
-					+ "' is not valid: '" + value + "'");
-		}
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
 
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MySimpleStringValueObject other = (MySimpleStringValueObject) obj;
+        return Objects.equals(value, other.value);
+    }
 
-	/**
-	 * Ensures that the string can be converted into the type.
-	 */
-	@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD,
-			ElementType.ANNOTATION_TYPE })
-	@Retention(RetentionPolicy.RUNTIME)
-	@Constraint(validatedBy = { Validator.class })
-	@Documented
-	public static @interface MySimpleStringValueObjectStr {
+    @Override
+    public int compareTo(final MySimpleStringValueObject other) {
+        return value.compareTo(other.value);
+    }
 
-		String message()
+    @Override
+    @NotNull
+    public Class<String> getBaseType() {
+        return String.class;
+    }
 
-		default "{tst2.x.valueobject.MySimpleStringValueObject.message}";
+    /**
+     * Verifies that a given string can be converted into the type.
+     * 
+     * @param value
+     *            Value to validate.
+     * 
+     * @return Returns {@literal true} if it's a valid type else {@literal false}.
+     */
+    public static boolean isValid(final String value) {
+        if (value == null) {
+            return true;
+        }
+        if (value.isEmpty()) {
+            return false;
+        }
+        final String trimmed = value.trim();
+        return trimmed.length() <= MAX_LENGTH;
+    }
 
-		Class<?>[] groups() default {};
+    /**
+     * Verifies if the argument is valid and throws an exception if this is not
+     * the case.
+     * 
+     * @param name
+     *            Name of the value for a possible error message.
+     * @param value
+     *            Value to check.
+     * 
+     * @throws ConstraintViolationException
+     *             The value was not valid.
+     */
+    public static void requireArgValid(@NotNull final String name, @NotNull final String value) throws ConstraintViolationException {
 
-		Class<? extends Payload>[] payload() default {};
+        if (!isValid(value)) {
+            throw new ConstraintViolationException("The argument '" + name
+                    + "' is not valid: '" + value + "'");
+        }
 
-	}
+    }
 
-	/**
-	 * Validates if a string is compliant with the type.
-	 */
-	public static final class Validator implements
-			ConstraintValidator<MySimpleStringValueObjectStr, String> {
+    /**
+     * Ensures that the string can be converted into the type.
+     */
+    @Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD,
+            ElementType.ANNOTATION_TYPE })
+    @Retention(RetentionPolicy.RUNTIME)
+    @Constraint(validatedBy = { Validator.class })
+    @Documented
+    public @interface MySimpleStringValueObjectStr {
 
-		@Override
-		public final void initialize(
-				final MySimpleStringValueObjectStr annotation) {
-			// Not used
-		}
+        String message()
 
-		@Override
-		public final boolean isValid(final String value,
-				final ConstraintValidatorContext context) {
-			return MySimpleStringValueObject.isValid(value);
-		}
+        default "{tst2.x.valueobject.MySimpleStringValueObject.message}";
 
-	}
+        Class<?>[] groups() default {};
 
-	/**
-	 * Converts the value object from/to string.
-	 */
-	public static final class Converter extends XmlAdapter<String, MySimpleStringValueObject>
-			implements ValueObjectConverter<String, MySimpleStringValueObject>
-			, AttributeConverter<MySimpleStringValueObject, String>
-			, JsonbAdapter<MySimpleStringValueObject, String> {
+        Class<? extends Payload>[] payload() default {};
 
-		// Attribute Converter
+    }
 
-		@Override
-		public final Class<String> getBaseTypeClass() {
-			return String.class;
-		}
+    /**
+     * Validates if a string is compliant with the type.
+     */
+    public static final class Validator implements
+            ConstraintValidator<MySimpleStringValueObjectStr, String> {
 
-		@Override
-		public final Class<MySimpleStringValueObject> getValueObjectClass() {
-			return MySimpleStringValueObject.class;
-		}
+        @Override
+        public void initialize(
+                final MySimpleStringValueObjectStr annotation) {
+            // Not used
+        }
 
-		@Override
-		public boolean isValid(final String value) {
-			return MySimpleStringValueObject.isValid(value);
-		}
+        @Override
+        public boolean isValid(final String value,
+                final ConstraintValidatorContext context) {
+            return MySimpleStringValueObject.isValid(value);
+        }
 
-		@Override
-		public final MySimpleStringValueObject toVO(final String value) {
-			if (value == null) {
-				return null;
-			}
-			return new MySimpleStringValueObject(value);
-		}
+    }
 
-		@Override
-		public final String fromVO(final MySimpleStringValueObject value) {
-			if (value == null) {
-				return null;
-			}
-			return value.asBaseType();
-		}
+    /**
+     * Converts the value object from/to String.
+     */
+    public static final class Converter extends XmlAdapter<String, MySimpleStringValueObject> implements AttributeConverter<MySimpleStringValueObject, String>, JsonbAdapter<MySimpleStringValueObject, String> {
 
-		// JAXB XML Adapter
+        // General methods
 
-		@Override
-		public final MySimpleStringValueObject unmarshal(final String str)
-				throws Exception {
-			return toVO(str);
-		}
+        /**
+         * Converts the String into a MySimpleStringValueObject. A {@literal null} parameter will return {@literal null}.
+         * 
+         * @param value
+         *            String to convert into a MySimpleStringValueObject.
+         * 
+         * @return Value object of type MySimpleStringValueObject.
+         */
+        public MySimpleStringValueObject toVO(final String value) {
+            if (value == null) {
+                return null;
+            }
+            return new MySimpleStringValueObject(value);
+        }
 
-		@Override
-		public final String marshal(final MySimpleStringValueObject obj)
-				throws Exception {
-			return fromVO(obj);
-		}
+        /**
+         * Converts a MySimpleStringValueObject into a String. A {@literal null} parameter will return {@literal null}.
+         * 
+         * @param value
+         *            Value object of type MySimpleStringValueObject.
+         * 
+         * @return String.
+         */
+        public String fromVO(final MySimpleStringValueObject value) {
+            if (value == null) {
+                return null;
+            }
+            return value.asBaseType();
+        }
 
-		// JPA Attribute Converter
+        // JAXB XML Adapter
 
-		@Override
-		public final String convertToDatabaseColumn(
-				final MySimpleStringValueObject obj) {
-			return fromVO(obj);
-		}
+        @Override
+        public MySimpleStringValueObject unmarshal(final String value) throws Exception {
+            return toVO(value);
+        }
 
-		@Override
-		public final MySimpleStringValueObject convertToEntityAttribute(
-				final String str) {
-			return toVO(str);
-		}
+        @Override
+        public String marshal(final MySimpleStringValueObject obj) throws Exception {
+            return fromVO(obj);
+        }
 
-		// JSONB Adapter
+        // JPA Attribute Converter
 
-		@Override
-		public final String adaptToJson(final MySimpleStringValueObject obj)
-				throws Exception {
-			return fromVO(obj);
-		}
+        @Override
+        public String convertToDatabaseColumn(final MySimpleStringValueObject obj) {
+            return fromVO(obj);
+        }
 
-		@Override
-		public final MySimpleStringValueObject adaptFromJson(
-				final String str) throws Exception {
-			return toVO(str);
-		}
+        @Override
+        public MySimpleStringValueObject convertToEntityAttribute(final String value) {
+            return toVO(value);
+        }
 
-	}
+        // JSONB Adapter
+
+        @Override
+        public String adaptToJson(final MySimpleStringValueObject obj) throws Exception {
+            return fromVO(obj);
+        }
+
+        @Override
+        public MySimpleStringValueObject adaptFromJson(final String value) throws Exception {
+            return toVO(value);
+        }
+
+    }
 
 }

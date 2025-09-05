@@ -28,38 +28,38 @@ import org.fuin.objects4j.core.AbstractStringValueObject;
  */
 public abstract class AbstractMyValueObject extends AbstractStringValueObject implements ValueObject, Serializable {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	private String value;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected AbstractMyValueObject() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param value Persistent value.
-	 */
-	public AbstractMyValueObject(@NotNull final String value) {
-		super();
-		Contract.requireArgNotNull("value", value);
-		
-		this.value = value;
-	}
-	
-	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getValue() {
-		return value;
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    private String value;
+    
+    /**
+     * Default constructor.
+     */
+    protected AbstractMyValueObject() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param value Persistent value.
+     */
+    public AbstractMyValueObject(@NotNull final String value) {
+        super();
+        Contract.requireArgNotNull("value", value);
+        
+        this.value = value;
+    }
+    
+    /**
+     * Returns: Persistent value.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getValue() {
+        return value;
+    }
+    
 }

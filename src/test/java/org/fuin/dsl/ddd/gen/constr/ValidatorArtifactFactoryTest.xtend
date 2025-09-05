@@ -27,92 +27,92 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class ValidatorArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testConstraintAValidator() {
-		testConstraint("A")
-	}
-	
-	@Test
-	def void testConstraintBValidator() {
-		testConstraint("B")
-	}
-	
-	@Test
-	def void testConstraintCValidator() {
-		testConstraint("C")
-	}
-	
-	@Test
-	def void testConstraintDValidator() {
-		testConstraint("D")
-	}
-	
-	@Test
-	def void testConstraintEValidator() {
-		testConstraint("E")
-	}
-	
-	@Test
-	def void testConstraintFValidator() {
-		testConstraint("F")
-	}
-	
-	@Test
-	def void testConstraintGValidator() {
-		testConstraint("G")
-	}
-	
-	@Test
-	def void testConstraintHValidator() {
-		testConstraint("H")
-	}
-	
-	private def testConstraint(String constrChar) {
-		
-		// PREPARE
-		val constrName = "Constraint" + constrChar
-		val voName = "ValueObject" + constrChar
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.constr." + constrName, EXAMPLES_CONCRETE + ".x.constr." + constrName)
-		refReg.putReference("x.constr." + voName, EXAMPLES_CONCRETE + ".x.constr." + voName)
+    @Test
+    def void testConstraintAValidator() {
+        testConstraint("A")
+    }
+    
+    @Test
+    def void testConstraintBValidator() {
+        testConstraint("B")
+    }
+    
+    @Test
+    def void testConstraintCValidator() {
+        testConstraint("C")
+    }
+    
+    @Test
+    def void testConstraintDValidator() {
+        testConstraint("D")
+    }
+    
+    @Test
+    def void testConstraintEValidator() {
+        testConstraint("E")
+    }
+    
+    @Test
+    def void testConstraintFValidator() {
+        testConstraint("F")
+    }
+    
+    @Test
+    def void testConstraintGValidator() {
+        testConstraint("G")
+    }
+    
+    @Test
+    def void testConstraintHValidator() {
+        testConstraint("H")
+    }
+    
+    private def testConstraint(String constrChar) {
+        
+        // PREPARE
+        val constrName = "Constraint" + constrChar
+        val voName = "ValueObject" + constrChar
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.constr." + constrName, EXAMPLES_CONCRETE + ".x.constr." + constrName)
+        refReg.putReference("x.constr." + voName, EXAMPLES_CONCRETE + ".x.constr." + voName)
 
-		val ValidatorArtifactFactory testee = createTestee()
-		val Constraint constraint = model.find(typeof(Constraint), constrName)
-		if (constraint.exception !== null) {
-			val constrException = constrChar + "Exception"
-			refReg.putReference("x.constr." + constrException, EXAMPLES_CONCRETE + ".x.constr." + constrException)
-		}
+        val ValidatorArtifactFactory testee = createTestee()
+        val Constraint constraint = model.find(typeof(Constraint), constrName)
+        if (constraint.exception !== null) {
+            val constrException = constrChar + "Exception"
+            refReg.putReference("x.constr." + constrException, EXAMPLES_CONCRETE + ".x.constr." + constrException)
+        }
 
-		// TEST
-		val result = new String(testee.create(constraint, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(constraint, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/constr/" + constrName + "Validator.java").loadConcreteExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/constr/" + constrName + "Validator.java").loadConcreteExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new ValidatorArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("validator", ValidatorArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new ValidatorArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("validator", ValidatorArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/constraint.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/constraint.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

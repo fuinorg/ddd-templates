@@ -39,18 +39,18 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 // CHECKSTYLE:OFF:LineLength
 public @interface ConstraintF {
 
-	/** Used to create an error message. */
-	String message() default "F is not allowed: ${a} '${b}': ${validatedValue}";
+    /** Used to create an error message. */
+    String message() default "F is not allowed: ${a} '${b}': ${validatedValue}";
 
-	/** Processing groups with which the constraint declaration is associated. */		
-	Class<?>[] groups() default {};
+    /** Processing groups with which the constraint declaration is associated. */        
+    Class<?>[] groups() default {};
 
-	/** Payload with which the the constraint declaration is associated. */
-	Class<? extends Payload>[] payload() default {};
+    /** Payload with which the the constraint declaration is associated. */
+    Class<? extends Payload>[] payload() default {};
 
-	int a();
-	
-	String b();
-	
+    int a();
+    
+    String b();
+    
 }
 //CHECKSTYLE:ON:LineLength

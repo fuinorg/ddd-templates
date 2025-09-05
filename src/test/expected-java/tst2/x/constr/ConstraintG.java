@@ -39,14 +39,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 // CHECKSTYLE:OFF:LineLength
 public @interface ConstraintG {
 
-	/** Used to create an error message. */
-	String message() default "G is not allowed: ${validatedValue}";
+    /** Used to create an error message. */
+    String message() default "G is not allowed: ${validatedValue}";
 
-	/** Processing groups with which the constraint declaration is associated. */		
-	Class<?>[] groups() default {};
+    /** Processing groups with which the constraint declaration is associated. */        
+    Class<?>[] groups() default {};
 
-	/** Payload with which the the constraint declaration is associated. */
-	Class<? extends Payload>[] payload() default {};
+    /** Payload with which the the constraint declaration is associated. */
+    Class<? extends Payload>[] payload() default {};
 
 }
 //CHECKSTYLE:ON:LineLength

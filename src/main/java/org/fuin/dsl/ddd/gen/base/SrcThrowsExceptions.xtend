@@ -12,22 +12,22 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensio
  */
 class SrcThrowsExceptions implements CodeSnippet {
 
-	val List<Exception> exceptions
+    val List<Exception> exceptions
 
-	new(CodeSnippetContext ctx, List<Exception> exceptions) {
-		this.exceptions = exceptions
-		if (exceptions !== null) {
-			for (Exception exception : exceptions) {
-				ctx.requiresReference(exception.uniqueName)
-			}
-		}
-	}
+    new(CodeSnippetContext ctx, List<Exception> exceptions) {
+        this.exceptions = exceptions
+        if (exceptions !== null) {
+            for (Exception exception : exceptions) {
+                ctx.requiresReference(exception.uniqueName)
+            }
+        }
+    }
 
-	override toString() {
-		if ((exceptions === null) || (exceptions.size == 0)) {
-			return ""
-		}
-		''' throws «FOR ex : exceptions SEPARATOR ', '»«ex.name»«ENDFOR»'''
-	}
+    override toString() {
+        if ((exceptions === null) || (exceptions.size == 0)) {
+            return ""
+        }
+        ''' throws «FOR ex : exceptions SEPARATOR ', '»«ex.name»«ENDFOR»'''
+    }
 
 }

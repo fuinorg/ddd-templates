@@ -26,23 +26,23 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class MyValueObject4 extends AbstractMyValueObject4 {
 
-	private static final long serialVersionUID = 1000L;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected MyValueObject4() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param a Persistent value A.
-	 * @param b Persistent value B.
-	 */
-	public MyValueObject4(@NotNull final String a, @NotNull final String b) {
-		super(a, b);
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    /**
+     * Default constructor.
+     */
+    protected MyValueObject4() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param a Persistent value A.
+     * @param b Persistent value B.
+     */
+    public MyValueObject4(@NotNull final String a, @NotNull final String b) {
+        super(a, b);
+    }
+    
 }

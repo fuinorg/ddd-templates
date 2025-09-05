@@ -27,76 +27,76 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class EventTestArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreateEventA() {
-		testCreate("EventA")
-	}
+    @Test
+    def void testCreateEventA() {
+        testCreate("EventA")
+    }
 
-	@Test
-	def void testCreateEventB() {
-		testCreate("EventB")
-	}
+    @Test
+    def void testCreateEventB() {
+        testCreate("EventB")
+    }
 
-	@Test
-	def void testCreateEventC() {
-		testCreate("EventC")
-	}
+    @Test
+    def void testCreateEventC() {
+        testCreate("EventC")
+    }
 
-	@Test
-	def void testCreateEventD() {
-		testCreate("EventD")
-	}
+    @Test
+    def void testCreateEventD() {
+        testCreate("EventD")
+    }
 
-	@Test
-	def void testCreateEventE() {
-		testCreate("EventE")
-	}
-	
-	private def testCreate(String eventName) {
+    @Test
+    def void testCreateEventE() {
+        testCreate("EventE")
+    }
+    
+    private def testCreate(String eventName) {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.types.Integer", "java.lang.Integer")
-		refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
-		refReg.putReference("x.ev." + eventName, EXAMPLES_CONCRETE + ".x.ev." + eventName)
-		refReg.putReference("XEntityIdFactory", EXAMPLES_CONCRETE + ".x.ev.XEntityIdFactory")
-		refReg.putReference("x.ev.MyString", EXAMPLES_CONCRETE + ".x.ev.MyString")
-		val EventTestArtifactFactory testee = createTestee(true, true, true)
-		val Event event = model.find(typeof(Event), eventName)
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.types.Integer", "java.lang.Integer")
+        refReg.putReference("x.ev.CustomerId", EXAMPLES_CONCRETE + ".x.ev.CustomerId")
+        refReg.putReference("x.ev." + eventName, EXAMPLES_CONCRETE + ".x.ev." + eventName)
+        refReg.putReference("XEntityIdFactory", EXAMPLES_CONCRETE + ".x.ev.XEntityIdFactory")
+        refReg.putReference("x.ev.MyString", EXAMPLES_CONCRETE + ".x.ev.MyString")
+        val EventTestArtifactFactory testee = createTestee(true, true, true)
+        val Event event = model.find(typeof(Event), eventName)
 
-		// TEST
-		val result = new String(testee.create(event, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(event, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/ev/" + eventName + "Test.java").loadConcreteExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/ev/" + eventName + "Test.java").loadConcreteExample)
 
-	}
+    }
 
-	private def createTestee(boolean jaxb, boolean jaxbElements, boolean jsonb) {
-		val factory = new EventTestArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("eventTest", EventTestArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.addVariable(new Variable(GenerateOptions.KEY_JAXB, jaxb.toString));
-		config.addVariable(new Variable(GenerateOptions.KEY_JAXB_ELEMENTS, jaxbElements.toString));
-		config.addVariable(new Variable(GenerateOptions.KEY_JSONB, jsonb.toString));
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee(boolean jaxb, boolean jaxbElements, boolean jsonb) {
+        val factory = new EventTestArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("eventTest", EventTestArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.addVariable(new Variable(GenerateOptions.KEY_JAXB, jaxb.toString));
+        config.addVariable(new Variable(GenerateOptions.KEY_JAXB_ELEMENTS, jaxbElements.toString));
+        config.addVariable(new Variable(GenerateOptions.KEY_JSONB, jsonb.toString));
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/event.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/event.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

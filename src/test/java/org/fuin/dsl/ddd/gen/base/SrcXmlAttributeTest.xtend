@@ -11,22 +11,22 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDslFactoryExtensions.*
 
 class SrcXmlAttributeTest {
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val variable = eINSTANCE.createAttribute("AbcDefGhi")
-		val SrcXmlAttribute testee = new SrcXmlAttribute(ctx, variable)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val variable = eINSTANCE.createAttribute("AbcDefGhi")
+        val SrcXmlAttribute testee = new SrcXmlAttribute(ctx, variable)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo('''@XmlAttribute(name = "abc-def-ghi")'''.toString)
-		assertThat(ctx.imports).contains("jakarta.xml.bind.annotation.XmlAttribute")
+        // VERIFY
+        assertThat(result).isEqualTo('''@XmlAttribute(name = "abc-def-ghi")'''.toString)
+        assertThat(ctx.imports).contains("jakarta.xml.bind.annotation.XmlAttribute")
 
-	}
+    }
 
 }

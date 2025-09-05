@@ -23,16 +23,16 @@ import jakarta.validation.constraints.NotNull;
  * Service B - Single method.
  */
 public interface ServiceB {
-	
-	/**
-	 * Finds something.
-	 *
-	 * @param a Key.
-	 *
-	 * @return Value.
-	 *
-	 * @throws AnyConstraintViolatedException The constraint was violated.
-	 */
-	public String find(@NotNull final Integer a) throws AnyConstraintViolatedException;
-	
+    
+    /**
+     * Finds something.
+     *
+     * @param a Key.
+     *
+     * @return Value.
+     *
+     * @throws AnyConstraintViolatedException The constraint was violated.
+     */
+    public String find(@NotNull final Integer a) throws AnyConstraintViolatedException;
+    
 }

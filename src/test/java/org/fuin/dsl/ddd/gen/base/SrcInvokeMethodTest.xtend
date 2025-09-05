@@ -9,59 +9,59 @@ import static org.assertj.core.api.Assertions.*
 
 class SrcInvokeMethodTest {
 
-	@Test
-	def void testEmpty() {
+    @Test
+    def void testEmpty() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val names = new ArrayList<String>()
-		val testee = new SrcInvokeMethod(ctx, "super", names)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val names = new ArrayList<String>()
+        val testee = new SrcInvokeMethod(ctx, "super", names)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo('''super();'''.toString)
+        // VERIFY
+        assertThat(result).isEqualTo('''super();'''.toString)
 
-	}
+    }
 
-	@Test
-	def void testOne() {
+    @Test
+    def void testOne() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val names = new ArrayList<String>()
-		names.add("a")
-		val testee = new SrcInvokeMethod(ctx, "super", names)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val names = new ArrayList<String>()
+        names.add("a")
+        val testee = new SrcInvokeMethod(ctx, "super", names)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo('''super(a);'''.toString)
+        // VERIFY
+        assertThat(result).isEqualTo('''super(a);'''.toString)
 
-	}
+    }
 
-	@Test
-	def void testMultiple() {
+    @Test
+    def void testMultiple() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val names = new ArrayList<String>()
-		names.add("a")
-		names.add("b")
-		names.add("c")
-		val testee = new SrcInvokeMethod(ctx, "super", names)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val names = new ArrayList<String>()
+        names.add("a")
+        names.add("b")
+        names.add("c")
+        val testee = new SrcInvokeMethod(ctx, "super", names)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo('''super(a, b, c);'''.toString)
+        // VERIFY
+        assertThat(result).isEqualTo('''super(a, b, c);'''.toString)
 
-	}
+    }
 
 }

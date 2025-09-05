@@ -29,67 +29,67 @@ import org.fuin.objects4j.common.ValueObject;
  */
 public abstract class AbstractMyAggregate4Id implements AggregateRootId, ValueObject {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	private String a;
-	
-	@NotNull
-	private String b;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected AbstractMyAggregate4Id() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param a Persistent value A.
-	 * @param b Persistent value B.
-	 */
-	public AbstractMyAggregate4Id(@NotNull final String a, @NotNull final String b) {
-		super();
-		Contract.requireArgNotNull("a", a);
-		Contract.requireArgNotNull("b", b);
-		
-		this.a = a;
-		this.b = b;
-	}
-	
-	/**
-	 * Returns: Persistent value A.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getA() {
-		return a;
-	}
-	
-	/**
-	 * Returns: Persistent value B.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getB() {
-		return b;
-	}
-	
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyAggregate4");
-	
-	@Override
-	public final EntityType getType() {
-		return TYPE;
-	}
-	
-	@Override
-	public final String asTypedString() {
-		return TYPE + " " + asString();
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    private String a;
+    
+    @NotNull
+    private String b;
+    
+    /**
+     * Default constructor.
+     */
+    protected AbstractMyAggregate4Id() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param a Persistent value A.
+     * @param b Persistent value B.
+     */
+    public AbstractMyAggregate4Id(@NotNull final String a, @NotNull final String b) {
+        super();
+        Contract.requireArgNotNull("a", a);
+        Contract.requireArgNotNull("b", b);
+        
+        this.a = a;
+        this.b = b;
+    }
+    
+    /**
+     * Returns: Persistent value A.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getA() {
+        return a;
+    }
+    
+    /**
+     * Returns: Persistent value B.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getB() {
+        return b;
+    }
+    
+    /** Name that identifies the entity uniquely within the context. */    
+    public static final EntityType TYPE = new StringBasedEntityType("MyAggregate4");
+    
+    @Override
+    public final EntityType getType() {
+        return TYPE;
+    }
+    
+    @Override
+    public final String asTypedString() {
+        return TYPE + " " + asString();
+    }
+    
 }

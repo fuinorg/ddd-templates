@@ -29,64 +29,64 @@ import tst2.x.entityid.MyEntity3IdConverter;
 @XmlJavaTypeAdapter(MyEntity3IdConverter.class)
 public final class MyEntity3Id extends AbstractMyEntity3Id {
 
-	private static final long serialVersionUID = 1000L;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected MyEntity3Id() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param a Persistent value A.
-	 * @param b Persistent value B.
-	 */
-	public MyEntity3Id(@NotNull final String a, @NotNull final String b) {
-		super(a, b);
-	}
-	
-	@Override
-	public final String asBaseType() {
-		// TODO Implement!
-		return null;
-	}
-	
-	/**
-	 * Returns the information if a given string can be converted into
-	 * an instance of MyEntity3Id. A <code>null</code> value returns <code>true</code>.
-	 * 
-	 * @param value
-	 *            Value to check.
-	 * 
-	 * @return TRUE if it's a valid string, else FALSE.
-	 */
-	public static boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		// TODO Verify the value is valid!
-		return true;
-	}
-	
-	/**
-	 * Parses a given string and returns a new instance of MyEntity3Id.
-	 * 
-	 * @param value
-	 *            Value to convert. A <code>null</code> value returns
-	 *            <code>null</code>.
-	 * 
-	 * @return Converted value.
-	 */
-	public static MyEntity3Id valueOf(final String value) {
-		if (value == null) {
-			return null;
-		}
-		// TODO Parse string value and return new instance! 
-		// return new MyEntity3Id(value);
-		return null;
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    /**
+     * Default constructor.
+     */
+    protected MyEntity3Id() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param a Persistent value A.
+     * @param b Persistent value B.
+     */
+    public MyEntity3Id(@NotNull final String a, @NotNull final String b) {
+        super(a, b);
+    }
+    
+    @Override
+    public final String asBaseType() {
+        // TODO Implement!
+        return null;
+    }
+    
+    /**
+     * Returns the information if a given string can be converted into
+     * an instance of MyEntity3Id. A <code>null</code> value returns <code>true</code>.
+     * 
+     * @param value
+     *            Value to check.
+     * 
+     * @return TRUE if it's a valid string, else FALSE.
+     */
+    public static boolean isValid(final String value) {
+        if (value == null) {
+            return true;
+        }
+        // TODO Verify the value is valid!
+        return true;
+    }
+    
+    /**
+     * Parses a given string and returns a new instance of MyEntity3Id.
+     * 
+     * @param value
+     *            Value to convert. A <code>null</code> value returns
+     *            <code>null</code>.
+     * 
+     * @return Converted value.
+     */
+    public static MyEntity3Id valueOf(final String value) {
+        if (value == null) {
+            return null;
+        }
+        // TODO Parse string value and return new instance! 
+        // return new MyEntity3Id(value);
+        return null;
+    }
+    
 }

@@ -39,18 +39,18 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 // CHECKSTYLE:OFF:LineLength
 public @interface ConstraintD {
 
-	/** Used to create an error message. */
-	String message() default "D is not allowed ${a} '${b}': ${validatedValue.a} - ${validatedValue.b} - ${validatedValue.c} - ${validatedValue.d}";
+    /** Used to create an error message. */
+    String message() default "D is not allowed ${a} '${b}': ${validatedValue.a} - ${validatedValue.b} - ${validatedValue.c} - ${validatedValue.d}";
 
-	/** Processing groups with which the constraint declaration is associated. */		
-	Class<?>[] groups() default {};
+    /** Processing groups with which the constraint declaration is associated. */        
+    Class<?>[] groups() default {};
 
-	/** Payload with which the the constraint declaration is associated. */
-	Class<? extends Payload>[] payload() default {};
+    /** Payload with which the the constraint declaration is associated. */
+    Class<? extends Payload>[] payload() default {};
 
-	int a();
-	
-	String b();
-	
+    int a();
+    
+    String b();
+    
 }
 //CHECKSTYLE:ON:LineLength

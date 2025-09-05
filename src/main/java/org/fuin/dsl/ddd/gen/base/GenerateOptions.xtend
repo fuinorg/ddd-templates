@@ -9,259 +9,259 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
  */
 class GenerateOptions {
 
-	/** Key to retrieve the copyright header. */
-	public val static KEY_COPYRIGHT_HEADER = "copyrightHeader"
+    /** Key to retrieve the copyright header. */
+    public val static KEY_COPYRIGHT_HEADER = "copyrightHeader"
 
-	/** Key for the name of the base package to prepend right before the context from the DSL (Type: String). */
-	public val static KEY_BASE_PKG = "basepkg"
+    /** Key for the name of the base package to prepend right before the context from the DSL (Type: String). */
+    public val static KEY_BASE_PKG = "basepkg"
 
-	/** Key for the name of a package to insert right after the context from the DSL (Type: String). */
-	public val static KEY_PKG = "pkg"
+    /** Key for the name of a package to insert right after the context from the DSL (Type: String). */
+    public val static KEY_PKG = "pkg"
 
-	/** Key if to generate JPA annotations (Type: Boolean). */
-	public val static KEY_JPA = "jpa"
+    /** Key if to generate JPA annotations (Type: Boolean). */
+    public val static KEY_JPA = "jpa"
 
-	/** Key if to generate JAX-B annotations (Type: Boolean). */
-	public val static KEY_JAXB = "jaxb"
+    /** Key if to generate JAX-B annotations (Type: Boolean). */
+    public val static KEY_JAXB = "jaxb"
 
-	/** Key if to generate JAX-B elements instead of attributes. Used to harmonize JSON and XML structures (Type: Boolean). */
-	public val static KEY_JAXB_ELEMENTS = "jaxb_elements"
+    /** Key if to generate JAX-B elements instead of attributes. Used to harmonize JSON and XML structures (Type: Boolean). */
+    public val static KEY_JAXB_ELEMENTS = "jaxb_elements"
 
-	/** Key if to generate JSON-B annotations (Type: Boolean). */
-	public val static KEY_JSONB = "jsonb"
+    /** Key if to generate JSON-B annotations (Type: Boolean). */
+    public val static KEY_JSONB = "jsonb"
 
-	/** Key if to generate Jackson annotations (Type: Boolean). */
-	public val static KEY_JACKSON = "jackson"
+    /** Key if to generate Jackson annotations (Type: Boolean). */
+    public val static KEY_JACKSON = "jackson"
 
-	var String basePkg
+    var String basePkg
 
-	var String pkg
+    var String pkg
 
-	var boolean jpa
+    var boolean jpa
 
-	var boolean jaxb
+    var boolean jaxb
 
-	var boolean jaxbElements
+    var boolean jaxbElements
 
-	var boolean jsonb
+    var boolean jsonb
 
-	var boolean jackson
+    var boolean jackson
 
-	var String copyrightHeader
+    var String copyrightHeader
 
-	/**
-	 * Default constructor.
-	 */
-	private new() {
-		super()
-	}
+    /**
+     * Default constructor.
+     */
+    private new() {
+        super()
+    }
 
-	/**
-	 * Constructor with map to copy.
-	 * 
-	 * @param varMap Variables to use for retrieving the options.
-	 */
-	protected new(Map<String, String> varMap) {
-		super()
+    /**
+     * Constructor with map to copy.
+     * 
+     * @param varMap Variables to use for retrieving the options.
+     */
+    protected new(Map<String, String> varMap) {
+        super()
 
-		basePkg = varMap.nullSafe.get(KEY_BASE_PKG)
-		pkg = varMap.nullSafe.get(KEY_PKG)
-		jpa = Boolean.valueOf(varMap.nullSafe.get(KEY_JPA))
-		jaxb = Boolean.valueOf(varMap.nullSafe.get(KEY_JAXB))
-		jaxbElements = Boolean.valueOf(varMap.nullSafe.get(KEY_JAXB_ELEMENTS))
-		jsonb = Boolean.valueOf(varMap.nullSafe.get(KEY_JSONB))
-		jackson = Boolean.valueOf(varMap.nullSafe.get(KEY_JACKSON))
+        basePkg = varMap.nullSafe.get(KEY_BASE_PKG)
+        pkg = varMap.nullSafe.get(KEY_PKG)
+        jpa = Boolean.valueOf(varMap.nullSafe.get(KEY_JPA))
+        jaxb = Boolean.valueOf(varMap.nullSafe.get(KEY_JAXB))
+        jaxbElements = Boolean.valueOf(varMap.nullSafe.get(KEY_JAXB_ELEMENTS))
+        jsonb = Boolean.valueOf(varMap.nullSafe.get(KEY_JSONB))
+        jackson = Boolean.valueOf(varMap.nullSafe.get(KEY_JACKSON))
 
-		val String header = varMap.nullSafe.get(KEY_COPYRIGHT_HEADER)
-		if (header === null) {
-			copyrightHeader = ""
-		}
-		copyrightHeader = header
+        val String header = varMap.nullSafe.get(KEY_COPYRIGHT_HEADER)
+        if (header === null) {
+            copyrightHeader = ""
+        }
+        copyrightHeader = header
 
-	}
+    }
 
-	/**
-	 * Returns the name of the base package to prepend right before the context from the DSL.
-	 * 
-	 * @return Base package name.
-	 */
-	def String getBasePkg() {
-		return basePkg
-	}
+    /**
+     * Returns the name of the base package to prepend right before the context from the DSL.
+     * 
+     * @return Base package name.
+     */
+    def String getBasePkg() {
+        return basePkg
+    }
 
-	/**
-	 * Returns the name of a package to insert right after the context from the DSL.
-	 * 
-	 * @return Package name.
-	 */
-	def String getPkg() {
-		return pkg
-	}
+    /**
+     * Returns the name of a package to insert right after the context from the DSL.
+     * 
+     * @return Package name.
+     */
+    def String getPkg() {
+        return pkg
+    }
 
-	/**
-	 * Determines if JPA annotations should be generated.
-	 * 
-	 * @return {@code true} if JPA annotations should be generated.
-	 */
-	def boolean getJpa() {
-		return jpa
-	}
+    /**
+     * Determines if JPA annotations should be generated.
+     * 
+     * @return {@code true} if JPA annotations should be generated.
+     */
+    def boolean getJpa() {
+        return jpa
+    }
 
-	/**
-	 * Determines if JAX-B annotations should be generated.
-	 * 
-	 * @return {@code true} if XML binding annotations should be generated.
-	 */
-	def boolean getJaxb() {
-		return jaxb
-	}
+    /**
+     * Determines if JAX-B annotations should be generated.
+     * 
+     * @return {@code true} if XML binding annotations should be generated.
+     */
+    def boolean getJaxb() {
+        return jaxb
+    }
 
-	/**
-	 * Determines if '@XmlElement' annotations should be generated instead of '@XmlAttribute' for JAX-B.
-	 * 
-	 * @return {@code true} if element annotations should be generated.
-	 */
-	def boolean getJaxbElements() {
-		return jaxbElements
-	}
+    /**
+     * Determines if '@XmlElement' annotations should be generated instead of '@XmlAttribute' for JAX-B.
+     * 
+     * @return {@code true} if element annotations should be generated.
+     */
+    def boolean getJaxbElements() {
+        return jaxbElements
+    }
 
-	/**
-	 * Determines if JSON-B annotations should be generated.
-	 * 
-	 * @return {@code true} if JSON binding annotations should be generated.
-	 */
-	def boolean getJsonb() {
-		return jsonb
-	}
+    /**
+     * Determines if JSON-B annotations should be generated.
+     * 
+     * @return {@code true} if JSON binding annotations should be generated.
+     */
+    def boolean getJsonb() {
+        return jsonb
+    }
 
-	/**
-	 * Determines if Jackson annotations should be generated.
-	 * 
-	 * @return {@code true} if Jackson annotations should be generated.
-	 */
-	def boolean getJackson() {
-		return jackson
-	}
+    /**
+     * Determines if Jackson annotations should be generated.
+     * 
+     * @return {@code true} if Jackson annotations should be generated.
+     */
+    def boolean getJackson() {
+        return jackson
+    }
 
-	/**
-	 * Returns the copyright header to use.
-	 * 
-	 * @return Copyright header for source files.
-	 */
-	def String getCopyrightHeader() {
-		return copyrightHeader
-	}
+    /**
+     * Returns the copyright header to use.
+     * 
+     * @return Copyright header for source files.
+     */
+    def String getCopyrightHeader() {
+        return copyrightHeader
+    }
 
-	/** 
-	 * Returns a new builder instance. Convenience method to shorten the builder creation in the code.
-	 * 
-	 * @return New builder instance.
-	 */
-	static def Builder builder() {
-		return new Builder()
-	}
+    /** 
+     * Returns a new builder instance. Convenience method to shorten the builder creation in the code.
+     * 
+     * @return New builder instance.
+     */
+    static def Builder builder() {
+        return new Builder()
+    }
 
-	/** 
-	 * Returns an empty instance.
-	 * 
-	 * @return New instance.
-	 */
-	static def GenerateOptions empty() {
-		return new GenerateOptions()
-	}
+    /** 
+     * Returns an empty instance.
+     * 
+     * @return New instance.
+     */
+    static def GenerateOptions empty() {
+        return new GenerateOptions()
+    }
 
-	static class Builder {
+    static class Builder {
 
-		GenerateOptions obj
+        GenerateOptions obj
 
-		new() {
-			super();
-			obj = GenerateOptions.empty()
-		}
+        new() {
+            super();
+            obj = GenerateOptions.empty()
+        }
 
-		new(GenerateOptions other) {
-			this();
-			obj.basePkg = other.basePkg
-			obj.pkg = other.pkg
-			obj.jpa = other.jpa
-			obj.jaxb = other.jaxb
-			obj.jaxbElements = other.jaxbElements
-			obj.jsonb = other.jsonb
-			obj.jackson = other.jackson
-			obj.copyrightHeader = other.copyrightHeader
-		}
+        new(GenerateOptions other) {
+            this();
+            obj.basePkg = other.basePkg
+            obj.pkg = other.pkg
+            obj.jpa = other.jpa
+            obj.jaxb = other.jaxb
+            obj.jaxbElements = other.jaxbElements
+            obj.jsonb = other.jsonb
+            obj.jackson = other.jackson
+            obj.copyrightHeader = other.copyrightHeader
+        }
 
-		def Builder withBasePkg(String basePkg) {
-			obj.basePkg = basePkg
-			return this
-		}
+        def Builder withBasePkg(String basePkg) {
+            obj.basePkg = basePkg
+            return this
+        }
 
-		def Builder withPkg(String pkg) {
-			obj.pkg = pkg
-			return this
-		}
+        def Builder withPkg(String pkg) {
+            obj.pkg = pkg
+            return this
+        }
 
-		def Builder withJpa(boolean jpa) {
-			obj.jpa = jpa
-			return this
-		}
+        def Builder withJpa(boolean jpa) {
+            obj.jpa = jpa
+            return this
+        }
 
-		def Builder withJpa() {
-			obj.jpa = true
-			return this
-		}
+        def Builder withJpa() {
+            obj.jpa = true
+            return this
+        }
 
-		def Builder withJaxb(boolean jaxb) {
-			obj.jaxb = jaxb
-			return this
-		}
+        def Builder withJaxb(boolean jaxb) {
+            obj.jaxb = jaxb
+            return this
+        }
 
-		def Builder withJaxb() {
-			obj.jaxb = true
-			return this
-		}
+        def Builder withJaxb() {
+            obj.jaxb = true
+            return this
+        }
 
-		def Builder withJaxbElements(boolean jaxbElements) {
-			obj.jaxbElements = jaxbElements
-			return this
-		}
+        def Builder withJaxbElements(boolean jaxbElements) {
+            obj.jaxbElements = jaxbElements
+            return this
+        }
 
-		def Builder withJaxbElements() {
-			obj.jaxbElements = true
-			return this
-		}
+        def Builder withJaxbElements() {
+            obj.jaxbElements = true
+            return this
+        }
 
-		def Builder withJsonb(boolean jsonb) {
-			obj.jsonb = jsonb
-			return this
-		}
+        def Builder withJsonb(boolean jsonb) {
+            obj.jsonb = jsonb
+            return this
+        }
 
-		def Builder withJsonb() {
-			obj.jsonb = true
-			return this
-		}
+        def Builder withJsonb() {
+            obj.jsonb = true
+            return this
+        }
 
-		def Builder withJackson(boolean jackson) {
-			obj.jackson = jackson
-			return this
-		}
+        def Builder withJackson(boolean jackson) {
+            obj.jackson = jackson
+            return this
+        }
 
-		def Builder withJackson() {
-			obj.jackson = true
-			return this
-		}
+        def Builder withJackson() {
+            obj.jackson = true
+            return this
+        }
 
-		def Builder withCopyrightHeader(String header) {
-			obj.copyrightHeader = header
-			return this
-		}
+        def Builder withCopyrightHeader(String header) {
+            obj.copyrightHeader = header
+            return this
+        }
 
-		def GenerateOptions create() {
-			val GenerateOptions options = obj
-			obj = GenerateOptions.empty()
-			return options
-		}
+        def GenerateOptions create() {
+            val GenerateOptions options = obj
+            obj = GenerateOptions.empty()
+            return options
+        }
 
-	}
+    }
 
 }

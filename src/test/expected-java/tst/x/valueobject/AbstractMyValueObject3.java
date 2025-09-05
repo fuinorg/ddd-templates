@@ -28,54 +28,54 @@ import org.fuin.objects4j.core.AbstractStringValueObject;
  */
 public abstract class AbstractMyValueObject3 extends AbstractStringValueObject implements ValueObject, Serializable {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	private String a;
-	
-	@NotNull
-	private String b;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected AbstractMyValueObject3() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param a Persistent value A.
-	 * @param b Persistent value B.
-	 */
-	public AbstractMyValueObject3(@NotNull final String a, @NotNull final String b) {
-		super();
-		Contract.requireArgNotNull("a", a);
-		Contract.requireArgNotNull("b", b);
-		
-		this.a = a;
-		this.b = b;
-	}
-	
-	/**
-	 * Returns: Persistent value A.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getA() {
-		return a;
-	}
-	
-	/**
-	 * Returns: Persistent value B.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getB() {
-		return b;
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    private String a;
+    
+    @NotNull
+    private String b;
+    
+    /**
+     * Default constructor.
+     */
+    protected AbstractMyValueObject3() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param a Persistent value A.
+     * @param b Persistent value B.
+     */
+    public AbstractMyValueObject3(@NotNull final String a, @NotNull final String b) {
+        super();
+        Contract.requireArgNotNull("a", a);
+        Contract.requireArgNotNull("b", b);
+        
+        this.a = a;
+        this.b = b;
+    }
+    
+    /**
+     * Returns: Persistent value A.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getA() {
+        return a;
+    }
+    
+    /**
+     * Returns: Persistent value B.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getB() {
+        return b;
+    }
+    
 }

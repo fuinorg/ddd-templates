@@ -18,56 +18,56 @@ import java.util.List
 
 class ServiceArtifactFactory extends AbstractSource<Service> {
 
-	override getModelType() {
-		typeof(Service)
-	}
+    override getModelType() {
+        typeof(Service)
+    }
 
-	override create(Service service, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(Service service, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		if (!(service.eContainer instanceof Namespace)) {
-			// Do not create separate interface file 
-			// for services in constructors or methods
-			return null
-		}
+        if (!(service.eContainer instanceof Namespace)) {
+            // Do not create separate interface file 
+            // for services in constructors or methods
+            return null
+        }
 
-		val className = service.name
-		val Namespace ns = service.namespace;
-		val pkg = ns.asPackage
-		val fqn = pkg + "." + className
-		val filename = fqn.replace('.', '/') + ".java";
+        val className = service.name
+        val Namespace ns = service.namespace;
+        val pkg = ns.asPackage
+        val fqn = pkg + "." + className
+        val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(service.uniqueName, fqn)
+        val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+        refReg.putReference(service.uniqueName, fqn)
 
-		if (preparationRun) {
+        if (preparationRun) {
 
-			// No code generation during preparation phase
-			return null
-		}
+            // No code generation during preparation phase
+            return null
+        }
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports(service)
-		ctx.addReferences(service)
+        val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
+        ctx.addImports(service)
+        ctx.addReferences(service)
 
-		return List.of(new GeneratedArtifact(artifactName, filename,
-			create(ctx, service, pkg, className).toString().getBytes("UTF-8")));
-	}
+        return List.of(new GeneratedArtifact(artifactName, filename,
+            create(ctx, service, pkg, className).toString().getBytes("UTF-8")));
+    }
 
-	def addImports(CodeSnippetContext ctx, Service service) {
-		// Nothing to do
-	}
+    def addImports(CodeSnippetContext ctx, Service service) {
+        // Nothing to do
+    }
 
-	def addReferences(CodeSnippetContext ctx, Service service) {
-		// Nothing to do
-	}
+    def addReferences(CodeSnippetContext ctx, Service service) {
+        // Nothing to do
+    }
 
-	def create(SimpleCodeSnippetContext ctx, Service service, String pkg, String className) {
-		val String src = ''' 
-			«new SrcService(ctx, service)»
-			'''
+    def create(SimpleCodeSnippetContext ctx, Service service, String pkg, String className) {
+        val String src = ''' 
+            «new SrcService(ctx, service)»
+            '''
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
 }

@@ -22,61 +22,61 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 @ExtendWith(InjectionExtension) 
 class SrcHandleEventMethodsTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("x.a.DidSomethingEvent", "a.b.c.DidSomethingEvent")
-		refReg.putReference("x.a.SomethingHappenedEvent", "a.b.c.SomethingHappenedEvent")
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
-		val SrcHandleEventMethods testee = new SrcHandleEventMethods(ctx, aggregate.allEvents)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        refReg.putReference("x.a.DidSomethingEvent", "a.b.c.DidSomethingEvent")
+        refReg.putReference("x.a.SomethingHappenedEvent", "a.b.c.SomethingHappenedEvent")
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
+        val SrcHandleEventMethods testee = new SrcHandleEventMethods(ctx, aggregate.allEvents)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''
-				/**
-				 * Handles: DidSomethingEvent.
-				 *
-				 * @param event Event to handle.
-				 */
-				@Override
-				@ApplyEvent
-				protected final void handle(@NotNull final DidSomethingEvent event) {
-					// TODO Handle event!
-				}
-				
-				/**
-				 * Handles: SomethingHappenedEvent.
-				 *
-				 * @param event Event to handle.
-				 */
-				@Override
-				@ApplyEvent
-				protected final void handle(@NotNull final SomethingHappenedEvent event) {
-					// TODO Handle event!
-				}
-				
-			'''.toString)
-		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull",
-			"org.fuin.ddd4j.core.ApplyEvent", "a.b.c.DidSomethingEvent", "a.b.c.SomethingHappenedEvent")
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''
+                /**
+                 * Handles: DidSomethingEvent.
+                 *
+                 * @param event Event to handle.
+                 */
+                @Override
+                @ApplyEvent
+                protected final void handle(@NotNull final DidSomethingEvent event) {
+                    // TODO Handle event!
+                }
+                
+                /**
+                 * Handles: SomethingHappenedEvent.
+                 *
+                 * @param event Event to handle.
+                 */
+                @Override
+                @ApplyEvent
+                protected final void handle(@NotNull final SomethingHappenedEvent event) {
+                    // TODO Handle event!
+                }
+                
+            '''.toString)
+        assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull",
+            "org.fuin.ddd4j.core.ApplyEvent", "a.b.c.DidSomethingEvent", "a.b.c.SomethingHappenedEvent")
 
-	}
+    }
 
-	def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

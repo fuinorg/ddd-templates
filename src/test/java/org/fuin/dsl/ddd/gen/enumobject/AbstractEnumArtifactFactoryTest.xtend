@@ -27,54 +27,54 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class AbstractEnumArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testAbstractEnumB() {
-		testEnum("EnumB")
-	}
+    @Test
+    def void testAbstractEnumB() {
+        testEnum("EnumB")
+    }
 
-	@Test
-	def void testAbstractEnumD() {
-		testEnum("EnumD")
-	}
+    @Test
+    def void testAbstractEnumD() {
+        testEnum("EnumD")
+    }
 
-	private def testEnum(String enumName) {
+    private def testEnum(String enumName) {
 
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.types.Integer", "java.lang.Integer")
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.types.Integer", "java.lang.Integer")
 
-		val AbstractEnumArtifactFactory testee = createTestee()
-		val EnumObject enu = model.find(typeof(EnumObject), enumName)
+        val AbstractEnumArtifactFactory testee = createTestee()
+        val EnumObject enu = model.find(typeof(EnumObject), enumName)
 
-		// TEST
-		val result = new String(testee.create(enu, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(enu, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/enumobject/Abstract" + enumName + ".java").loadAbstractExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/enumobject/Abstract" + enumName + ".java").loadAbstractExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new AbstractEnumArtifactFactory() {}
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractEnumObject", AbstractEnumArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new AbstractEnumArtifactFactory() {}
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractEnumObject", AbstractEnumArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/enumobject.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/enumobject.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

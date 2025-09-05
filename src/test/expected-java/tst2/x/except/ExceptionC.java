@@ -26,31 +26,31 @@ import org.fuin.objects4j.core.KeyValue;
  */
 public final class ExceptionC extends Exception {
 
-	private static final long serialVersionUID = 1000L;
+    private static final long serialVersionUID = 1000L;
 
-	@NotNull
-	private String a;
-	
-	/**
-	 * Constructs a new instance of the exception.
-	 *
-	 * @param a A.
-	 */
-	public ExceptionC(@NotNull final String a) {
-		super(KeyValue.replace("Exception C: ${a}",  new KeyValue("a", a)));
-		Contract.requireArgNotNull("a", a);
-		
-		this.a = a;
-	}
+    @NotNull
+    private String a;
+    
+    /**
+     * Constructs a new instance of the exception.
+     *
+     * @param a A.
+     */
+    public ExceptionC(@NotNull final String a) {
+        super(KeyValue.replace("Exception C: ${a}",  new KeyValue("a", a)));
+        Contract.requireArgNotNull("a", a);
+        
+        this.a = a;
+    }
 
-	/**
-	 * Returns: A.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getA() {
-		return a;
-	}
-	
+    /**
+     * Returns: A.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getA() {
+        return a;
+    }
+    
 }

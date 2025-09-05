@@ -13,35 +13,35 @@ import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
  */
 class SrcGetter implements CodeSnippet {
 
-	val CodeSnippetContext ctx
-	val String modifiers
-	val Variable variable
+    val CodeSnippetContext ctx
+    val String modifiers
+    val Variable variable
 
-	new(CodeSnippetContext ctx, GenerateOptions options, String modifiers, Variable variable) {
-		this.ctx = ctx
-		this.modifiers = modifiers
-		this.variable = variable
-		
-		if (variable.nullable === null) {
-			ctx.requiresImport("jakarta.validation.constraints.NotNull")		
-		} else {
-			ctx.requiresImport("jakarta.annotation.Nullable")		
-		}
-		addRequiredReferences(variable, ctx)
-	}
+    new(CodeSnippetContext ctx, GenerateOptions options, String modifiers, Variable variable) {
+        this.ctx = ctx
+        this.modifiers = modifiers
+        this.variable = variable
+        
+        if (variable.nullable === null) {
+            ctx.requiresImport("jakarta.validation.constraints.NotNull")        
+        } else {
+            ctx.requiresImport("jakarta.annotation.Nullable")        
+        }
+        addRequiredReferences(variable, ctx)
+    }
 
-	override toString() {
-		'''	
-			/**
-			 * Returns: «variable.superDoc.text»
-			 *
-			 * @return Current value.
-			 */
-			«IF variable.nullable === null»@NotNull«ELSE»@Nullable«ENDIF»
-			«modifiers» «variable.type(ctx)» get«variable.name.toFirstUpper»() {
-				return «variable.name»;
-			}
-		'''
-	}
+    override toString() {
+        '''    
+            /**
+             * Returns: «variable.superDoc.text»
+             *
+             * @return Current value.
+             */
+            «IF variable.nullable === null»@NotNull«ELSE»@Nullable«ENDIF»
+            «modifiers» «variable.type(ctx)» get«variable.name.toFirstUpper»() {
+                return «variable.name»;
+            }
+        '''
+    }
 
 }

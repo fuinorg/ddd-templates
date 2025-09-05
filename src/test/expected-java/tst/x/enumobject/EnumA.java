@@ -20,28 +20,28 @@ package tst.x.enumobject;
 
 /** Enumeration type A - No variables. */
 public final class EnumA {
-	
-	/** First. */
-	public static final EnumA A = new EnumA();
-	
-	/** Second. */
-	public static final EnumA B = new EnumA();
-	
-	/** Third. */
-	public static final EnumA C = new EnumA();
-	
-	/** All instances. */
-	public static final EnumA[] ALL = new EnumA[] {
-		A, B, C
-	};
-	
-	/** Valid instances. */
-	public static final EnumA[] VALID = new EnumA[] {
-		A, B, C
-	};
-	
-	/** Deprecated instances. */
-	public static final EnumA[] DEPRECTAED = new EnumA[] {
-	};
-	
+    
+    /** First. */
+    public static final EnumA A = new EnumA();
+    
+    /** Second. */
+    public static final EnumA B = new EnumA();
+    
+    /** Third. */
+    public static final EnumA C = new EnumA();
+    
+    /** All instances. */
+    public static final List<EnumA> ALL = List.of(
+        A, B, C
+    );
+    
+    /** Valid instances. */
+    public static final List<EnumA> VALID = List.of(
+        A, B, C
+    );
+    
+    /** Deprecated instances. */
+    public static final List<EnumA> DEPRECATED = List.of(
+    );
+    
 }

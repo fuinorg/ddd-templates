@@ -27,51 +27,51 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class SimpleStringValueObjectArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject
-	ValidationTestHelper validationTester
+    @Inject
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreateMyValueObject() {
+    @Test
+    def void testCreateMyValueObject() {
 
-		// PREPARE
-		val name = "MySimpleStringValueObject"
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.valueobject." + name + "Converter",
-			EXAMPLES_CONCRETE + ".x.valueobject." + name + "Converter")
+        // PREPARE
+        val name = "MySimpleStringValueObject"
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.valueobject." + name + "Converter",
+            EXAMPLES_CONCRETE + ".x.valueobject." + name + "Converter")
 
-		val SimpleStringValueObjectArtifactFactory testee = createTestee()
-		val ValueObject vo = model.find(typeof(ValueObject), name)
+        val SimpleStringValueObjectArtifactFactory testee = createTestee()
+        val ValueObject vo = model.find(typeof(ValueObject), name)
 
-		// TEST
-		val result = new String(testee.create(vo, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(vo, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/valueobject/" + name + ".java").loadConcreteExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/valueobject/" + name + ".java").loadConcreteExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new SimpleStringValueObjectArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("vo", SimpleStringValueObjectArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.addVariable(new Variable(GenerateOptions.KEY_JPA, "true"))
-		config.addVariable(new Variable(GenerateOptions.KEY_JAXB, "true"))
-		config.addVariable(new Variable(GenerateOptions.KEY_JSONB, "true"))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new SimpleStringValueObjectArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("vo", SimpleStringValueObjectArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.addVariable(new Variable(GenerateOptions.KEY_JPA, "true"))
+        config.addVariable(new Variable(GenerateOptions.KEY_JAXB, "true"))
+        config.addVariable(new Variable(GenerateOptions.KEY_JSONB, "true"))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/valueobject.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/valueobject.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

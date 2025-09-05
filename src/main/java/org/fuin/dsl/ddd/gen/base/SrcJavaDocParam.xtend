@@ -8,23 +8,23 @@ import jakarta.annotation.Nullable
  */
 class SrcJavaDocParam {
 
-	val String name;
+    val String name;
 
-	val String doc;
+    val String doc;
 
-	/**
-	 * Constructor with mandatory data.
-	 * 
-	 * @param name Parameter name.
-	 * @param doc Text for the comment.
-	 */
-	new(@NotNull String name, @Nullable String doc) {
-		this.name = name
-		this.doc = doc
-	}
+    /**
+     * Constructor with mandatory data.
+     * 
+     * @param name Parameter name.
+     * @param doc Text for the comment.
+     */
+    new(@NotNull String name, @Nullable String doc) {
+        this.name = name
+        this.doc = doc
+    }
 
-	override toString() {
-		''' * @param «name» «doc»'''
-	}
+    override toString() {
+        ''' * @param «name» «doc»'''
+    }
 
 }

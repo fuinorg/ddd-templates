@@ -25,67 +25,71 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensio
 import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import java.util.List
+import java.io.Serial
 
 class ValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
-	override getModelType() {
-		typeof(ValueObject)
-	}
+    override getModelType() {
+        typeof(ValueObject)
+    }
 
-	override create(ValueObject valueObject, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(ValueObject valueObject, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val className = valueObject.name
-		val Namespace ns = valueObject.namespace;
-		val pkg = ns.asPackage
-		val fqn = pkg + "." + className
-		val filename = fqn.replace('.', '/') + ".java";
+        val className = valueObject.name
+        val Namespace ns = valueObject.namespace;
+        val pkg = ns.asPackage
+        val fqn = pkg + "." + className
+        val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(valueObject.uniqueName, fqn)
+        val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+        refReg.putReference(valueObject.uniqueName, fqn)
 
-		if (preparationRun) {
+        if (preparationRun) {
 
-			// No code generation during preparation phase
-			return null
-		}
+            // No code generation during preparation phase
+            return null
+        }
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports(valueObject)
+        val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
+        ctx.addImports(valueObject)
 
-		return List.of(new GeneratedArtifact(artifactName, filename,
-			create(ctx, ns, valueObject, pkg, className).toString().getBytes("UTF-8")));
-	}
+        return List.of(new GeneratedArtifact(artifactName, filename,
+            create(ctx, ns, valueObject, pkg, className).toString().getBytes("UTF-8")));
+    }
 
-	def addImports(CodeSnippetContext ctx, ValueObject vo) {
-		ctx.requiresImport(Serializable.name)
-		ctx.requiresImport(org.fuin.objects4j.common.ValueObject.name)
-	}
+    def addImports(CodeSnippetContext ctx, ValueObject vo) {
+    	ctx.requiresImport(Serial.name)
+        ctx.requiresImport(Serializable.name)
+        ctx.requiresImport(org.fuin.objects4j.common.ValueObject.name)
+    }
 
-	def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className) {
-		val GenerateOptions localOptions = new GenerateOptions.Builder()
-			.withJaxb(vo.base === null && options.jaxb)
-			.withJaxbElements(options.jaxbElements)
-			.withJsonb((vo.base === null && options.jsonb))
-			.create();
-		val String src = ''' 
-			«new SrcJavaDocType(vo)»
-			«new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
-			«IF vo.base === null»
-				«new SrcXmlRootElement(ctx, vo)»
-			«ENDIF»
-			public final class «className» «new SrcVoBaseOptionalExtends(ctx, vo.base)»implements ValueObject, Serializable {
-			
-				private static final long serialVersionUID = 1000L;
-				
-				«new SrcVarsDecl(ctx, "private", localOptions, vo)»
-				«new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), vo, false)»
-				«new SrcGetters(ctx, GenerateOptions.empty(), "public final", vo.attributes)»
-				«new SrcVoBaseMethods(ctx, vo)»
-			}
-		'''
+    def create(SimpleCodeSnippetContext ctx, Namespace ns, ValueObject vo, String pkg, String className) {
+        val GenerateOptions localOptions = new GenerateOptions.Builder()
+            .withJaxb(vo.base === null && options.jaxb)
+            .withJaxbElements(options.jaxbElements)
+            .withJsonb((vo.base === null && options.jsonb))
+            .withJackson((vo.base === null && options.jackson))
+            .create();
+        val String src = ''' 
+            «new SrcJavaDocType(vo)»
+            «new SrcMetaAnnotations(ctx, vo.metaInfo, vo.context.name, ns.name + "." + className)»
+            «IF vo.base === null && options.jaxb»
+                «new SrcXmlRootElement(ctx, vo)»
+            «ENDIF»
+            public final class «className» «new SrcVoBaseOptionalExtends(ctx, vo.base)»implements ValueObject, Serializable {
+            
+                @Serial
+                private static final long serialVersionUID = 1000L;
+                
+                «new SrcVarsDecl(ctx, "private", localOptions, vo)»
+                «new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), vo, false)»
+                «new SrcGetters(ctx, GenerateOptions.empty(), "public final", vo.attributes)»
+                «new SrcVoBaseMethods(ctx, vo)»
+            }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
 }

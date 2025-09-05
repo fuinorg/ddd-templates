@@ -9,23 +9,23 @@ import static org.assertj.core.api.Assertions.*
 
 class SrcXmlElementTest {
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val variable = CqrsDslFactory.eINSTANCE.createVariable
-		variable.setName("AbcDefGhi")
-		val SrcXmlElement testee = new SrcXmlElement(ctx, variable)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val variable = CqrsDslFactory.eINSTANCE.createVariable
+        variable.setName("AbcDefGhi")
+        val SrcXmlElement testee = new SrcXmlElement(ctx, variable)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo('''@XmlElement(name = "abc-def-ghi")'''.toString)
-		assertThat(ctx.imports).contains("jakarta.xml.bind.annotation.XmlElement")
+        // VERIFY
+        assertThat(result).isEqualTo('''@XmlElement(name = "abc-def-ghi")'''.toString)
+        assertThat(ctx.imports).contains("jakarta.xml.bind.annotation.XmlElement")
 
-	}
+    }
 
 }

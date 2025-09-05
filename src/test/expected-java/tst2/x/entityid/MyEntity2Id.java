@@ -31,56 +31,56 @@ import org.fuin.objects4j.common.ValueObject;
 @Immutable
 public final class MyEntity2Id implements EntityId, ValueObject {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	private String id;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected MyEntity2Id() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param id Persistent value.
-	 */
-	public MyEntity2Id(@NotNull final String id) {
-		super();
-		Contract.requireArgNotNull("id", id);
-		
-		this.id = id;
-	}
-	
-	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getId() {
-		return id;
-	}
-	
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyEntity2");
-	
-	@Override
-	public final EntityType getType() {
-		return TYPE;
-	}
-	
-	@Override
-	public final String asTypedString() {
-		return TYPE + " " + asString();
-	}
-	
-	@Override
-	public final String asString() {
-		return "" + getId();
-	}
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    private String id;
+    
+    /**
+     * Default constructor.
+     */
+    protected MyEntity2Id() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param id Persistent value.
+     */
+    public MyEntity2Id(@NotNull final String id) {
+        super();
+        Contract.requireArgNotNull("id", id);
+        
+        this.id = id;
+    }
+    
+    /**
+     * Returns: Persistent value.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getId() {
+        return id;
+    }
+    
+    /** Name that identifies the entity uniquely within the context. */    
+    public static final EntityType TYPE = new StringBasedEntityType("MyEntity2");
+    
+    @Override
+    public final EntityType getType() {
+        return TYPE;
+    }
+    
+    @Override
+    public final String asTypedString() {
+        return TYPE + " " + asString();
+    }
+    
+    @Override
+    public final String asString() {
+        return "" + getId();
+    }
 
 }

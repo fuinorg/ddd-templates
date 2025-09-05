@@ -26,53 +26,53 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class CtxEventRegistryArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val String name = "XEventRegistry"
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.ev.EventA", EXAMPLES_CONCRETE + ".x.ev.EventA");
-		refReg.putReference("x.ev.EventB", EXAMPLES_CONCRETE + ".x.ev.EventB");
-		refReg.putReference("x.ev.EventC", EXAMPLES_CONCRETE + ".x.ev.EventC");
-		refReg.putReference("x.ev.EventD", EXAMPLES_CONCRETE + ".x.ev.EventD");
-		refReg.putReference("x.ev.EventE", EXAMPLES_CONCRETE + ".x.ev.EventE");
+        // PREPARE
+        val String name = "XEventRegistry"
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.ev.EventA", EXAMPLES_CONCRETE + ".x.ev.EventA");
+        refReg.putReference("x.ev.EventB", EXAMPLES_CONCRETE + ".x.ev.EventB");
+        refReg.putReference("x.ev.EventC", EXAMPLES_CONCRETE + ".x.ev.EventC");
+        refReg.putReference("x.ev.EventD", EXAMPLES_CONCRETE + ".x.ev.EventD");
+        refReg.putReference("x.ev.EventE", EXAMPLES_CONCRETE + ".x.ev.EventE");
 
-		val CtxEventRegistryArtifactFactory testee = createTestee()
-		val ResourceSet resourceSet = model()
+        val CtxEventRegistryArtifactFactory testee = createTestee()
+        val ResourceSet resourceSet = model()
 
-		// TEST
-		val result = new String(testee.create(resourceSet, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(resourceSet, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/resourceset/" + name + ".java").loadConcreteExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/resourceset/" + name + ".java").loadConcreteExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new CtxEventRegistryArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("ctxEventRegistry",
-			CtxEventRegistryArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(GenerateOptions.KEY_PKG, "resourceset"))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new CtxEventRegistryArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("ctxEventRegistry",
+            CtxEventRegistryArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+        config.addVariable(new Variable(GenerateOptions.KEY_PKG, "resourceset"))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/event.ddd")))
-		validationTester.assertNoIssues(model)
-		return model.eResource.resourceSet
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/event.ddd")))
+        validationTester.assertNoIssues(model)
+        return model.eResource.resourceSet
+    }
 
 }

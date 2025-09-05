@@ -22,64 +22,64 @@ import static org.assertj.core.api.Assertions.*
 @ExtendWith(InjectionExtension) 
 class SrcInvokeGetterTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testNullObjName() {
+    @Test
+    def void testNullObjName() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val codeSnippetContext = new SimpleCodeSnippetContext(refReg);
-		val SrcInvokeGetter testee = createTestee(codeSnippetContext, "ctx", "ns", "MyValueObject", null, "a")
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val codeSnippetContext = new SimpleCodeSnippetContext(refReg);
+        val SrcInvokeGetter testee = createTestee(codeSnippetContext, "ctx", "ns", "MyValueObject", null, "a")
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo('''getA()'''.toString)
-		assertThat(codeSnippetContext.imports).empty
+        // VERIFY
+        assertThat(result).isEqualTo('''getA()'''.toString)
+        assertThat(codeSnippetContext.imports).empty
 
-	}
+    }
 
-	@Test
-	def void testWithObjName() {
+    @Test
+    def void testWithObjName() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val codeSnippetContext = new SimpleCodeSnippetContext(refReg);
-		val SrcInvokeGetter testee = createTestee(codeSnippetContext, "ctx", "ns", "MyValueObject", "x", "a")
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val codeSnippetContext = new SimpleCodeSnippetContext(refReg);
+        val SrcInvokeGetter testee = createTestee(codeSnippetContext, "ctx", "ns", "MyValueObject", "x", "a")
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo('''x.getA()'''.toString)
-		assertThat(codeSnippetContext.imports).empty
+        // VERIFY
+        assertThat(result).isEqualTo('''x.getA()'''.toString)
+        assertThat(codeSnippetContext.imports).empty
 
-	}
+    }
 
-	private def SrcInvokeGetter createTestee(CodeSnippetContext codeSnippetContext, String ctx, String ns, String type,
-		String objName, String varName) {
-		val model = parser.parse(
-			'''
-				context «ctx» {
-					namespace «ns» {
-						value-object «type» {
-						}
-					}	 
-				}
-			'''
-		)
-		validationTester.assertNoIssues(model)
-		val ValueObject valueObject = model.contexts.get(0).namespaces.get(0).elements.get(0) as ValueObject
-		val Variable variable = CqrsDslFactory.eINSTANCE.createVariable()
-		variable.setName(varName)
-		variable.setType(valueObject)
-		return new SrcInvokeGetter(codeSnippetContext, objName, variable)
-	}
+    private def SrcInvokeGetter createTestee(CodeSnippetContext codeSnippetContext, String ctx, String ns, String type,
+        String objName, String varName) {
+        val model = parser.parse(
+            '''
+                context «ctx» {
+                    namespace «ns» {
+                        value-object «type» {
+                        }
+                    }     
+                }
+            '''
+        )
+        validationTester.assertNoIssues(model)
+        val ValueObject valueObject = model.contexts.get(0).namespaces.get(0).elements.get(0) as ValueObject
+        val Variable variable = CqrsDslFactory.eINSTANCE.createVariable()
+        variable.setName(varName)
+        variable.setType(valueObject)
+        return new SrcInvokeGetter(codeSnippetContext, objName, variable)
+    }
 
 }

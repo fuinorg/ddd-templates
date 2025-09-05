@@ -15,26 +15,26 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
  */
 class SrcService implements CodeSnippet {
 
-	val CodeSnippetContext ctx
-	val Service service
+    val CodeSnippetContext ctx
+    val Service service
 
-	new(CodeSnippetContext ctx, Service service) {
-		this.ctx = ctx
-		this.service = service
-	}
+    new(CodeSnippetContext ctx, Service service) {
+        this.ctx = ctx
+        this.service = service
+    }
 
-	override toString() {
-		'''	
-		«new SrcJavaDocType(service)»
-		public interface «service.name» {
-			
-			«FOR method : service.methods.nullSafe»
-				«new SrcJavaDocMethod(ctx, method).toString»
-				«new SrcMethodSignature(ctx, "public", false, GenerateOptions.empty(), method).toString»;
-				
-			«ENDFOR»
-		}
-		'''
-	}
+    override toString() {
+        '''    
+        «new SrcJavaDocType(service)»
+        public interface «service.name» {
+            
+            «FOR method : service.methods.nullSafe»
+                «new SrcJavaDocMethod(ctx, method).toString»
+                «new SrcMethodSignature(ctx, "public", false, GenerateOptions.empty(), method).toString»;
+                
+            «ENDFOR»
+        }
+        '''
+    }
 
 }

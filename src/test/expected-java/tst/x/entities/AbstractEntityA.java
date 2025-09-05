@@ -27,30 +27,30 @@ import org.fuin.objects4j.common.Contract;
  */
 public abstract class AbstractEntityA extends AbstractEntity<AggregateXId, AggregateX, EntityAId> {
 
-	@NotNull
-	private EntityAId id;
+    @NotNull
+    private EntityAId id;
 
-	/**
-	 * Constructor with mandatory data.
-	 *
-	 * @param rootAggregate The root aggregate of this entity.
-	 * @param id Unique entity identifier.
-	 */
-	protected AbstractEntityA(@NotNull final AggregateX rootAggregate, @NotNull final EntityAId id) {
-		super(rootAggregate);
-		Contract.requireArgNotNull("id", id);
-		
-		this.id = id;
-	}
-	
-	@Override
-	public final EntityType getType() {
-		return EntityAId.TYPE;
-	}
+    /**
+     * Constructor with mandatory data.
+     *
+     * @param rootAggregate The root aggregate of this entity.
+     * @param id Unique entity identifier.
+     */
+    protected AbstractEntityA(@NotNull final AggregateX rootAggregate, @NotNull final EntityAId id) {
+        super(rootAggregate);
+        Contract.requireArgNotNull("id", id);
+        
+        this.id = id;
+    }
+    
+    @Override
+    public final EntityType getType() {
+        return EntityAId.TYPE;
+    }
 
-	@Override
-	public final EntityAId getId() {
-		return id;
-	}
+    @Override
+    public final EntityAId getId() {
+        return id;
+    }
 
 }

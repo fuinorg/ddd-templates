@@ -10,20 +10,20 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
  */
 class SrcInvokeGetter implements CodeSnippet {
 
-	val String objName
-	val Variable variable
+    val String objName
+    val Variable variable
 
-	new(CodeSnippetContext ctx, String objName, Variable variable) {
-		this.objName = objName
-		this.variable = variable
-	}
+    new(CodeSnippetContext ctx, String objName, Variable variable) {
+        this.objName = objName
+        this.variable = variable
+    }
 
-	override toString() {
-		if (objName === null) {
-			'''get«variable.name.toFirstUpper»()'''
-		} else {
-			'''«objName».get«variable.name.toFirstUpper»()'''
-		}
-	}
+    override toString() {
+        if (objName === null) {
+            '''get«variable.name.toFirstUpper»()'''
+        } else {
+            '''«objName».get«variable.name.toFirstUpper»()'''
+        }
+    }
 
 }

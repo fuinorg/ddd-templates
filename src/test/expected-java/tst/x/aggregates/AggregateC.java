@@ -25,35 +25,35 @@ import org.fuin.ddd4j.core.ApplyEvent;
  */
 public final class AggregateC extends AbstractAggregateC {
 
-	/**
-	 * Default constructor for loading the aggregate root from history. 
-	 */
-	public AggregateC() {
-		super();
-	}
+    /**
+     * Default constructor for loading the aggregate root from history. 
+     */
+    public AggregateC() {
+        super();
+    }
 
-	/**
-	 * Creates the entity.
-	 *
-	 * @param a Variable A.
-	 * @param b Variable B.
-	 *
-	 * @throws AnyConstraintViolatedException The constraint was violated.
-	 */
-	public AggregateC(@NotNull final String a, @NotNull final Integer b) throws AnyConstraintViolatedException {
-		super();
-		// TODO Implement!
-	}
-	
-	/**
-	 * Handles: AggregateCCreatedEvent.
-	 *
-	 * @param event Event to handle.
-	 */
-	@Override
-	@ApplyEvent
-	protected final void handle(@NotNull final AggregateCCreatedEvent event) {
-		// TODO Handle event!
-	}
-	
+    /**
+     * Creates the entity.
+     *
+     * @param a Variable A.
+     * @param b Variable B.
+     *
+     * @throws AnyConstraintViolatedException The constraint was violated.
+     */
+    public AggregateC(@NotNull final String a, @NotNull final Integer b) throws AnyConstraintViolatedException {
+        super();
+        // TODO Implement!
+    }
+    
+    /**
+     * Handles: AggregateCCreatedEvent.
+     *
+     * @param event Event to handle.
+     */
+    @Override
+    @ApplyEvent
+    protected final void handle(@NotNull final AggregateCCreatedEvent event) {
+        // TODO Handle event!
+    }
+    
 }

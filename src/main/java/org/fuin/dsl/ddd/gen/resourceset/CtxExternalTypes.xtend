@@ -16,6 +16,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import java.util.Collection
 import java.util.List
 import java.util.Set
+import java.util.Collections
 
 /**
  * Registers a set of external types. It does NOT create any source code.
@@ -58,56 +59,56 @@ import java.util.Set
  */
 class CtxExternalTypes extends AbstractSource<ResourceSet> {
 
-	override getModelType() {
-		typeof(ResourceSet)
-	}
+    override getModelType() {
+        typeof(ResourceSet)
+    }
 
-	override isIncremental() {
-		false
-	}
+    override isIncremental() {
+        false
+    }
 
-	override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val pkg = getVar("namespace", "types")
-		val dateType = getVar(pkg + ".Date", "java.time.LocalDate")
-		val timeType = getVar(pkg + ".Time", "java.time.LocalDateTime")
-		val dateTimeType = getVar(pkg + ".Timestamp", "java.time.ZonedDateTime")
-		val uuidType = getVar(pkg + ".UUID", UUID.name)
+        val pkg = getVar("namespace", "types")
+        val dateType = getVar(pkg + ".Date", "java.time.LocalDate")
+        val timeType = getVar(pkg + ".Time", "java.time.LocalDateTime")
+        val dateTimeType = getVar(pkg + ".Timestamp", "java.time.ZonedDateTime")
+        val uuidType = getVar(pkg + ".UUID", UUID.name)
 
-		// Just registers the external types
-		val Iterator<Context> iter = resourceSet.getAllContents().filter(typeof(Context))
-		while (iter.hasNext) {
-			val Context ctx = iter.next
-			val name = ctx.name
-			val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-			refReg.putReference(name + "." + pkg + ".Byte", Byte.name)
-			refReg.putReference(name + "." + pkg + ".Short", Short.name)
-			refReg.putReference(name + "." + pkg + ".Integer", Integer.name)
-			refReg.putReference(name + "." + pkg + ".Long", Long.name)
-			refReg.putReference(name + "." + pkg + ".Float", Float.name)
-			refReg.putReference(name + "." + pkg + ".Double", Double.name)
-			refReg.putReference(name + "." + pkg + ".Boolean", Boolean.name)
-			refReg.putReference(name + "." + pkg + ".Character", Character.name)
-			refReg.putReference(name + "." + pkg + ".String", String.name)
-			refReg.putReference(name + "." + pkg + ".Date", dateType)
-			refReg.putReference(name + "." + pkg + ".Time", timeType)
-			refReg.putReference(name + "." + pkg + ".Timestamp", dateTimeType)
-			refReg.putReference(name + "." + pkg + ".UUID", uuidType)
-			refReg.putReference(name + "." + pkg + ".Currency", Currency.name)
-			refReg.putReference(name + "." + pkg + ".BigDecimal", BigDecimal.name)
-			refReg.putReference(name + "." + pkg + ".Locale", Locale.name)
-			refReg.putReference(name + "." + pkg + ".Object", Object.name)
-			refReg.putReference(name + "." + pkg + ".EntityIdPath", "org.fuin.ddd4j.core.EntityIdPath")
-			refReg.putReference(name + "." + pkg + ".Collection", Collection.name)
-			refReg.putReference(name + "." + pkg + ".List", List.name)
-			refReg.putReference(name + "." + pkg + ".Map", Map.name)
-			refReg.putReference(name + "." + pkg + ".Set", Set.name)
-			
-		}
+        // Just registers the external types
+        val Iterator<Context> iter = resourceSet.getAllContents().filter(typeof(Context))
+        while (iter.hasNext) {
+            val Context ctx = iter.next
+            val name = ctx.name
+            val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+            refReg.putReference(name + "." + pkg + ".Byte", Byte.name)
+            refReg.putReference(name + "." + pkg + ".Short", Short.name)
+            refReg.putReference(name + "." + pkg + ".Integer", Integer.name)
+            refReg.putReference(name + "." + pkg + ".Long", Long.name)
+            refReg.putReference(name + "." + pkg + ".Float", Float.name)
+            refReg.putReference(name + "." + pkg + ".Double", Double.name)
+            refReg.putReference(name + "." + pkg + ".Boolean", Boolean.name)
+            refReg.putReference(name + "." + pkg + ".Character", Character.name)
+            refReg.putReference(name + "." + pkg + ".String", String.name)
+            refReg.putReference(name + "." + pkg + ".Date", dateType)
+            refReg.putReference(name + "." + pkg + ".Time", timeType)
+            refReg.putReference(name + "." + pkg + ".Timestamp", dateTimeType)
+            refReg.putReference(name + "." + pkg + ".UUID", uuidType)
+            refReg.putReference(name + "." + pkg + ".Currency", Currency.name)
+            refReg.putReference(name + "." + pkg + ".BigDecimal", BigDecimal.name)
+            refReg.putReference(name + "." + pkg + ".Locale", Locale.name)
+            refReg.putReference(name + "." + pkg + ".Object", Object.name)
+            refReg.putReference(name + "." + pkg + ".EntityIdPath", "org.fuin.ddd4j.core.EntityIdPath")
+            refReg.putReference(name + "." + pkg + ".Collection", Collection.name)
+            refReg.putReference(name + "." + pkg + ".List", List.name)
+            refReg.putReference(name + "." + pkg + ".Map", Map.name)
+            refReg.putReference(name + "." + pkg + ".Set", Set.name)
+            
+        }
 
-		// Will never produce anything
-		return null
+        // Will never produce anything
+        return Collections.emptyList();
 
-	}
+    }
 
 }

@@ -21,115 +21,115 @@ import java.util.List
 
 class ValidatorArtifactFactory extends AbstractSource<Constraint> {
 
-	override getModelType() {
-		typeof(Constraint)
-	}
+    override getModelType() {
+        typeof(Constraint)
+    }
 
-	override create(Constraint constraint, Map<String, Object> context, boolean preparationRun) throws GenerateException {
-		if (constraint.input === null || constraint.input.size > 1) {
-			// Do not generate something in case there is no base type or more than one base type
-			return null;
-		}
+    override create(Constraint constraint, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+        if (constraint.input === null || constraint.input.size > 1) {
+            // Do not generate something in case there is no base type or more than one base type
+            return null;
+        }
 
-		val className = constraint.getName() + "Validator"
-		val Namespace ns = constraint.eContainer() as Namespace;
-		val pkg = ns.asPackage
-		val fqn = pkg + "." + className
-		val filename = fqn.replace('.', '/') + ".java";
-		
-		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(constraint.uniqueName + "Validator", fqn)
+        val className = constraint.getName() + "Validator"
+        val Namespace ns = constraint.eContainer() as Namespace;
+        val pkg = ns.asPackage
+        val fqn = pkg + "." + className
+        val filename = fqn.replace('.', '/') + ".java";
+        
+        val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+        refReg.putReference(constraint.uniqueName + "Validator", fqn)
 
-		if (preparationRun) {
+        if (preparationRun) {
 
-			// No code generation during preparation phase
-			return null
-		}
+            // No code generation during preparation phase
+            return null
+        }
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports(constraint)
-		ctx.addReferences(constraint)
+        val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
+        ctx.addImports(constraint)
+        ctx.addReferences(constraint)
 
-		return List.of(new GeneratedArtifact(artifactName, filename,
-			create(ctx, constraint, pkg, className).toString().getBytes("UTF-8")));
-	}
+        return List.of(new GeneratedArtifact(artifactName, filename,
+            create(ctx, constraint, pkg, className).toString().getBytes("UTF-8")));
+    }
 
-	def addImports(CodeSnippetContext ctx, Constraint constraint) {
-		ctx.requiresImport("jakarta.validation.ConstraintValidator")
-		ctx.requiresImport("jakarta.validation.ConstraintValidatorContext")
-		if ((constraint.exception !== null) && (constraint.input.iterator.next instanceof AbstractVO)) {
-			ctx.requiresImport("jakarta.validation.Validator")
-		}
-	}
+    def addImports(CodeSnippetContext ctx, Constraint constraint) {
+        ctx.requiresImport("jakarta.validation.ConstraintValidator")
+        ctx.requiresImport("jakarta.validation.ConstraintValidatorContext")
+        if ((constraint.exception !== null) && (constraint.input.iterator.next instanceof AbstractVO)) {
+            ctx.requiresImport("jakarta.validation.Validator")
+        }
+    }
 
-	def addReferences(CodeSnippetContext ctx, Constraint constraint) {
-		ctx.requiresReference(constraint.uniqueName) 
-		ctx.requiresReference(constraint.input.iterator.next.uniqueName) 
-		if (constraint.exception !== null) {
-			ctx.requiresReference(constraint.exception.uniqueName)
-		}
-	}
+    def addReferences(CodeSnippetContext ctx, Constraint constraint) {
+        ctx.requiresReference(constraint.uniqueName) 
+        ctx.requiresReference(constraint.input.iterator.next.uniqueName) 
+        if (constraint.exception !== null) {
+            ctx.requiresReference(constraint.exception.uniqueName)
+        }
+    }
 
-	def create(SimpleCodeSnippetContext ctx, Constraint c, String pkg, String className) {
+    def create(SimpleCodeSnippetContext ctx, Constraint c, String pkg, String className) {
 
-		val first = c.input.iterator.next;
-		val targetName = first.name
-		val variables = first.attributes
+        val first = c.input.iterator.next;
+        val targetName = first.name
+        val variables = first.attributes
 
-		val String src = ''' 
-			/** «c.doc.text» */
-			// CHECKSTYLE:OFF:LineLength
-			public final class «className» implements ConstraintValidator<«c.name», «targetName»> {
-				// CHECKSTYLE:ON:LineLength
-			
-				@Override
-				public final void initialize(final «c.name» annotation) {
-					// TODO Implement!
-				}
-			
-				@Override
-				public final boolean isValid(final «targetName» object, final ConstraintValidatorContext ctx) {
-					// TODO Implement!
-					return true;
-				}
-			
-				«IF c.exception !== null»
-					«IF c.input.iterator.next instanceof AbstractVO»
-					/**
-					 * Verifies that the argument is valid an throws an exception otherwise.
-					 * 
-					 * @param validator Validator to use.
-					 * @param obj Object to validate.
-					 * 
-					 * @throws «c.exception.name» The constraint was violated.
-					 */
-					public static void requireValid(final Validator validator, final «targetName» obj) throws «c.exception.name» {
-						if (validator.validate(obj).size() > 0) {
-							throw new «c.exception.name»(«FOR v : variables SEPARATOR ', '»«new SrcInvokeGetter(ctx, "obj", v).toString»«ENDFOR»);
-						}
-					}
-					«ELSE»
-					/**
-					 * Verifies that the argument is valid an throws an exception otherwise.
-					 * 
-					 * @param obj Object to validate.
-					 * 
-					 * @throws «c.exception.name» The constraint was violated.
-					 */
-					public static void requireValid(final «targetName» obj) throws «c.exception.name» {
-						// TODO Implement!
-						// if ( ... ) {
-						//		throw new «c.exception.name»();
-						// }
-					}
-					«ENDIF»
+        val String src = ''' 
+            /** «c.doc.text» */
+            // CHECKSTYLE:OFF:LineLength
+            public final class «className» implements ConstraintValidator<«c.name», «targetName»> {
+                // CHECKSTYLE:ON:LineLength
+            
+                @Override
+                public final void initialize(final «c.name» annotation) {
+                    // TODO Implement!
+                }
+            
+                @Override
+                public final boolean isValid(final «targetName» object, final ConstraintValidatorContext ctx) {
+                    // TODO Implement!
+                    return true;
+                }
+            
+                «IF c.exception !== null»
+                    «IF c.input.iterator.next instanceof AbstractVO»
+                    /**
+                     * Verifies that the argument is valid an throws an exception otherwise.
+                     * 
+                     * @param validator Validator to use.
+                     * @param obj Object to validate.
+                     * 
+                     * @throws «c.exception.name» The constraint was violated.
+                     */
+                    public static void requireValid(final Validator validator, final «targetName» obj) throws «c.exception.name» {
+                        if (validator.validate(obj).size() > 0) {
+                            throw new «c.exception.name»(«FOR v : variables SEPARATOR ', '»«new SrcInvokeGetter(ctx, "obj", v).toString»«ENDFOR»);
+                        }
+                    }
+                    «ELSE»
+                    /**
+                     * Verifies that the argument is valid an throws an exception otherwise.
+                     * 
+                     * @param obj Object to validate.
+                     * 
+                     * @throws «c.exception.name» The constraint was violated.
+                     */
+                    public static void requireValid(final «targetName» obj) throws «c.exception.name» {
+                        // TODO Implement!
+                        // if ( ... ) {
+                        //        throw new «c.exception.name»();
+                        // }
+                    }
+                    «ENDIF»
 
-				«ENDIF»
-			}
-		'''
+                «ENDIF»
+            }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
 }

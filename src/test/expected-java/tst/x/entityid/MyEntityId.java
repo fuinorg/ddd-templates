@@ -29,62 +29,62 @@ import tst2.x.entityid.MyEntityIdConverter;
 @XmlJavaTypeAdapter(MyEntityIdConverter.class)
 public final class MyEntityId extends AbstractMyEntityId {
 
-	private static final long serialVersionUID = 1000L;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected MyEntityId() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param value Persistent value.
-	 */
-	public MyEntityId(@NotNull final String value) {
-		super(value);
-	}
-	
-	@Override
-	public final String asBaseType() {
-		return getValue();
-	}
-	
-	/**
-	 * Returns the information if a given string can be converted into
-	 * an instance of MyEntityId. A <code>null</code> value returns <code>true</code>.
-	 * 
-	 * @param value
-	 *            Value to check.
-	 * 
-	 * @return TRUE if it's a valid string, else FALSE.
-	 */
-	public static boolean isValid(final String value) {
-		if (value == null) {
-			return true;
-		}
-		// TODO Verify the value is valid!
-		return true;
-	}
-	
-	/**
-	 * Parses a given string and returns a new instance of MyEntityId.
-	 * 
-	 * @param value
-	 *            Value to convert. A <code>null</code> value returns
-	 *            <code>null</code>.
-	 * 
-	 * @return Converted value.
-	 */
-	public static MyEntityId valueOf(final String value) {
-		if (value == null) {
-			return null;
-		}
-		// TODO Parse string value and return new instance! 
-		// return new MyEntityId(value);
-		return null;
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    /**
+     * Default constructor.
+     */
+    protected MyEntityId() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param value Persistent value.
+     */
+    public MyEntityId(@NotNull final String value) {
+        super(value);
+    }
+    
+    @Override
+    public final String asBaseType() {
+        return getValue();
+    }
+    
+    /**
+     * Returns the information if a given string can be converted into
+     * an instance of MyEntityId. A <code>null</code> value returns <code>true</code>.
+     * 
+     * @param value
+     *            Value to check.
+     * 
+     * @return TRUE if it's a valid string, else FALSE.
+     */
+    public static boolean isValid(final String value) {
+        if (value == null) {
+            return true;
+        }
+        // TODO Verify the value is valid!
+        return true;
+    }
+    
+    /**
+     * Parses a given string and returns a new instance of MyEntityId.
+     * 
+     * @param value
+     *            Value to convert. A <code>null</code> value returns
+     *            <code>null</code>.
+     * 
+     * @return Converted value.
+     */
+    public static MyEntityId valueOf(final String value) {
+        if (value == null) {
+            return null;
+        }
+        // TODO Parse string value and return new instance! 
+        // return new MyEntityId(value);
+        return null;
+    }
+    
 }

@@ -22,5 +22,5 @@ package tst2.x.services;
  * Service A - No methods.
  */
 public interface ServiceA {
-	
+    
 }

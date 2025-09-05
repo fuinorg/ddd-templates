@@ -10,23 +10,23 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
  */
 class SrcJavaDocException {
 
-	val String name;
+    val String name;
 
-	val String doc;
+    val String doc;
 
-	/**
-	 * Constructor with mandatory data.
-	 * 
-	 * @param name Parameter name.
-	 * @param doc Text for the comment.
-	 */
-	new(@NotNull String name, @Nullable String doc) {
-		this.name = name
-		this.doc = doc.text
-	}
+    /**
+     * Constructor with mandatory data.
+     * 
+     * @param name Parameter name.
+     * @param doc Text for the comment.
+     */
+    new(@NotNull String name, @Nullable String doc) {
+        this.name = name
+        this.doc = doc.text
+    }
 
-	override toString() {
-		''' * @throws «name» «doc»'''
-	}
+    override toString() {
+        ''' * @throws «name» «doc»'''
+    }
 
 }

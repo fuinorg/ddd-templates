@@ -23,48 +23,78 @@ import org.fuin.objects4j.common.Contract;
 /** Enumeration type B - With variables. */
 public enum EnumB {
 
-	/** First. */
-	A(1, "a", "First"),
-	
-		/** Second. */
-	B(2, "b", "Second"),
-	
-		/** Third. */
-	C(3, "c", "Third")
-	
-	;
-	
-	@NotNull
-	private Integer id;
-	
-	@NotNull
-	private String shortName;
-	
-	@NotNull
-	private String longName;
-	
-	/** All instances. */
-	public static final EnumB[] ALL = new EnumB[] {
-		A, B, C
-	};
-	
-	/** Valid instances. */
-	public static final EnumB[] VALID = new EnumB[] {
-		A, B, C
-	};
-	
-	/** Deprecated instances. */
-	public static final EnumB[] DEPRECTAED = new EnumB[] {
-	};
-	
-	private EnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
-		Contract.requireArgNotNull("id", id);
-		Contract.requireArgNotNull("shortName", shortName);
-		Contract.requireArgNotNull("longName", longName);
-		
-		this.id = id;
-		this.shortName = shortName;
-		this.longName = longName;
-	}
+    /** First. */
+    A(1, "a", "First"),
+    
+        /** Second. */
+    B(2, "b", "Second"),
+    
+        /** Third. */
+    C(3, "c", "Third")
+    
+    ;
+    
+    @NotNull
+    private Integer id;
+    
+    @NotNull
+    private String shortName;
+    
+    @NotNull
+    private String longName;
+    
+    /**
+     * Returns: Identifier.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public Integer getId() {
+        return id;
+    }
+    
+    /**
+     * Returns: Short name.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public String getShortName() {
+        return shortName;
+    }
+    
+    /**
+     * Returns: Long name.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public String getLongName() {
+        return longName;
+    }
+    
+    /** All instances. */
+    public static final List<EnumB> ALL = List.of(
+        A, B, C
+    );
+    
+    /** Valid instances. */
+    public static final List<EnumB> VALID = List.of(
+        A, B, C
+    );
+    
+    /** Deprecated instances. */
+    public static final List<EnumB> DEPRECATED = List.of(
+    );
+    
+    private EnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
+        Contract.requireArgNotNull("id", id);
+        Contract.requireArgNotNull("shortName", shortName);
+        Contract.requireArgNotNull("longName", longName);
+        
+        this.id = id;
+        this.shortName = shortName;
+        this.longName = longName;
+    }
 
 }

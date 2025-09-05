@@ -21,43 +21,43 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 @ExtendWith(InjectionExtension) 
 class SrcAbstractHandleEventMethodTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("x.a.DidSomethingEvent", "a.b.c.DidSomethingEvent")
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val event = model().find(Event, "DidSomethingEvent")
-		val SrcAbstractHandleEventMethod testee = new SrcAbstractHandleEventMethod(ctx, event)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        refReg.putReference("x.a.DidSomethingEvent", "a.b.c.DidSomethingEvent")
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val event = model().find(Event, "DidSomethingEvent")
+        val SrcAbstractHandleEventMethod testee = new SrcAbstractHandleEventMethod(ctx, event)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''
-			/**
-			 * Handles: DidSomethingEvent.
-			 *
-			 * @param event Event to handle.
-			 */
-			protected abstract void handle(@NotNull final DidSomethingEvent event);
-			'''.toString)
-		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull", "a.b.c.DidSomethingEvent")
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''
+            /**
+             * Handles: DidSomethingEvent.
+             *
+             * @param event Event to handle.
+             */
+            protected abstract void handle(@NotNull final DidSomethingEvent event);
+            '''.toString)
+        assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull", "a.b.c.DidSomethingEvent")
 
-	}
+    }
 
-	def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

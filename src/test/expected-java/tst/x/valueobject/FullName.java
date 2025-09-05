@@ -19,6 +19,7 @@ package tst.x.valueobject;
 
 import jakarta.validation.constraints.NotNull;
 import javax.annotation.concurrent.Immutable;
+import org.fuin.objects4j.ui.Examples;
 import org.fuin.objects4j.ui.Label;
 import org.fuin.objects4j.ui.ShortLabel;
 import org.fuin.objects4j.ui.Tooltip;
@@ -30,25 +31,26 @@ import org.fuin.objects4j.ui.Tooltip;
 @ShortLabel(bundle = "x", key = "valueobject.FullName.slabel", value = "Name")
 @Label(bundle = "x", key = "valueobject.FullName.label", value = "Full name")
 @Tooltip(bundle = "x", key = "valueobject.FullName.tooltip", value = "A person's full nomenclature, also known as a personal name")
+@Examples(value = { "Peter Parker","Mary Jane Watson","Harry Osborn" })
 public final class FullName extends AbstractFullName {
 
-	private static final long serialVersionUID = 1000L;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected FullName() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param firstName First name.
-	 * @param lastName Last name.
-	 */
-	public FullName(@NotNull final String firstName, @NotNull final String lastName) {
-		super(firstName, lastName);
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    /**
+     * Default constructor.
+     */
+    protected FullName() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param firstName First name.
+     * @param lastName Last name.
+     */
+    public FullName(@NotNull final String firstName, @NotNull final String lastName) {
+        super(firstName, lastName);
+    }
+    
 }

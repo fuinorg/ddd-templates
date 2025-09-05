@@ -27,27 +27,27 @@ import org.fuin.objects4j.common.Contract;
  */
 public abstract class AbstractAggregateA extends AbstractAggregateRoot<AggregateAId> {
 
-	@NotNull
-	private AggregateAId id;
+    @NotNull
+    private AggregateAId id;
 
-	@Override
-	public final EntityType getType() {
-		return AggregateAId.TYPE;
-	}
+    @Override
+    public final EntityType getType() {
+        return AggregateAId.TYPE;
+    }
 
-	@Override
-	public final AggregateAId getId() {
-		return id;
-	}
+    @Override
+    public final AggregateAId getId() {
+        return id;
+    }
 
-	/**
-	 * Sets the aggregate identifier.
-	 * 
-	 * @param id Unique aggregate identifier.
-	 */
-	protected final void setId(@NotNull final AggregateAId id) {
-		Contract.requireArgNotNull("id", id);
-		this.id = id;
-	}
-	
+    /**
+     * Sets the aggregate identifier.
+     * 
+     * @param id Unique aggregate identifier.
+     */
+    protected final void setId(@NotNull final AggregateAId id) {
+        Contract.requireArgNotNull("id", id);
+        this.id = id;
+    }
+    
 }

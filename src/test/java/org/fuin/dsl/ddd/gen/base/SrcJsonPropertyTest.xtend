@@ -9,23 +9,23 @@ import static org.assertj.core.api.Assertions.*
 
 class SrcJsonPropertyTest {
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val variable = CqrsDslFactory.eINSTANCE.createVariable
-		variable.setName("AbcDefGhi")
-		val SrcJsonProperty testee = new SrcJsonProperty(ctx, variable)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val variable = CqrsDslFactory.eINSTANCE.createVariable
+        variable.setName("AbcDefGhi")
+        val SrcJsonProperty testee = new SrcJsonProperty(ctx, variable)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo('''@JsonbProperty("abc-def-ghi")'''.toString)
-		assertThat(ctx.imports).contains("jakarta.json.bind.annotation.JsonbProperty")
+        // VERIFY
+        assertThat(result).isEqualTo('''@JsonbProperty("abc-def-ghi")'''.toString)
+        assertThat(ctx.imports).contains("jakarta.json.bind.annotation.JsonbProperty")
 
-	}
+    }
 
 }

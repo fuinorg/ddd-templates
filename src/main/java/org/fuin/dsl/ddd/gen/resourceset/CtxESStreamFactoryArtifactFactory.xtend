@@ -21,119 +21,119 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class CtxESStreamFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 
-	override getModelType() {
-		typeof(ResourceSet)
-	}
+    override getModelType() {
+        typeof(ResourceSet)
+    }
 
-	override isIncremental() {
-		false
-	}
+    override isIncremental() {
+        false
+    }
 
-	override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val Map<String, List<AggregateId>> contextAggregateIds = resourceSet.contextAggregateIdMap
+        val Map<String, List<AggregateId>> contextAggregateIds = resourceSet.contextAggregateIdMap
 
-		val Iterator<String> ctxIt = contextAggregateIds.keySet.iterator
-		while (ctxIt.hasNext) {
-			val String ctx = ctxIt.next
-			val List<AggregateId> aggregateIds = contextAggregateIds.get(ctx)
+        val Iterator<String> ctxIt = contextAggregateIds.keySet.iterator
+        while (ctxIt.hasNext) {
+            val String ctx = ctxIt.next
+            val List<AggregateId> aggregateIds = contextAggregateIds.get(ctx)
 
-			val className = ctx.toFirstUpper + "StreamFactory"
-			val String pkg = contextPkg(ctx)
-			val fqn = pkg + "." + className
-			val filename = fqn.replace('.', '/') + ".java";
+            val className = ctx.toFirstUpper + "StreamFactory"
+            val String pkg = contextPkg(ctx)
+            val fqn = pkg + "." + className
+            val filename = fqn.replace('.', '/') + ".java";
 
-			val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-			refReg.putReference(className, fqn)
+            val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+            refReg.putReference(className, fqn)
 
-			// TODO Support multiple generated artifacts for ArtifactFactory
-			if (preparationRun) {
-				return null
-			}
+            // TODO Support multiple generated artifacts for ArtifactFactory
+            if (preparationRun) {
+                return null
+            }
 
-			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg)
-			sctx.addImports
-			sctx.addReferences(aggregateIds)
+            val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg)
+            sctx.addImports
+            sctx.addReferences(aggregateIds)
 
-			return List.of(new GeneratedArtifact(artifactName, filename,
-				create(sctx, ctx, pkg, className, aggregateIds, resourceSet).toString().getBytes("UTF-8")));
-		}
+            return List.of(new GeneratedArtifact(artifactName, filename,
+                create(sctx, ctx, pkg, className, aggregateIds, resourceSet).toString().getBytes("UTF-8")));
+        }
 
-	}
+    }
 
-	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("jakarta.enterprise.context.ApplicationScoped")
-		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.IdStreamFactory")
-		ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.Stream")
-		ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.StreamId")
-		ctx.requiresImport("java.util.Map")
-		ctx.requiresImport("java.util.HashMap")		
-	}
+    def addImports(CodeSnippetContext ctx) {
+        ctx.requiresImport("jakarta.enterprise.context.ApplicationScoped")
+        ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.IdStreamFactory")
+        ctx.requiresImport("org.fuin.ddd4j.eventstore.jpa.Stream")
+        ctx.requiresImport("org.fuin.ddd4j.eventstore.intf.StreamId")
+        ctx.requiresImport("java.util.Map")
+        ctx.requiresImport("java.util.HashMap")        
+    }
 
-	def addReferences(CodeSnippetContext ctx, List<AggregateId> aggregateIds) {
-		for (aggregateId : aggregateIds) {
-			ctx.requiresReference(aggregateId.uniqueName)
-			ctx.requiresReference(aggregateId.uniqueName + "StreamFactory")
-		}
-	}
+    def addReferences(CodeSnippetContext ctx, List<AggregateId> aggregateIds) {
+        for (aggregateId : aggregateIds) {
+            ctx.requiresReference(aggregateId.uniqueName)
+            ctx.requiresReference(aggregateId.uniqueName + "StreamFactory")
+        }
+    }
 
-	def contextAggregateIdMap(ResourceSet resourceSet) {
-		val Map<String, List<AggregateId>> contextEntityIds = new HashMap<String, List<AggregateId>>();
-		val Iterator<AggregateId> iter = resourceSet.getAllContents().filter(typeof(AggregateId))
-		while (iter.hasNext) {
-			val AggregateId aggregateId = iter.next
-			var List<AggregateId> aggregateIds = contextEntityIds.get(aggregateId.context.name)
-			if (aggregateIds === null) {
-				aggregateIds = new ArrayList<AggregateId>();
-				contextEntityIds.put(aggregateId.context.name, aggregateIds)
-			}
-			aggregateIds.add(aggregateId)
-		}
-		return contextEntityIds
-	}
+    def contextAggregateIdMap(ResourceSet resourceSet) {
+        val Map<String, List<AggregateId>> contextEntityIds = new HashMap<String, List<AggregateId>>();
+        val Iterator<AggregateId> iter = resourceSet.getAllContents().filter(typeof(AggregateId))
+        while (iter.hasNext) {
+            val AggregateId aggregateId = iter.next
+            var List<AggregateId> aggregateIds = contextEntityIds.get(aggregateId.context.name)
+            if (aggregateIds === null) {
+                aggregateIds = new ArrayList<AggregateId>();
+                contextEntityIds.put(aggregateId.context.name, aggregateIds)
+            }
+            aggregateIds.add(aggregateId)
+        }
+        return contextEntityIds
+    }
 
-	def create(SimpleCodeSnippetContext sctx, String ctx, String pkg, String className, List<AggregateId> aggregateIds,
-		ResourceSet resourceSet) {
-		val String src = ''' 
-			/**
-			 * Creates a stream for all known aggregates based on a AggregateRootId.
-			 */
-			@ApplicationScoped
-			public class «className» implements IdStreamFactory {
-			
-			    private Map<String, IdStreamFactory> map;
-			
-			    /**
-			     * Default constructor.
-			     */
-			    public «className»() {
-					super();
-					map = new HashMap<String, IdStreamFactory>();
-					«FOR aggregateId : aggregateIds»
-					map.put(«aggregateId.name».TYPE.asString(), new «aggregateId.name»StreamFactory());
-					«ENDFOR»
-			    }
-			
-			    @Override
-			    public boolean containsType(final StreamId streamId) {
-					return map.get(streamId.getName()) != null;
-			  }
-			
-			    @Override
-			    public Stream createStream(final StreamId streamId) {
-					final IdStreamFactory factory = map.get(streamId.getName());
-					if (factory == null) {
-			  throw new IllegalArgumentException("Unknown stream id type: "
-			   + streamId);
-					}
-					return factory.createStream(streamId);
-			  }
-			
-			}
-		'''
+    def create(SimpleCodeSnippetContext sctx, String ctx, String pkg, String className, List<AggregateId> aggregateIds,
+        ResourceSet resourceSet) {
+        val String src = ''' 
+            /**
+             * Creates a stream for all known aggregates based on a AggregateRootId.
+             */
+            @ApplicationScoped
+            public class «className» implements IdStreamFactory {
+            
+                private Map<String, IdStreamFactory> map;
+            
+                /**
+                 * Default constructor.
+                 */
+                public «className»() {
+                    super();
+                    map = new HashMap<String, IdStreamFactory>();
+                    «FOR aggregateId : aggregateIds»
+                    map.put(«aggregateId.name».TYPE.asString(), new «aggregateId.name»StreamFactory());
+                    «ENDFOR»
+                }
+            
+                @Override
+                public boolean containsType(final StreamId streamId) {
+                    return map.get(streamId.getName()) != null;
+              }
+            
+                @Override
+                public Stream createStream(final StreamId streamId) {
+                    final IdStreamFactory factory = map.get(streamId.getName());
+                    if (factory == null) {
+              throw new IllegalArgumentException("Unknown stream id type: "
+               + streamId);
+                    }
+                    return factory.createStream(streamId);
+              }
+            
+            }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, sctx.imports, src).toString 
+        new SrcAll(copyrightHeader, pkg, sctx.imports, src).toString 
 
-	}
+    }
 
 }

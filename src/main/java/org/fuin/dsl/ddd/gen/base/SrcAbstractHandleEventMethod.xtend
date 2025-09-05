@@ -11,29 +11,29 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsEventExtensions.*
  */
 class SrcAbstractHandleEventMethod implements CodeSnippet {
 
-	val String name
+    val String name
 
-	/**
-	 * Constructor with all mandatory data.
-	 * 
-	 * @param ctx Context.
-	 * @param event Event.
-	 */
-	new(CodeSnippetContext ctx, Event event) {
-		this.name = event.name
-		ctx.requiresReference(event.uniqueName)
-		ctx.requiresImport("jakarta.validation.constraints.NotNull")
-	}
+    /**
+     * Constructor with all mandatory data.
+     * 
+     * @param ctx Context.
+     * @param event Event.
+     */
+    new(CodeSnippetContext ctx, Event event) {
+        this.name = event.name
+        ctx.requiresReference(event.uniqueName)
+        ctx.requiresImport("jakarta.validation.constraints.NotNull")
+    }
 
-	override toString() {
-		'''
-			/**
-			 * Handles: «name».
-			 *
-			 * @param event Event to handle.
-			 */
-			protected abstract void handle(@NotNull final «name» event);
-		'''
-	}
+    override toString() {
+        '''
+            /**
+             * Handles: «name».
+             *
+             * @param event Event to handle.
+             */
+            protected abstract void handle(@NotNull final «name» event);
+        '''
+    }
 
 }

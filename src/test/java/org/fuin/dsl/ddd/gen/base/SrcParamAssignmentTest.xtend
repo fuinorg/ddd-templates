@@ -11,21 +11,21 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDslFactoryExtensions.*
 
 class SrcParamAssignmentTest {
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val codeSnippetContext = new SimpleCodeSnippetContext(refReg)
-		val SrcParamAssignment testee = new SrcParamAssignment(codeSnippetContext, eINSTANCE.createParameter("a"))
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val codeSnippetContext = new SimpleCodeSnippetContext(refReg)
+        val SrcParamAssignment testee = new SrcParamAssignment(codeSnippetContext, eINSTANCE.createParameter("a"))
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo("this.a = a;")
-		assertThat(codeSnippetContext.imports).empty
+        // VERIFY
+        assertThat(result).isEqualTo("this.a = a;")
+        assertThat(codeSnippetContext.imports).empty
 
-	}
+    }
 
 }

@@ -21,6 +21,7 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.ValueObject;
+import org.fuin.objects4j.ui.Examples;
 import org.fuin.objects4j.ui.Label;
 import org.fuin.objects4j.ui.Prompt;
 import org.fuin.objects4j.ui.ShortLabel;
@@ -31,62 +32,64 @@ import org.fuin.objects4j.ui.Tooltip;
  */
 public abstract class AbstractFullName implements ValueObject, Serializable {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	@ShortLabel(key = "firstName.slabel", value = "First")
-	@Label(key = "firstName.label", value = "First name")
-	@Tooltip(key = "firstName.tooltip", value = "A given name, also known as a personal name or forename")
-	@Prompt(key = "firstName.prompt", value = "Enter your first name")
-	private String firstName;
-	
-	@NotNull
-	@ShortLabel(key = "lastName.slabel", value = "Last")
-	@Label(key = "lastName.label", value = "Last name")
-	@Tooltip(key = "lastName.tooltip", value = "A family name, also known as a surname")
-	@Prompt(key = "lastName.prompt", value = "Enter your last name")
-	private String lastName;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected AbstractFullName() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param firstName First name.
-	 * @param lastName Last name.
-	 */
-	public AbstractFullName(@NotNull final String firstName, @NotNull final String lastName) {
-		super();
-		Contract.requireArgNotNull("firstName", firstName);
-		Contract.requireArgNotNull("lastName", lastName);
-		
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-	
-	/**
-	 * Returns: First name.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getFirstName() {
-		return firstName;
-	}
-	
-	/**
-	 * Returns: Last name.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getLastName() {
-		return lastName;
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    @ShortLabel(key = "firstName.slabel", value = "First")
+    @Label(key = "firstName.label", value = "First name")
+    @Tooltip(key = "firstName.tooltip", value = "A given name, also known as a personal name or forename")
+    @Prompt(key = "firstName.prompt", value = "Enter your first name")
+    @Examples(value = { "Peter","Mary Jane","Harry" })
+    private String firstName;
+    
+    @NotNull
+    @ShortLabel(key = "lastName.slabel", value = "Last")
+    @Label(key = "lastName.label", value = "Last name")
+    @Tooltip(key = "lastName.tooltip", value = "A family name, also known as a surname")
+    @Prompt(key = "lastName.prompt", value = "Enter your last name")
+    @Examples(value = { "Parker","Watson","Osborn" })
+    private String lastName;
+    
+    /**
+     * Default constructor.
+     */
+    protected AbstractFullName() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param firstName First name.
+     * @param lastName Last name.
+     */
+    public AbstractFullName(@NotNull final String firstName, @NotNull final String lastName) {
+        super();
+        Contract.requireArgNotNull("firstName", firstName);
+        Contract.requireArgNotNull("lastName", lastName);
+        
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    
+    /**
+     * Returns: First name.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getFirstName() {
+        return firstName;
+    }
+    
+    /**
+     * Returns: Last name.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getLastName() {
+        return lastName;
+    }
+    
 }

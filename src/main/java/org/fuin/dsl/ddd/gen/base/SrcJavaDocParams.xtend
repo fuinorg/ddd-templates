@@ -12,32 +12,32 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsVariableExtensions.*
  */
 class SrcJavaDocParams {
 
-	val List<Parameter> parameters
+    val List<Parameter> parameters
 
-	/**
-	 * Constructor with mandatory data.
-	 * 
-	 * @param parameters List of parameters.
-	 */
-	new(@Nullable List<Parameter> parameters) {
-		this.parameters = parameters
-	}
+    /**
+     * Constructor with mandatory data.
+     * 
+     * @param parameters List of parameters.
+     */
+    new(@Nullable List<Parameter> parameters) {
+        this.parameters = parameters
+    }
 
-	override toString() {
-		if (parameters.nullSafe.size == 0) {
-			''''''
-		} else {
-			'''
-				«sp»*
-				«FOR v : parameters»
-					«new SrcJavaDocParam(v.name, v.superDoc)»
-				«ENDFOR»
-			'''
-		}
-	}
+    override toString() {
+        if (parameters.nullSafe.size == 0) {
+            ''''''
+        } else {
+            '''
+                «sp»*
+                «FOR v : parameters»
+                    «new SrcJavaDocParam(v.name, v.superDoc)»
+                «ENDFOR»
+            '''
+        }
+    }
 
-	def sp() {
-		" "
-	}
+    def sp() {
+        " "
+    }
 
 }

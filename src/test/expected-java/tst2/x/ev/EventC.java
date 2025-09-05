@@ -19,92 +19,90 @@ package tst2.x.ev;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import org.fuin.ddd4j.core.EntityIdPath;
 import org.fuin.ddd4j.core.EventType;
 import org.fuin.ddd4j.jsonb.AbstractDomainEvent;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.core.KeyValue;
+import org.fuin.objects4j.ui.Examples;
 
 /**
  * Aggregate event C.
  */
-@XmlRootElement(name = "event-c")
 public final class EventC extends AbstractDomainEvent<CustomerId> {
 
-	private static final long serialVersionUID = 1000L;
+    private static final long serialVersionUID = 1000L;
 
-	/** Unique name used to store the event. */
-	public static final EventType EVENT_TYPE = new EventType("EventC");
-	
-	@NotNull
-	@XmlAttribute(name = "a")
-	@JsonbProperty("a")
-	private String a;
-	
-	@NotNull
-	@XmlAttribute(name = "b")
-	@JsonbProperty("b")
-	private Integer b;
-	
+    /** Unique name used to store the event. */
+    public static final EventType EVENT_TYPE = new EventType("EventC");
+    
+    @NotNull
+    @JsonbProperty("a")
+    @Examples(value = { "Abc" })
+    private String a;
+    
+    @NotNull
+    @JsonbProperty("b")
+    @Examples(value = { "123" })
+    private Integer b;
+    
 
-	/**
-	 * Protected default constructor for deserialization.
-	 */
-	protected EventC() {
-		super();
-	}
-	
-	/**
-	 * Aggregate event C.
-	 *
-	 * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
-	* @param a A. 
-	* @param b B. 
-	*/
-	public EventC(@NotNull final EntityIdPath entityIdPath, @NotNull final String a, @NotNull final Integer b) {
-		super(entityIdPath);
-		Contract.requireArgNotNull("a", a);
-		Contract.requireArgNotNull("b", b);
-		
-		this.a = a;
-		this.b = b;
-	}
+    /**
+     * Protected default constructor for deserialization.
+     */
+    protected EventC() {
+        super();
+    }
+    
+    /**
+     * Aggregate event C.
+     *
+     * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
+    * @param a A. 
+    * @param b B. 
+    */
+    public EventC(@NotNull final EntityIdPath entityIdPath, @NotNull final String a, @NotNull final Integer b) {
+        super(entityIdPath);
+        Contract.requireArgNotNull("a", a);
+        Contract.requireArgNotNull("b", b);
+        
+        this.a = a;
+        this.b = b;
+    }
 
-	@Override
-	public final EventType getEventType() {
-		return EVENT_TYPE;
-	}
+    @Override
+    public final EventType getEventType() {
+        return EVENT_TYPE;
+    }
 
-	/**
-	 * Returns: A.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getA() {
-		return a;
-	}
-	
-	/**
-	 * Returns: B.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final Integer getB() {
-		return b;
-	}
-	
+    /**
+     * Returns: A.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getA() {
+        return a;
+    }
+    
+    /**
+     * Returns: B.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final Integer getB() {
+        return b;
+    }
+    
 
-	@Override
-	public final String toString() {
-		return KeyValue.replace("Event C: ${a} / ${b} [${#entityIdPath}]",
-			new KeyValue("#entityIdPath", getEntityIdPath())
-			, new KeyValue("a", a)
-			, new KeyValue("b", b)
-		);
-	}
-	
+    @Override
+    public final String toString() {
+        return KeyValue.replace("Event C: ${a} / ${b} [${#entityIdPath}]",
+            new KeyValue("#entityIdPath", getEntityIdPath())
+            , new KeyValue("a", a)
+            , new KeyValue("b", b)
+        );
+    }
+    
 }

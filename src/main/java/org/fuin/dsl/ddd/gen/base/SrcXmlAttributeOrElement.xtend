@@ -11,18 +11,18 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsTypeExtensions.*
  */
 class SrcXmlAttributeOrElement implements CodeSnippet {
 
-	val CodeSnippet codeSnippet
+    val CodeSnippet codeSnippet
 
-	new(CodeSnippetContext ctx, Variable variable, boolean xmlElements) {
-		if (!xmlElements && (variable.type.base !== null) && (variable.type.base.element === null)) {
-			codeSnippet = new SrcXmlAttribute(ctx, variable)			
-		} else {
-			codeSnippet = new SrcXmlElement(ctx, variable)
-		}
-	}
+    new(CodeSnippetContext ctx, Variable variable, boolean xmlElements) {
+        if (!xmlElements && (variable.type.base !== null) && (variable.type.base.element === null)) {
+            codeSnippet = new SrcXmlAttribute(ctx, variable)            
+        } else {
+            codeSnippet = new SrcXmlElement(ctx, variable)
+        }
+    }
 
-	override toString() {
-		codeSnippet.toString
-	}
+    override toString() {
+        codeSnippet.toString
+    }
 
 }

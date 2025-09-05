@@ -21,69 +21,69 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 @ExtendWith(InjectionExtension) 
 class SrcVarsDeclTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("a.b.String", "java.lang.String")
-		refReg.putReference("a.b.Integer", "java.lang.Integer")
-		refReg.putReference("a.b.Boolean", "java.lang.Boolean")
-		val ctx = new SimpleCodeSnippetContext(refReg)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        refReg.putReference("a.b.String", "java.lang.String")
+        refReg.putReference("a.b.Integer", "java.lang.Integer")
+        refReg.putReference("a.b.Boolean", "java.lang.Boolean")
+        val ctx = new SimpleCodeSnippetContext(refReg)
 
-		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val SrcVarsDecl testee = new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), valueObject)
+        val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
+        val SrcVarsDecl testee = new SrcVarsDecl(ctx, "private", GenerateOptions.empty(), valueObject)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''
-				@NotNull
-				private String a;
-				
-				@NotNull
-				private Integer b;
-				
-				@Nullable
-				private Boolean c;
-				
-			'''.toString)
-		assertThat(ctx.imports).containsOnly("java.lang.String", "java.lang.Integer", "java.lang.Boolean",
-			"jakarta.validation.constraints.NotNull", "jakarta.annotation.Nullable")
-	}
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''
+                @NotNull
+                private String a;
+                
+                @NotNull
+                private Integer b;
+                
+                @Nullable
+                private Boolean c;
+                
+            '''.toString)
+        assertThat(ctx.imports).containsOnly("java.lang.String", "java.lang.Integer", "java.lang.Boolean",
+            "jakarta.validation.constraints.NotNull", "jakarta.annotation.Nullable")
+    }
 
-	def DomainModel createModel() {
-		val DomainModel model = parser.parse(
-			'''
-				context a {
-					
-					namespace b {
-						
-						type String
-						type Integer
-						type Boolean
-				
-						value-object MyValueObject {
-							String a
-							Integer b
-							nullable Boolean c
-						}
-				
-					}
-				
-				}
-			'''
-		)
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    def DomainModel createModel() {
+        val DomainModel model = parser.parse(
+            '''
+                context a {
+                    
+                    namespace b {
+                        
+                        type String
+                        type Integer
+                        type Boolean
+                
+                        value-object MyValueObject {
+                            String a
+                            Integer b
+                            nullable Boolean c
+                        }
+                
+                    }
+                
+                }
+            '''
+        )
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

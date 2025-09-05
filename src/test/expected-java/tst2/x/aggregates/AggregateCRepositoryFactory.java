@@ -27,16 +27,16 @@ import org.fuin.esc.api.EventStore;
 @Dependent
 public class AggregateCRepositoryFactory {
 
-	/**
-	 * Produces a AggregateCRepository.
-	 * 
-	 * @param eventStore The event store to use for construction.
-	 *
-	 * @return The new repository instance.
-	 */
-	@Produces
-	public AggregateCRepository create(final EventStore eventStore) {
-		return new AggregateCRepository(eventStore);
-	}
+    /**
+     * Produces a AggregateCRepository.
+     * 
+     * @param eventStore The event store to use for construction.
+     *
+     * @return The new repository instance.
+     */
+    @Produces
+    public AggregateCRepository create(final EventStore eventStore) {
+        return new AggregateCRepository(eventStore);
+    }
 
 }

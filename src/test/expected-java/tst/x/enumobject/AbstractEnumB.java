@@ -22,61 +22,61 @@ import org.fuin.objects4j.common.Contract;
 
 /** Enumeration type B - With variables. */
 public abstract class AbstractEnumB {
-	
-	@NotNull
-	private Integer id;
-	
-	@NotNull
-	private String shortName;
-	
-	@NotNull
-	private String longName;
-	
-	/**
-	 * Enumeration type B - With variables.
-	 *
-	 * @param id Identifier.
-	 * @param shortName Short name.
-	 * @param longName Long name.
-	 */
-	protected AbstractEnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
-		Contract.requireArgNotNull("id", id);
-		Contract.requireArgNotNull("shortName", shortName);
-		Contract.requireArgNotNull("longName", longName);
-		
-		this.id = id;
-		this.shortName = shortName;
-		this.longName = longName;
-	}
+    
+    @NotNull
+    private Integer id;
+    
+    @NotNull
+    private String shortName;
+    
+    @NotNull
+    private String longName;
+    
+    /**
+     * Enumeration type B - With variables.
+     *
+     * @param id Identifier.
+     * @param shortName Short name.
+     * @param longName Long name.
+     */
+    protected AbstractEnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
+        Contract.requireArgNotNull("id", id);
+        Contract.requireArgNotNull("shortName", shortName);
+        Contract.requireArgNotNull("longName", longName);
+        
+        this.id = id;
+        this.shortName = shortName;
+        this.longName = longName;
+    }
 
-	/**
-	 * Returns: Identifier.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final Integer getId() {
-		return id;
-	}
-	
-	/**
-	 * Returns: Short name.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getShortName() {
-		return shortName;
-	}
-	
-	/**
-	 * Returns: Long name.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getLongName() {
-		return longName;
-	}
-	
+    /**
+     * Returns: Identifier.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final Integer getId() {
+        return id;
+    }
+    
+    /**
+     * Returns: Short name.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getShortName() {
+        return shortName;
+    }
+    
+    /**
+     * Returns: Long name.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getLongName() {
+        return longName;
+    }
+    
 }

@@ -11,16 +11,16 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
  */
 class SrcJsonProperty implements CodeSnippet {
 
-	val Variable variable
+    val Variable variable
 
-	new(CodeSnippetContext ctx, Variable variable) {
-		this.variable = variable
+    new(CodeSnippetContext ctx, Variable variable) {
+        this.variable = variable
 
-		ctx.requiresImport("jakarta.json.bind.annotation.JsonbProperty")
-	}
+        ctx.requiresImport("jakarta.json.bind.annotation.JsonbProperty")
+    }
 
-	override toString() {
-		'''@JsonbProperty("«variable.name.toXmlName»")'''
-	}
+    override toString() {
+        '''@JsonbProperty("«variable.name.toXmlName»")'''
+    }
 
 }

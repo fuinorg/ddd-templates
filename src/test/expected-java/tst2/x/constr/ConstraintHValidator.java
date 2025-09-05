@@ -23,31 +23,31 @@ import jakarta.validation.ConstraintValidatorContext;
 /** Constraint H - External type target - With exception - With variables */
 // CHECKSTYLE:OFF:LineLength
 public final class ConstraintHValidator implements ConstraintValidator<ConstraintH, String> {
-	// CHECKSTYLE:ON:LineLength
+    // CHECKSTYLE:ON:LineLength
 
-	@Override
-	public final void initialize(final ConstraintH annotation) {
-		// TODO Implement!
-	}
+    @Override
+    public final void initialize(final ConstraintH annotation) {
+        // TODO Implement!
+    }
 
-	@Override
-	public final boolean isValid(final String object, final ConstraintValidatorContext ctx) {
-		// TODO Implement!
-		return true;
-	}
+    @Override
+    public final boolean isValid(final String object, final ConstraintValidatorContext ctx) {
+        // TODO Implement!
+        return true;
+    }
 
-	/**
-	 * Verifies that the argument is valid an throws an exception otherwise.
-	 * 
-	 * @param obj Object to validate.
-	 * 
-	 * @throws HException The constraint was violated.
-	 */
-	public static void requireValid(final String obj) throws HException {
-		// TODO Implement!
-		// if ( ... ) {
-		//		throw new HException();
-		// }
-	}
+    /**
+     * Verifies that the argument is valid an throws an exception otherwise.
+     * 
+     * @param obj Object to validate.
+     * 
+     * @throws HException The constraint was violated.
+     */
+    public static void requireValid(final String obj) throws HException {
+        // TODO Implement!
+        // if ( ... ) {
+        //        throw new HException();
+        // }
+    }
 
 }

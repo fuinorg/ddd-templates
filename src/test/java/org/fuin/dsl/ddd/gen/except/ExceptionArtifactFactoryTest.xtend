@@ -27,75 +27,75 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class ExceptionArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreateEventA() {
-		testCreate("ExceptionA")
-	}
+    @Test
+    def void testCreateEventA() {
+        testCreate("ExceptionA")
+    }
 
-	@Test
-	def void testCreateEventB() {
-		testCreate("ExceptionB")
-	}
+    @Test
+    def void testCreateEventB() {
+        testCreate("ExceptionB")
+    }
 
-	@Test
-	def void testCreateEventC() {
-		testCreate("ExceptionC")
-	}
+    @Test
+    def void testCreateEventC() {
+        testCreate("ExceptionC")
+    }
 
-	@Test
-	def void testCreateEventD() {
-		testCreate("ExceptionD")
-	}
+    @Test
+    def void testCreateEventD() {
+        testCreate("ExceptionD")
+    }
 
-	@Test
-	def void testCreateEventE() {
-		testCreate("ExceptionE")
-	}
+    @Test
+    def void testCreateEventE() {
+        testCreate("ExceptionE")
+    }
 
-	@Test
-	def void testCreateEventF() {
-		testCreate("ExceptionF")
-	}
+    @Test
+    def void testCreateEventF() {
+        testCreate("ExceptionF")
+    }
 
-	private def testCreate(String name) {
+    private def testCreate(String name) {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.types.Integer", "java.lang.Integer")
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.types.Integer", "java.lang.Integer")
 
-		val ExceptionArtifactFactory testee = createTestee()
-		val Exception ex = model.find(typeof(Exception), name)
+        val ExceptionArtifactFactory testee = createTestee()
+        val Exception ex = model.find(typeof(Exception), name)
 
-		// TEST
-		val result = new String(testee.create(ex, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(ex, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/except/" + name + ".java").loadConcreteExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/except/" + name + ".java").loadConcreteExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new ExceptionArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("exception", ExceptionArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new ExceptionArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("exception", ExceptionArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/exception.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/exception.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

@@ -33,71 +33,71 @@ import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
 // CHECKSTYLE:OFF
 public final class EventETest {
 
-	@Test
-	public final void testSerializeDeserialize() {
+    @Test
+    public final void testSerializeDeserialize() {
 
-		// PREPARE
-		final EventE original = createTestee();
+        // PREPARE
+        final EventE original = createTestee();
 
-		// TEST
-		final EventE copy = deserialize(serialize(original));
+        // TEST
+        final EventE copy = deserialize(serialize(original));
 
-		// VERIFY
-		assertThat(original).isEqualTo(copy);
-		assertThat(original.getA()).isEqualTo(copy.getA());
-		assertThat(original.getB()).isEqualTo(copy.getB());
+        // VERIFY
+        assertThat(original).isEqualTo(copy);
+        assertThat(original.getA()).isEqualTo(copy.getA());
+        assertThat(original.getB()).isEqualTo(copy.getB());
 
-	}
+    }
 
-	@Test
-	public final void testMarshalUnmarshalXml() {
+    @Test
+    public final void testMarshalUnmarshalXml() {
 
-		// PREPARE
-		final EventE original = createTestee();
+        // PREPARE
+        final EventE original = createTestee();
 
-		// TEST
-		final String xml = marshal(original, createAdapter(), EventE.class);
-		final EventE copy = unmarshal(xml, createAdapter(), EventE.class);
+        // TEST
+        final String xml = marshal(original, createAdapter(), EventE.class);
+        final EventE copy = unmarshal(xml, createAdapter(), EventE.class);
 
-		// VERIFY
-		assertThat(original).isEqualTo(copy);
-		assertThat(original.getA()).isEqualTo(copy.getA());
-		assertThat(original.getB()).isEqualTo(copy.getB());
+        // VERIFY
+        assertThat(original).isEqualTo(copy);
+        assertThat(original.getA()).isEqualTo(copy.getA());
+        assertThat(original.getB()).isEqualTo(copy.getB());
 
-	}
+    }
 
-	@Test
-	public final void testMarshalUnmarshalJson() {
+    @Test
+    public final void testMarshalUnmarshalJson() {
 
-		// PREPARE
-		final EventE original = createTestee();
+        // PREPARE
+        final EventE original = createTestee();
 
-		final JsonbConfig config = new JsonbConfig()
-				.withAdapters(new EventIdJsonbAdapter())
-				.withPropertyVisibilityStrategy(new FieldAccessStrategy());
-		final Jsonb jsonb = JsonbBuilder.create(config);
+        final JsonbConfig config = new JsonbConfig()
+                .withAdapters(new EventIdJsonbAdapter())
+                .withPropertyVisibilityStrategy(new FieldAccessStrategy());
+        final Jsonb jsonb = JsonbBuilder.create(config);
 
-		// TEST
-		final String json = jsonb.toJson(original, EventE.class);
-		final EventE copy = jsonb.fromJson(json, EventE.class);
+        // TEST
+        final String json = jsonb.toJson(original, EventE.class);
+        final EventE copy = jsonb.fromJson(json, EventE.class);
 
-		// VERIFY
-		assertThat(original).isEqualTo(copy);
-		assertThat(original.getA()).isEqualTo(copy.getA());
-		assertThat(original.getB()).isEqualTo(copy.getB());
+        // VERIFY
+        assertThat(original).isEqualTo(copy);
+        assertThat(original.getA()).isEqualTo(copy.getA());
+        assertThat(original.getB()).isEqualTo(copy.getB());
 
-	}
+    }
 
-	private EventE createTestee() {
-		// TODO Set test values
-		final MyString a = new MyString("abc");
-		final MyString b = new MyString("123");
-		return new EventE(a, b);
-	}
+    private EventE createTestee() {
+        // TODO Set test values
+        final MyString a = new MyString("abc");
+        final MyString b = new MyString("123");
+        return new EventE(a, b);
+    }
 
-	protected final XmlAdapter<?, ?>[] createAdapter() {
-		return new XmlAdapter[] { };
-	}
+    protected final XmlAdapter<?, ?>[] createAdapter() {
+        return new XmlAdapter[] { };
+    }
 
 }
 // CHECKSTYLE:ON

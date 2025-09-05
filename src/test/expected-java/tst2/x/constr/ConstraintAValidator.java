@@ -23,17 +23,17 @@ import jakarta.validation.ConstraintValidatorContext;
 /** Constraint A - Value object target - No exception - No variables */
 // CHECKSTYLE:OFF:LineLength
 public final class ConstraintAValidator implements ConstraintValidator<ConstraintA, ValueObjectA> {
-	// CHECKSTYLE:ON:LineLength
+    // CHECKSTYLE:ON:LineLength
 
-	@Override
-	public final void initialize(final ConstraintA annotation) {
-		// TODO Implement!
-	}
+    @Override
+    public final void initialize(final ConstraintA annotation) {
+        // TODO Implement!
+    }
 
-	@Override
-	public final boolean isValid(final ValueObjectA object, final ConstraintValidatorContext ctx) {
-		// TODO Implement!
-		return true;
-	}
+    @Override
+    public final boolean isValid(final ValueObjectA object, final ConstraintValidatorContext ctx) {
+        // TODO Implement!
+        return true;
+    }
 
 }

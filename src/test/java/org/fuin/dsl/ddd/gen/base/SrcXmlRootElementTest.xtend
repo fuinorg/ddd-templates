@@ -8,21 +8,21 @@ import static org.assertj.core.api.Assertions.*
 
 class SrcXmlRootElementTest {
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val SrcXmlRootElement testee = new SrcXmlRootElement(ctx, "AbcDefGhi")
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val SrcXmlRootElement testee = new SrcXmlRootElement(ctx, "AbcDefGhi")
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo('''@XmlRootElement(name = "abc-def-ghi")'''.toString)
-		assertThat(ctx.imports).contains("jakarta.xml.bind.annotation.XmlRootElement")
+        // VERIFY
+        assertThat(result).isEqualTo('''@XmlRootElement(name = "abc-def-ghi")'''.toString)
+        assertThat(ctx.imports).contains("jakarta.xml.bind.annotation.XmlRootElement")
 
-	}
+    }
 
 }

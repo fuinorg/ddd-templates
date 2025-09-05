@@ -20,29 +20,29 @@ package tst.x.enumobject;
 
 /** Enumeration type C - With deprecated instance. */
 public final class EnumC {
-	
-	/** First. */
-	public static final EnumC A = new EnumC();
-	
-	/** Second - Only kept for backward compatibility. */
-	public static final EnumC B = new EnumC();
-	
-	/** Third. */
-	public static final EnumC C = new EnumC();
-	
-	/** All instances. */
-	public static final EnumC[] ALL = new EnumC[] {
-		A, B, C
-	};
-	
-	/** Valid instances. */
-	public static final EnumC[] VALID = new EnumC[] {
-		A, C
-	};
-	
-	/** Deprecated instances. */
-	public static final EnumC[] DEPRECTAED = new EnumC[] {
-		B
-	};
-	
+    
+    /** First. */
+    public static final EnumC A = new EnumC();
+    
+    /** Second - Only kept for backward compatibility. */
+    public static final EnumC B = new EnumC();
+    
+    /** Third. */
+    public static final EnumC C = new EnumC();
+    
+    /** All instances. */
+    public static final List<EnumC> ALL = List.of(
+        A, B, C
+    );
+    
+    /** Valid instances. */
+    public static final List<EnumC> VALID = List.of(
+        A, C
+    );
+    
+    /** Deprecated instances. */
+    public static final List<EnumC> DEPRECATED = List.of(
+        B
+    );
+    
 }

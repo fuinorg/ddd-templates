@@ -10,27 +10,27 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
  */
 class SrcAbstractHandleEventMethods implements CodeSnippet {
 
-	val CodeSnippetContext ctx
-	val List<Event> events
+    val CodeSnippetContext ctx
+    val List<Event> events
 
-	/**
-	 * Constructor with all mandatory data.
-	 * 
-	 * @param ctx Context.
-	 * @param event Event.
-	 */
-	new(CodeSnippetContext ctx, List<Event> events) {
-		this.ctx = ctx
-		this.events = events
-	}
+    /**
+     * Constructor with all mandatory data.
+     * 
+     * @param ctx Context.
+     * @param event Event.
+     */
+    new(CodeSnippetContext ctx, List<Event> events) {
+        this.ctx = ctx
+        this.events = events
+    }
 
-	override toString() {
-		'''
-			«FOR event : events»
-				«new SrcAbstractHandleEventMethod(ctx, event)»
-				
-			«ENDFOR»
-		'''
-	}
+    override toString() {
+        '''
+            «FOR event : events»
+                «new SrcAbstractHandleEventMethod(ctx, event)»
+                
+            «ENDFOR»
+        '''
+    }
 
 }

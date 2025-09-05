@@ -39,16 +39,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 // CHECKSTYLE:OFF:LineLength
 public @interface ConstraintB {
 
-	/** Used to create an error message. */
-	String message() default "B is not allowed: ${a}: ${validatedValue.a} - ${validatedValue.b}";
+    /** Used to create an error message. */
+    String message() default "B is not allowed: ${a}: ${validatedValue.a} - ${validatedValue.b}";
 
-	/** Processing groups with which the constraint declaration is associated. */		
-	Class<?>[] groups() default {};
+    /** Processing groups with which the constraint declaration is associated. */        
+    Class<?>[] groups() default {};
 
-	/** Payload with which the the constraint declaration is associated. */
-	Class<? extends Payload>[] payload() default {};
+    /** Payload with which the the constraint declaration is associated. */
+    Class<? extends Payload>[] payload() default {};
 
-	int value();
-	
+    int value();
+    
 }
 //CHECKSTYLE:ON:LineLength

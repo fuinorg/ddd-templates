@@ -27,66 +27,66 @@ import org.eclipse.xtext.testing.extensions.InjectionExtension
 @ExtendWith(InjectionExtension) 
 class FinalAggregateArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testAggregateA() {
-		testAggregate("AggregateA")
-	}
+    @Test
+    def void testAggregateA() {
+        testAggregate("AggregateA")
+    }
 
-	@Test
-	def void testAggregateB() {
-		testAggregate("AggregateB")
-	}
-	
-	@Test
-	def void testAggregateC() {
-		testAggregate("AggregateC")
-	}
+    @Test
+    def void testAggregateB() {
+        testAggregate("AggregateB")
+    }
+    
+    @Test
+    def void testAggregateC() {
+        testAggregate("AggregateC")
+    }
 
-	private def testAggregate(String aggregateName) {
+    private def testAggregate(String aggregateName) {
 
-		// PREPARE
-		val abstractName = "Abstract" + aggregateName
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.types.Integer", "java.lang.Integer")
-		refReg.putReference("x.aggregates." + abstractName, "tst.x.aggregates." + abstractName)
-		refReg.putReference("x.aggregates." + aggregateName + "Id", "tst.x.aggregates." + aggregateName + "Id")
-		refReg.putReference("x.aggregates." + aggregateName + "CreatedEvent", "tst.x.aggregates." + aggregateName + "CreatedEvent")
-		refReg.putReference("x.aggregates.AnyConstraintViolatedException", "tst.x.aggregates.AnyConstraintViolatedException")
+        // PREPARE
+        val abstractName = "Abstract" + aggregateName
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.types.Integer", "java.lang.Integer")
+        refReg.putReference("x.aggregates." + abstractName, "tst.x.aggregates." + abstractName)
+        refReg.putReference("x.aggregates." + aggregateName + "Id", "tst.x.aggregates." + aggregateName + "Id")
+        refReg.putReference("x.aggregates." + aggregateName + "CreatedEvent", "tst.x.aggregates." + aggregateName + "CreatedEvent")
+        refReg.putReference("x.aggregates.AnyConstraintViolatedException", "tst.x.aggregates.AnyConstraintViolatedException")
 
-		val FinalAggregateArtifactFactory testee = createTestee()
-		val Aggregate aggregate = model.find(typeof(Aggregate), aggregateName)
+        val FinalAggregateArtifactFactory testee = createTestee()
+        val Aggregate aggregate = model.find(typeof(Aggregate), aggregateName)
 
-		// TEST
-		val result = new String(testee.create(aggregate, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(aggregate, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/aggregates/" + aggregateName + ".java").loadAbstractExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/aggregates/" + aggregateName + ".java").loadAbstractExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new FinalAggregateArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("aggregate",
-			FinalAggregateArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new FinalAggregateArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("aggregate",
+            FinalAggregateArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregate.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregate.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

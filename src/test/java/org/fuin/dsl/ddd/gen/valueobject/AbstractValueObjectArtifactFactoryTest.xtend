@@ -27,70 +27,70 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class AbstractValueObjectArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreateAbstractMyValueObject() {
-		testCreate("MyValueObject")
-	}
-	
-	@Test
-	def void testCreateAbstractMyValueObject2() {
-		testCreate("MyValueObject2")
-	}	
+    @Test
+    def void testCreateAbstractMyValueObject() {
+        testCreate("MyValueObject")
+    }
+    
+    @Test
+    def void testCreateAbstractMyValueObject2() {
+        testCreate("MyValueObject2")
+    }    
 
-	@Test
-	def void testCreateAbstractMyValueObject3() {
-		testCreate("MyValueObject3")
-	}
+    @Test
+    def void testCreateAbstractMyValueObject3() {
+        testCreate("MyValueObject3")
+    }
 
-	@Test
-	def void testCreateAbstractMyValueObject4() {
-		testCreate("MyValueObject4")
-	}	
+    @Test
+    def void testCreateAbstractMyValueObject4() {
+        testCreate("MyValueObject4")
+    }    
 
-	@Test
-	def void testCreateAbstractFullName() {
-		testCreate("FullName")
-	}	
+    @Test
+    def void testCreateAbstractFullName() {
+        testCreate("FullName")
+    }    
 
-	def void testCreate(String name) {
-		
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+    def void testCreate(String name) {
+        
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		val AbstractValueObjectArtifactFactory testee = createTestee()
-		val ValueObject vo = model.find(typeof(ValueObject), name)
+        val AbstractValueObjectArtifactFactory testee = createTestee()
+        val ValueObject vo = model.find(typeof(ValueObject), name)
 
-		// TEST
-		val result = new String(testee.create(vo, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(vo, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/valueobject/Abstract" + name + ".java").loadAbstractExample)
-		
-	}
-		
-	private def createTestee() {
-		val factory = new AbstractValueObjectArtifactFactory() {}
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractValueObject",
-			AbstractValueObjectArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+        // VERIFY
+        assertThat(result).isEqualTo(("x/valueobject/Abstract" + name + ".java").loadAbstractExample)
+        
+    }
+        
+    private def createTestee() {
+        val factory = new AbstractValueObjectArtifactFactory() {}
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractValueObject",
+            AbstractValueObjectArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/valueobject.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/valueobject.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

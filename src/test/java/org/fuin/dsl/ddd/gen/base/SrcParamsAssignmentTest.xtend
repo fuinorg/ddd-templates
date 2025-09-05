@@ -13,35 +13,35 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDslFactoryExtensions.*
 
 class SrcParamsAssignmentTest {
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val codeSnippetContext = new SimpleCodeSnippetContext(refReg)
-		val params = new ArrayList<Parameter>()
-		params.add(eINSTANCE.createParameter("a"))
-		params.add(eINSTANCE.createParameter("b"))
-		params.add(eINSTANCE.createParameter("c", true))
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val codeSnippetContext = new SimpleCodeSnippetContext(refReg)
+        val params = new ArrayList<Parameter>()
+        params.add(eINSTANCE.createParameter("a"))
+        params.add(eINSTANCE.createParameter("b"))
+        params.add(eINSTANCE.createParameter("c", true))
 
-		val SrcParamsAssignment testee = new SrcParamsAssignment(codeSnippetContext, params)
+        val SrcParamsAssignment testee = new SrcParamsAssignment(codeSnippetContext, params)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''
-				Contract.requireArgNotNull("a", a);
-				Contract.requireArgNotNull("b", b);
-				
-				this.a = a;
-				this.b = b;
-				this.c = c;
-			'''.toString
-		)
-		assertThat(codeSnippetContext.imports).containsOnly("org.fuin.objects4j.common.Contract")
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''
+                Contract.requireArgNotNull("a", a);
+                Contract.requireArgNotNull("b", b);
+                
+                this.a = a;
+                this.b = b;
+                this.c = c;
+            '''.toString
+        )
+        assertThat(codeSnippetContext.imports).containsOnly("org.fuin.objects4j.common.Contract")
 
-	}
+    }
 
 }

@@ -23,11 +23,11 @@ package tst.x.aggregates;
  */
 public final class AggregateA extends AbstractAggregateA {
 
-	/**
-	 * Default constructor for loading the aggregate root from history. 
-	 */
-	public AggregateA() {
-		super();
-	}
+    /**
+     * Default constructor for loading the aggregate root from history. 
+     */
+    public AggregateA() {
+        super();
+    }
 
 }

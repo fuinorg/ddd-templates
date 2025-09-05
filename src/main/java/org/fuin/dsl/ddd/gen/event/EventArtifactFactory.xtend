@@ -32,192 +32,213 @@ import java.util.List
 
 class EventArtifactFactory extends AbstractSource<Event> {
 
-	override getModelType() {
-		typeof(Event)
-	}
+    override getModelType() {
+        typeof(Event)
+    }
 
-	override create(Event event, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(Event event, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val AbstractEntity entity = event.entity;
-		val className = event.getName()
-		var Namespace ns;
-		if (entity === null) {
-			ns = event.namespace;
-		} else {
-			ns = entity.namespace;
-		}
-		val pkg = ns.asPackage
-		val fqn = pkg + "." + className
-		val filename = fqn.replace('.', '/') + ".java";
+        val AbstractEntity entity = event.entity;
+        val className = event.getName()
+        var Namespace ns;
+        if (entity === null) {
+            ns = event.namespace;
+        } else {
+            ns = entity.namespace;
+        }
+        val pkg = ns.asPackage
+        val fqn = pkg + "." + className
+        val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(event.uniqueName, fqn)
+        val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+        refReg.putReference(event.uniqueName, fqn)
 
-		if (preparationRun) {
+        if (preparationRun) {
 
-			// No code generation during preparation phase
-			return null
-		}
+            // No code generation during preparation phase
+            return null
+        }
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports(entity, event)
-		ctx.addReferences(event)
+        val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
+        ctx.addImports(entity, event)
+        ctx.addReferences(event)
 
-		var String src;
-		if (entity === null) {
-			src = createStandardEvent(ctx, event, pkg, className).toString();
-		} else {
-			src = createDomainEvent(ctx, event, pkg, className).toString();
-		}
+        var String src;
+        if (entity === null) {
+            src = createStandardEvent(ctx, event, pkg, className).toString();
+        } else {
+            src = createDomainEvent(ctx, event, pkg, className).toString();
+        }
 
-		return List.of(new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8")));
-	}
+        return List.of(new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8")));
+    }
 
-	def addImports(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
-		ctx.requiresImport("org.fuin.ddd4j.core.EventType")
-		if (entity === null) {
-			ctx.requiresImport("org.fuin.ddd4j.ddd.AbstractEvent")
-			if (event.attributes.nullSafe.size > 0) {
-				ctx.requiresImport("org.fuin.objects4j.core.KeyValue")
-			}
-		} else {
-			ctx.requiresImport("org.fuin.ddd4j.jsonb.AbstractDomainEvent")
-			ctx.requiresImport("org.fuin.ddd4j.core.EntityIdPath")
-			ctx.requiresImport("jakarta.validation.constraints.NotNull")		
-			ctx.requiresImport("org.fuin.objects4j.core.KeyValue")
-		}
-	}
+    def addImports(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
+        ctx.requiresImport("org.fuin.ddd4j.core.EventType")
+        
+        if (entity === null) {
+	        if (options.jsonb) {
+	            ctx.requiresImport("org.fuin.ddd4j.jsonb.AbstractEvent")        
+	        }
+	        if (options.jaxb) {
+	            ctx.requiresImport("org.fuin.ddd4j.jaxb.AbstractEvent")        
+	        }
+	        if (options.jackson) {
+	            ctx.requiresImport("org.fuin.ddd4j.jackson.AbstractEvent")        
+	        }
+            if (event.attributes.nullSafe.size > 0) {
+                ctx.requiresImport("org.fuin.objects4j.core.KeyValue")
+            }
+        } else {
+	        if (options.jsonb) {
+	            ctx.requiresImport("org.fuin.ddd4j.jsonb.AbstractDomainEvent")        
+	        }
+	        if (options.jaxb) {
+	            ctx.requiresImport("org.fuin.ddd4j.jaxb.AbstractDomainEvent")        
+	        }
+	        if (options.jackson) {
+	            ctx.requiresImport("org.fuin.ddd4j.jackson.AbstractDomainEvent")        
+	        }
+            ctx.requiresImport("org.fuin.ddd4j.core.EntityIdPath")
+            ctx.requiresImport("jakarta.validation.constraints.NotNull")        
+            ctx.requiresImport("org.fuin.objects4j.core.KeyValue")
+        }
+    }
 
-	def addReferences(CodeSnippetContext ctx, Event event) {
-		if (event.entity !== null) {
-			ctx.requiresReference(event.entityIdType.uniqueName)
-		}
-	}
+    def addReferences(CodeSnippetContext ctx, Event event) {    	
+        if (event.entity !== null) {
+            ctx.requiresReference(event.entityIdType.uniqueName)
+        }
+    }
 
-	def AbstractEntityId getEntityIdType(Event event) {
-		if (event.entity === null) {
-			return null
-		}
-		return event.entity.idType
-	}
+    def AbstractEntityId getEntityIdType(Event event) {
+        if (event.entity === null) {
+            return null
+        }
+        return event.entity.idType
+    }
 
-	def createDomainEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
-		val String src = ''' 
-			«new SrcJavaDocType(event)»
-			«new SrcXmlRootElement(ctx, event.name)»
-			public final class «className» extends AbstractDomainEvent<«event.entityIdType.name»> {
-			
-				private static final long serialVersionUID = 1000L;
-			
-				/** Unique name used to store the event. */
-				public static final EventType EVENT_TYPE = new EventType("«event.name»");
-				
-				«new SrcVarsDecl(ctx, "private", options, event)»
-			
-				/**
-				 * Protected default constructor for deserialization.
-				 */
-				protected «event.name»() {
-					super();
-				}
-				
-				/**
-				 * «event.doc.text»
-				 *
-				 * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
-				«FOR v : event.attributes»
-					* @param «v.name» «v.superDoc» 
-				«ENDFOR»
-				*/
-				public «event.name»(@NotNull final EntityIdPath entityIdPath«IF event.attributes.nullSafe.size > 0», «new SrcParamsDecl(
-				ctx, options, event.attributes.asParameters)»«ENDIF») {
-					super(entityIdPath);
-					«new SrcParamsAssignment(ctx, event.attributes.asParameters)»
-				}
-			
-				@Override
-				public final EventType getEventType() {
-					return EVENT_TYPE;
-				}
-			
-				«new SrcGetters(ctx, options, "public final", event.attributes)»
-			
-				@Override
-				public final String toString() {
-					return KeyValue.replace("«event.message»",
-						new KeyValue("#entityIdPath", getEntityIdPath())
-						«FOR v : event.attributes»
-							, new KeyValue("«v.name»", «v.name»)
-						«ENDFOR»
-					);
-				}
-				
-			}
-		'''
+    def createDomainEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
+        val String src = ''' 
+            «new SrcJavaDocType(event)»
+            «IF options.jaxb»
+            «new SrcXmlRootElement(ctx, event.name)»
+            «ENDIF»
+            public final class «className» extends AbstractDomainEvent<«event.entityIdType.name»> {
+            
+                private static final long serialVersionUID = 1000L;
+            
+                /** Unique name used to store the event. */
+                public static final EventType EVENT_TYPE = new EventType("«event.name»");
+                
+                «new SrcVarsDecl(ctx, "private", options, event)»
+            
+                /**
+                 * Protected default constructor for deserialization.
+                 */
+                protected «event.name»() {
+                    super();
+                }
+                
+                /**
+                 * «event.doc.text»
+                 *
+                 * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
+                «FOR v : event.attributes»
+                    * @param «v.name» «v.superDoc» 
+                «ENDFOR»
+                */
+                public «event.name»(@NotNull final EntityIdPath entityIdPath«IF event.attributes.nullSafe.size > 0», «new SrcParamsDecl(
+                ctx, options, event.attributes.asParameters)»«ENDIF») {
+                    super(entityIdPath);
+                    «new SrcParamsAssignment(ctx, event.attributes.asParameters)»
+                }
+            
+                @Override
+                public final EventType getEventType() {
+                    return EVENT_TYPE;
+                }
+            
+                «new SrcGetters(ctx, options, "public final", event.attributes)»
+            
+                @Override
+                public final String toString() {
+                    return KeyValue.replace("«event.message»",
+                        new KeyValue("#entityIdPath", getEntityIdPath())
+                        «FOR v : event.attributes»
+                            , new KeyValue("«v.name»", «v.name»)
+                        «ENDFOR»
+                    );
+                }
+                
+            }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
-	def createStandardEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
-		val String src = ''' 
-			«new SrcJavaDocType(event)»
-			«new SrcXmlRootElement(ctx, event.name)»
-			public final class «className» extends AbstractEvent {
-			
-				private static final long serialVersionUID = 1000L;
-			
-				/** Unique name used to store the event. */
-				public static final EventType EVENT_TYPE = new EventType("«event.name»");
-				
-				«new SrcVarsDecl(ctx, "private", options, event)»
-			
-				«IF event.attributes.nullSafe.size > 0»
-					/**
-					 * Protected default constructor for deserialization.
-					 */
-					protected «event.name»() {
-						super();
-					}
-					
-				«ENDIF»
-				/**
-				 * «event.doc.text»
-				 *
-				«FOR v : event.attributes»
-					* @param «v.name» «v.superDoc» 
-				«ENDFOR»
-				*/
-				public «event.name»(«new SrcParamsDecl(ctx, options, event.attributes.asParameters)») {
-					super();
-					«new SrcParamsAssignment(ctx, event.attributes.asParameters)»
-				}
-			
-				@Override
-				public final EventType getEventType() {
-					return EVENT_TYPE;
-				}
-			
-				«new SrcGetters(ctx, options, "public final", event.attributes)»
-			
-				@Override
-				public final String toString() {
-					«IF event.attributes.nullSafe.size == 0»
-						return "«event.message»";
-					«ELSE»
-						return KeyValue.replace("«event.message»"
-						«FOR v : event.attributes»
-							, new KeyValue("«v.name»", «v.name»)
-						«ENDFOR»
-						);
-					«ENDIF»
-				}
-				
-			}
-		'''
+    def createStandardEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
+        val String src = ''' 
+            «new SrcJavaDocType(event)»
+            «IF options.jaxb»
+            «new SrcXmlRootElement(ctx, event.name)»
+            «ENDIF»
+            public final class «className» extends AbstractEvent {
+            
+                private static final long serialVersionUID = 1000L;
+            
+                /** Unique name used to store the event. */
+                public static final EventType EVENT_TYPE = new EventType("«event.name»");
+                
+                «new SrcVarsDecl(ctx, "private", options, event)»
+            
+                «IF event.attributes.nullSafe.size > 0»
+                    /**
+                     * Protected default constructor for deserialization.
+                     */
+                    protected «event.name»() {
+                        super();
+                    }
+                    
+                «ENDIF»
+                /**
+                 * «event.doc.text»
+                 *
+                «FOR v : event.attributes»
+                    * @param «v.name» «v.superDoc» 
+                «ENDFOR»
+                */
+                public «event.name»(«new SrcParamsDecl(ctx, options, event.attributes.asParameters)») {
+                    super();
+                    «new SrcParamsAssignment(ctx, event.attributes.asParameters)»
+                }
+            
+                @Override
+                public final EventType getEventType() {
+                    return EVENT_TYPE;
+                }
+            
+                «new SrcGetters(ctx, options, "public final", event.attributes)»
+            
+                @Override
+                public final String toString() {
+                    «IF event.attributes.nullSafe.size == 0»
+                        return "«event.message»";
+                    «ELSE»
+                        return KeyValue.replace("«event.message»"
+                        «FOR v : event.attributes»
+                            , new KeyValue("«v.name»", «v.name»)
+                        «ENDFOR»
+                        );
+                    «ENDIF»
+                }
+                
+            }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
 }

@@ -35,73 +35,73 @@ import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
 // CHECKSTYLE:OFF
 public final class EventCTest {
 
-	@Test
-	public final void testSerializeDeserialize() {
+    @Test
+    public final void testSerializeDeserialize() {
 
-		// PREPARE
-		final EventC original = createTestee();
+        // PREPARE
+        final EventC original = createTestee();
 
-		// TEST
-		final EventC copy = deserialize(serialize(original));
+        // TEST
+        final EventC copy = deserialize(serialize(original));
 
-		// VERIFY
-		assertThat(original).isEqualTo(copy);
-		assertThat(original.getA()).isEqualTo(copy.getA());
-		assertThat(original.getB()).isEqualTo(copy.getB());
+        // VERIFY
+        assertThat(original).isEqualTo(copy);
+        assertThat(original.getA()).isEqualTo(copy.getA());
+        assertThat(original.getB()).isEqualTo(copy.getB());
 
-	}
+    }
 
-	@Test
-	public final void testMarshalUnmarshalXml() {
+    @Test
+    public final void testMarshalUnmarshalXml() {
 
-		// PREPARE
-		final EventC original = createTestee();
+        // PREPARE
+        final EventC original = createTestee();
 
-		// TEST
-		final String xml = marshal(original, createAdapter(), EventC.class);
-		final EventC copy = unmarshal(xml, createAdapter(), EventC.class);
+        // TEST
+        final String xml = marshal(original, createAdapter(), EventC.class);
+        final EventC copy = unmarshal(xml, createAdapter(), EventC.class);
 
-		// VERIFY
-		assertThat(original).isEqualTo(copy);
-		assertThat(original.getA()).isEqualTo(copy.getA());
-		assertThat(original.getB()).isEqualTo(copy.getB());
+        // VERIFY
+        assertThat(original).isEqualTo(copy);
+        assertThat(original.getA()).isEqualTo(copy.getA());
+        assertThat(original.getB()).isEqualTo(copy.getB());
 
-	}
+    }
 
-	@Test
-	public final void testMarshalUnmarshalJson() {
+    @Test
+    public final void testMarshalUnmarshalJson() {
 
-		// PREPARE
-		final EventC original = createTestee();
+        // PREPARE
+        final EventC original = createTestee();
 
-		final JsonbConfig config = new JsonbConfig()
-				.withAdapters(new EventIdJsonbAdapter())
-				.withPropertyVisibilityStrategy(new FieldAccessStrategy());
-		final Jsonb jsonb = JsonbBuilder.create(config);
+        final JsonbConfig config = new JsonbConfig()
+                .withAdapters(new EventIdJsonbAdapter())
+                .withPropertyVisibilityStrategy(new FieldAccessStrategy());
+        final Jsonb jsonb = JsonbBuilder.create(config);
 
-		// TEST
-		final String json = jsonb.toJson(original, EventC.class);
-		final EventC copy = jsonb.fromJson(json, EventC.class);
+        // TEST
+        final String json = jsonb.toJson(original, EventC.class);
+        final EventC copy = jsonb.fromJson(json, EventC.class);
 
-		// VERIFY
-		assertThat(original).isEqualTo(copy);
-		assertThat(original.getA()).isEqualTo(copy.getA());
-		assertThat(original.getB()).isEqualTo(copy.getB());
+        // VERIFY
+        assertThat(original).isEqualTo(copy);
+        assertThat(original.getA()).isEqualTo(copy.getA());
+        assertThat(original.getB()).isEqualTo(copy.getB());
 
-	}
+    }
 
-	private EventC createTestee() {
-		// TODO Set test values
-		final CustomerId entityId = new CustomerId("42705de0-91a1-11e4-b4a9-0800200c9a6");
-		final String a = "Abc";
-		final Integer b = 123;
-		return new EventC(new EntityIdPath(entityId), a, b);
-	}
+    private EventC createTestee() {
+        // TODO Set test values
+        final CustomerId entityId = new CustomerId("42705de0-91a1-11e4-b4a9-0800200c9a6");
+        final String a = "Abc";
+        final Integer b = 123;
+        return new EventC(new EntityIdPath(entityId), a, b);
+    }
 
-	protected final XmlAdapter<?, ?>[] createAdapter() {
-		final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(new XEntityIdFactory());
-		return new XmlAdapter[] { EntityIdPathXmlAdapter };
-	}
+    protected final XmlAdapter<?, ?>[] createAdapter() {
+        final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(new XEntityIdFactory());
+        return new XmlAdapter[] { EntityIdPathXmlAdapter };
+    }
 
 }
 // CHECKSTYLE:ON

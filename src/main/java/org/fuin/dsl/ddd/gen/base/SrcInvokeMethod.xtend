@@ -12,42 +12,42 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
  */
 class SrcInvokeMethod implements CodeSnippet {
 
-	val String method
-	val List<String> names
+    val String method
+    val List<String> names
 
-	/**
-	 * Constructor with names.
-	 * 
-	 * @param ctx Context.
-	 * @param method Name of the method to call.
-	 * @param names List of names to use to invoke the super constructor.
-	 */
-	new(CodeSnippetContext ctx, String method, List<String> names) {
-		this.method = method
-		this.names = names;
-	}
-	
-	/**
-	 * Constructor with names.
-	 * 
-	 * @param ctx Context.
-	 * @param method Name of the method to call.
-	 * @param names Names to use to invoke the super constructor.
-	 */
-	new(CodeSnippetContext ctx, String method, String...names) {
-		this.method = method
-		this.names = new ArrayList()
-		if (names !== null) {
-			this.names.addAll(names)		
-		}
-	}
+    /**
+     * Constructor with names.
+     * 
+     * @param ctx Context.
+     * @param method Name of the method to call.
+     * @param names List of names to use to invoke the super constructor.
+     */
+    new(CodeSnippetContext ctx, String method, List<String> names) {
+        this.method = method
+        this.names = names;
+    }
+    
+    /**
+     * Constructor with names.
+     * 
+     * @param ctx Context.
+     * @param method Name of the method to call.
+     * @param names Names to use to invoke the super constructor.
+     */
+    new(CodeSnippetContext ctx, String method, String...names) {
+        this.method = method
+        this.names = new ArrayList()
+        if (names !== null) {
+            this.names.addAll(names)        
+        }
+    }
 
-	override toString() {
-		if (names.nullSafe.size == 0) {
-			return '''«method»();''';
-		} else {
-			return '''«method»(«FOR name : names SEPARATOR ', '»«name»«ENDFOR»);''';
-		}
-	}
+    override toString() {
+        if (names.nullSafe.size == 0) {
+            return '''«method»();''';
+        } else {
+            return '''«method»(«FOR name : names SEPARATOR ', '»«name»«ENDFOR»);''';
+        }
+    }
 
 }

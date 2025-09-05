@@ -17,39 +17,37 @@
  */
 package tst2.x.ev;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
 import org.fuin.ddd4j.core.EventType;
-import org.fuin.ddd4j.ddd.AbstractEvent;
+import org.fuin.ddd4j.jsonb.AbstractEvent;
 
 /**
  * Event D - Independent of an aggregate.
  */
-@XmlRootElement(name = "event-d")
 public final class EventD extends AbstractEvent {
 
-	private static final long serialVersionUID = 1000L;
+    private static final long serialVersionUID = 1000L;
 
-	/** Unique name used to store the event. */
-	public static final EventType EVENT_TYPE = new EventType("EventD");
-	
+    /** Unique name used to store the event. */
+    public static final EventType EVENT_TYPE = new EventType("EventD");
+    
 
-	/**
-	 * Event D - Independent of an aggregate.
-	 *
-	*/
-	public EventD() {
-		super();
-	}
+    /**
+     * Event D - Independent of an aggregate.
+     *
+    */
+    public EventD() {
+        super();
+    }
 
-	@Override
-	public final EventType getEventType() {
-		return EVENT_TYPE;
-	}
+    @Override
+    public final EventType getEventType() {
+        return EVENT_TYPE;
+    }
 
 
-	@Override
-	public final String toString() {
-		return "Something interesting happened!";
-	}
-	
+    @Override
+    public final String toString() {
+        return "Something interesting happened!";
+    }
+    
 }

@@ -14,68 +14,68 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
  */
 class SrcJavaDocType implements CodeSnippet {
 
-	val String text
+    val String text
 
-	/**
-	 * Constructor with doc.
-	 * 
-	 * @param doc Doc including comment characters.
-	 */
-	new(String doc) {
-		this.text = doc.text
-	}
+    /**
+     * Constructor with doc.
+     * 
+     * @param doc Doc including comment characters.
+     */
+    new(String doc) {
+        this.text = doc.text
+    }
 
-	/**
-	 * Constructor with constructor.
-	 * 
-	 * @param method Constructor with doc.
-	 */
-	new(Constructor constructor) {
-		this(constructor.doc)
-	}
+    /**
+     * Constructor with constructor.
+     * 
+     * @param method Constructor with doc.
+     */
+    new(Constructor constructor) {
+        this(constructor.doc)
+    }
 
-	/**
-	 * Constructor with method.
-	 * 
-	 * @param method Method with doc.
-	 */
-	new(Method method) {
-		this(method.doc)
-	}
+    /**
+     * Constructor with method.
+     * 
+     * @param method Method with doc.
+     */
+    new(Method method) {
+        this(method.doc)
+    }
 
-	/**
-	 * Constructor with internal type.
-	 * 
-	 * @param internalType Type with doc.
-	 */
-	new(InternalType internalType) {
-		this(internalType.doc)
-	}
+    /**
+     * Constructor with internal type.
+     * 
+     * @param internalType Type with doc.
+     */
+    new(InternalType internalType) {
+        this(internalType.doc)
+    }
 
-	/**
-	 * Constructor with service.
-	 * 
-	 * @param service Service with doc.
-	 */
-	new(Service service) {
-		this(service.doc)
-	}
-	
-	/**
-	 * Constructor with event.
-	 * 
-	 * @param event Event with doc.
-	 */
-	new(Event event) {
-		this(event.doc)
-	}
+    /**
+     * Constructor with service.
+     * 
+     * @param service Service with doc.
+     */
+    new(Service service) {
+        this(service.doc)
+    }
+    
+    /**
+     * Constructor with event.
+     * 
+     * @param event Event with doc.
+     */
+    new(Event event) {
+        this(event.doc)
+    }
 
-	override toString() {
-		'''
-			/**
-			 * «text»
-			 */
-		'''
-	}
+    override toString() {
+        '''
+            /**
+             * «text»
+             */
+        '''
+    }
 
 }

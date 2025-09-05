@@ -11,16 +11,16 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
  */
 class SrcXmlElement implements CodeSnippet {
 
-	val Variable variable
+    val Variable variable
 
-	new(CodeSnippetContext ctx, Variable variable) {
-		this.variable = variable
+    new(CodeSnippetContext ctx, Variable variable) {
+        this.variable = variable
 
-		ctx.requiresImport("jakarta.xml.bind.annotation.XmlElement")
-	}
+        ctx.requiresImport("jakarta.xml.bind.annotation.XmlElement")
+    }
 
-	override toString() {
-		'''@XmlElement(name = "«variable.name.toXmlName»")'''
-	}
+    override toString() {
+        '''@XmlElement(name = "«variable.name.toXmlName»")'''
+    }
 
 }

@@ -21,118 +21,118 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 @ExtendWith(InjectionExtension) 
 class SrcVoBaseMethodsNumberTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testString() {
+    @Test
+    def void testString() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		refReg.putReference("y.types.Long", "java.lang.Long")
-		refReg.putReference("y.a.MyEntityId", "a.b.c.MyEntityId")
-		val EntityId entityId = createModel().find(EntityId, "MyEntityId")
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        refReg.putReference("y.types.Long", "java.lang.Long")
+        refReg.putReference("y.a.MyEntityId", "a.b.c.MyEntityId")
+        val EntityId entityId = createModel().find(EntityId, "MyEntityId")
 
-		val testee = new SrcVoBaseMethodsNumber(ctx, entityId)
+        val testee = new SrcVoBaseMethodsNumber(ctx, entityId)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''	
-				/**
-				 * Returns the information if a given Long can be converted into
-				 * an instance of MyEntityId. A <code>null</code> value returns <code>true</code>.
-				 * 
-				 * @param value
-				 *            Value to check.
-				 * 
-				 * @return TRUE if it's a valid Long, else FALSE.
-				 */
-				public static boolean isValid(final Long value) {
-					if (value == null) {
-						return true;
-					}
-					try {
-						Long.valueOf(value);
-					} catch (final NumberFormatException ex) {
-						return false;
-					}
-					return true;
-				}
-				
-				/**
-				 * Parses a given Long and returns a new instance of MyEntityId.
-				 * 
-				 * @param value
-				 *            Value to convert. A <code>null</code> value returns
-				 *            <code>null</code>.
-				 * 
-				 * @return Converted value.
-				 */
-				public static MyEntityId valueOf(final Long value) {
-					if (value == null) {
-						return null;
-					}
-					return new MyEntityId(value);
-				}
-				
-				/**
-				 * Parses a given String and returns a new instance of MyEntityId.
-				 * 
-				 * @param value
-				 *            Value to convert. A <code>null</code> value returns
-				 *            <code>null</code>.
-				 * 
-				 * @return Converted value.
-				 */
-				public static MyEntityId valueOf(final String value) {
-					if (value == null) {
-						return null;
-					}
-					return new MyEntityId(Long.valueOf(value));
-				}
-				
-			'''.toString
-		)
-		assertThat(ctx.imports).containsOnly("a.b.c.MyEntityId", "java.lang.Long")
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''    
+                /**
+                 * Returns the information if a given Long can be converted into
+                 * an instance of MyEntityId. A <code>null</code> value returns <code>true</code>.
+                 * 
+                 * @param value
+                 *            Value to check.
+                 * 
+                 * @return TRUE if it's a valid Long, else FALSE.
+                 */
+                public static boolean isValid(final Long value) {
+                    if (value == null) {
+                        return true;
+                    }
+                    try {
+                        Long.valueOf(value);
+                    } catch (final NumberFormatException ex) {
+                        return false;
+                    }
+                    return true;
+                }
+                
+                /**
+                 * Parses a given Long and returns a new instance of MyEntityId.
+                 * 
+                 * @param value
+                 *            Value to convert. A <code>null</code> value returns
+                 *            <code>null</code>.
+                 * 
+                 * @return Converted value.
+                 */
+                public static MyEntityId valueOf(final Long value) {
+                    if (value == null) {
+                        return null;
+                    }
+                    return new MyEntityId(value);
+                }
+                
+                /**
+                 * Parses a given String and returns a new instance of MyEntityId.
+                 * 
+                 * @param value
+                 *            Value to convert. A <code>null</code> value returns
+                 *            <code>null</code>.
+                 * 
+                 * @return Converted value.
+                 */
+                public static MyEntityId valueOf(final String value) {
+                    if (value == null) {
+                        return null;
+                    }
+                    return new MyEntityId(Long.valueOf(value));
+                }
+                
+            '''.toString
+        )
+        assertThat(ctx.imports).containsOnly("a.b.c.MyEntityId", "java.lang.Long")
 
-	}
+    }
 
-	def DomainModel createModel() {
-		val DomainModel model = parser.parse(
-			'''
-				context y {
-				
-					namespace types {
-						type Long
-						type UUID
-					}
-					
-					namespace a {
-						
-						import y.types.*
-						
-						entity-id MyEntityId identifies MyEntity base Long {}
-						
-						entity MyEntity identifier MyEntityId root MyAggregate {}
-				
-						aggregate-id MyAggregateId identifies MyAggregate base UUID {}
-							
-						aggregate MyAggregate identifier MyAggregateId {}
-							
-					}
-					
-				}
-			'''
-		)
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    def DomainModel createModel() {
+        val DomainModel model = parser.parse(
+            '''
+                context y {
+                
+                    namespace types {
+                        type Long
+                        type UUID
+                    }
+                    
+                    namespace a {
+                        
+                        import y.types.*
+                        
+                        entity-id MyEntityId identifies MyEntity base Long {}
+                        
+                        entity MyEntity identifier MyEntityId root MyAggregate {}
+                
+                        aggregate-id MyAggregateId identifies MyAggregate base UUID {}
+                            
+                        aggregate MyAggregate identifier MyAggregateId {}
+                            
+                    }
+                    
+                }
+            '''
+        )
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

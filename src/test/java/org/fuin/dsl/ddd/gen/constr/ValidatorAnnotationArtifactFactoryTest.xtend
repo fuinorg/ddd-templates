@@ -27,86 +27,86 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class ValidatorAnnotationArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testConstraintA() {
-		testConstraint("ConstraintA")
-	}
+    @Test
+    def void testConstraintA() {
+        testConstraint("ConstraintA")
+    }
 
-	@Test
-	def void testConstraintB() {
-		testConstraint("ConstraintB")
-	}
+    @Test
+    def void testConstraintB() {
+        testConstraint("ConstraintB")
+    }
 
-	@Test
-	def void testConstraintC() {
-		testConstraint("ConstraintC")
-	}
+    @Test
+    def void testConstraintC() {
+        testConstraint("ConstraintC")
+    }
 
-	@Test
-	def void testConstraintD() {
-		testConstraint("ConstraintD")
-	}
-	
-	@Test
-	def void testConstraintE() {
-		testConstraint("ConstraintE")
-	}
+    @Test
+    def void testConstraintD() {
+        testConstraint("ConstraintD")
+    }
+    
+    @Test
+    def void testConstraintE() {
+        testConstraint("ConstraintE")
+    }
 
-	@Test
-	def void testConstraintF() {
-		testConstraint("ConstraintF")
-	}
+    @Test
+    def void testConstraintF() {
+        testConstraint("ConstraintF")
+    }
 
-	@Test
-	def void testConstraintG() {
-		testConstraint("ConstraintG")
-	}
+    @Test
+    def void testConstraintG() {
+        testConstraint("ConstraintG")
+    }
 
-	@Test
-	def void testConstraintH() {
-		testConstraint("ConstraintH")
-	}
+    @Test
+    def void testConstraintH() {
+        testConstraint("ConstraintH")
+    }
 
-	private def testConstraint(String constrName) {
+    private def testConstraint(String constrName) {
 
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.constr." + constrName + "Validator",
-			EXAMPLES_CONCRETE + ".x.constr." + constrName + "Validator")
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.constr." + constrName + "Validator",
+            EXAMPLES_CONCRETE + ".x.constr." + constrName + "Validator")
 
-		val ValidatorAnnotationArtifactFactory testee = createTestee()
-		val Constraint constraint = model.find(typeof(Constraint), constrName)
+        val ValidatorAnnotationArtifactFactory testee = createTestee()
+        val Constraint constraint = model.find(typeof(Constraint), constrName)
 
-		// TEST
-		val result = new String(testee.create(constraint, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(constraint, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/constr/" + constrName + ".java").loadConcreteExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/constr/" + constrName + ".java").loadConcreteExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new ValidatorAnnotationArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("validatorAnnotation",
-			ValidatorAnnotationArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new ValidatorAnnotationArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("validatorAnnotation",
+            ValidatorAnnotationArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/constraint.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/constraint.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

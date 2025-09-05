@@ -27,47 +27,47 @@ import org.fuin.objects4j.core.KeyValue;
  */
 public final class ExceptionF extends UniquelyNumberedException {
 
-	private static final long serialVersionUID = 1000L;
+    private static final long serialVersionUID = 1000L;
 
-	@NotNull
-	private String a;
-	
-	@NotNull
-	private Integer b;
-	
-	/**
-	 * Constructs a new instance of the exception.
-	 *
-	 * @param a A.
-	 * @param b B.
-	 */
-	public ExceptionF(@NotNull final String a, @NotNull final Integer b) {
-		super(125, KeyValue.replace("Exception F: ${a} / ${b}",  new KeyValue("a", a), new KeyValue("b", b)));
-		Contract.requireArgNotNull("a", a);
-		Contract.requireArgNotNull("b", b);
-		
-		this.a = a;
-		this.b = b;
-	}
+    @NotNull
+    private String a;
+    
+    @NotNull
+    private Integer b;
+    
+    /**
+     * Constructs a new instance of the exception.
+     *
+     * @param a A.
+     * @param b B.
+     */
+    public ExceptionF(@NotNull final String a, @NotNull final Integer b) {
+        super(125, KeyValue.replace("Exception F: ${a} / ${b}",  new KeyValue("a", a), new KeyValue("b", b)));
+        Contract.requireArgNotNull("a", a);
+        Contract.requireArgNotNull("b", b);
+        
+        this.a = a;
+        this.b = b;
+    }
 
-	/**
-	 * Returns: A.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getA() {
-		return a;
-	}
-	
-	/**
-	 * Returns: B.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final Integer getB() {
-		return b;
-	}
-	
+    /**
+     * Returns: A.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getA() {
+        return a;
+    }
+    
+    /**
+     * Returns: B.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final Integer getB() {
+        return b;
+    }
+    
 }

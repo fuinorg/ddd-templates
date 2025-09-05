@@ -24,14 +24,14 @@ import jakarta.validation.constraints.NotNull;
  */
 public final class EntityA extends AbstractEntityA {
 
-	/**
-	 * Constructor with mandatory data.
-	 *
-	 * @param rootAggregate The root aggregate of this entity.
-	 * @param id Unique entity identifier.
-	 */
-	public EntityA(@NotNull final AggregateX rootAggregate, @NotNull final EntityAId id) {
-		super(rootAggregate, id);
-	}
-	
+    /**
+     * Constructor with mandatory data.
+     *
+     * @param rootAggregate The root aggregate of this entity.
+     * @param id Unique entity identifier.
+     */
+    public EntityA(@NotNull final AggregateX rootAggregate, @NotNull final EntityAId id) {
+        super(rootAggregate, id);
+    }
+    
 }

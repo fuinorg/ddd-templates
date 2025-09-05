@@ -10,47 +10,47 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
  */
 class SrcJavaDocReturn {
 
-	val String doc;
+    val String doc;
 
-	/**
-	 * Constructor with mandatory data.
-	 * 
-	 * @param doc Text for the comment.
-	 */
-	new(@Nullable String doc) {
-		if (doc === null) {
-			this.doc = null
-		} else {
-			this.doc = doc.text
-		}
-	}
+    /**
+     * Constructor with mandatory data.
+     * 
+     * @param doc Text for the comment.
+     */
+    new(@Nullable String doc) {
+        if (doc === null) {
+            this.doc = null
+        } else {
+            this.doc = doc.text
+        }
+    }
 
-	/**
-	 * Constructor with mandatory data.
-	 * 
-	 * @param doc Text for the comment.
-	 */
-	new(@Nullable ReturnType returnType) {
-		if (returnType === null) {
-			this.doc = null
-		} else {
-			this.doc = returnType.doc.text		
-		}
-	}
+    /**
+     * Constructor with mandatory data.
+     * 
+     * @param doc Text for the comment.
+     */
+    new(@Nullable ReturnType returnType) {
+        if (returnType === null) {
+            this.doc = null
+        } else {
+            this.doc = returnType.doc.text        
+        }
+    }
 
-	override toString() {
-		if (doc === null) {
-			''''''
-		} else {
-			'''
-				«sp»*
-				«sp»* @return «doc»
-			'''		
-		}
-	}
+    override toString() {
+        if (doc === null) {
+            ''''''
+        } else {
+            '''
+                «sp»*
+                «sp»* @return «doc»
+            '''        
+        }
+    }
 
-	def sp() {
-		" "
-	}
+    def sp() {
+        " "
+    }
 
 }

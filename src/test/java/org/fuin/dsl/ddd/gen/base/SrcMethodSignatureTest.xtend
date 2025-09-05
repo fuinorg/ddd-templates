@@ -21,65 +21,65 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 @ExtendWith(InjectionExtension) 
 class SrcMethodSignatureTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("x.a.MyAggregateId", "a.b.c.MyAggregateId")
-		refReg.putReference("x.a.MyValueObject", "a.b.c.MyValueObject")
-		refReg.putReference("x.a.ConstraintViolatedException", "a.b.c.ConstraintViolatedException")
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
-		val method = aggregate.methods.get(0)
-		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", false, GenerateOptions.empty(), method)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        refReg.putReference("x.a.MyAggregateId", "a.b.c.MyAggregateId")
+        refReg.putReference("x.a.MyValueObject", "a.b.c.MyValueObject")
+        refReg.putReference("x.a.ConstraintViolatedException", "a.b.c.ConstraintViolatedException")
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
+        val method = aggregate.methods.get(0)
+        val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", false, GenerateOptions.empty(), method)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException'''.toString)
-		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull", "a.b.c.MyAggregateId",
-			"a.b.c.MyValueObject", "a.b.c.ConstraintViolatedException")
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''public void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException'''.toString)
+        assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull", "a.b.c.MyAggregateId",
+            "a.b.c.MyValueObject", "a.b.c.ConstraintViolatedException")
 
-	}
+    }
 
-	@Test
-	def void testCreateAbstract() {
+    @Test
+    def void testCreateAbstract() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("x.a.MyAggregateId", "a.b.c.MyAggregateId")
-		refReg.putReference("x.a.MyValueObject", "a.b.c.MyValueObject")
-		refReg.putReference("x.a.ConstraintViolatedException", "a.b.c.ConstraintViolatedException")
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
-		val method = aggregate.methods.get(0)
-		val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", true, GenerateOptions.empty(), method)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        refReg.putReference("x.a.MyAggregateId", "a.b.c.MyAggregateId")
+        refReg.putReference("x.a.MyValueObject", "a.b.c.MyValueObject")
+        refReg.putReference("x.a.ConstraintViolatedException", "a.b.c.ConstraintViolatedException")
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val Aggregate aggregate = model().find(Aggregate, "MyAggregate")
+        val method = aggregate.methods.get(0)
+        val SrcMethodSignature testee = new SrcMethodSignature(ctx, "public", true, GenerateOptions.empty(), method)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''public abstract void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException'''.toString)
-		assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull", "a.b.c.MyAggregateId",
-			"a.b.c.MyValueObject", "a.b.c.ConstraintViolatedException")
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''public abstract void doSomething(@NotNull final MyAggregateId id, final MyValueObject vo) throws ConstraintViolatedException'''.toString)
+        assertThat(ctx.imports).containsOnly("jakarta.validation.constraints.NotNull", "a.b.c.MyAggregateId",
+            "a.b.c.MyValueObject", "a.b.c.ConstraintViolatedException")
 
-	}
+    }
 
-	def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 
 }

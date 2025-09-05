@@ -23,31 +23,31 @@ import jakarta.validation.ConstraintValidatorContext;
 /** Constraint G - External type target - With exception - No variables */
 // CHECKSTYLE:OFF:LineLength
 public final class ConstraintGValidator implements ConstraintValidator<ConstraintG, String> {
-	// CHECKSTYLE:ON:LineLength
+    // CHECKSTYLE:ON:LineLength
 
-	@Override
-	public final void initialize(final ConstraintG annotation) {
-		// TODO Implement!
-	}
+    @Override
+    public final void initialize(final ConstraintG annotation) {
+        // TODO Implement!
+    }
 
-	@Override
-	public final boolean isValid(final String object, final ConstraintValidatorContext ctx) {
-		// TODO Implement!
-		return true;
-	}
+    @Override
+    public final boolean isValid(final String object, final ConstraintValidatorContext ctx) {
+        // TODO Implement!
+        return true;
+    }
 
-	/**
-	 * Verifies that the argument is valid an throws an exception otherwise.
-	 * 
-	 * @param obj Object to validate.
-	 * 
-	 * @throws GException The constraint was violated.
-	 */
-	public static void requireValid(final String obj) throws GException {
-		// TODO Implement!
-		// if ( ... ) {
-		//		throw new GException();
-		// }
-	}
+    /**
+     * Verifies that the argument is valid an throws an exception otherwise.
+     * 
+     * @param obj Object to validate.
+     * 
+     * @throws GException The constraint was violated.
+     */
+    public static void requireValid(final String obj) throws GException {
+        // TODO Implement!
+        // if ( ... ) {
+        //        throw new GException();
+        // }
+    }
 
 }

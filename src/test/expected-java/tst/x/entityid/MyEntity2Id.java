@@ -26,27 +26,27 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class MyEntity2Id extends AbstractMyEntity2Id {
 
-	private static final long serialVersionUID = 1000L;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected MyEntity2Id() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param id Persistent value.
-	 */
-	public MyEntity2Id(@NotNull final String id) {
-		super(id);
-	}
-	
-	@Override
-	public final String asString() {
-		return "" + getId();
-	}
+    private static final long serialVersionUID = 1000L;
+    
+    /**
+     * Default constructor.
+     */
+    protected MyEntity2Id() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param id Persistent value.
+     */
+    public MyEntity2Id(@NotNull final String id) {
+        super(id);
+    }
+    
+    @Override
+    public final String asString() {
+        return "" + getId();
+    }
 
 }

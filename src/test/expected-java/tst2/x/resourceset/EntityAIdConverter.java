@@ -29,40 +29,40 @@ import org.fuin.objects4j.core.AbstractValueObjectConverter;
 @ApplicationScoped
 @Converter(autoApply = true)
 public final class EntityAIdConverter extends
-		AbstractValueObjectConverter<String, EntityAId> implements
-		AttributeConverter<EntityAId, String>, SingleEntityIdFactory {
+        AbstractValueObjectConverter<String, EntityAId> implements
+        AttributeConverter<EntityAId, String>, SingleEntityIdFactory {
 
-	@Override
-	public Class<String> getBaseTypeClass() {
-		return String.class;
-	}
+    @Override
+    public Class<String> getBaseTypeClass() {
+        return String.class;
+    }
 
-	@Override
-	public final Class<EntityAId> getValueObjectClass() {
-		return EntityAId.class;
-	}
+    @Override
+    public final Class<EntityAId> getValueObjectClass() {
+        return EntityAId.class;
+    }
 
-	@Override
-	public final boolean isValid(final String value) {
-		return EntityAId.isValid(value);
-	}
+    @Override
+    public final boolean isValid(final String value) {
+        return EntityAId.isValid(value);
+    }
 
-	@Override
-	public final EntityAId toVO(final String value) {
-		return EntityAId.valueOf(value);
-	}
+    @Override
+    public final EntityAId toVO(final String value) {
+        return EntityAId.valueOf(value);
+    }
 
-	@Override
-	public final String fromVO(final EntityAId value) {
-		if (value == null) {
-			return null;
-		}
-		return value.asBaseType();
-	}
+    @Override
+    public final String fromVO(final EntityAId value) {
+        if (value == null) {
+            return null;
+        }
+        return value.asBaseType();
+    }
 
-	@Override
-	public final EntityId createEntityId(final String id) {
-		return EntityAId.valueOf(id);
-	}
+    @Override
+    public final EntityId createEntityId(final String id) {
+        return EntityAId.valueOf(id);
+    }
 
 }

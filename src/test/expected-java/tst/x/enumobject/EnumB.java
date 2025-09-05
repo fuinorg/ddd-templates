@@ -21,32 +21,32 @@ import jakarta.validation.constraints.NotNull;
 
 /** Enumeration type B - With variables. */
 public final class EnumB extends AbstractEnumB {
-	
-	/** First. */
-	public static final EnumB A = new EnumB(1, "a", "First");
-	
-	/** Second. */
-	public static final EnumB B = new EnumB(2, "b", "Second");
-	
-	/** Third. */
-	public static final EnumB C = new EnumB(3, "c", "Third");
-	
-	/** All instances. */
-	public static final EnumB[] ALL = new EnumB[] {
-		A, B, C
-	};
-	
-	/** Valid instances. */
-	public static final EnumB[] VALID = new EnumB[] {
-		A, B, C
-	};
-	
-	/** Deprecated instances. */
-	public static final EnumB[] DEPRECTAED = new EnumB[] {
-	};
-	
-	private EnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
-		super(id, shortName, longName);
-	}
-	
+    
+    /** First. */
+    public static final EnumB A = new EnumB(1, "a", "First");
+    
+    /** Second. */
+    public static final EnumB B = new EnumB(2, "b", "Second");
+    
+    /** Third. */
+    public static final EnumB C = new EnumB(3, "c", "Third");
+    
+    /** All instances. */
+    public static final List<EnumB> ALL = List.of(
+        A, B, C
+    );
+    
+    /** Valid instances. */
+    public static final List<EnumB> VALID = List.of(
+        A, B, C
+    );
+    
+    /** Deprecated instances. */
+    public static final List<EnumB> DEPRECATED = List.of(
+    );
+    
+    private EnumB(@NotNull final Integer id, @NotNull final String shortName, @NotNull final String longName) {
+        super(id, shortName, longName);
+    }
+    
 }

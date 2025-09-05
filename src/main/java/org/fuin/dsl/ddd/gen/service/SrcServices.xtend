@@ -12,21 +12,21 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
  */
 class SrcServices implements CodeSnippet {
 
-	val CodeSnippetContext ctx
-	val List<Service> services
+    val CodeSnippetContext ctx
+    val List<Service> services
 
-	new(CodeSnippetContext ctx, List<Service> services) {
-		this.ctx = ctx
-		this.services = services
-	}
+    new(CodeSnippetContext ctx, List<Service> services) {
+        this.ctx = ctx
+        this.services = services
+    }
 
-	override toString() {
-		'''	
-		«FOR service : services.nullSafe»
-			«new SrcService(ctx, service).toString»
-			
-		«ENDFOR»
-		'''
-	}
+    override toString() {
+        '''    
+        «FOR service : services.nullSafe»
+            «new SrcService(ctx, service).toString»
+            
+        «ENDFOR»
+        '''
+    }
 
 }

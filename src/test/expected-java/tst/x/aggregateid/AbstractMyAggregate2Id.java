@@ -29,51 +29,51 @@ import org.fuin.objects4j.common.ValueObject;
  */
 public abstract class AbstractMyAggregate2Id implements AggregateRootId, ValueObject {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	private String id;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected AbstractMyAggregate2Id() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param id Persistent value.
-	 */
-	public AbstractMyAggregate2Id(@NotNull final String id) {
-		super();
-		Contract.requireArgNotNull("id", id);
-		
-		this.id = id;
-	}
-	
-	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getId() {
-		return id;
-	}
-	
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyAggregate2");
-	
-	@Override
-	public final EntityType getType() {
-		return TYPE;
-	}
-	
-	@Override
-	public final String asTypedString() {
-		return TYPE + " " + asString();
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    private String id;
+    
+    /**
+     * Default constructor.
+     */
+    protected AbstractMyAggregate2Id() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param id Persistent value.
+     */
+    public AbstractMyAggregate2Id(@NotNull final String id) {
+        super();
+        Contract.requireArgNotNull("id", id);
+        
+        this.id = id;
+    }
+    
+    /**
+     * Returns: Persistent value.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getId() {
+        return id;
+    }
+    
+    /** Name that identifies the entity uniquely within the context. */    
+    public static final EntityType TYPE = new StringBasedEntityType("MyAggregate2");
+    
+    @Override
+    public final EntityType getType() {
+        return TYPE;
+    }
+    
+    @Override
+    public final String asTypedString() {
+        return TYPE + " " + asString();
+    }
+    
 }

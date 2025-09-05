@@ -24,31 +24,31 @@ import jakarta.validation.Validator;
 /** Constraint D - Value object target - With exception - With variables */
 // CHECKSTYLE:OFF:LineLength
 public final class ConstraintDValidator implements ConstraintValidator<ConstraintD, ValueObjectD> {
-	// CHECKSTYLE:ON:LineLength
+    // CHECKSTYLE:ON:LineLength
 
-	@Override
-	public final void initialize(final ConstraintD annotation) {
-		// TODO Implement!
-	}
+    @Override
+    public final void initialize(final ConstraintD annotation) {
+        // TODO Implement!
+    }
 
-	@Override
-	public final boolean isValid(final ValueObjectD object, final ConstraintValidatorContext ctx) {
-		// TODO Implement!
-		return true;
-	}
+    @Override
+    public final boolean isValid(final ValueObjectD object, final ConstraintValidatorContext ctx) {
+        // TODO Implement!
+        return true;
+    }
 
-	/**
-	 * Verifies that the argument is valid an throws an exception otherwise.
-	 * 
-	 * @param validator Validator to use.
-	 * @param obj Object to validate.
-	 * 
-	 * @throws DException The constraint was violated.
-	 */
-	public static void requireValid(final Validator validator, final ValueObjectD obj) throws DException {
-		if (validator.validate(obj).size() > 0) {
-			throw new DException(obj.getA(), obj.getB(), obj.getC(), obj.getD());
-		}
-	}
+    /**
+     * Verifies that the argument is valid an throws an exception otherwise.
+     * 
+     * @param validator Validator to use.
+     * @param obj Object to validate.
+     * 
+     * @throws DException The constraint was violated.
+     */
+    public static void requireValid(final Validator validator, final ValueObjectD obj) throws DException {
+        if (validator.validate(obj).size() > 0) {
+            throw new DException(obj.getA(), obj.getB(), obj.getC(), obj.getD());
+        }
+    }
 
 }

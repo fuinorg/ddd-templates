@@ -28,33 +28,33 @@ import tst.x.aggregates.AggregateCId;
  */
 public final class AggregateCRepository extends EventStoreRepository<AggregateCId, AggregateC> {
 
-	/**
-	 * Constructor with all mandatory data.
-	 * 
-	 * @param eventStore Event store.
-	 */
-	public AggregateCRepository(final EventStore eventStore) {
-		super(eventStore);
-	}
+    /**
+     * Constructor with all mandatory data.
+     * 
+     * @param eventStore Event store.
+     */
+    public AggregateCRepository(final EventStore eventStore) {
+        super(eventStore);
+    }
 
-	@Override
-	public Class<AggregateC> getAggregateClass() {
-		return AggregateC.class;
-	}
+    @Override
+    public Class<AggregateC> getAggregateClass() {
+        return AggregateC.class;
+    }
 
-	@Override
-	public final EntityType getAggregateType() {
-		return AggregateCId.TYPE;
-	}
+    @Override
+    public final EntityType getAggregateType() {
+        return AggregateCId.TYPE;
+    }
 
-	@Override
-	public final AggregateC create() {
-		return new AggregateC();
-	}
+    @Override
+    public final AggregateC create() {
+        return new AggregateC();
+    }
 
-	@Override
-	protected final String getIdParamName() {
-		return "aggregateCId";
-	}
+    @Override
+    protected final String getIdParamName() {
+        return "aggregateCId";
+    }
 
 }

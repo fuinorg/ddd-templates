@@ -1,4 +1,4 @@
-package org.fuin.dsl.ddd.gen.valueobject
+package org.fuin.dsl.ddd.gen.entityid
 
 import java.util.HashMap
 import jakarta.inject.Inject
@@ -6,8 +6,8 @@ import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
+import org.fuin.dsl.cqrs.cqrsDsl.EntityId
 import org.fuin.dsl.cqrs.cqrsDsl.DomainModel
-import org.fuin.dsl.cqrs.cqrsDsl.ValueObject
 import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import org.fuin.dsl.ddd.gen.base.Utils
 import org.fuin.dsl.cqrs.tests.CqrsDslInjectorProvider
@@ -25,7 +25,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 @InjectWith(typeof(CqrsDslInjectorProvider))
 @ExtendWith(InjectionExtension) 
-class ValueObjectArtifactFactoryTest {
+class SimpleEntityIdArtifactFactoryTest {
 
     @Inject
     ParseHelper<DomainModel> parser
@@ -34,65 +34,39 @@ class ValueObjectArtifactFactoryTest {
     ValidationTestHelper validationTester
 
     @Test
-    def void testCreateMyValueObject() {
-        testCreate("MyValueObject")
-    }
-
-    @Test
-    def void testCreateMyValueObject2() {
-        testCreate("MyValueObject2")
-    }
-
-    @Test
-    def void testCreateMyValueObject3() {
-        testCreate("MyValueObject3")
-    }
-
-    @Test
-    def void testCreateMyValueObject4() {
-        testCreate("MyValueObject4")
-    }
-    
-    @Test
-    def void testCreateFullName() {
-        testCreate("FullName")
-    }
-    
-    private def void testCreate(String name) {
+    def void testCreateMyEntityId5() {
 
         // PREPARE
         val context = new HashMap<String, Object>()
         val refReg = context.codeReferenceRegistry
         refReg.putReference("x.types.String", "java.lang.String")
-        refReg.putReference("x.valueobject." + name + "Converter", EXAMPLES_CONCRETE + ".x.valueobject." + name + "Converter")
 
-        val ValueObjectArtifactFactory testee = createTestee(true, false, true)
-        val ValueObject vo = model.find(typeof(ValueObject), name)
+        val SimpleEntityIdArtifactFactory testee = createTestee()
+        val EntityId entityId = model.find(typeof(EntityId), "MyEntity5Id")
 
         // TEST
-        val result = new String(testee.create(vo, context, false).iterator().next().data)
+        val result = new String(testee.create(entityId, context, false).iterator().next().data)
 
         // VERIFY
-        assertThat(result).isEqualTo(("x/valueobject/" + name + ".java").loadConcreteExample)
+        assertThat(result).isEqualTo("x/entityid/MyEntity5Id.java".loadConcreteExample)
 
     }
-    
 
-    private def createTestee(boolean jaxb, boolean jaxbElements, boolean jsonb) {
-        val factory = new ValueObjectArtifactFactory()
-        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("vo", ValueObjectArtifactFactory.name)
+    private def createTestee() {
+        val factory = new SimpleEntityIdArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("entityId", SimpleEntityIdArtifactFactory.name)
         config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
         config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-        config.addVariable(new Variable(GenerateOptions.KEY_JAXB, jaxb.toString));
-        config.addVariable(new Variable(GenerateOptions.KEY_JAXB_ELEMENTS, jaxbElements.toString));
-        config.addVariable(new Variable(GenerateOptions.KEY_JSONB, jsonb.toString));
+        config.addVariable(new Variable(GenerateOptions.KEY_JPA, "true"))
+        config.addVariable(new Variable(GenerateOptions.KEY_JAXB, "true"))
+        config.addVariable(new Variable(GenerateOptions.KEY_JSONB, "true"))
         config.init(new DefaultContext(), null)
         factory.init(config)
         return factory
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/valueobject.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/entityid.ddd")))
         validationTester.assertNoIssues(model)
         return model
     }

@@ -21,89 +21,89 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 @ExtendWith(InjectionExtension) 
 class SrcJavaDocMethodTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
 
-		val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
-		val method = valueObject.methods.get(0)
-		val SrcJavaDocMethod testee = new SrcJavaDocMethod(ctx, method)
+        val ValueObject valueObject = createModel().find(ValueObject, "MyValueObject")
+        val method = valueObject.methods.get(0)
+        val SrcJavaDocMethod testee = new SrcJavaDocMethod(ctx, method)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''
-				/**
-				 * This method does cool things.
-				 *
-				 * @param a Abc.
-				 * @param b Def.
-				 *
-				 * @throws WhateverException Argh...
-				 */
-			'''.toString)
-		assertThat(ctx.imports).isEmpty()
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''
+                /**
+                 * This method does cool things.
+                 *
+                 * @param a Abc.
+                 * @param b Def.
+                 *
+                 * @throws WhateverException Argh...
+                 */
+            '''.toString)
+        assertThat(ctx.imports).isEmpty()
 
-	}
+    }
 
-	def DomainModel createModel() {
-		val DomainModel model = parser.parse(
-			'''
-				context a {
-					
-					namespace b {
-						
-						type String
-						type Integer
-				
-						value-object MyValueObject {
-				
-							/**
-							 * This method does cool things.
-							 */
-							method whatever business-rules WhateverConstraint {
-								
-								/** Abc. */
-								String a
-								
-								/** Def. */
-								Integer b
-								
-							}
-				
-						}
-				
-						/** Makes sure that this is compliant. */
-						constraint WhateverConstraint exception WhateverException {
-							
-							/** Explain why it's strict. */
-							consistency strong
-				
-							message "WhateverConstraint message"
-						}
-				
-						/** Argh... */
-						exception WhateverException {
-							message "WhateverException message"
-						}		
-				
-					}
-				
-				}
-			''')
-			validationTester.assertNoIssues(model)
-			return model		
-	}
+    def DomainModel createModel() {
+        val DomainModel model = parser.parse(
+            '''
+                context a {
+                    
+                    namespace b {
+                        
+                        type String
+                        type Integer
+                
+                        value-object MyValueObject {
+                
+                            /**
+                             * This method does cool things.
+                             */
+                            method whatever business-rules WhateverConstraint {
+                                
+                                /** Abc. */
+                                String a
+                                
+                                /** Def. */
+                                Integer b
+                                
+                            }
+                
+                        }
+                
+                        /** Makes sure that this is compliant. */
+                        constraint WhateverConstraint exception WhateverException {
+                            
+                            /** Explain why it's strict. */
+                            consistency strong
+                
+                            message "WhateverConstraint message"
+                        }
+                
+                        /** Argh... */
+                        exception WhateverException {
+                            message "WhateverException message"
+                        }        
+                
+                    }
+                
+                }
+            ''')
+            validationTester.assertNoIssues(model)
+            return model        
+    }
 
 }

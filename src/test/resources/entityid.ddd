@@ -59,6 +59,12 @@ context x {
 			
 		}
 
+		entity MyEntity5 identifier MyEntity5Id root MyAggregate {}
+
+		/** Entity ID no attribute and base Integer. */
+		entity-id MyEntity5Id identifies MyEntity5 base Integer {
+        }			
+
 
 	}
 

@@ -27,57 +27,57 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class ServiceArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreateServiceA() {
-		testCreate("ServiceA")
-	}
+    @Test
+    def void testCreateServiceA() {
+        testCreate("ServiceA")
+    }
 
-	@Test
-	def void testCreateServiceB() {
-		testCreate("ServiceB")
-	}
+    @Test
+    def void testCreateServiceB() {
+        testCreate("ServiceB")
+    }
 
-	private def void testCreate(String name) {
+    private def void testCreate(String name) {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.types.Integer", "java.lang.Integer")
-		refReg.putReference("x.services.AnyConstraintViolatedException",
-			EXAMPLES_CONCRETE + ".x.services.AnyConstraintViolatedException")
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.types.Integer", "java.lang.Integer")
+        refReg.putReference("x.services.AnyConstraintViolatedException",
+            EXAMPLES_CONCRETE + ".x.services.AnyConstraintViolatedException")
 
-		val ServiceArtifactFactory testee = createTestee()
-		val Service service = model.find(typeof(Service), name)
+        val ServiceArtifactFactory testee = createTestee()
+        val Service service = model.find(typeof(Service), name)
 
-		// TEST
-		val result = new String(testee.create(service, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(service, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/services/" + name + ".java").loadConcreteExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/services/" + name + ".java").loadConcreteExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new ServiceArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("service", ServiceArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new ServiceArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("service", ServiceArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/service.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/service.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

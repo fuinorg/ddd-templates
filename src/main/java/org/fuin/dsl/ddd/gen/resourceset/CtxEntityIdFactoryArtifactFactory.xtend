@@ -21,119 +21,119 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class CtxEntityIdFactoryArtifactFactory extends AbstractSource<ResourceSet> {
 
-	override getModelType() {
-		typeof(ResourceSet)
-	}
+    override getModelType() {
+        typeof(ResourceSet)
+    }
 
-	override isIncremental() {
-		false
-	}
+    override isIncremental() {
+        false
+    }
 
-	override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(ResourceSet resourceSet, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val Map<String, List<AbstractEntityId>> contextEntityIds = resourceSet.contextEntityIdMap
+        val Map<String, List<AbstractEntityId>> contextEntityIds = resourceSet.contextEntityIdMap
 
-		val Iterator<String> ctxIt = contextEntityIds.keySet.iterator
-		while (ctxIt.hasNext) {
-			val String ctx = ctxIt.next
-			val List<AbstractEntityId> entityIds = contextEntityIds.get(ctx)
+        val Iterator<String> ctxIt = contextEntityIds.keySet.iterator
+        while (ctxIt.hasNext) {
+            val String ctx = ctxIt.next
+            val List<AbstractEntityId> entityIds = contextEntityIds.get(ctx)
 
-			val className = ctx.toFirstUpper + "EntityIdFactory"
-			val String pkg = contextPkg(ctx)
-			val fqn = pkg + "." + className
-			val filename = fqn.replace('.', '/') + ".java";
+            val className = ctx.toFirstUpper + "EntityIdFactory"
+            val String pkg = contextPkg(ctx)
+            val fqn = pkg + "." + className
+            val filename = fqn.replace('.', '/') + ".java";
 
-			val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-			refReg.putReference(className, fqn)
+            val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+            refReg.putReference(className, fqn)
 
-			// TODO Support multiple generated artifacts for ArtifactFactory
-			if (preparationRun) {
-				return null
-			}
+            // TODO Support multiple generated artifacts for ArtifactFactory
+            if (preparationRun) {
+                return null
+            }
 
-			val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg)
-			sctx.addImports
-			sctx.addReferences(entityIds)
+            val SimpleCodeSnippetContext sctx = new SimpleCodeSnippetContext(refReg)
+            sctx.addImports
+            sctx.addReferences(entityIds)
 
-			return List.of(new GeneratedArtifact(artifactName, filename,
-				create(sctx, ctx, pkg, className, entityIds, resourceSet).toString().getBytes("UTF-8")));
+            return List.of(new GeneratedArtifact(artifactName, filename,
+                create(sctx, ctx, pkg, className, entityIds, resourceSet).toString().getBytes("UTF-8")));
 
-		}
+        }
 
-	}
+    }
 
-	def addImports(CodeSnippetContext ctx) {
-		ctx.requiresImport("jakarta.enterprise.context.ApplicationScoped")
-		ctx.requiresImport("java.util.Map")
-		ctx.requiresImport("java.util.HashMap")
-		ctx.requiresImport("org.fuin.ddd4j.core.EntityIdFactory")
-		ctx.requiresImport("org.fuin.ddd4j.ddd.SingleEntityIdFactory")
-		ctx.requiresImport("org.fuin.ddd4j.core.EntityId")
-	}
+    def addImports(CodeSnippetContext ctx) {
+        ctx.requiresImport("jakarta.enterprise.context.ApplicationScoped")
+        ctx.requiresImport("java.util.Map")
+        ctx.requiresImport("java.util.HashMap")
+        ctx.requiresImport("org.fuin.ddd4j.core.EntityIdFactory")
+        ctx.requiresImport("org.fuin.ddd4j.ddd.SingleEntityIdFactory")
+        ctx.requiresImport("org.fuin.ddd4j.core.EntityId")
+    }
 
-	def addReferences(CodeSnippetContext ctx, List<AbstractEntityId> entityIds) {
-		for (entityId : entityIds) {
-			ctx.requiresReference(entityId.uniqueName)
-			ctx.requiresReference(entityId.uniqueName + "Converter")
-		}
-	}
+    def addReferences(CodeSnippetContext ctx, List<AbstractEntityId> entityIds) {
+        for (entityId : entityIds) {
+            ctx.requiresReference(entityId.uniqueName)
+            ctx.requiresReference(entityId.uniqueName + "Converter")
+        }
+    }
 
-	def contextEntityIdMap(ResourceSet resourceSet) {
-		val Map<String, List<AbstractEntityId>> contextEntityIds = new HashMap<String, List<AbstractEntityId>>();
-		val Iterator<AbstractEntityId> iter = resourceSet.getAllContents().filter(typeof(AbstractEntityId))
-		while (iter.hasNext) {
-			val AbstractEntityId entityId = iter.next
-			var List<AbstractEntityId> entityIds = contextEntityIds.get(entityId.context.name)
-			if (entityIds === null) {
-				entityIds = new ArrayList<AbstractEntityId>();
-				contextEntityIds.put(entityId.context.name, entityIds)
-			}
-			entityIds.add(entityId)
-		}
-		return contextEntityIds
-	}
+    def contextEntityIdMap(ResourceSet resourceSet) {
+        val Map<String, List<AbstractEntityId>> contextEntityIds = new HashMap<String, List<AbstractEntityId>>();
+        val Iterator<AbstractEntityId> iter = resourceSet.getAllContents().filter(typeof(AbstractEntityId))
+        while (iter.hasNext) {
+            val AbstractEntityId entityId = iter.next
+            var List<AbstractEntityId> entityIds = contextEntityIds.get(entityId.context.name)
+            if (entityIds === null) {
+                entityIds = new ArrayList<AbstractEntityId>();
+                contextEntityIds.put(entityId.context.name, entityIds)
+            }
+            entityIds.add(entityId)
+        }
+        return contextEntityIds
+    }
 
-	def create(SimpleCodeSnippetContext sctx, String ctx, String pkg, String className, List<AbstractEntityId> entityIds,
-		ResourceSet resourceSet) {
-		val String src = ''' 
-		/**
-		 * Creates entity identifier instanced based on the type.
-		 */
-		@ApplicationScoped
-		public final class «className» implements EntityIdFactory {
-		
-			private Map<String, SingleEntityIdFactory> map;
-			
-			/**
-			 * Default constructor.
-			 */
-			public «className»() {
-				super();
-				map = new HashMap<String, SingleEntityIdFactory>();
-				«FOR entityId : entityIds»
-				map.put(«entityId.name».TYPE.asString(), new «entityId.name»Converter());
-				«ENDFOR»
-			}
-			
-			@Override
-			public EntityId createEntityId(final String type, final String id) {
-				final SingleEntityIdFactory factory = map.get(type);
-				if (factory == null) {
-					throw new IllegalArgumentException("Unknown type: " + type);
-				}
-				return factory.createEntityId(id);
-			}
-			
-			@Override
-			public boolean containsType(final String type) {
-				return map.containsKey(type);
-			}
-		
-		}
-		'''
+    def create(SimpleCodeSnippetContext sctx, String ctx, String pkg, String className, List<AbstractEntityId> entityIds,
+        ResourceSet resourceSet) {
+        val String src = ''' 
+        /**
+         * Creates entity identifier instanced based on the type.
+         */
+        @ApplicationScoped
+        public final class «className» implements EntityIdFactory {
+        
+            private Map<String, SingleEntityIdFactory> map;
+            
+            /**
+             * Default constructor.
+             */
+            public «className»() {
+                super();
+                map = new HashMap<String, SingleEntityIdFactory>();
+                «FOR entityId : entityIds»
+                map.put(«entityId.name».TYPE.asString(), new «entityId.name»Converter());
+                «ENDFOR»
+            }
+            
+            @Override
+            public EntityId createEntityId(final String type, final String id) {
+                final SingleEntityIdFactory factory = map.get(type);
+                if (factory == null) {
+                    throw new IllegalArgumentException("Unknown type: " + type);
+                }
+                return factory.createEntityId(id);
+            }
+            
+            @Override
+            public boolean containsType(final String type) {
+                return map.containsKey(type);
+            }
+        
+        }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, sctx.imports, src).toString 
+        new SrcAll(copyrightHeader, pkg, sctx.imports, src).toString 
 
-	}
+    }
 
 }

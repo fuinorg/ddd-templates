@@ -30,32 +30,32 @@ import org.fuin.ddd4j.ddd.SingleEntityIdFactory;
 @ApplicationScoped
 public final class XEntityIdFactory implements EntityIdFactory {
 
-	private Map<String, SingleEntityIdFactory> map;
-	
-	/**
-	 * Default constructor.
-	 */
-	public XEntityIdFactory() {
-		super();
-		map = new HashMap<String, SingleEntityIdFactory>();
-		map.put(AggregateAId.TYPE.asString(), new AggregateAIdConverter());
-		map.put(AggregateBId.TYPE.asString(), new AggregateBIdConverter());
-		map.put(EntityAId.TYPE.asString(), new EntityAIdConverter());
-		map.put(EntityBId.TYPE.asString(), new EntityBIdConverter());
-	}
-	
-	@Override
-	public EntityId createEntityId(final String type, final String id) {
-		final SingleEntityIdFactory factory = map.get(type);
-		if (factory == null) {
-			throw new IllegalArgumentException("Unknown type: " + type);
-		}
-		return factory.createEntityId(id);
-	}
-	
-	@Override
-	public boolean containsType(final String type) {
-		return map.containsKey(type);
-	}
+    private Map<String, SingleEntityIdFactory> map;
+    
+    /**
+     * Default constructor.
+     */
+    public XEntityIdFactory() {
+        super();
+        map = new HashMap<String, SingleEntityIdFactory>();
+        map.put(AggregateAId.TYPE.asString(), new AggregateAIdConverter());
+        map.put(AggregateBId.TYPE.asString(), new AggregateBIdConverter());
+        map.put(EntityAId.TYPE.asString(), new EntityAIdConverter());
+        map.put(EntityBId.TYPE.asString(), new EntityBIdConverter());
+    }
+    
+    @Override
+    public EntityId createEntityId(final String type, final String id) {
+        final SingleEntityIdFactory factory = map.get(type);
+        if (factory == null) {
+            throw new IllegalArgumentException("Unknown type: " + type);
+        }
+        return factory.createEntityId(id);
+    }
+    
+    @Override
+    public boolean containsType(final String type) {
+        return map.containsKey(type);
+    }
 
 }

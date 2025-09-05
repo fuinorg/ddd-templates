@@ -49,39 +49,39 @@ public class XEventRegistry implements SerDeserializerRegistry {
 
     private static final Charset UTF8 = Charset.forName("utf-8");
 
-	private SimpleSerializerDeserializerRegistry registry;
-	
-	@Inject
-	private EntityIdFactory entityIdFactory;
+    private SimpleSerializerDeserializerRegistry registry;
+    
+    @Inject
+    private EntityIdFactory entityIdFactory;
 
-	@PostConstruct
-	protected void init() {
-		
-		final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(entityIdFactory);
-		final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { EntityIdPathXmlAdapter };
-		final XmlDeSerializer xmlDeSer = new XmlDeSerializer(UTF8, adapters, false, EscEvents.class, EscMeta.class, EventA.class, EventB.class, EventC.class, EventD.class, EventE.class);
-		
-		registry = new SimpleSerializerDeserializerRegistry();
+    @PostConstruct
+    protected void init() {
+        
+        final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(entityIdFactory);
+        final XmlAdapter<?, ?>[] adapters = new XmlAdapter<?, ?>[] { EntityIdPathXmlAdapter };
+        final XmlDeSerializer xmlDeSer = new XmlDeSerializer(UTF8, adapters, false, EscEvents.class, EscMeta.class, EventA.class, EventB.class, EventC.class, EventD.class, EventE.class);
+        
+        registry = new SimpleSerializerDeserializerRegistry();
         // Base types always needed
         registry.add(EscEvents.SER_TYPE, CONTENT_TYPE, xmlDeSer);
         registry.add(EscMeta.SER_TYPE, CONTENT_TYPE, xmlDeSer);
         // User types
-		registry.add(new SerializedDataType(EventA.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
-		registry.add(new SerializedDataType(EventB.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
-		registry.add(new SerializedDataType(EventC.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
-		registry.add(new SerializedDataType(EventD.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
-		registry.add(new SerializedDataType(EventE.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
-	}
+        registry.add(new SerializedDataType(EventA.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
+        registry.add(new SerializedDataType(EventB.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
+        registry.add(new SerializedDataType(EventC.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
+        registry.add(new SerializedDataType(EventD.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
+        registry.add(new SerializedDataType(EventE.EVENT_TYPE.asBaseType()), CONTENT_TYPE, xmlDeSer);
+    }
 
-	@Override
-	public Serializer getSerializer(final SerializedDataType type) {
-		return registry.getSerializer(type);
-	}
+    @Override
+    public Serializer getSerializer(final SerializedDataType type) {
+        return registry.getSerializer(type);
+    }
 
-	@Override
-	public Deserializer getDeserializer(final SerializedDataType type, final EnhancedMimeType mimeType) {
-		return registry.getDeserializer(type, mimeType);
-	}
+    @Override
+    public Deserializer getDeserializer(final SerializedDataType type, final EnhancedMimeType mimeType) {
+        return registry.getDeserializer(type, mimeType);
+    }
 
     @Override
     public Deserializer getDeserializer(final SerializedDataType type) {
@@ -95,17 +95,17 @@ public class XEventRegistry implements SerDeserializerRegistry {
 
     @Override
     public boolean serializerExists(final SerializedDataType type) {
-    	return registry.serializerExists(type);
+        return registry.serializerExists(type);
     }
 
     @Override
     public boolean deserializerExists(final SerializedDataType type) {
-    	return registry.deserializerExists(type);
+        return registry.deserializerExists(type);
     }
 
     @Override
     public boolean deserializerExists(final SerializedDataType type, final EnhancedMimeType mimeType) {
-    	return registry.deserializerExists(type, mimeType);
+        return registry.deserializerExists(type, mimeType);
     }
 
 }

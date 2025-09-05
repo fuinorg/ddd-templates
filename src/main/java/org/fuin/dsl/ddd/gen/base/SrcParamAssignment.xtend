@@ -9,20 +9,20 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
  */
 class SrcParamAssignment implements CodeSnippet {
 
-	val Parameter parameter
+    val Parameter parameter
 
-	/**
-	 * Constructor with all mandatory data.
-	 * 
-	 * @param ctx Context.
-	 * @param parameter Parameter.
-	 */
-	new(CodeSnippetContext ctx, Parameter parameter) {
-		this.parameter = parameter
-	}
+    /**
+     * Constructor with all mandatory data.
+     * 
+     * @param ctx Context.
+     * @param parameter Parameter.
+     */
+    new(CodeSnippetContext ctx, Parameter parameter) {
+        this.parameter = parameter
+    }
 
-	override toString() {
-		'''this.«parameter.name» = «parameter.name»;'''
-	}
+    override toString() {
+        '''this.«parameter.name» = «parameter.name»;'''
+    }
 
 }

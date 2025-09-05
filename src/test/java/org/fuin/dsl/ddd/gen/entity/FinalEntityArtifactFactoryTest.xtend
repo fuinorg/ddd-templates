@@ -27,66 +27,66 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 @ExtendWith(InjectionExtension) 
 class FinalEntityArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testEntityA() {
-		testEntity("EntityA")
-	}
-	
-	@Test
-	def void testEntityB() {
-		testEntity("EntityB")
-	}
-	
-	@Test
-	def void testEntityC() {
-		testEntity("EntityC")
-	}
-	
-	private def testEntity(String entityName) {
-		
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.types.Integer", "java.lang.Integer")
-		refReg.putReference("x.entities.AggregateX", "tst.x.entities.AggregateX")
-		refReg.putReference("x.entities.AggregateXId", "tst.x.entities.AggregateXId")
-		refReg.putReference("x.entities." + entityName + "Id", "tst.x.entities." + entityName + "Id")
-		refReg.putReference("x.entities.Abstract" + entityName, "tst.x.entities.Abstract" + entityName)
-		refReg.putReference("x.entities.AnyConstraintViolatedException", "tst.x.entities.AnyConstraintViolatedException")
-		refReg.putReference("x.entities." + entityName + "CreatedEvent", "tst.x.entities." + entityName + "Id")
+    @Test
+    def void testEntityA() {
+        testEntity("EntityA")
+    }
+    
+    @Test
+    def void testEntityB() {
+        testEntity("EntityB")
+    }
+    
+    @Test
+    def void testEntityC() {
+        testEntity("EntityC")
+    }
+    
+    private def testEntity(String entityName) {
+        
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.types.Integer", "java.lang.Integer")
+        refReg.putReference("x.entities.AggregateX", "tst.x.entities.AggregateX")
+        refReg.putReference("x.entities.AggregateXId", "tst.x.entities.AggregateXId")
+        refReg.putReference("x.entities." + entityName + "Id", "tst.x.entities." + entityName + "Id")
+        refReg.putReference("x.entities.Abstract" + entityName, "tst.x.entities.Abstract" + entityName)
+        refReg.putReference("x.entities.AnyConstraintViolatedException", "tst.x.entities.AnyConstraintViolatedException")
+        refReg.putReference("x.entities." + entityName + "CreatedEvent", "tst.x.entities." + entityName + "Id")
 
-		val FinalEntityArtifactFactory testee = createTestee()
-		val Entity entity = model.find(typeof(Entity), entityName)
+        val FinalEntityArtifactFactory testee = createTestee()
+        val Entity entity = model.find(typeof(Entity), entityName)
 
-		// TEST
-		val result = new String(testee.create(entity, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(entity, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/entities/" + entityName + ".java").loadAbstractExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/entities/" + entityName + ".java").loadAbstractExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new FinalEntityArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("entity", FinalEntityArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new FinalEntityArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("entity", FinalEntityArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/entity.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/entity.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

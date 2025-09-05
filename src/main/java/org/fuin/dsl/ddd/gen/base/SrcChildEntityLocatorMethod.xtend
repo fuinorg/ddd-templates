@@ -18,31 +18,31 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsEntityExtensions.*
  */
 class SrcChildEntityLocatorMethod implements CodeSnippet {
 
-	val CodeSnippetContext ctx
-	val GenerateOptions options 
-	val ReturnType returnType
-	val List<String> annotations
-	val List<Parameter> parameters
-	val List<Exception> exceptions = null
+    val CodeSnippetContext ctx
+    val GenerateOptions options 
+    val ReturnType returnType
+    val List<String> annotations
+    val List<Parameter> parameters
+    val List<Exception> exceptions = null
 
-	new(CodeSnippetContext ctx, GenerateOptions options, Entity entity) {
-		this.ctx = ctx
-		this.options = options
-		this.returnType = CqrsDslFactory.eINSTANCE.createReturnType()
-		this.returnType.setType(entity)
-		this.annotations = #["@Override", "@ChildEntityLocator"]
-		this.parameters = #[
-			CqrsDslFactory.eINSTANCE.createParameter(entity.idTypeNullsafe, entity.idTypeNullsafe.name.toFirstLower, false)]
+    new(CodeSnippetContext ctx, GenerateOptions options, Entity entity) {
+        this.ctx = ctx
+        this.options = options
+        this.returnType = CqrsDslFactory.eINSTANCE.createReturnType()
+        this.returnType.setType(entity)
+        this.annotations = #["@Override", "@ChildEntityLocator"]
+        this.parameters = #[
+            CqrsDslFactory.eINSTANCE.createParameter(entity.idTypeNullsafe, entity.idTypeNullsafe.name.toFirstLower, false)]
 
-		ctx.requiresImport("org.fuin.ddd4j.ddd.ChildEntityLocator")
-		ctx.requiresReference(entity.uniqueName)
-		ctx.requiresReference(entity.idTypeNullsafe.uniqueName)
-	}
+        ctx.requiresImport("org.fuin.ddd4j.ddd.ChildEntityLocator")
+        ctx.requiresReference(entity.uniqueName)
+        ctx.requiresReference(entity.idTypeNullsafe.uniqueName)
+    }
 
-	override toString() {
-		'''«new SrcMethod(ctx, options,
-			new MethodData(null, annotations,
-				"protected final", false, returnType, "find" + returnType.type.name, parameters, exceptions))»'''
-	}
+    override toString() {
+        '''«new SrcMethod(ctx, options,
+            new MethodData(null, annotations,
+                "protected final", false, returnType, "find" + returnType.type.name, parameters, exceptions))»'''
+    }
 
 }

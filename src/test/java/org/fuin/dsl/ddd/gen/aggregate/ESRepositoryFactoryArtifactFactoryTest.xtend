@@ -27,50 +27,50 @@ import org.junit.jupiter.api.^extension.ExtendWith
 @ExtendWith(InjectionExtension) 
 class ESRepositoryFactoryArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreate() {
+    @Test
+    def void testCreate() {
 
-		// PREPARE
-		val aggregateName = "AggregateC"
-		val repoClassName = aggregateName + "Repository"
-		val className = repoClassName + "Factory"
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.aggregates." + repoClassName, EXAMPLES_CONCRETE + ".x.aggregates." + repoClassName)
-		refReg.putReference("XEventRegistry", EXAMPLES_CONCRETE + ".x.resourceset.XEventRegistry")
+        // PREPARE
+        val aggregateName = "AggregateC"
+        val repoClassName = aggregateName + "Repository"
+        val className = repoClassName + "Factory"
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.aggregates." + repoClassName, EXAMPLES_CONCRETE + ".x.aggregates." + repoClassName)
+        refReg.putReference("XEventRegistry", EXAMPLES_CONCRETE + ".x.resourceset.XEventRegistry")
 
-		val ESRepositoryFactoryArtifactFactory testee = createTestee()
-		val Aggregate aggregate = model.find(typeof(Aggregate), aggregateName)
+        val ESRepositoryFactoryArtifactFactory testee = createTestee()
+        val Aggregate aggregate = model.find(typeof(Aggregate), aggregateName)
 
-		// TEST
-		val result = new String(testee.create(aggregate, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(aggregate, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/aggregates/" + className + ".java").loadConcreteExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/aggregates/" + className + ".java").loadConcreteExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new ESRepositoryFactoryArtifactFactory()
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("esRepositoryFactory",
-			ESRepositoryFactoryArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new ESRepositoryFactoryArtifactFactory()
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("esRepositoryFactory",
+            ESRepositoryFactoryArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_CONCRETE))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregate.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregate.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

@@ -21,6 +21,7 @@ import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import java.io.Serial;
 import java.io.Serializable;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.ValueObject;
@@ -31,58 +32,59 @@ import org.fuin.objects4j.common.ValueObject;
 @XmlRootElement(name = "my-value-object4")
 public final class MyValueObject4 implements ValueObject, Serializable {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	@XmlAttribute(name = "a")
-	@JsonbProperty("a")
-	private String a;
-	
-	@NotNull
-	@XmlAttribute(name = "b")
-	@JsonbProperty("b")
-	private String b;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected MyValueObject4() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param a Persistent value A.
-	 * @param b Persistent value B.
-	 */
-	public MyValueObject4(@NotNull final String a, @NotNull final String b) {
-		super();
-		Contract.requireArgNotNull("a", a);
-		Contract.requireArgNotNull("b", b);
-		
-		this.a = a;
-		this.b = b;
-	}
-	
-	/**
-	 * Returns: Persistent value A.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getA() {
-		return a;
-	}
-	
-	/**
-	 * Returns: Persistent value B.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final String getB() {
-		return b;
-	}
-	
+    @Serial
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    @XmlAttribute(name = "a")
+    @JsonbProperty("a")
+    private String a;
+    
+    @NotNull
+    @XmlAttribute(name = "b")
+    @JsonbProperty("b")
+    private String b;
+    
+    /**
+     * Default constructor.
+     */
+    protected MyValueObject4() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param a Persistent value A.
+     * @param b Persistent value B.
+     */
+    public MyValueObject4(@NotNull final String a, @NotNull final String b) {
+        super();
+        Contract.requireArgNotNull("a", a);
+        Contract.requireArgNotNull("b", b);
+        
+        this.a = a;
+        this.b = b;
+    }
+    
+    /**
+     * Returns: Persistent value A.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getA() {
+        return a;
+    }
+    
+    /**
+     * Returns: Persistent value B.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final String getB() {
+        return b;
+    }
+    
 }

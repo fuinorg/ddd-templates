@@ -31,77 +31,77 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 
 class FinalEntityArtifactFactory extends AbstractSource<Entity> {
 
-	override getModelType() {
-		typeof(Entity)
-	}
+    override getModelType() {
+        typeof(Entity)
+    }
 
-	override create(Entity entity, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(Entity entity, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-		val className = entity.getName()
-		val Namespace ns = entity.eContainer() as Namespace;
-		val pkg = ns.asPackage
-		val fqn = pkg + "." + className
-		val filename = fqn.replace('.', '/') + ".java";
+        val className = entity.getName()
+        val Namespace ns = entity.eContainer() as Namespace;
+        val pkg = ns.asPackage
+        val fqn = pkg + "." + className
+        val filename = fqn.replace('.', '/') + ".java";
 
-		val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-		refReg.putReference(entity.uniqueName, fqn)
+        val CodeReferenceRegistry refReg = context.codeReferenceRegistry
+        refReg.putReference(entity.uniqueName, fqn)
 
-		if (preparationRun) {
+        if (preparationRun) {
 
-			// No code generation during preparation phase
-			return null
-		}
+            // No code generation during preparation phase
+            return null
+        }
 
-		val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-		ctx.addImports
-		ctx.addReferences(entity)
+        val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
+        ctx.addImports
+        ctx.addReferences(entity)
 
-		return List.of(new GeneratedArtifact(artifactName, filename,
-			create(ctx, entity, pkg, className).toString().getBytes("UTF-8")));
-	}
+        return List.of(new GeneratedArtifact(artifactName, filename,
+            create(ctx, entity, pkg, className).toString().getBytes("UTF-8")));
+    }
 
-	def addImports(CodeSnippetContext ctx) {
-	}
+    def addImports(CodeSnippetContext ctx) {
+    }
 
-	def addReferences(CodeSnippetContext ctx, Entity entity) {
-		ctx.requiresReference(entity.uniqueAbstractName)
-	}
+    def addReferences(CodeSnippetContext ctx, Entity entity) {
+        ctx.requiresReference(entity.uniqueAbstractName)
+    }
 
-	def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className) {
-		val String src = ''' 
-			«new SrcJavaDocType(entity)»
-			public final class «entity.name» extends Abstract«entity.name» {
-			
-				«new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), constructorData(entity, className))»
-				«new SrcChildEntityLocatorMethods(ctx, GenerateOptions.empty(), entity)»
-				«new SrcMethods(ctx, GenerateOptions.empty(), entity)»
-				«new SrcHandleEventMethods(ctx, entity.allEvents)»
-			}
-		'''
+    def create(SimpleCodeSnippetContext ctx, Entity entity, String pkg, String className) {
+        val String src = ''' 
+            «new SrcJavaDocType(entity)»
+            public final class «entity.name» extends Abstract«entity.name» {
+            
+                «new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), constructorData(entity, className))»
+                «new SrcChildEntityLocatorMethods(ctx, GenerateOptions.empty(), entity)»
+                «new SrcMethods(ctx, GenerateOptions.empty(), entity)»
+                «new SrcHandleEventMethods(ctx, entity.allEvents)»
+            }
+        '''
 
-		new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
 
-	}
+    }
 
-	def constructorData(Entity entity, String className) {
-		val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
-		val rootParam = new ConstructorParameter(eINSTANCE.createParameter("The root aggregate of this entity.", entity.rootNullsafe, "rootAggregate", false), true)
-		val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idTypeNullsafe, "id", false), true)
-		if (entity.constructors === null || entity.constructors.size == 0) {
-			val List<ConstructorParameter> parameters = new ArrayList<ConstructorParameter>()
-			parameters.add(rootParam)
-			parameters.add(idParam)
-			val ConstructorData cd = new ConstructorData("/** Constructor with mandatory data. */", null, "public", className, parameters, null)
-			constructors.add(cd)
-		} else {
-			for (constructor : entity.constructors) {
-				val ConstructorData cd = new ConstructorData("public", className, constructor, true)
-				cd.prepend(idParam)
-				cd.prepend(rootParam)
-				constructors.add(cd)
-			}			
-		}
-		return constructors
-	}
+    def constructorData(Entity entity, String className) {
+        val List<ConstructorData> constructors = new ArrayList<ConstructorData>()
+        val rootParam = new ConstructorParameter(eINSTANCE.createParameter("The root aggregate of this entity.", entity.rootNullsafe, "rootAggregate", false), true)
+        val idParam = new ConstructorParameter(eINSTANCE.createParameter("Unique entity identifier.", entity.idTypeNullsafe, "id", false), true)
+        if (entity.constructors === null || entity.constructors.size == 0) {
+            val List<ConstructorParameter> parameters = new ArrayList<ConstructorParameter>()
+            parameters.add(rootParam)
+            parameters.add(idParam)
+            val ConstructorData cd = new ConstructorData("/** Constructor with mandatory data. */", null, "public", className, parameters, null)
+            constructors.add(cd)
+        } else {
+            for (constructor : entity.constructors) {
+                val ConstructorData cd = new ConstructorData("public", className, constructor, true)
+                cd.prepend(idParam)
+                cd.prepend(rootParam)
+                constructors.add(cd)
+            }            
+        }
+        return constructors
+    }
 
 }

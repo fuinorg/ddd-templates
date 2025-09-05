@@ -35,69 +35,69 @@ import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
 // CHECKSTYLE:OFF
 public final class EventBTest {
 
-	@Test
-	public final void testSerializeDeserialize() {
+    @Test
+    public final void testSerializeDeserialize() {
 
-		// PREPARE
-		final EventB original = createTestee();
+        // PREPARE
+        final EventB original = createTestee();
 
-		// TEST
-		final EventB copy = deserialize(serialize(original));
+        // TEST
+        final EventB copy = deserialize(serialize(original));
 
-		// VERIFY
-		assertThat(original).isEqualTo(copy);
-		assertThat(original.getA()).isEqualTo(copy.getA());
+        // VERIFY
+        assertThat(original).isEqualTo(copy);
+        assertThat(original.getA()).isEqualTo(copy.getA());
 
-	}
+    }
 
-	@Test
-	public final void testMarshalUnmarshalXml() {
+    @Test
+    public final void testMarshalUnmarshalXml() {
 
-		// PREPARE
-		final EventB original = createTestee();
+        // PREPARE
+        final EventB original = createTestee();
 
-		// TEST
-		final String xml = marshal(original, createAdapter(), EventB.class);
-		final EventB copy = unmarshal(xml, createAdapter(), EventB.class);
+        // TEST
+        final String xml = marshal(original, createAdapter(), EventB.class);
+        final EventB copy = unmarshal(xml, createAdapter(), EventB.class);
 
-		// VERIFY
-		assertThat(original).isEqualTo(copy);
-		assertThat(original.getA()).isEqualTo(copy.getA());
+        // VERIFY
+        assertThat(original).isEqualTo(copy);
+        assertThat(original.getA()).isEqualTo(copy.getA());
 
-	}
+    }
 
-	@Test
-	public final void testMarshalUnmarshalJson() {
+    @Test
+    public final void testMarshalUnmarshalJson() {
 
-		// PREPARE
-		final EventB original = createTestee();
+        // PREPARE
+        final EventB original = createTestee();
 
-		final JsonbConfig config = new JsonbConfig()
-				.withAdapters(new EventIdJsonbAdapter())
-				.withPropertyVisibilityStrategy(new FieldAccessStrategy());
-		final Jsonb jsonb = JsonbBuilder.create(config);
+        final JsonbConfig config = new JsonbConfig()
+                .withAdapters(new EventIdJsonbAdapter())
+                .withPropertyVisibilityStrategy(new FieldAccessStrategy());
+        final Jsonb jsonb = JsonbBuilder.create(config);
 
-		// TEST
-		final String json = jsonb.toJson(original, EventB.class);
-		final EventB copy = jsonb.fromJson(json, EventB.class);
+        // TEST
+        final String json = jsonb.toJson(original, EventB.class);
+        final EventB copy = jsonb.fromJson(json, EventB.class);
 
-		// VERIFY
-		assertThat(original).isEqualTo(copy);
-		assertThat(original.getA()).isEqualTo(copy.getA());
+        // VERIFY
+        assertThat(original).isEqualTo(copy);
+        assertThat(original.getA()).isEqualTo(copy.getA());
 
-	}
+    }
 
-	private EventB createTestee() {
-		// TODO Set test values
-		final CustomerId entityId = new CustomerId("42705de0-91a1-11e4-b4a9-0800200c9a6");
-		final String a = "Abc";
-		return new EventB(new EntityIdPath(entityId), a);
-	}
+    private EventB createTestee() {
+        // TODO Set test values
+        final CustomerId entityId = new CustomerId("42705de0-91a1-11e4-b4a9-0800200c9a6");
+        final String a = "Abc";
+        return new EventB(new EntityIdPath(entityId), a);
+    }
 
-	protected final XmlAdapter<?, ?>[] createAdapter() {
-		final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(new XEntityIdFactory());
-		return new XmlAdapter[] { EntityIdPathXmlAdapter };
-	}
+    protected final XmlAdapter<?, ?>[] createAdapter() {
+        final EntityIdPathXmlAdapter EntityIdPathXmlAdapter = new EntityIdPathXmlAdapter(new XEntityIdFactory());
+        return new XmlAdapter[] { EntityIdPathXmlAdapter };
+    }
 
 }
 // CHECKSTYLE:ON

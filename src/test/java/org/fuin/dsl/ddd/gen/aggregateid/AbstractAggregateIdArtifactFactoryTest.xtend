@@ -27,122 +27,122 @@ import org.eclipse.xtext.testing.extensions.InjectionExtension
 @ExtendWith(InjectionExtension) 
 class AbstractAggregateIdArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testCreateMyAggregateId() {
+    @Test
+    def void testCreateMyAggregateId() {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		val AbstractAggregateIdArtifactFactory testee = createTestee()
-		val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregateId")
+        val AbstractAggregateIdArtifactFactory testee = createTestee()
+        val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregateId")
 
-		// TEST
-		val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregateId.java".loadAbstractExample)
+        // VERIFY
+        assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregateId.java".loadAbstractExample)
 
-	}
-	
-	@Test
-	def void testCreateMyAggregate2Id() {
-		
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+    }
+    
+    @Test
+    def void testCreateMyAggregate2Id() {
+        
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		val AbstractAggregateIdArtifactFactory testee = createTestee()
-		val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregate2Id")
+        val AbstractAggregateIdArtifactFactory testee = createTestee()
+        val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregate2Id")
 
-		// TEST
-		val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregate2Id.java".loadAbstractExample)
-		
-	}	
+        // VERIFY
+        assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregate2Id.java".loadAbstractExample)
+        
+    }    
 
-	@Test
-	def void testCreateMyAggregate3Id() {
+    @Test
+    def void testCreateMyAggregate3Id() {
 
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		val AbstractAggregateIdArtifactFactory testee = createTestee()
-		val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregate3Id")
+        val AbstractAggregateIdArtifactFactory testee = createTestee()
+        val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregate3Id")
 
-		// TEST
-		val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregate3Id.java".loadAbstractExample)
+        // VERIFY
+        assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregate3Id.java".loadAbstractExample)
 
-	}
+    }
 
-	@Test
-	def void testCreateMyAggregate4Id() {
-		
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
+    @Test
+    def void testCreateMyAggregate4Id() {
+        
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
 
-		val AbstractAggregateIdArtifactFactory testee = createTestee()
-		val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregate4Id")
+        val AbstractAggregateIdArtifactFactory testee = createTestee()
+        val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregate4Id")
 
-		// TEST
-		val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregate4Id.java".loadAbstractExample)
-		
-	}	
+        // VERIFY
+        assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregate4Id.java".loadAbstractExample)
+        
+    }    
 
-	@Test
-	def void testCreateMyAggregate6Id() {
-		
-		// PREPARE
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.UUID", "java.util.UUID")
+    @Test
+    def void testCreateMyAggregate6Id() {
+        
+        // PREPARE
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.UUID", "java.util.UUID")
 
-		val AbstractAggregateIdArtifactFactory testee = createTestee()
-		val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregate6Id")
+        val AbstractAggregateIdArtifactFactory testee = createTestee()
+        val AggregateId aggregateId = model.find(typeof(AggregateId), "MyAggregate6Id")
 
-		// TEST
-		val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(aggregateId, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregate6Id.java".loadAbstractExample)
-		
-	}	
+        // VERIFY
+        assertThat(result).isEqualTo("x/aggregateid/AbstractMyAggregate6Id.java".loadAbstractExample)
+        
+    }    
 
-	private def createTestee() {
-		val factory = new AbstractAggregateIdArtifactFactory() {}
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractAggregateId",
-			AbstractAggregateIdArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new AbstractAggregateIdArtifactFactory() {}
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractAggregateId",
+            AbstractAggregateIdArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregateid.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregateid.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

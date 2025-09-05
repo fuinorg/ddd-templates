@@ -12,27 +12,27 @@ import static extension org.fuin.dsl.ddd.gen.extensions.ParameterExtensions.*
  */
 abstract class AbstractVOExtensions {
 
-	/**
-	 * Creates a new constructor parameter list from the variables.
-	 * 
-	 * @param constructor Constructor with list of variables.
-	 * 
-	 * @return Constructor parameter list
-	 */
-	def static List<ConstructorParameter> asWrappedParameters(AbstractVO constructor) {
-		return asWrappedParameters(constructor, false)
-	}
+    /**
+     * Creates a new constructor parameter list from the variables.
+     * 
+     * @param constructor Constructor with list of variables.
+     * 
+     * @return Constructor parameter list
+     */
+    def static List<ConstructorParameter> asWrappedParameters(AbstractVO constructor) {
+        return asWrappedParameters(constructor, false)
+    }
 
-	/**
-	 * Creates a new constructor parameter list from the variables.
-	 * 
-	 * @param constructor Constructor with list of variables.
-	 * @param passToSuper Defines if all variables should be passed to the super call
-	 * 
-	 * @return Constructor parameter list
-	 */
-	def static List<ConstructorParameter> asWrappedParameters(AbstractVO constructor, boolean passToSuper) {
-		return constructor.attributes.asParameters.asWrappedParameters(passToSuper)
-	}
-	
+    /**
+     * Creates a new constructor parameter list from the variables.
+     * 
+     * @param constructor Constructor with list of variables.
+     * @param passToSuper Defines if all variables should be passed to the super call
+     * 
+     * @return Constructor parameter list
+     */
+    def static List<ConstructorParameter> asWrappedParameters(AbstractVO constructor, boolean passToSuper) {
+        return constructor.attributes.asParameters.asWrappedParameters(passToSuper)
+    }
+    
 }

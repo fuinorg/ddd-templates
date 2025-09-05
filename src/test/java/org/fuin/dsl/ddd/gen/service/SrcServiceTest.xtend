@@ -22,82 +22,82 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsDomainModelExtensions.*
 @ExtendWith(InjectionExtension) 
 class SrcServiceTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testServiceA() {
+    @Test
+    def void testServiceA() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Service service = model.find(typeof(Service), "ServiceA")
-		val SrcService testee = new SrcService(ctx, service)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val Service service = model.find(typeof(Service), "ServiceA")
+        val SrcService testee = new SrcService(ctx, service)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''
-				/**
-				 * Service A - No methods.
-				 */
-				public interface ServiceA {
-					
-				}
-			'''.toString)
-		assertThat(ctx.imports).isEmpty
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''
+                /**
+                 * Service A - No methods.
+                 */
+                public interface ServiceA {
+                    
+                }
+            '''.toString)
+        assertThat(ctx.imports).isEmpty
 
-	}
-	
-	@Test
-	def void testServiceB() {
+    }
+    
+    @Test
+    def void testServiceB() {
 
-		// PREPARE
-		val refReg = new SimpleCodeReferenceRegistry()
-		refReg.putReference("x.types.Integer", "java.lang.Integer")
-		refReg.putReference("x.types.String", "java.lang.String")
-		
-		val ctx = new SimpleCodeSnippetContext(refReg)
-		val Service service = model.find(typeof(Service), "ServiceB")
-		val SrcService testee = new SrcService(ctx, service)
+        // PREPARE
+        val refReg = new SimpleCodeReferenceRegistry()
+        refReg.putReference("x.types.Integer", "java.lang.Integer")
+        refReg.putReference("x.types.String", "java.lang.String")
+        
+        val ctx = new SimpleCodeSnippetContext(refReg)
+        val Service service = model.find(typeof(Service), "ServiceB")
+        val SrcService testee = new SrcService(ctx, service)
 
-		// TEST
-		val result = testee.toString
+        // TEST
+        val result = testee.toString
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-			'''
-			/**
-			 * Service B - Single method.
-			 */
-			public interface ServiceB {
-				
-				/**
-				 * Finds something.
-				 *
-				 * @param a Key.
-				 *
-				 * @return Value.
-				 *
-				 * @throws AnyConstraintViolatedException The constraint was violated.
-				 */
-				public String find(@NotNull final Integer a) throws AnyConstraintViolatedException;
-				
-			}
-			'''.toString)
-		assertThat(ctx.imports).containsOnly("java.lang.Integer", "java.lang.String", "x.services.AnyConstraintViolatedException", "jakarta.validation.constraints.NotNull")
+        // VERIFY
+        assertThat(result).isEqualTo(
+            '''
+            /**
+             * Service B - Single method.
+             */
+            public interface ServiceB {
+                
+                /**
+                 * Finds something.
+                 *
+                 * @param a Key.
+                 *
+                 * @return Value.
+                 *
+                 * @throws AnyConstraintViolatedException The constraint was violated.
+                 */
+                public String find(@NotNull final Integer a) throws AnyConstraintViolatedException;
+                
+            }
+            '''.toString)
+        assertThat(ctx.imports).containsOnly("java.lang.Integer", "java.lang.String", "x.services.AnyConstraintViolatedException", "jakarta.validation.constraints.NotNull")
 
-	}
-	
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/service.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    }
+    
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/service.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

@@ -31,56 +31,56 @@ import org.fuin.objects4j.core.AbstractUuidValueObject;
  */
 public abstract class AbstractMyAggregate6Id extends AbstractUuidValueObject implements AggregateRootId, ValueObject {
 
-	private static final long serialVersionUID = 1000L;
-	
-	@NotNull
-	private UUID value;
-	
-	/**
-	 * Default constructor.
-	 */
-	protected AbstractMyAggregate6Id() {
-		super();
-	}
-	
-	/**
-	 * Constructor with all data.
-	 *
-	 * @param value Persistent value.
-	 */
-	public AbstractMyAggregate6Id(@NotNull final UUID value) {
-		super();
-		Contract.requireArgNotNull("value", value);
-		
-		this.value = value;
-	}
-	
-	/**
-	 * Returns: Persistent value.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	public final UUID getValue() {
-		return value;
-	}
-	
-	/** Name that identifies the entity uniquely within the context. */	
-	public static final EntityType TYPE = new StringBasedEntityType("MyAggregate6");
-	
-	@Override
-	public final EntityType getType() {
-		return TYPE;
-	}
-	
-	@Override
-	public final String asTypedString() {
-		return TYPE + " " + asString();
-	}
-	
-	@Override
-	public final String asString() {
-	    return asBaseType().toString();
-	}
-	
+    private static final long serialVersionUID = 1000L;
+    
+    @NotNull
+    private UUID value;
+    
+    /**
+     * Default constructor.
+     */
+    protected AbstractMyAggregate6Id() {
+        super();
+    }
+    
+    /**
+     * Constructor with all data.
+     *
+     * @param value Persistent value.
+     */
+    public AbstractMyAggregate6Id(@NotNull final UUID value) {
+        super();
+        Contract.requireArgNotNull("value", value);
+        
+        this.value = value;
+    }
+    
+    /**
+     * Returns: Persistent value.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    public final UUID getValue() {
+        return value;
+    }
+    
+    /** Name that identifies the entity uniquely within the context. */    
+    public static final EntityType TYPE = new StringBasedEntityType("MyAggregate6");
+    
+    @Override
+    public final EntityType getType() {
+        return TYPE;
+    }
+    
+    @Override
+    public final String asTypedString() {
+        return TYPE + " " + asString();
+    }
+    
+    @Override
+    public final String asString() {
+        return asBaseType().toString();
+    }
+    
 }

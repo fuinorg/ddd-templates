@@ -10,24 +10,24 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
  */
 class SrcParamsSuperCall implements CodeSnippet {
 
-	val List<Parameter> parameters
+    val List<Parameter> parameters
 
-	/**
-	 * Constructor with all mandatory data.
-	 * 
-	 * @param ctx Context.
-	 * @param parameters Parameters.
-	 */
-	new(CodeSnippetContext ctx, List<Parameter> parameters) {
-		this.parameters = parameters
-	}
+    /**
+     * Constructor with all mandatory data.
+     * 
+     * @param ctx Context.
+     * @param parameters Parameters.
+     */
+    new(CodeSnippetContext ctx, List<Parameter> parameters) {
+        this.parameters = parameters
+    }
 
-	override toString() {
-		if (parameters === null) {
-			'''super();'''
-		} else {
-			'''super(«FOR v : parameters SEPARATOR ", "»«v.name»«ENDFOR»);'''		
-		}
-	}
+    override toString() {
+        if (parameters === null) {
+            '''super();'''
+        } else {
+            '''super(«FOR v : parameters SEPARATOR ", "»«v.name»«ENDFOR»);'''        
+        }
+    }
 
 }

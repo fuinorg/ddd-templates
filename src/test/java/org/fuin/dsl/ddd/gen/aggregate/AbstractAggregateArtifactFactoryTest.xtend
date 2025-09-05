@@ -27,64 +27,64 @@ import org.eclipse.xtext.testing.extensions.InjectionExtension
 @ExtendWith(InjectionExtension) 
 class AbstractAggregateArtifactFactoryTest {
 
-	@Inject
-	ParseHelper<DomainModel> parser
+    @Inject
+    ParseHelper<DomainModel> parser
 
-	@Inject 
-	ValidationTestHelper validationTester
+    @Inject 
+    ValidationTestHelper validationTester
 
-	@Test
-	def void testAbstractAggregateA() {
-		testAggregate("AggregateA")
-	}
+    @Test
+    def void testAbstractAggregateA() {
+        testAggregate("AggregateA")
+    }
 
-	@Test
-	def void testAbstractAggregateB() {
-		testAggregate("AggregateB")
-	}
-	
-	@Test
-	def void testAbstractAggregateC() {
-		testAggregate("AggregateC")
-	}
+    @Test
+    def void testAbstractAggregateB() {
+        testAggregate("AggregateB")
+    }
+    
+    @Test
+    def void testAbstractAggregateC() {
+        testAggregate("AggregateC")
+    }
 
-	private def testAggregate(String aggregateName) {
+    private def testAggregate(String aggregateName) {
 
-		// PREPARE
-		val abstractName = "Abstract" + aggregateName
-		val context = new HashMap<String, Object>()
-		val refReg = context.codeReferenceRegistry
-		refReg.putReference("x.types.String", "java.lang.String")
-		refReg.putReference("x.types.Integer", "java.lang.Integer")
-		refReg.putReference("x.aggregates." + aggregateName + "Id", "tst.x.aggregates." + aggregateName + "Id")
-		refReg.putReference("x.aggregates." + aggregateName + "CreatedEvent", "tst.x.aggregates." + aggregateName + "CreatedEvent")
+        // PREPARE
+        val abstractName = "Abstract" + aggregateName
+        val context = new HashMap<String, Object>()
+        val refReg = context.codeReferenceRegistry
+        refReg.putReference("x.types.String", "java.lang.String")
+        refReg.putReference("x.types.Integer", "java.lang.Integer")
+        refReg.putReference("x.aggregates." + aggregateName + "Id", "tst.x.aggregates." + aggregateName + "Id")
+        refReg.putReference("x.aggregates." + aggregateName + "CreatedEvent", "tst.x.aggregates." + aggregateName + "CreatedEvent")
 
-		val AbstractAggregateArtifactFactory testee = createTestee()
-		val Aggregate aggregate = model.find(typeof(Aggregate), aggregateName)
+        val AbstractAggregateArtifactFactory testee = createTestee()
+        val Aggregate aggregate = model.find(typeof(Aggregate), aggregateName)
 
-		// TEST
-		val result = new String(testee.create(aggregate, context, false).iterator().next().data)
+        // TEST
+        val result = new String(testee.create(aggregate, context, false).iterator().next().data)
 
-		// VERIFY
-		assertThat(result).isEqualTo(("x/aggregates/" + abstractName + ".java").loadAbstractExample)
+        // VERIFY
+        assertThat(result).isEqualTo(("x/aggregates/" + abstractName + ".java").loadAbstractExample)
 
-	}
+    }
 
-	private def createTestee() {
-		val factory = new AbstractAggregateArtifactFactory() {}
-		val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractAggregate",
-			AbstractAggregateArtifactFactory.name)
-		config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
-		config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
-		config.init(new DefaultContext(), null)
-		factory.init(config)
-		return factory
-	}
+    private def createTestee() {
+        val factory = new AbstractAggregateArtifactFactory() {}
+        val ArtifactFactoryConfig config = new ArtifactFactoryConfig("abstractAggregate",
+            AbstractAggregateArtifactFactory.name)
+        config.addVariable(new Variable(GenerateOptions.KEY_BASE_PKG, EXAMPLES_ABSTRACT))
+        config.addVariable(new Variable(GenerateOptions.KEY_COPYRIGHT_HEADER, Utils.readAsString("required-header.txt")))
+        config.init(new DefaultContext(), null)
+        factory.init(config)
+        return factory
+    }
 
-	private def model() {
-		val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregate.ddd")))
-		validationTester.assertNoIssues(model)
-		return model
-	}
+    private def model() {
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregate.ddd")))
+        validationTester.assertNoIssues(model)
+        return model
+    }
 
 }

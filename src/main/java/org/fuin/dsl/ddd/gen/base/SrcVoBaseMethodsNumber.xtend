@@ -12,85 +12,85 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractVOExtensions.*
  */
 class SrcVoBaseMethodsNumber implements CodeSnippet {
 
-	val String typeName;
+    val String typeName;
 
-	val String baseName;
+    val String baseName;
 
-	/**
-	 * Constructor with value object.
-	 * 
-	 * @param ctx Context.
-	 * @param vo Value object.
-	 */
-	new(CodeSnippetContext ctx, AbstractVO vo) {
-		if (vo === null) {
-			throw new IllegalArgumentException("vo cannot be null")
-		}
-		if (vo.baseType === null) {
-			throw new IllegalArgumentException("vo.base cannot be null")
-		}
-		this.typeName = vo.name
-		this.baseName = vo.baseType.name
-		ctx.requiresReference(vo.uniqueName)
-		ctx.requiresReference(vo.baseType.uniqueName)
-	}
+    /**
+     * Constructor with value object.
+     * 
+     * @param ctx Context.
+     * @param vo Value object.
+     */
+    new(CodeSnippetContext ctx, AbstractVO vo) {
+        if (vo === null) {
+            throw new IllegalArgumentException("vo cannot be null")
+        }
+        if (vo.baseType === null) {
+            throw new IllegalArgumentException("vo.base cannot be null")
+        }
+        this.typeName = vo.name
+        this.baseName = vo.baseType.name
+        ctx.requiresReference(vo.uniqueName)
+        ctx.requiresReference(vo.baseType.uniqueName)
+    }
 
-	override toString() {
-		'''	
-			/**
-			 * Returns the information if a given «baseName» can be converted into
-			 * an instance of «typeName». A <code>null</code> value returns <code>true</code>.
-			 * 
-			 * @param value
-			 *            Value to check.
-			 * 
-			 * @return TRUE if it's a valid «baseName», else FALSE.
-			 */
-			public static boolean isValid(final «baseName» value) {
-				if (value == null) {
-					return true;
-				}
-				try {
-					«baseName».valueOf(value);
-				} catch (final NumberFormatException ex) {
-					return false;
-				}
-				return true;
-			}
-			
-			/**
-			 * Parses a given «baseName» and returns a new instance of «typeName».
-			 * 
-			 * @param value
-			 *            Value to convert. A <code>null</code> value returns
-			 *            <code>null</code>.
-			 * 
-			 * @return Converted value.
-			 */
-			public static «typeName» valueOf(final «baseName» value) {
-				if (value == null) {
-					return null;
-				}
-				return new «typeName»(value);
-			}
-			
-			/**
-			 * Parses a given String and returns a new instance of «typeName».
-			 * 
-			 * @param value
-			 *            Value to convert. A <code>null</code> value returns
-			 *            <code>null</code>.
-			 * 
-			 * @return Converted value.
-			 */
-			public static «typeName» valueOf(final String value) {
-				if (value == null) {
-					return null;
-				}
-				return new «typeName»(«baseName».valueOf(value));
-			}
-			
-		'''
-	}
+    override toString() {
+        '''    
+            /**
+             * Returns the information if a given «baseName» can be converted into
+             * an instance of «typeName». A <code>null</code> value returns <code>true</code>.
+             * 
+             * @param value
+             *            Value to check.
+             * 
+             * @return TRUE if it's a valid «baseName», else FALSE.
+             */
+            public static boolean isValid(final «baseName» value) {
+                if (value == null) {
+                    return true;
+                }
+                try {
+                    «baseName».valueOf(value);
+                } catch (final NumberFormatException ex) {
+                    return false;
+                }
+                return true;
+            }
+            
+            /**
+             * Parses a given «baseName» and returns a new instance of «typeName».
+             * 
+             * @param value
+             *            Value to convert. A <code>null</code> value returns
+             *            <code>null</code>.
+             * 
+             * @return Converted value.
+             */
+            public static «typeName» valueOf(final «baseName» value) {
+                if (value == null) {
+                    return null;
+                }
+                return new «typeName»(value);
+            }
+            
+            /**
+             * Parses a given String and returns a new instance of «typeName».
+             * 
+             * @param value
+             *            Value to convert. A <code>null</code> value returns
+             *            <code>null</code>.
+             * 
+             * @return Converted value.
+             */
+            public static «typeName» valueOf(final String value) {
+                if (value == null) {
+                    return null;
+                }
+                return new «typeName»(«baseName».valueOf(value));
+            }
+            
+        '''
+    }
 
 }

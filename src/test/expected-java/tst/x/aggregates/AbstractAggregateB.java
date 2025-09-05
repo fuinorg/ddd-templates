@@ -27,73 +27,73 @@ import org.fuin.objects4j.common.Contract;
  */
 public abstract class AbstractAggregateB extends AbstractAggregateRoot<AggregateBId> {
 
-	@NotNull
-	private AggregateBId id;
+    @NotNull
+    private AggregateBId id;
 
-	@NotNull
-	private String a;
-	
-	@NotNull
-	private Integer b;
-	
-	@Override
-	public final EntityType getType() {
-		return AggregateBId.TYPE;
-	}
+    @NotNull
+    private String a;
+    
+    @NotNull
+    private Integer b;
+    
+    @Override
+    public final EntityType getType() {
+        return AggregateBId.TYPE;
+    }
 
-	@Override
-	public final AggregateBId getId() {
-		return id;
-	}
+    @Override
+    public final AggregateBId getId() {
+        return id;
+    }
 
-	/**
-	 * Sets the aggregate identifier.
-	 * 
-	 * @param id Unique aggregate identifier.
-	 */
-	protected final void setId(@NotNull final AggregateBId id) {
-		Contract.requireArgNotNull("id", id);
-		this.id = id;
-	}
-	
-	/**
-	 * Returns: Variable A.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	protected final String getA() {
-		return a;
-	}
-	
-	/**
-	 * Returns: Variable B.
-	 *
-	 * @return Current value.
-	 */
-	@NotNull
-	protected final Integer getB() {
-		return b;
-	}
-	
-	/**
-	 * Sets: Variable A.
-	 *
-	 * @param a Value to set.
-	 */
-	protected final void setA(@NotNull final String a) {
-		Contract.requireArgNotNull("a", a);
-		this.a = a;
-	}
-	
-	/**
-	 * Sets: Variable B.
-	 *
-	 * @param b Value to set.
-	 */
-	protected final void setB(@NotNull final Integer b) {
-		Contract.requireArgNotNull("b", b);
-		this.b = b;
-	}
-	
+    /**
+     * Sets the aggregate identifier.
+     * 
+     * @param id Unique aggregate identifier.
+     */
+    protected final void setId(@NotNull final AggregateBId id) {
+        Contract.requireArgNotNull("id", id);
+        this.id = id;
+    }
+    
+    /**
+     * Returns: Variable A.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    protected final String getA() {
+        return a;
+    }
+    
+    /**
+     * Returns: Variable B.
+     *
+     * @return Current value.
+     */
+    @NotNull
+    protected final Integer getB() {
+        return b;
+    }
+    
+    /**
+     * Sets: Variable A.
+     *
+     * @param a Value to set.
+     */
+    protected final void setA(@NotNull final String a) {
+        Contract.requireArgNotNull("a", a);
+        this.a = a;
+    }
+    
+    /**
+     * Sets: Variable B.
+     *
+     * @param b Value to set.
+     */
+    protected final void setB(@NotNull final Integer b) {
+        Contract.requireArgNotNull("b", b);
+        this.b = b;
+    }
+    
 }
