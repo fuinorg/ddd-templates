@@ -24,7 +24,7 @@ import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import org.fuin.dsl.ddd.gen.base.GenerateOptions
 import java.util.List
 
-abstract class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
+class AbstractAggregateIdArtifactFactory extends AbstractSource<AggregateId> {
 
     override getModelType() {
         typeof(AggregateId)

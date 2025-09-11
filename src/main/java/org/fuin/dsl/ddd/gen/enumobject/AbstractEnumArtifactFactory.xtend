@@ -25,7 +25,7 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import java.util.List
 
-abstract class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
+class AbstractEnumArtifactFactory extends AbstractSource<EnumObject> {
 
     override getModelType() {
         typeof(EnumObject)

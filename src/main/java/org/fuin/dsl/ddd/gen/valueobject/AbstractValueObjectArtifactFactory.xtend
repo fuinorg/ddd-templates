@@ -23,7 +23,7 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import java.util.List
 
-abstract class AbstractValueObjectArtifactFactory extends AbstractSource<ValueObject> {
+class AbstractValueObjectArtifactFactory extends AbstractSource<ValueObject> {
 
     override getModelType() {
         typeof(ValueObject)

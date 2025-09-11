@@ -28,7 +28,7 @@ import java.util.List
 /**
  * Generates an abstract aggregate Java class.
  */
-abstract class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
+class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
 
     override getModelType() {
         return typeof(Aggregate)

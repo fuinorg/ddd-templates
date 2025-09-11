@@ -24,7 +24,7 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsEntityIdExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import java.util.List
 
-abstract class AbstractEntityIdArtifactFactory extends AbstractSource<EntityId> {
+class AbstractEntityIdArtifactFactory extends AbstractSource<EntityId> {
 
     override getModelType() {
         typeof(EntityId)
