@@ -88,7 +88,7 @@ class FinalAggregateArtifactFactory extends AbstractSource<Aggregate> {
             }
         '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
     }
 
     def _constructors(CodeSnippetContext ctx, Aggregate aggregate, String className) {

@@ -110,7 +110,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
             }
         '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
 
     }
 

@@ -66,7 +66,7 @@ class ServiceArtifactFactory extends AbstractSource<Service> {
             «new SrcService(ctx, service)»
             '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
 
     }
 

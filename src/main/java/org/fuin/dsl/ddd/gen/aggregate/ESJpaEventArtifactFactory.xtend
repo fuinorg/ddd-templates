@@ -188,7 +188,7 @@ class ESJpaEventArtifactFactory extends AbstractSource<Aggregate> implements Art
             }
         '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString 
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString 
 
     }
 

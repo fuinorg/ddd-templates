@@ -79,7 +79,7 @@ class FinalEntityArtifactFactory extends AbstractSource<Entity> {
             }
         '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
 
     }
 

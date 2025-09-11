@@ -81,7 +81,7 @@ class ESRepositoryFactoryArtifactFactory extends AbstractSource<Aggregate> imple
             }
         '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
 
     }
 

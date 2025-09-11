@@ -48,6 +48,7 @@ import java.util.Collections
  *         type List generics 1
  *         type Map generics 2
  *         type Set generics 1
+ *         type Binary
  *     }
  * }
  * <code>

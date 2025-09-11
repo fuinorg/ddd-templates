@@ -7,6 +7,7 @@ import java.util.Set
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 
 import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
+import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 /**
  * Creates the import statements source code.
@@ -15,7 +16,7 @@ class SrcImports implements CodeSnippet {
 
     val List<String> imports
 
-    new(String currentPkg, Set<String> importSet) {
+    new(CodeSnippetContext ctx, String currentPkg, Set<String> importSet) {    	
         imports = new ArrayList<String>()
         for (imp : importSet) {
             if (!javaLang(imp) && (imp.trim.length > 0) && !currentPkg.equals(imp.onlyPackage)) {

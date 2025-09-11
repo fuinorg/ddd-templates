@@ -112,7 +112,7 @@ class ValidatorAnnotationArtifactFactory extends AbstractSource<Constraint> {
             //CHECKSTYLE:ON:LineLength
         '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
 
     }
 

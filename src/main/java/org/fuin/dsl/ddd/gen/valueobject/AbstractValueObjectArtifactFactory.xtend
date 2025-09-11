@@ -76,7 +76,7 @@ class AbstractValueObjectArtifactFactory extends AbstractSource<ValueObject> {
             }
         '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
 
     }
 

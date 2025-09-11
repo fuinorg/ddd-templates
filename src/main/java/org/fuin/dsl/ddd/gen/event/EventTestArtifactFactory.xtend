@@ -189,7 +189,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
             // CHECKSTYLE:ON
         '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
 
     }
 
@@ -278,7 +278,7 @@ class EventTestArtifactFactory extends AbstractSource<Event> {
             // CHECKSTYLE:ON
         '''
 
-        new SrcAll(copyrightHeader, pkg, ctx.imports, src).toString
+        new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
 
     }
 

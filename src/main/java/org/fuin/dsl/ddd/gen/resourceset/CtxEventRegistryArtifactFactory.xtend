@@ -175,7 +175,7 @@ class CtxEventRegistryArtifactFactory extends AbstractSource<ResourceSet> {
             
         '''
 
-        new SrcAll(copyrightHeader, pkg, sctx.imports, src).toString
+        new SrcAll(sctx, copyrightHeader, pkg, sctx.imports, src).toString
 
     }
 
