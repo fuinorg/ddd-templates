@@ -103,6 +103,7 @@ class CtxExternalTypes extends AbstractSource<ResourceSet> {
             refReg.putReference(name + "." + pkg + ".List", List.name)
             refReg.putReference(name + "." + pkg + ".Map", Map.name)
             refReg.putReference(name + "." + pkg + ".Set", Set.name)
+            refReg.putReference(name + "." + pkg + ".Binary", "byte[]")
             
         }
 

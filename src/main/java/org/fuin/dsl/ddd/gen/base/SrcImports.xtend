@@ -26,6 +26,9 @@ class SrcImports implements CodeSnippet {
     }
     
     def boolean javaLang(String imp) {
+        if (imp.equals("byte[]")) {
+        	return true
+        }
         if (!imp.startsWith("java.lang.")) {
             return false
         }
