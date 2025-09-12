@@ -83,7 +83,7 @@ class FinalAggregateArtifactFactory extends AbstractSource<Aggregate> {
                     
                 «ENDFOR»
                 «new SrcChildEntityLocatorMethods(ctx, GenerateOptions.empty(), aggregate)»
-                «new SrcMethods(ctx, GenerateOptions.empty(), aggregate)»
+                «new SrcMethods(ctx, GenerateOptions.empty(), aggregate, false)»
                 «new SrcHandleEventMethods(ctx, aggregate.allEvents)»
             }
         '''

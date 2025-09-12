@@ -24,6 +24,7 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractEntityExtension
 import static extension org.fuin.dsl.cqrs.extensions.CqrsAggregateExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import java.util.List
+import org.fuin.dsl.ddd.gen.base.SrcMethods
 
 /**
  * Generates an abstract aggregate Java class.
@@ -107,6 +108,7 @@ class AbstractAggregateArtifactFactory extends AbstractSource<Aggregate> {
                 «new SrcAbstractChildEntityLocatorMethods(ctx, GenerateOptions.empty(), aggregate)»
                 «new SrcAbstractHandleEventMethods(ctx, aggregate.allEvents)»
                 «new SrcServices(ctx, aggregate.services)»
+                «new SrcMethods(ctx, GenerateOptions.empty(), aggregate, true)»
             }
         '''
 

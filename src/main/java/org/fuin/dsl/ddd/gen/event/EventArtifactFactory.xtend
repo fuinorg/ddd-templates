@@ -21,7 +21,6 @@ import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
 import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractEntityExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
-import static extension org.fuin.dsl.cqrs.extensions.CqrsAttributeExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsEventExtensions.*
@@ -119,6 +118,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
     }
 
     def createDomainEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
+    	var variables = event.origin === null ? event.attributes : event.origin.parameters
         val String src = ''' 
             «new SrcJavaDocType(event)»
             «IF options.jaxb»
@@ -144,14 +144,14 @@ class EventArtifactFactory extends AbstractSource<Event> {
                  * «event.doc.text»
                  *
                  * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
-                «FOR v : event.attributes»
+                «FOR v : variables»
                     * @param «v.name» «v.superDoc» 
                 «ENDFOR»
                 */
-                public «event.name»(@NotNull final EntityIdPath entityIdPath«IF event.attributes.nullSafe.size > 0», «new SrcParamsDecl(
-                ctx, options, event.attributes.asParameters)»«ENDIF») {
+                public «event.name»(@NotNull final EntityIdPath entityIdPath«IF variables.nullSafe.size > 0», «new SrcParamsDecl(
+                ctx, options, variables.asParameters)»«ENDIF») {
                     super(entityIdPath);
-                    «new SrcParamsAssignment(ctx, event.attributes.asParameters)»
+                    «new SrcParamsAssignment(ctx, variables.asParameters)»
                 }
             
                 @Override
@@ -159,13 +159,13 @@ class EventArtifactFactory extends AbstractSource<Event> {
                     return EVENT_TYPE;
                 }
             
-                «new SrcGetters(ctx, options, "public final", event.attributes)»
+                «new SrcGetters(ctx, options, "public final", variables)»
             
                 @Override
                 public final String toString() {
                     return KeyValue.replace("«event.message»",
                         new KeyValue("#entityIdPath", getEntityIdPath())
-                        «FOR v : event.attributes»
+                        «FOR v : variables»
                             , new KeyValue("«v.name»", «v.name»)
                         «ENDFOR»
                     );
@@ -179,6 +179,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
     }
 
     def createStandardEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
+    	var variables = event.origin === null ? event.attributes : event.origin.parameters
         val String src = ''' 
             «new SrcJavaDocType(event)»
             «IF options.jaxb»
@@ -193,7 +194,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
                 
                 «new SrcVarsDecl(ctx, "private", options, event)»
             
-                «IF event.attributes.nullSafe.size > 0»
+                «IF variables.nullSafe.size > 0»
                     /**
                      * Protected default constructor for deserialization.
                      */
@@ -205,13 +206,13 @@ class EventArtifactFactory extends AbstractSource<Event> {
                 /**
                  * «event.doc.text»
                  *
-                «FOR v : event.attributes»
+                «FOR v : variables»
                     * @param «v.name» «v.superDoc» 
                 «ENDFOR»
                 */
-                public «event.name»(«new SrcParamsDecl(ctx, options, event.attributes.asParameters)») {
+                public «event.name»(«new SrcParamsDecl(ctx, options, variables.asParameters)») {
                     super();
-                    «new SrcParamsAssignment(ctx, event.attributes.asParameters)»
+                    «new SrcParamsAssignment(ctx, variables.asParameters)»
                 }
             
                 @Override
@@ -219,15 +220,15 @@ class EventArtifactFactory extends AbstractSource<Event> {
                     return EVENT_TYPE;
                 }
             
-                «new SrcGetters(ctx, options, "public final", event.attributes)»
+                «new SrcGetters(ctx, options, "public final", variables)»
             
                 @Override
                 public final String toString() {
-                    «IF event.attributes.nullSafe.size == 0»
+                    «IF variables.nullSafe.size == 0»
                         return "«event.message»";
                     «ELSE»
                         return KeyValue.replace("«event.message»"
-                        «FOR v : event.attributes»
+                        «FOR v : variables»
                             , new KeyValue("«v.name»", «v.name»)
                         «ENDFOR»
                         );

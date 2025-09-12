@@ -74,7 +74,7 @@ class FinalEntityArtifactFactory extends AbstractSource<Entity> {
             
                 «new SrcConstructorsWithParamsAssignment(ctx, GenerateOptions.empty(), constructorData(entity, className))»
                 «new SrcChildEntityLocatorMethods(ctx, GenerateOptions.empty(), entity)»
-                «new SrcMethods(ctx, GenerateOptions.empty(), entity)»
+                «new SrcMethods(ctx, GenerateOptions.empty(), entity, false)»
                 «new SrcHandleEventMethods(ctx, entity.allEvents)»
             }
         '''

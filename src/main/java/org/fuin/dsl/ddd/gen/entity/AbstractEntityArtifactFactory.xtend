@@ -34,6 +34,7 @@ import static extension org.fuin.dsl.cqrs.extensions.CqrsAggregateExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsDslFactoryExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
+import org.fuin.dsl.ddd.gen.base.SrcMethods
 
 abstract class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
 
@@ -104,6 +105,7 @@ abstract class AbstractEntityArtifactFactory extends AbstractSource<Entity> {
                 «new SrcAbstractChildEntityLocatorMethods(ctx, GenerateOptions.empty(), entity)»
                 «new SrcAbstractHandleEventMethods(ctx, entity.allEvents)»
                 «new SrcServices(ctx, entity.services)»
+                «new SrcMethods(ctx, GenerateOptions.empty(), entity, true)»
             }
         '''
 

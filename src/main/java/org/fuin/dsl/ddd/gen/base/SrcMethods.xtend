@@ -24,13 +24,18 @@ class SrcMethods implements CodeSnippet {
      * @param ctx Context.
      * @param options Options to use.
      * @param entity Entity.
+     * @param makeAbstract Should the method be made abstract?
      */
-    new(CodeSnippetContext ctx, GenerateOptions options, AbstractEntity entity) {
+    new(CodeSnippetContext ctx, GenerateOptions options, AbstractEntity entity, boolean makeAbstract) {
         this.ctx = ctx
         this.options = options
         this.methods = new ArrayList<MethodData>()
         for (method : entity.methods.nullSafe) {
-            this.methods.add(new MethodData("public final", false, method))
+        	if (makeAbstract) {
+        		this.methods.add(new MethodData("public", true, method))
+        	} else {
+            	this.methods.add(new MethodData("public final", false, method))            
+            }
         }
     }
 
@@ -40,13 +45,18 @@ class SrcMethods implements CodeSnippet {
      * @param ctx Context.
      * @param options Options to use.
      * @param type Value object.
+     * @param makeAbstract Should the method be made abstract?
      */
-    new(CodeSnippetContext ctx, GenerateOptions options, AbstractVO vo) {
+    new(CodeSnippetContext ctx, GenerateOptions options, AbstractVO vo, boolean makeAbstract) {
         this.ctx = ctx
         this.options = options
         this.methods = new ArrayList<MethodData>()
         for (method : vo.methods.nullSafe) {
-            this.methods.add(new MethodData("public final", false, method))
+        	if (makeAbstract) {
+        		this.methods.add(new MethodData("public", true, method))
+        	} else {
+            	this.methods.add(new MethodData("public final", false, method))            
+            }
         }
     }
 

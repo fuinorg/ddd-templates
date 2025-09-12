@@ -5,11 +5,39 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.TypeExtensions.*
+import org.fuin.dsl.cqrs.cqrsDsl.Attribute
+import org.fuin.dsl.cqrs.cqrsDsl.ConstraintInstance
+import java.util.List
+import org.fuin.dsl.cqrs.cqrsDsl.Parameter
+import java.util.Collections
+import jakarta.validation.constraints.NotNull
 
 /**
  * Provides extension methods for Variable.
  */
 class VariableExtensions {
+
+	/**
+	 * Returns either invariant or precondition constraints.
+	 * 
+	 * @param variable Attribute or parameter.
+	 * @return List of constraints.  
+	 */
+	@NotNull
+    def static List<ConstraintInstance> getConstraints(Variable variable) {
+    	if (variable instanceof Attribute) {
+    		if (variable.invariants === null || variable.invariants.constraintInstances === null) {
+    			return Collections.emptyList();
+    		}
+    		return variable.invariants.constraintInstances
+    	}
+    	if (variable instanceof Parameter) {
+    		if (variable.preconditions === null || variable.preconditions.constraintInstances === null) {
+    			return Collections.emptyList();
+    		}
+    		return variable.preconditions.constraintInstances
+    	}
+	}
 
     /**
      * Returns the simple type name. If there is a multiplicity <code>List</code> 

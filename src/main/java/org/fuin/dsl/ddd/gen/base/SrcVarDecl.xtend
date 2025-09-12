@@ -1,14 +1,13 @@
 package org.fuin.dsl.ddd.gen.base
 
 import jakarta.validation.constraints.NotNull
-import org.fuin.dsl.cqrs.cqrsDsl.Attribute
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
-import static extension org.fuin.dsl.cqrs.extensions.CqrsInvariantsExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsVariableExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.VariableExtensions.*
 import jakarta.annotation.Nullable
+import org.fuin.dsl.cqrs.cqrsDsl.Variable
 
 /**
  * Creates source code for a single attribute declaration.
@@ -18,7 +17,7 @@ class SrcVarDecl implements CodeSnippet {
     val CodeSnippetContext ctx
     val String modifiers
     val GenerateOptions options
-    val Attribute attribute
+    val Variable variable
 
     /**
      * Constructor with all mandatory data.
@@ -26,20 +25,20 @@ class SrcVarDecl implements CodeSnippet {
      * @param ctx Context.
      * @param modifiers Modifiers for the attribute.
      * @param options Options to use.
-     * @param attribute Attribute.
+     * @param variable Attribute or Parameter.
      */
-    new(CodeSnippetContext ctx, String modifiers, GenerateOptions options, Attribute attribute) {
+    new(CodeSnippetContext ctx, String modifiers, GenerateOptions options, Variable variable) {
         this.ctx = ctx
         this.modifiers = modifiers
         this.options = options
-        this.attribute = attribute
+        this.variable = variable
 
-        if (attribute.nullable === null) {
+        if (variable.nullable === null) {
             ctx.requiresImport(NotNull.name)
         } else {
             ctx.requiresImport(Nullable.name)
         }
-        addRequiredReferences(attribute, ctx)
+        addRequiredReferences(variable, ctx)
     }
 
     override toString() {
@@ -47,17 +46,17 @@ class SrcVarDecl implements CodeSnippet {
             «validationAnnotations»
             «xmlAnnotations»
             «jsonAnnotations»
-            «new SrcMetaAnnotations(ctx, attribute.overriddenMeta, null, attribute.name)»
-            «modifiers» «attribute.type(ctx)» «attribute.name»;
+            «new SrcMetaAnnotations(ctx, variable.overriddenMeta, null, variable.name)»
+            «modifiers» «variable.type(ctx)» «variable.name»;
         '''
     }
 
     private def validationAnnotations() {
         '''
-            «FOR cc : attribute.invariants.nullSafe SEPARATOR ' '»
+            «FOR cc : variable.constraints SEPARATOR ' '»
                 «new SrcValidationAnnotation(ctx, cc)»
             «ENDFOR»
-            «IF attribute.nullable === null»
+            «IF variable.nullable === null»
                 @NotNull
             «ELSE»
                 @Nullable
@@ -68,7 +67,7 @@ class SrcVarDecl implements CodeSnippet {
     private def xmlAnnotations() {
         '''
             «IF options.jaxb»
-                «new SrcXmlAttributeOrElement(ctx, attribute, options.jaxbElements)»
+                «new SrcXmlAttributeOrElement(ctx, variable, options.jaxbElements)»
             «ENDIF»
         '''
     }
@@ -76,7 +75,7 @@ class SrcVarDecl implements CodeSnippet {
     private def jsonAnnotations() {
         '''
             «IF options.jsonb»
-                «new SrcJsonProperty(ctx, attribute)»
+                «new SrcJsonProperty(ctx, variable)»
             «ENDIF»
         '''
     }
