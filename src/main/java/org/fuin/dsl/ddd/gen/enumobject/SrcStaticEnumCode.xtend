@@ -36,10 +36,8 @@ class SrcStaticEnumCode implements CodeSnippet {
         this.baseVar = CqrsCollectionExtensions.<Attribute>first(attributes.nullSafe)
         this.instances = enumObject.instances
         this.base = enumObject.base
-        if (base !== null) {
-            ctx.requiresImport(Nullable.name)
-            ctx.requiresImport(List.name)
-        }
+        ctx.requiresImport(Nullable.name)
+        ctx.requiresImport(List.name)
     }
     
     override toString() {

@@ -10,6 +10,7 @@ import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 
 import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 import org.fuin.dsl.cqrs.cqrsDsl.Variable
+import org.fuin.dsl.cqrs.cqrsDsl.Command
 
 /**
  * Creates source code for a one or more attribute declarations.
@@ -56,6 +57,18 @@ class SrcVarsDecl implements CodeSnippet {
      */
     new(CodeSnippetContext ctx, String visibility, GenerateOptions options, Event event) {
         this(ctx, visibility, options, event.origin === null ? event.attributes : event.origin.parameters);    
+    }
+
+    /**
+     * Constructor with command.
+     * 
+     * @param ctx Context.
+     * @param visibility Visibility for the attribute.
+     * @param options Options to use.
+     * @param command Command that has a list of attributes.
+     */
+    new(CodeSnippetContext ctx, String visibility, GenerateOptions options, Command command) {
+        this(ctx, visibility, options, command.target === null ? command.attributes : command.target.parameters);    
     }
 
     /**

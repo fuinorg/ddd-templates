@@ -35,6 +35,7 @@
 
 		<assertj-core.version>3.27.3</assertj-core.version>
 		<ddd-4-java.version>0.8.0-SNAPSHOT</ddd-4-java.version>
+		<cqrs-4-java.version>0.7.0-SNAPSHOT</cqrs-4-java.version>
 		<ddd-cqrs-dsl.version>1.0.0-SNAPSHOT</ddd-cqrs-dsl.version>
 		<equalsverifier.version>4.0.9</equalsverifier.version>
 		<esc.version>0.10.0-SNAPSHOT</esc.version>
@@ -180,11 +181,46 @@
 		
 		<dependency>
 			<groupId>org.fuin.ddd4j</groupId>
+			<artifactId>ddd-4-java-jackson</artifactId>
+			<version>${ddd-4-java.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.fuin.ddd4j</groupId>
 			<artifactId>ddd-4-java-esc</artifactId>
 			<version>${ddd-4-java.version}</version>
 			<scope>test</scope>
 		</dependency>		
-
+		
+		<dependency>
+			<groupId>org.fuin.cqrs4j</groupId>
+			<artifactId>cqrs-4-java-core</artifactId>
+			<version>${cqrs-4-java.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.fuin.cqrs4j</groupId>
+			<artifactId>cqrs-4-java-jaxb</artifactId>
+			<version>${cqrs-4-java.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.fuin.cqrs4j</groupId>
+			<artifactId>cqrs-4-java-jsonb</artifactId>
+			<version>${cqrs-4-java.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.fuin.cqrs4j</groupId>
+			<artifactId>cqrs-4-java-jackson</artifactId>
+			<version>${cqrs-4-java.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>

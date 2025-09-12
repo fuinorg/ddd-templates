@@ -8,6 +8,7 @@ import org.fuin.dsl.cqrs.cqrsDsl.Service
 import org.fuin.srcgen4j.core.emf.CodeSnippet
 
 import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
+import org.fuin.dsl.cqrs.cqrsDsl.Command
 
 /**
  * Creates the source code for a type (class, interface) JavaDoc.
@@ -68,6 +69,15 @@ class SrcJavaDocType implements CodeSnippet {
      */
     new(Event event) {
         this(event.doc)
+    }
+
+    /**
+     * Constructor with command.
+     * 
+     * @param event Command with doc.
+     */
+    new(Command command) {
+        this(command.doc)
     }
 
     override toString() {

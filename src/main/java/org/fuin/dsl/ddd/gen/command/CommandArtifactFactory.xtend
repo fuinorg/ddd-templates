@@ -1,9 +1,8 @@
-package org.fuin.dsl.ddd.gen.event
+package org.fuin.dsl.ddd.gen.command
 
 import java.util.Map
 import org.fuin.dsl.cqrs.cqrsDsl.AbstractEntity
 import org.fuin.dsl.cqrs.cqrsDsl.AbstractEntityId
-import org.fuin.dsl.cqrs.cqrsDsl.Event
 import org.fuin.dsl.cqrs.cqrsDsl.Namespace
 import org.fuin.dsl.ddd.gen.base.AbstractSource
 import org.fuin.dsl.ddd.gen.base.SrcAll
@@ -19,31 +18,33 @@ import org.fuin.srcgen4j.core.emf.CodeReferenceRegistry
 import org.fuin.srcgen4j.core.emf.CodeSnippetContext
 import org.fuin.srcgen4j.core.emf.SimpleCodeSnippetContext
 
-import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractEntityExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractElementExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsCollectionExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsEObjectExtensions.*
-import static extension org.fuin.dsl.cqrs.extensions.CqrsEventExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsStringExtensions.*
 import static extension org.fuin.dsl.cqrs.extensions.CqrsVariableExtensions.*
+import static extension org.fuin.dsl.cqrs.extensions.CqrsAbstractEntityExtensions.*
 import static extension org.fuin.dsl.ddd.gen.extensions.MapExtensions.*
 import java.util.List
+import org.fuin.dsl.cqrs.cqrsDsl.Command
+import org.fuin.dsl.cqrs.cqrsDsl.Aggregate
 import java.io.Serial
 import java.time.ZonedDateTime
+import org.fuin.dsl.cqrs.cqrsDsl.AggregateId
 
-class EventArtifactFactory extends AbstractSource<Event> {
+class CommandArtifactFactory extends AbstractSource<Command> {
 
     override getModelType() {
-        typeof(Event)
+        typeof(Command)
     }
 
-    override create(Event event, Map<String, Object> context, boolean preparationRun) throws GenerateException {
+    override create(Command command, Map<String, Object> context, boolean preparationRun) throws GenerateException {
 
-        val AbstractEntity entity = event.entity;
-        val className = event.getName()
+        val Aggregate entity = command.aggregate
+        val className = command.getName()
         var Namespace ns;
         if (entity === null) {
-            ns = event.namespace;
+            ns = command.namespace;
         } else {
             ns = entity.namespace;
         }
@@ -52,7 +53,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
         val filename = fqn.replace('.', '/') + ".java";
 
         val CodeReferenceRegistry refReg = context.codeReferenceRegistry
-        refReg.putReference(event.uniqueName, fqn)
+        refReg.putReference(command.uniqueName, fqn)
 
         if (preparationRun) {
 
@@ -61,44 +62,44 @@ class EventArtifactFactory extends AbstractSource<Event> {
         }
 
         val SimpleCodeSnippetContext ctx = new SimpleCodeSnippetContext(refReg)
-        ctx.addImports(entity, event)
-        ctx.addReferences(event)
+        ctx.addImports(entity, command)
+        ctx.addReferences(command)
 
         var String src;
         if (entity === null) {
-            src = createStandardEvent(ctx, event, pkg, className).toString();
+            src = createStandardCommand(ctx, command, pkg, className).toString();
         } else {
-            src = createDomainEvent(ctx, event, pkg, className).toString();
+            src = createDomainCommand(ctx, command, pkg, className).toString();
         }
 
         return List.of(new GeneratedArtifact(artifactName, filename, src.getBytes("UTF-8")));
     }
 
-    def addImports(CodeSnippetContext ctx, AbstractEntity entity, Event event) {
+    def addImports(CodeSnippetContext ctx, AbstractEntity entity, Command command) {
         ctx.requiresImport("org.fuin.ddd4j.core.EventType")
         
         if (entity === null) {
 	        if (options.jsonb) {
-	            ctx.requiresImport("org.fuin.ddd4j.jsonb.AbstractEvent")        
+	            ctx.requiresImport("org.fuin.cqrs4j.jsonb.AbstractCommand")        
 	        }
 	        if (options.jaxb) {
-	            ctx.requiresImport("org.fuin.ddd4j.jaxb.AbstractEvent")        
+	            ctx.requiresImport("org.fuin.cqrs4j.jaxb.AbstractCommand")        
 	        }
 	        if (options.jackson) {
-	            ctx.requiresImport("org.fuin.ddd4j.jackson.AbstractEvent")        
+	            ctx.requiresImport("org.fuin.cqrs4j.jackson.AbstractCommand")        
 	        }
-            if (event.attributes.nullSafe.size > 0) {
+            if (command.attributes.nullSafe.size > 0) {
                 ctx.requiresImport("org.fuin.objects4j.core.KeyValue")
             }
         } else {
 	        if (options.jsonb) {
-	            ctx.requiresImport("org.fuin.ddd4j.jsonb.AbstractDomainEvent")        
+	            ctx.requiresImport("org.fuin.cqrs4j.jsonb.AbstractAggregateCommand")        
 	        }
 	        if (options.jaxb) {
-	            ctx.requiresImport("org.fuin.ddd4j.jaxb.AbstractDomainEvent")        
+	            ctx.requiresImport("org.fuin.cqrs4j.jaxb.AbstractAggregateCommand")        
 	        }
 	        if (options.jackson) {
-	            ctx.requiresImport("org.fuin.ddd4j.jackson.AbstractDomainEvent")        
+	            ctx.requiresImport("org.fuin.cqrs4j.jackson.AbstractAggregateCommand")        
 	        }
             ctx.requiresImport("jakarta.validation.constraints.NotNull")        
             ctx.requiresImport("org.fuin.objects4j.core.KeyValue")
@@ -108,35 +109,42 @@ class EventArtifactFactory extends AbstractSource<Event> {
         }
     }
 
-    def addReferences(CodeSnippetContext ctx, Event event) {    	
-        if (event.entity !== null) {
-            ctx.requiresReference(event.entityIdType.uniqueName)
+    def addReferences(CodeSnippetContext ctx, Command command) {    	
+        if (command.aggregate !== null) {
+            ctx.requiresReference(command.entityIdType.uniqueName)
         }
     }
 
-    def AbstractEntityId getEntityIdType(Event event) {
-        if (event.entity === null) {
+    def AggregateId getAggregateIdType(Command command) {
+        if (command.aggregate === null) {
             return null
         }
-        return event.entity.idType
+        return command.aggregate.idType
     }
 
-    def createDomainEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
-    	var variables = event.origin === null ? event.attributes : event.origin.parameters
+    def AbstractEntityId getEntityIdType(Command command) {
+        if (command.entity === null) {
+            return null
+        }
+        return command.entity.idType
+    }
+
+    def createDomainCommand(SimpleCodeSnippetContext ctx, Command command, String pkg, String className) {
+    	var variables = command.target === null ? command.attributes : command.target.parameters
         val String src = ''' 
-            «new SrcJavaDocType(event)»
+            «new SrcJavaDocType(command)»
             «IF options.jaxb»
-            «new SrcXmlRootElement(ctx, event.name)»
+            «new SrcXmlRootElement(ctx, command.name)»
             «ENDIF»
-            public final class «className» extends AbstractDomainEvent<«event.entityIdType.name»> {
+            public final class «className» extends AbstractAggregateCommand<«command.aggregateIdType.name», «command.entityIdType.name»> {
             
-                @Serial
+            	@Serial
                 private static final long serialVersionUID = 1000L;
             
-                /** Unique name used to store the event. */
-                public static final EventType EVENT_TYPE = new EventType("«event.name»");
+                /** Unique name used to store the command. */
+                public static final EventType EVENT_TYPE = new EventType("«command.name»");
                 
-                «new SrcVarsDecl(ctx, "private", options, event)»
+                «new SrcVarsDecl(ctx, "private", options, command)»
             
                 @Override
                 public EventType getEventType() {
@@ -147,7 +155,7 @@ class EventArtifactFactory extends AbstractSource<Event> {
             
                 @Override
                 public String toString() {
-                    return KeyValue.replace("«event.message»",
+                    return KeyValue.replace("«command.message»",
                         new KeyValue("#entityIdPath", getEntityIdPath())
                         «FOR v : variables»
                             , new KeyValue("«v.name»", «v.name»)
@@ -164,65 +172,64 @@ class EventArtifactFactory extends AbstractSource<Event> {
                     return new Builder();
                 }
                 
-                «new SrcEventBuilder(ctx, options, event)»
+                «new SrcCommandBuilder(ctx, options,command)»
             }
-            
         '''
 
         new SrcAll(ctx, copyrightHeader, pkg, ctx.imports, src).toString
 
     }
 
-    def createStandardEvent(SimpleCodeSnippetContext ctx, Event event, String pkg, String className) {
-    	var variables = event.origin === null ? event.attributes : event.origin.parameters
+    def createStandardCommand(SimpleCodeSnippetContext ctx, Command command, String pkg, String className) {
+    	var variables = command.target === null ? command.attributes : command.target.parameters
         val String src = ''' 
-            «new SrcJavaDocType(event)»
+            «new SrcJavaDocType(command)»
             «IF options.jaxb»
-            «new SrcXmlRootElement(ctx, event.name)»
+            «new SrcXmlRootElement(ctx, command.name)»
             «ENDIF»
-            public final class «className» extends AbstractEvent {
+            public final class «className» extends AbstractCommand {
             
                 private static final long serialVersionUID = 1000L;
             
-                /** Unique name used to store the event. */
-                public static final EventType EVENT_TYPE = new EventType("«event.name»");
+                /** Unique name used to store the command. */
+                public static final EventType EVENT_TYPE = new EventType("«command.name»");
                 
-                «new SrcVarsDecl(ctx, "private", options, event)»
+                «new SrcVarsDecl(ctx, "private", options, command)»
             
                 «IF variables.nullSafe.size > 0»
                     /**
                      * Protected default constructor for deserialization.
                      */
-                    protected «event.name»() {
+                    protected «command.name»() {
                         super();
                     }
                     
                 «ENDIF»
                 /**
-                 * «event.doc.text»
+                 * «command.doc.text»
                  *
                 «FOR v : variables»
                     * @param «v.name» «v.superDoc» 
                 «ENDFOR»
                 */
-                public «event.name»(«new SrcParamsDecl(ctx, options, variables.asParameters)») {
+                public «command.name»(«new SrcParamsDecl(ctx, options, variables.asParameters)») {
                     super();
                     «new SrcParamsAssignment(ctx, variables.asParameters)»
                 }
             
                 @Override
-                public EventType getEventType() {
+                public final EventType getEventType() {
                     return EVENT_TYPE;
                 }
             
-                «new SrcGetters(ctx, options, "public", variables)»
+                «new SrcGetters(ctx, options, "public final", variables)»
             
                 @Override
-                public String toString() {
+                public final String toString() {
                     «IF variables.nullSafe.size == 0»
-                        return "«event.message»";
+                        return "«command.message»";
                     «ELSE»
-                        return KeyValue.replace("«event.message»"
+                        return KeyValue.replace("«command.message»"
                         «FOR v : variables»
                             , new KeyValue("«v.name»", «v.name»)
                         «ENDFOR»
