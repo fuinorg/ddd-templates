@@ -19,7 +19,9 @@ package tst2.x.ev;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.validation.constraints.NotNull;
-import org.fuin.ddd4j.core.EntityIdPath;
+import java.io.Serial;
+import java.time.ZonedDateTime;
+import org.fuin.ddd4j.core.EventId;
 import org.fuin.ddd4j.core.EventType;
 import org.fuin.ddd4j.jsonb.AbstractDomainEvent;
 import org.fuin.objects4j.common.Contract;
@@ -31,6 +33,7 @@ import org.fuin.objects4j.ui.Examples;
  */
 public final class EventC extends AbstractDomainEvent<CustomerId> {
 
+    @Serial
     private static final long serialVersionUID = 1000L;
 
     /** Unique name used to store the event. */
@@ -47,31 +50,8 @@ public final class EventC extends AbstractDomainEvent<CustomerId> {
     private Integer b;
     
 
-    /**
-     * Protected default constructor for deserialization.
-     */
-    protected EventC() {
-        super();
-    }
-    
-    /**
-     * Aggregate event C.
-     *
-     * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
-    * @param a A. 
-    * @param b B. 
-    */
-    public EventC(@NotNull final EntityIdPath entityIdPath, @NotNull final String a, @NotNull final Integer b) {
-        super(entityIdPath);
-        Contract.requireArgNotNull("a", a);
-        Contract.requireArgNotNull("b", b);
-        
-        this.a = a;
-        this.b = b;
-    }
-
     @Override
-    public final EventType getEventType() {
+    public EventType getEventType() {
         return EVENT_TYPE;
     }
 
@@ -81,7 +61,7 @@ public final class EventC extends AbstractDomainEvent<CustomerId> {
      * @return Current value.
      */
     @NotNull
-    public final String getA() {
+    public String getA() {
         return a;
     }
     
@@ -91,13 +71,13 @@ public final class EventC extends AbstractDomainEvent<CustomerId> {
      * @return Current value.
      */
     @NotNull
-    public final Integer getB() {
+    public Integer getB() {
         return b;
     }
     
 
     @Override
-    public final String toString() {
+    public String toString() {
         return KeyValue.replace("Event C: ${a} / ${b} [${#entityIdPath}]",
             new KeyValue("#entityIdPath", getEntityIdPath())
             , new KeyValue("a", a)
@@ -105,4 +85,75 @@ public final class EventC extends AbstractDomainEvent<CustomerId> {
         );
     }
     
+    /**
+     * Creates a new builder instance.
+     *
+     * @return New builder instance.
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+    
+    /**
+     * Builds an instance of the outer class.
+     */
+    public static final class Builder extends AbstractDomainEvent.Builder<CustomerId, EventC, Builder> {
+    
+        private EventC delegate;
+    
+        private Builder() {
+            super(new EventC());
+            delegate = delegate();
+        }
+    
+        /**
+         * Sets: A.
+         *
+         * @param a Value to set.
+         * @return This builder.
+         */
+        public Builder a(@NotNull final String a) {
+            Contract.requireArgNotNull("a", a);
+            delegate.a = a;
+            return this;
+        }
+        
+        /**
+         * Sets: B.
+         *
+         * @param b Value to set.
+         * @return This builder.
+         */
+        public Builder b(@NotNull final Integer b) {
+            Contract.requireArgNotNull("b", b);
+            delegate.b = b;
+            return this;
+        }
+        
+    
+        /**
+         * Creates the event and clears the builder.
+         *
+         * @return New instance.
+         */
+        public EventC build() {
+            ensureBuildableAbstractDomainEvent();
+            if (delegate.getEventId() == null) {
+                this.eventId(new EventId());
+            }
+            if (delegate.getEventTimestamp() == null) {
+                this.timestamp(ZonedDateTime.now());
+            }
+            
+        	ensureNotNull("a", delegate.a);
+        	ensureNotNull("b", delegate.b);
+            
+            final EventC result = delegate;
+            delegate = new EventC();
+            resetAbstractDomainEvent(delegate);
+            return result;
+        }
+    
+    }
 }
+

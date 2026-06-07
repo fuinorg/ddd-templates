@@ -18,7 +18,9 @@
 package tst2.x.ev;
 
 import jakarta.validation.constraints.NotNull;
-import org.fuin.ddd4j.core.EntityIdPath;
+import java.io.Serial;
+import java.time.ZonedDateTime;
+import org.fuin.ddd4j.core.EventId;
 import org.fuin.ddd4j.core.EventType;
 import org.fuin.ddd4j.jsonb.AbstractDomainEvent;
 import org.fuin.objects4j.core.KeyValue;
@@ -28,39 +30,69 @@ import org.fuin.objects4j.core.KeyValue;
  */
 public final class EventA extends AbstractDomainEvent<CustomerId> {
 
+    @Serial
     private static final long serialVersionUID = 1000L;
 
     /** Unique name used to store the event. */
     public static final EventType EVENT_TYPE = new EventType("EventA");
     
 
-    /**
-     * Protected default constructor for deserialization.
-     */
-    protected EventA() {
-        super();
-    }
-    
-    /**
-     * Aggregate event A.
-     *
-     * @param entityIdPath Path from the aggregate root (first) to the entity that raised the event (last). 
-    */
-    public EventA(@NotNull final EntityIdPath entityIdPath) {
-        super(entityIdPath);
-    }
-
     @Override
-    public final EventType getEventType() {
+    public EventType getEventType() {
         return EVENT_TYPE;
     }
 
 
     @Override
-    public final String toString() {
+    public String toString() {
         return KeyValue.replace("Event A [${#entityIdPath}]",
             new KeyValue("#entityIdPath", getEntityIdPath())
         );
     }
     
+    /**
+     * Creates a new builder instance.
+     *
+     * @return New builder instance.
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+    
+    /**
+     * Builds an instance of the outer class.
+     */
+    public static final class Builder extends AbstractDomainEvent.Builder<CustomerId, EventA, Builder> {
+    
+        private EventA delegate;
+    
+        private Builder() {
+            super(new EventA());
+            delegate = delegate();
+        }
+    
+    
+        /**
+         * Creates the event and clears the builder.
+         *
+         * @return New instance.
+         */
+        public EventA build() {
+            ensureBuildableAbstractDomainEvent();
+            if (delegate.getEventId() == null) {
+                this.eventId(new EventId());
+            }
+            if (delegate.getEventTimestamp() == null) {
+                this.timestamp(ZonedDateTime.now());
+            }
+            
+            
+            final EventA result = delegate;
+            delegate = new EventA();
+            resetAbstractDomainEvent(delegate);
+            return result;
+        }
+    
+    }
 }
+

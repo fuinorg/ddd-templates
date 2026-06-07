@@ -17,7 +17,9 @@
  */
 package tst.x.enumobject;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 
 /** Enumeration type B - With variables. */
 public final class EnumB extends AbstractEnumB {

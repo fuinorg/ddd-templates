@@ -69,7 +69,7 @@ public final class EventE extends AbstractEvent {
     }
 
     @Override
-    public final EventType getEventType() {
+    public EventType getEventType() {
         return EVENT_TYPE;
     }
 
@@ -79,7 +79,7 @@ public final class EventE extends AbstractEvent {
      * @return Current value.
      */
     @NotNull
-    public final MyString getA() {
+    public MyString getA() {
         return a;
     }
     
@@ -89,13 +89,13 @@ public final class EventE extends AbstractEvent {
      * @return Current value.
      */
     @NotNull
-    public final MyString getB() {
+    public MyString getB() {
         return b;
     }
     
 
     @Override
-    public final String toString() {
+    public String toString() {
         return KeyValue.replace("Something interesting happened!"
         , new KeyValue("a", a)
         , new KeyValue("b", b)

@@ -17,6 +17,8 @@
  */
 package tst2.x.enumobject;
 
+import jakarta.annotation.Nullable;
+import java.util.List;
 
 /** Enumeration type A - No variables. */
 public enum EnumA {

@@ -40,13 +40,13 @@ public final class EventD extends AbstractEvent {
     }
 
     @Override
-    public final EventType getEventType() {
+    public EventType getEventType() {
         return EVENT_TYPE;
     }
 
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "Something interesting happened!";
     }
     

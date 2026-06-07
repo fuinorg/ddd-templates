@@ -17,7 +17,9 @@
  */
 package tst2.x.enumobject;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import org.fuin.objects4j.common.Contract;
 
 /** Enumeration type B - With variables. */
