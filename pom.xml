@@ -43,7 +43,7 @@
 		<org.eclipse.emf.ecore.version>2.36.0</org.eclipse.emf.ecore.version>
 		<srcgen4j-core.version>0.5.0-SNAPSHOT</srcgen4j-core.version>
 		<units4j.version>0.12.0</units4j.version>
-		<xtext.version>2.39.0</xtext.version>
+		<xtext.version>2.42.0</xtext.version>
 
 	</properties>
 
