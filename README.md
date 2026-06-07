@@ -4,7 +4,7 @@ ddd-templates
 Xtend based domain-driven design (DDD) code generation templates for use with SrcGen4J
 
 [![Build Status](https://github.com/fuinorg/ddd-templates/actions/workflows/maven.yml/badge.svg)](https://github.com/fuinorg/ddd-templates/actions/workflows/maven.yml)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin.dsl.ddd/ddd-templates/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin.dsl.ddd/ddd-templates/)
+[![Maven Central](https://img.shields.io/maven-central/v/org.fuin.dsl.ddd/ddd-templates.svg)](https://central.sonatype.com/artifact/org.fuin.dsl.ddd/ddd-templates)
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
 [![Java Development Kit 21](https://img.shields.io/badge/JDK-21-green.svg)](https://openjdk.java.net/projects/jdk/21/)
 

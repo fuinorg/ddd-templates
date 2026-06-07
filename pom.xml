@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.fuin</groupId>
 		<artifactId>pom</artifactId>
-		<version>2.0.0</version>
+		<version>2.0.2</version>
 	</parent>
 
 	<groupId>org.fuin.dsl.ddd</groupId>
@@ -29,33 +29,47 @@
 
 	<properties>
 		<java.version>21</java.version>
-		<maven.compiler.release>${java.version}</maven.compiler.release>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<java.release.version>${java.version}</java.release.version>
 
-		<assertj-core.version>3.27.3</assertj-core.version>
-		<ddd-4-java.version>0.8.0-SNAPSHOT</ddd-4-java.version>
+		<org-fuin-bom.version>1.0.2-SNAPSHOT</org-fuin-bom.version>
+		<objects4j-bom.version>0.11.1-SNAPSHOT</objects4j-bom.version>
+
+		<!-- Not managed by the fuin.org BOM -->
 		<cqrs-4-java.version>0.7.0-SNAPSHOT</cqrs-4-java.version>
+		<ddd-4-java.version>0.8.0-SNAPSHOT</ddd-4-java.version>
 		<ddd-cqrs-dsl.version>1.0.0-SNAPSHOT</ddd-cqrs-dsl.version>
-		<equalsverifier.version>4.0.9</equalsverifier.version>
 		<esc.version>0.10.0-SNAPSHOT</esc.version>
-		<hibernate-core.version>6.6.11.Final</hibernate-core.version>
-		<jakarta.enterprise.cdi-api.version>4.1.0</jakarta.enterprise.cdi-api.version>
-		<jakarta.json.version>2.0.1</jakarta.json.version>
-		<jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
-		<jaxb-runtime.version>4.0.5</jaxb-runtime.version>
-		<threeten-jaxb-core.version>2.2.0</threeten-jaxb-core.version>
-		<jsr305.version>3.0.2</jsr305.version>
-		<junit-jupiter.version>5.10.5</junit-jupiter.version>
-		<objects4j.version>0.11.1-SNAPSHOT</objects4j.version>
 		<org.eclipse.emf.ecore.change.version>2.16.0</org.eclipse.emf.ecore.change.version>
 		<org.eclipse.emf.ecore.version>2.36.0</org.eclipse.emf.ecore.version>
 		<srcgen4j-core.version>0.5.0-SNAPSHOT</srcgen4j-core.version>
 		<units4j.version>0.12.0</units4j.version>
 		<xtext.version>2.39.0</xtext.version>
-		<yasson.version>3.0.4</yasson.version>
-		
+
 	</properties>
+
+	<dependencyManagement>
+
+		<dependencies>
+
+			<dependency>
+				<groupId>org.fuin</groupId>
+				<artifactId>bom</artifactId>
+				<version>${org-fuin-bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.fuin.objects4j</groupId>
+				<artifactId>objects4j-bom</artifactId>
+				<version>${objects4j-bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+		</dependencies>
+
+	</dependencyManagement>
 
 	<dependencies>
 
@@ -100,19 +114,21 @@
 		<dependency>
 			<groupId>org.fuin.objects4j</groupId>
 			<artifactId>objects4j-core</artifactId>
-			<version>${objects4j.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jakarta.validation</groupId>
 			<artifactId>jakarta.validation-api</artifactId>
-			<version>${jakarta.validation-api.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
-			<version>${jsr305.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
 		</dependency>
 
 		<!-- test -->
@@ -127,13 +143,11 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>${junit-jupiter.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>${assertj-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -141,6 +155,15 @@
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext.testing</artifactId>
 			<version>${xtext.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- JUnit 4 is an optional dependency of org.eclipse.xtext.testing
+		     (ParseHelper / ValidationTestHelper use org.junit.Assert at runtime). -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -154,7 +177,6 @@
 		<dependency>
 			<groupId>jakarta.enterprise</groupId>
 			<artifactId>jakarta.enterprise.cdi-api</artifactId>
-			<version>${jakarta.enterprise.cdi-api.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -224,42 +246,36 @@
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>jakarta.json</artifactId>
-			<version>${jakarta.json.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse</groupId>
 			<artifactId>yasson</artifactId>
-			<version>${yasson.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>${jaxb-runtime.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 		    <groupId>nl.jqno.equalsverifier</groupId>
 		    <artifactId>equalsverifier</artifactId>
-		    <version>${equalsverifier.version}</version>
 		    <scope>test</scope>
 		</dependency>
 
 		<dependency>
 		    <groupId>io.github.threeten-jaxb</groupId>
 		    <artifactId>threeten-jaxb-core</artifactId>
-		    <version>${threeten-jaxb-core.version}</version>
 		</dependency>
 
 	</dependencies>
