@@ -82,7 +82,7 @@ class AbstractAggregateArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregate.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregate.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

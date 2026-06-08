@@ -75,7 +75,7 @@ class ServiceArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/service.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/service.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

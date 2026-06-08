@@ -83,19 +83,17 @@ class SrcServiceTest {
                  * @param a Key.
                  *
                  * @return Value.
-                 *
-                 * @throws AnyConstraintViolatedException The constraint was violated.
                  */
-                public String find(@NotNull final Integer a) throws AnyConstraintViolatedException;
+                public String find(@NotNull final Integer a);
                 
             }
             '''.toString)
-        assertThat(ctx.imports).containsOnly("java.lang.Integer", "java.lang.String", "x.services.AnyConstraintViolatedException", "jakarta.validation.constraints.NotNull")
+        assertThat(ctx.imports).containsOnly("java.lang.Integer", "java.lang.String", "jakarta.validation.constraints.NotNull")
 
     }
     
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/service.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/service.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

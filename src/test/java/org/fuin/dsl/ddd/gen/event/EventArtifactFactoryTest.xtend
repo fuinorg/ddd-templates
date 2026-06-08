@@ -126,7 +126,7 @@ class EventArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/event.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/event.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

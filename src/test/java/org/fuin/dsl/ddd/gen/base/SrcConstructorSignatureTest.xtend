@@ -53,7 +53,7 @@ class SrcConstructorSignatureTest {
     }
 
     def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/example1.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

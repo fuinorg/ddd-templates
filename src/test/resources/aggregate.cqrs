@@ -9,16 +9,6 @@ context x {
 		
 		import x.types.*
 		
-		/** Checks something. */
-		constraint AnyConstraint exception AnyConstraintViolatedException {
-			
-			/** Explain why it's strict. */
-			consistency strong
-
-			message "Any constraint"
-			
-		}
-		
 		/** The constraint was violated. */
 		exception AnyConstraintViolatedException {
 			message "Any constraint violated"
@@ -53,6 +43,14 @@ context x {
 			/** Variable B. */
 			Integer b
 
+			/** Checks something. */
+			business-rule AnyConstraint exception AnyConstraintViolatedException {
+				
+				/** Explain why it's strict. */
+				consistency strong
+	
+			}
+		
 			/** Creates the entity. */			
 			constructor create business-rules AnyConstraint fires AggregateCCreatedEvent {
 

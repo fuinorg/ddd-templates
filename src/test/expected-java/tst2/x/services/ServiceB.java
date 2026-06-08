@@ -30,9 +30,7 @@ public interface ServiceB {
      * @param a Key.
      *
      * @return Value.
-     *
-     * @throws AnyConstraintViolatedException The constraint was violated.
      */
-    public String find(@NotNull final Integer a) throws AnyConstraintViolatedException;
+    public String find(@NotNull final Integer a);
     
 }

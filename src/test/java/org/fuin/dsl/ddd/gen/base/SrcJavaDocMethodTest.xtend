@@ -49,8 +49,6 @@ class SrcJavaDocMethodTest {
                  *
                  * @param a Abc.
                  * @param b Def.
-                 *
-                 * @throws WhateverException Argh...
                  */
             '''.toString)
         assertThat(ctx.imports).isEmpty()
@@ -72,7 +70,7 @@ class SrcJavaDocMethodTest {
                             /**
                              * This method does cool things.
                              */
-                            method whatever business-rules WhateverConstraint {
+                            method whatever {
                                 
                                 /** Abc. */
                                 String a
@@ -84,19 +82,7 @@ class SrcJavaDocMethodTest {
                 
                         }
                 
-                        /** Makes sure that this is compliant. */
-                        constraint WhateverConstraint exception WhateverException {
-                            
-                            /** Explain why it's strict. */
-                            consistency strong
                 
-                            message "WhateverConstraint message"
-                        }
-                
-                        /** Argh... */
-                        exception WhateverException {
-                            message "WhateverException message"
-                        }        
                 
                     }
                 

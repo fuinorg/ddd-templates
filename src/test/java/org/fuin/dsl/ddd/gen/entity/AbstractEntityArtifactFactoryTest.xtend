@@ -84,7 +84,7 @@ class AbstractEntityArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/entity.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/entity.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

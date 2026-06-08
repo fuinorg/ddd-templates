@@ -76,7 +76,7 @@ class CtxEntityIdFactoryArtifactFactoryTest {
     }
 
     def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/resourceset.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/resourceset.cqrs")))
         validationTester.assertNoIssues(model)
         return model.eResource.resourceSet
     }

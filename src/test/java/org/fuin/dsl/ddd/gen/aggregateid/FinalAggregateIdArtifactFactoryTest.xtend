@@ -124,7 +124,7 @@ class FinalAggregateIdArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregateid.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/aggregateid.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

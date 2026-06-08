@@ -76,6 +76,17 @@ class FinalEntityArtifactFactory extends AbstractSource<Entity> {
                 «new SrcChildEntityLocatorMethods(ctx, GenerateOptions.empty(), entity)»
                 «new SrcMethods(ctx, GenerateOptions.empty(), entity, false)»
                 «new SrcHandleEventMethods(ctx, entity.allEvents)»
+
+                /**
+                 * Creates a new builder instance.
+                 *
+                 * @return New builder instance.
+                 */
+                public static Builder builder() {
+                    return new Builder();
+                }
+
+                «new SrcEntityBuilder(ctx, GenerateOptions.empty(), entity)»
             }
         '''
 

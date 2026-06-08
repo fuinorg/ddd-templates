@@ -18,6 +18,8 @@
 package tst.x.entities;
 
 import jakarta.validation.constraints.NotNull;
+import org.fuin.ddd4j.core.AbstractEntity;
+import org.fuin.objects4j.common.Contract;
 
 /**
  * Entity B - With variables.
@@ -34,4 +36,75 @@ public final class EntityB extends AbstractEntityB {
         super(rootAggregate, id);
     }
     
+
+    /**
+     * Creates a new builder instance.
+     *
+     * @return New builder instance.
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Builds an instance of the outer class.
+     */
+    public static final class Builder extends AbstractEntity.Builder<AggregateXId, AggregateX, EntityBId, EntityB, Builder> {
+    
+        @NotNull
+        private String a;
+        
+        @NotNull
+        private Integer b;
+        
+        private Builder() {
+            super();
+        }
+    
+        /**
+         * Sets: Variable A.
+         *
+         * @param a Value to set.
+         * @return This builder.
+         */
+        public Builder a(@NotNull final String a) {
+            Contract.requireArgNotNull("a", a);
+            this.a = a;
+            return this;
+        }
+    
+        /**
+         * Sets: Variable B.
+         *
+         * @param b Value to set.
+         * @return This builder.
+         */
+        public Builder b(@NotNull final Integer b) {
+            Contract.requireArgNotNull("b", b);
+            this.b = b;
+            return this;
+        }
+    
+        /**
+         * Creates the entity and clears the builder.
+         *
+         * @return New instance.
+         */
+        @Override
+        public EntityB build() {
+            ensureBuildableAbstractEntity();
+            ensureNotNull("a", a);
+            ensureNotNull("b", b);
+    
+            final EntityB result = new EntityB(getRootAggregate(), getEntityId());
+            result.setA(a);
+            result.setB(b);
+    
+            resetAbstractEntity();
+            this.a = null;
+            this.b = null;
+            return result;
+        }
+    
+    }
 }

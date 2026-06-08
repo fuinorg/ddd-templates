@@ -523,7 +523,7 @@ class SrcValidationAnnotationTest {
 
     def DomainModel createModel() {
         
-        val URL url = class.classLoader.getResource("org/fuin/dsl/ddd/Basics.ddd")
+        val URL url = class.classLoader.getResource("org/fuin/dsl/ddd/Basics.cqrs")
         val basics = IOUtils.toString(url, "utf-8")
         
         val DomainModel model = parser.parse(

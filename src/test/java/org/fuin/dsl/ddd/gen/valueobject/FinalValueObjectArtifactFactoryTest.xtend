@@ -89,7 +89,7 @@ class FinalValueObjectArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/valueobject.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/valueobject.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

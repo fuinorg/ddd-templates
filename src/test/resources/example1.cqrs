@@ -11,15 +11,6 @@ context x {
 
 		/** Example value object. */
 		value-object MyValueObject {}
-
-		/** Checks something. */
-		constraint AnyConstraint exception ConstraintViolatedException {
-
-			/** Explain why it's strict. */
-			consistency strong
-
-			message "Any constraint"
-		}
 		
 		/** The constraint was violated. */
 		exception ConstraintViolatedException {
@@ -32,6 +23,14 @@ context x {
 		/** Example aggregate. */
 		aggregate MyAggregate identifier MyAggregateId {
 			
+			/** Checks something. */
+			business-rule AnyConstraint exception ConstraintViolatedException {
+	
+				/** Explain why it's strict. */
+				consistency strong
+	
+			}
+
 			/** Does some cool things. */
 			method doSomething business-rules AnyConstraint fires DidSomethingEvent, SomethingHappenedEvent {
 				
@@ -57,6 +56,14 @@ context x {
 
 		/** Example entity. */
 		entity MyEntity identifier MyEntityId root MyAggregate {
+			
+			/** Checks something. */
+			business-rule AnyConstraint exception ConstraintViolatedException {
+	
+				/** Explain why it's strict. */
+				consistency strong
+	
+			}
 			
 			/** Creates the entity. */
 			constructor create business-rules AnyConstraint {

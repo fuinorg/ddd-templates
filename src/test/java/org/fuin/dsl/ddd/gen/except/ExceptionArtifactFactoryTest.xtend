@@ -93,7 +93,7 @@ class ExceptionArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/exception.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/exception.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

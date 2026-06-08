@@ -122,7 +122,7 @@ class EntityIdArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/entityid.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/entityid.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

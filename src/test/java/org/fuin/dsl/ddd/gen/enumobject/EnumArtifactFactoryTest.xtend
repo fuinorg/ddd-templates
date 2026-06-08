@@ -77,7 +77,7 @@ class EnumArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/enumobject.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/enumobject.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }

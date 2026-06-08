@@ -110,7 +110,7 @@ class ValidatorArtifactFactoryTest {
     }
 
     private def model() {
-        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/constraint.ddd")))
+        val DomainModel model = parser.parse(Utils.readAsString(class.getResource("/constraint.cqrs")))
         validationTester.assertNoIssues(model)
         return model
     }
